@@ -1,0 +1,54 @@
+"""
+Tests for the type coercion module
+"""
+from abc import ABC, abstractmethod
+from typing import Any
+import pytest
+from ansys.common.variableinterop import IVariableValue, implicit_coerce, IntegerValue, RealValue
+from test_utils import _create_exception_context
+
+
+class IDummy(ABC):
+    """Example interface that accepts variable types"""
+    @abstractmethod
+    def variable_argument(self, value: IVariableValue) -> IVariableValue: ...
+    # TODO: methods that accept specific types of IVariableValue
+    # TODO: test that it ignores other parameters
+
+class Impl(ABC):
+    """Test implementation that just returns what it gets sent"""
+    @implicit_coerce
+    def variable_argument(self, value: IVariableValue) -> IVariableValue:
+        return value
+
+
+class NotConvertible:
+    """Test object that can't be converted to an IVariableValue"""
+    pass
+
+
+@pytest.mark.parametrize('source,expect,expect_exception', [
+    (0, IntegerValue(0), None),
+    (1.2, RealValue(1.2), None),
+    (NotConvertible(), None, TypeError),
+    # TODO: Lots more cases
+])
+def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException):
+    """
+    Tests implicit_coerce decorator
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    sut = Impl()
+    with _create_exception_context(expect_exception):
+        result = sut.variable_argument(source)
+        assert type(expect) == type(result)
+        assert expect == source
