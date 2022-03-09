@@ -34,10 +34,10 @@ With coverage.
     ---------- coverage: platform linux, python 3.8.10-final-0 -----------
     Name                                    Stmts   Miss  Cover
     -----------------------------------------------------------
-    ansys/product/library/__init__.py           2      0   100%
-    ansys/product/library/_version.py           2      2     0%
-    ansys/product/library/module.py             2      0   100%
-    ansys/product/library/other_module.py      59     29    51%
+    ansys/common/variableinterop/__init__.py           2      0   100%
+    ansys/common/variableinterop/_version.py           2      2     0%
+    ansys/common/variableinterop/module.py             2      0   100%
+    ansys/common/variableinterop/other_module.py      59     29    51%
     -----------------------------------------------------------
     TOTAL                                      65     31    52%
 
