@@ -5,8 +5,8 @@ can span multiple lines and include examples.
 
 Examples
 --------
->>> from ansys.product import library
->>> library.add(1, 2)
+>>> from ansys.common import variableinterop
+>>> variableinterop.add(1, 2)
 3
 
 """
@@ -40,13 +40,13 @@ def add(arg1, arg2):
 
     Examples
     --------
-    >>> from ansys.product.library import add
+    >>> from ansys.common.variableinterop import add
     >>> add(1, 2)
     3
 
     See Also
     --------
-    :class:`ExampleClass <ansys.product.library.ExampleClass>`
+    :class:`ExampleClass <ansys.common.variableinterop.ExampleClass>`
 
     """
     return arg1 + arg2

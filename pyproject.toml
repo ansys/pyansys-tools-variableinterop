@@ -3,16 +3,14 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "ansys-product-library"
-version = "0.1.0"
-
-description = "Template PyAnsys library"
+name = "ansys-common-variableinterop"
+version = "0.1.dev0"
+description = "Optional variable specifications for interoperability between languages and capabilities"
 readme = "README.rst"
-homepage = "https://github.com/pyansys/template/"
-
-authors = ["Ansys, Inc."] # this is required
+authors = ["ANSYS, Inc. <ansys.support@ansys.com>"]
 maintainers = ["PyAnsys developers <pyansys.support@ansys.com>"] # You can change the name. The email group works.
 license = "MIT"
+repository = "https://github.com/pyansys/ansys-common-variableinterop"
 
 # Less than critical but helpful
 classifiers = [
@@ -27,8 +25,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7" # Plan on supporting only the currently supported versions of Python
+python = ">=3.7,<4.0"
 importlib-metadata = {version = "^4.0", python = "<3.8"}
+numpy = "^1.19.5"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
