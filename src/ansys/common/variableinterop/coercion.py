@@ -4,7 +4,7 @@ IVariableValue type.
 """
 import inspect
 import functools
-from typing import Any
+from typing import Any, Optional
 import numpy as np
 import typing
 
@@ -17,6 +17,38 @@ TYPE_MAPPINGS = {
     float: vv.RealValue,
     np.inexact: vv.RealValue
 }
+
+
+def _is_optional(arg_type: type) -> bool:
+    """
+    Determine if a type object refers to an Optional[x].
+
+    Parameters
+    ----------
+    arg_type The type to check for optional
+
+    Returns
+    -------
+    True if the argument passed in is Optional[x] for some x.
+    """
+    return hasattr(arg_type, '__origin__') and arg_type.__origin__ == typing.Union and len(arg_type.__args__) == 2 \
+        and arg_type.__args__[1] == type(None)
+
+
+def _get_optional_type(arg_type: type) -> type:
+    """
+    If _is_optional(arg_type) returns true, this function will return the type argument to Optional[x].
+    If _is_optional(arg_type) returns false, this function's behavior is undeclared.
+
+    Parameters
+    ----------
+    arg_type The Optional[x] type. Only valid if _is_optional(arg_type) returns true
+
+    Returns
+    -------
+    The 'x' from Optional[x].
+    """
+    return arg_type.__args__[0]
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
@@ -39,6 +71,13 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     ------
     TypeError if the argument cannot be converted to the supplied type
     """
+
+    if _is_optional(arg_type):
+        if arg is None:
+            return None
+        # TODO: Lots of diminutive cases. This currently just handles Optional[T]
+        arg_type = _get_optional_type(arg_type)
+
     if arg_type == vv.IVariableValue:
         for cls in type(arg).__mro__:
             if cls in TYPE_MAPPINGS:
@@ -49,8 +88,12 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         #  Can that be simplified?
         raise TypeError(f"Type {type(arg)} cannot be converted to {vv.IVariableValue}")
 
+    # TODO: This probably doesn't have all the right semantics for our set of implicit type conversions
+    if issubclass(arg_type, vv.IVariableValue):
+        return arg_type(arg)
+
     # TODO: More types and other error conditions
-    raise NotImplementedError
+    raise NotImplementedError(f"Type {arg_type} not supported")
 
 
 def implicit_coerce(func):
@@ -80,4 +123,5 @@ def implicit_coerce(func):
                                                                   type_hints[key])
 
         return func(*bound_sig.args, **bound_sig.kwargs)
+
     return wrapper

@@ -2,7 +2,7 @@
 Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Optional
 import pytest
 from ansys.common.variableinterop import IVariableValue, implicit_coerce, IntegerValue, RealValue
 from test_utils import _create_exception_context
@@ -14,6 +14,7 @@ class IDummy(ABC):
     def variable_argument(self, value: IVariableValue) -> IVariableValue: ...
     # TODO: methods that accept specific types of IVariableValue
     # TODO: test that it ignores other parameters
+
 
 class Impl(ABC):
     """Test implementation that just returns what it gets sent"""
@@ -31,6 +32,7 @@ class NotConvertible:
     (0, IntegerValue(0), None),
     (1.2, RealValue(1.2), None),
     (NotConvertible(), None, TypeError),
+    (None, None, TypeError)
     # TODO: Lots more cases
 ])
 def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException):
@@ -50,5 +52,91 @@ def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseExcep
     sut = Impl()
     with _create_exception_context(expect_exception):
         result = sut.variable_argument(source)
+        assert type(expect) == type(result)
+        assert expect == source
+
+
+@implicit_coerce
+def accept_real_value(value: RealValue) -> RealValue:
+    """
+    Test function that accepts a RealValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@pytest.mark.parametrize('source,expect,expect_exception', [
+    (5, RealValue(5.0), None),
+    (1.2, RealValue(1.2), None),
+    (NotConvertible(), None, TypeError),
+    (None, None, TypeError)
+    # TODO: Lots more cases
+])
+def test_coerce_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept RealValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_real_value(source)
+        assert type(expect) == type(result)
+        assert expect == source
+
+
+@implicit_coerce
+def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
+    """
+    Test function that accepts an Optional[RealValue]
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@pytest.mark.parametrize('source,expect,expect_exception', [
+    (5, RealValue(5.0), None),
+    (1.2, RealValue(1.2), None),
+    (NotConvertible(), None, TypeError),
+    (None, None, None)
+    # TODO: Lots more cases
+])
+def test_coerce_optional_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_optional_real_value(source)
         assert type(expect) == type(result)
         assert expect == source
