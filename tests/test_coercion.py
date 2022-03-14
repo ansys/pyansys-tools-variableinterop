@@ -92,9 +92,7 @@ def accept_real_value(value: RealValue) -> RealValue:
         # TODO: Lots more cases
     ],
 )
-def test_coerce_real_value(
-    source: Any, expect: IVariableValue, expect_exception: BaseException
-):
+def test_coerce_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
     """
     Tests implicit_coerce decorator when calling a function declared to accept RealValue
 

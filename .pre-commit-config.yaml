@@ -5,6 +5,9 @@ repos:
   hooks:
   - id: black
     exclude: ^src/ansys/templates/pypkg/
+    args: [
+    "--line-length", "100"
+    ]
 
 - repo: https://github.com/pycqa/isort
   rev: 5.10.1
