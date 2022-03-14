@@ -2,7 +2,7 @@
 Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any, Optional, Tuple
 import pytest
 from ansys.common.variableinterop import IVariableValue, implicit_coerce, IntegerValue, RealValue
 from test_utils import _create_exception_context
@@ -53,7 +53,7 @@ def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseExcep
     with _create_exception_context(expect_exception):
         result = sut.variable_argument(source)
         assert type(expect) == type(result)
-        assert expect == source
+        assert expect == result
 
 
 @implicit_coerce
@@ -96,7 +96,7 @@ def test_coerce_real_value(source: Any, expect: IVariableValue, expect_exception
     with _create_exception_context(expect_exception):
         result = accept_real_value(source)
         assert type(expect) == type(result)
-        assert expect == source
+        assert expect == result
 
 
 @implicit_coerce
@@ -122,7 +122,8 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
     (None, None, None)
     # TODO: Lots more cases
 ])
-def test_coerce_optional_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
+def test_coerce_optional_real_value(source: Any, expect: IVariableValue,
+                                    expect_exception: BaseException):
     """
     Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
 
@@ -139,4 +140,39 @@ def test_coerce_optional_real_value(source: Any, expect: IVariableValue, expect_
     with _create_exception_context(expect_exception):
         result = accept_optional_real_value(source)
         assert type(expect) == type(result)
-        assert expect == source
+        assert expect == result
+
+
+@implicit_coerce
+def accept_with_multiple_args(bogus: NotConvertible, value1: RealValue, value2: IVariableValue) \
+        -> Tuple[RealValue, IVariableValue]:
+    """
+    Test function that accepts a RealValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value1, value2
+
+
+def test_coerce_multiple_args():
+    """
+    Tests implicit_coerce decorator when multiple values to be converted
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+    nothing
+    """
+    result1, result2 = accept_with_multiple_args(NotConvertible(), 2.3, 28)
+    assert RealValue == type(result1)
+    assert RealValue(2.3) == result1
+    assert IntegerValue == type(result2)
+    assert IntegerValue(28) == result2

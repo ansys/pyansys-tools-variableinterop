@@ -4,7 +4,7 @@ IVariableValue type.
 """
 import inspect
 import functools
-from typing import Any, Optional
+from typing import Any
 import numpy as np
 import typing
 
@@ -31,14 +31,15 @@ def _is_optional(arg_type: type) -> bool:
     -------
     True if the argument passed in is Optional[x] for some x.
     """
-    return hasattr(arg_type, '__origin__') and arg_type.__origin__ == typing.Union and len(arg_type.__args__) == 2 \
-        and arg_type.__args__[1] == type(None)
+    return hasattr(arg_type, '__origin__') and arg_type.__origin__ == typing.Union \
+        and len(arg_type.__args__) == 2 and arg_type.__args__[1] == type(None)
 
 
 def _get_optional_type(arg_type: type) -> type:
     """
-    If _is_optional(arg_type) returns true, this function will return the type argument to Optional[x].
-    If _is_optional(arg_type) returns false, this function's behavior is undeclared.
+    If _is_optional(arg_type) returns true, this function will return the type
+    argument to Optional[x]. If _is_optional(arg_type) returns false, this
+    function's behavior is undeclared.
 
     Parameters
     ----------
@@ -88,12 +89,17 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         #  Can that be simplified?
         raise TypeError(f"Type {type(arg)} cannot be converted to {vv.IVariableValue}")
 
-    # TODO: This probably doesn't have all the right semantics for our set of implicit type conversions
+    # TODO: This probably doesn't have all the right semantics for our set of implicit
+    #  type conversions
     if issubclass(arg_type, vv.IVariableValue):
+        if arg is None:
+            raise TypeError(f"Type {type(arg)} cannot be converted to {arg_type}")
         return arg_type(arg)
 
     # TODO: More types and other error conditions
-    raise NotImplementedError(f"Type {arg_type} not supported")
+
+    # If we don't understand the type, ignore it and just pass through
+    return arg
 
 
 def implicit_coerce(func):

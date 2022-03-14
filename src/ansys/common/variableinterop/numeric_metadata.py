@@ -1,8 +1,7 @@
 from __future__ import annotations
 from abc import ABC
-from typing import TypeVar, Generic, List, Optional
+from typing import TypeVar
 from .common_variable_metadata import CommonVariableMetadata
-from .coercion import implicit_coerce
 
 T = TypeVar('T')
 
@@ -33,4 +32,3 @@ class NumericMetadata(CommonVariableMetadata, ABC):
     @display_format.setter
     def display_format(self, value: str):
         self._display_format = value
-
