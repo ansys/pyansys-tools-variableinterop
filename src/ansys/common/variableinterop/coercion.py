@@ -2,11 +2,12 @@
 This module contains utilities for coercing arbitrary Python objects into the appropriate
 IVariableValue type.
 """
-import inspect
 import functools
-from typing import Any
-import numpy as np
+import inspect
 import typing
+from typing import Any
+
+import numpy as np
 
 from ansys.common.variableinterop import variable_value as vv
 
@@ -15,7 +16,7 @@ TYPE_MAPPINGS = {
     int: vv.IntegerValue,
     np.integer: vv.IntegerValue,
     float: vv.RealValue,
-    np.inexact: vv.RealValue
+    np.inexact: vv.RealValue,
 }
 
 
@@ -31,8 +32,12 @@ def _is_optional(arg_type: type) -> bool:
     -------
     True if the argument passed in is Optional[x] for some x.
     """
-    return hasattr(arg_type, '__origin__') and arg_type.__origin__ == typing.Union \
-        and len(arg_type.__args__) == 2 and arg_type.__args__[1] == type(None)
+    return (
+        hasattr(arg_type, "__origin__")
+        and arg_type.__origin__ == typing.Union
+        and len(arg_type.__args__) == 2
+        and arg_type.__args__[1] == type(None)
+    )
 
 
 def _get_optional_type(arg_type: type) -> type:
@@ -125,8 +130,9 @@ def implicit_coerce(func):
         bound_sig.apply_defaults()
         for key in bound_sig.arguments:
             if key in type_hints:
-                bound_sig.arguments[key] = implicit_coerce_single(bound_sig.arguments[key],
-                                                                  type_hints[key])
+                bound_sig.arguments[key] = implicit_coerce_single(
+                    bound_sig.arguments[key], type_hints[key]
+                )
 
         return func(*bound_sig.args, **bound_sig.kwargs)
 

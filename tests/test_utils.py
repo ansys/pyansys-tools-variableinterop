@@ -1,7 +1,9 @@
 from contextlib import contextmanager
+
 import pytest
 
 # TODO: search google, is there a standard way to do this?
+
 
 @contextmanager
 def _dummy_context():

@@ -2,14 +2,16 @@
 Definition of IVariableValue and related classes
 """
 from __future__ import annotations
-from typing import TypeVar, Generic
+
 from abc import ABC, abstractmethod
+from typing import Generic, TypeVar
+
 import numpy as np
 
 # Used for the generic visitor pattern
 from .variable_type import VariableType
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class IVariableValue(ABC):
@@ -88,6 +90,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
 # TODO: I'm used to languages like Java and C# which encourage a class per file.
 #  What is best practice here?
+
 
 class IntegerValue(np.int64, IVariableValue):
     """

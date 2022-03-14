@@ -1,15 +1,18 @@
 from __future__ import annotations
+
 from abc import ABC
 from typing import TypeVar
+
 from .common_variable_metadata import CommonVariableMetadata
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class NumericMetadata(CommonVariableMetadata, ABC):
     """
     Generic base class for all numeric metadata implementations
     """
+
     def __init__(self):
         self._units: str = ""
         self._display_format: str = ""

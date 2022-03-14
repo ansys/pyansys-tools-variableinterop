@@ -3,21 +3,27 @@ Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
 from typing import Any, Optional, Tuple
+
 import pytest
-from ansys.common.variableinterop import IVariableValue, implicit_coerce, IntegerValue, RealValue
 from test_utils import _create_exception_context
+
+from ansys.common.variableinterop import IntegerValue, IVariableValue, RealValue, implicit_coerce
 
 
 class IDummy(ABC):
     """Example interface that accepts variable types"""
+
     @abstractmethod
-    def variable_argument(self, value: IVariableValue) -> IVariableValue: ...
+    def variable_argument(self, value: IVariableValue) -> IVariableValue:
+        ...
+
     # TODO: methods that accept specific types of IVariableValue
     # TODO: test that it ignores other parameters
 
 
 class Impl(ABC):
     """Test implementation that just returns what it gets sent"""
+
     @implicit_coerce
     def variable_argument(self, value: IVariableValue) -> IVariableValue:
         return value
@@ -25,16 +31,20 @@ class Impl(ABC):
 
 class NotConvertible:
     """Test object that can't be converted to an IVariableValue"""
+
     pass
 
 
-@pytest.mark.parametrize('source,expect,expect_exception', [
-    (0, IntegerValue(0), None),
-    (1.2, RealValue(1.2), None),
-    (NotConvertible(), None, TypeError),
-    (None, None, TypeError)
-    # TODO: Lots more cases
-])
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        (0, IntegerValue(0), None),
+        (1.2, RealValue(1.2), None),
+        (NotConvertible(), None, TypeError),
+        (None, None, TypeError)
+        # TODO: Lots more cases
+    ],
+)
 def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException):
     """
     Tests implicit_coerce decorator
@@ -72,14 +82,19 @@ def accept_real_value(value: RealValue) -> RealValue:
     return value
 
 
-@pytest.mark.parametrize('source,expect,expect_exception', [
-    (5, RealValue(5.0), None),
-    (1.2, RealValue(1.2), None),
-    (NotConvertible(), None, TypeError),
-    (None, None, TypeError)
-    # TODO: Lots more cases
-])
-def test_coerce_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        (5, RealValue(5.0), None),
+        (1.2, RealValue(1.2), None),
+        (NotConvertible(), None, TypeError),
+        (None, None, TypeError)
+        # TODO: Lots more cases
+    ],
+)
+def test_coerce_real_value(
+    source: Any, expect: IVariableValue, expect_exception: BaseException
+):
     """
     Tests implicit_coerce decorator when calling a function declared to accept RealValue
 
@@ -115,15 +130,19 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
     return value
 
 
-@pytest.mark.parametrize('source,expect,expect_exception', [
-    (5, RealValue(5.0), None),
-    (1.2, RealValue(1.2), None),
-    (NotConvertible(), None, TypeError),
-    (None, None, None)
-    # TODO: Lots more cases
-])
-def test_coerce_optional_real_value(source: Any, expect: IVariableValue,
-                                    expect_exception: BaseException):
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        (5, RealValue(5.0), None),
+        (1.2, RealValue(1.2), None),
+        (NotConvertible(), None, TypeError),
+        (None, None, None)
+        # TODO: Lots more cases
+    ],
+)
+def test_coerce_optional_real_value(
+    source: Any, expect: IVariableValue, expect_exception: BaseException
+):
     """
     Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
 
@@ -144,8 +163,9 @@ def test_coerce_optional_real_value(source: Any, expect: IVariableValue,
 
 
 @implicit_coerce
-def accept_with_multiple_args(bogus: NotConvertible, value1: RealValue, value2: IVariableValue) \
-        -> Tuple[RealValue, IVariableValue]:
+def accept_with_multiple_args(
+    bogus: NotConvertible, value1: RealValue, value2: IVariableValue
+) -> Tuple[RealValue, IVariableValue]:
     """
     Test function that accepts a RealValue
 

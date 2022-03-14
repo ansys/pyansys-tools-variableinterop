@@ -1,8 +1,9 @@
-from typing import Optional, List
-from .numeric_metadata import NumericMetadata
-from .variable_value import RealValue
-from .variable_type import VariableType
+from typing import List, Optional
+
 from .coercion import implicit_coerce
+from .numeric_metadata import NumericMetadata
+from .variable_type import VariableType
+from .variable_value import RealValue
 
 
 class RealMetadata(NumericMetadata):

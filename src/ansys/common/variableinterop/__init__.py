@@ -59,10 +59,11 @@ except ModuleNotFoundError:
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 from ansys.common.variableinterop.coercion import implicit_coerce, implicit_coerce_single
-from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.common_variable_metadata import CommonVariableMetadata
+from ansys.common.variableinterop.integer_metadata import IntegerMetadata
 from ansys.common.variableinterop.numeric_metadata import NumericMetadata
 from ansys.common.variableinterop.real_metadata import RealMetadata
-from ansys.common.variableinterop.integer_metadata import IntegerMetadata
+from ansys.common.variableinterop.variable_type import VariableType
+
 # TODO: Get rid of star
 from ansys.common.variableinterop.variable_value import *

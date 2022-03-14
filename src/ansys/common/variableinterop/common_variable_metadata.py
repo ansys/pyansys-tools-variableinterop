@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Dict
-from .variable_value import IVariableValue
+
 from .variable_type import VariableType
+from .variable_value import IVariableValue
 
 
 class CommonVariableMetadata(ABC):
