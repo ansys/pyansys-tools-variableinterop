@@ -34,9 +34,9 @@ def _is_optional(arg_type: type) -> bool:
     """
     return (
         hasattr(arg_type, "__origin__")
-        and arg_type.__origin__ == typing.Union
-        and len(arg_type.__args__) == 2
-        and arg_type.__args__[1] == type(None)
+        and arg_type.__origin__ == typing.Union  # type: ignore
+        and len(arg_type.__args__) == 2  # type: ignore
+        and arg_type.__args__[1] == type(None)  # type: ignore
     )
 
 
@@ -54,7 +54,7 @@ def _get_optional_type(arg_type: type) -> type:
     -------
     The 'x' from Optional[x].
     """
-    return arg_type.__args__[0]
+    return arg_type.__args__[0]  # type: ignore
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:

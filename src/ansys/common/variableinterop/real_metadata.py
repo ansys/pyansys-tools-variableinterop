@@ -33,7 +33,7 @@ class RealMetadata(NumericMetadata):
         """
         return self._lower_bound
 
-    @lower_bound.setter
+    @lower_bound.setter  # type: ignore
     @implicit_coerce
     def lower_bound(self, value: Optional[RealValue]):
         # TODO: How does documentation for properties work?
@@ -54,7 +54,7 @@ class RealMetadata(NumericMetadata):
         """
         return self._upper_bound
 
-    @upper_bound.setter
+    @upper_bound.setter  # type: ignore
     @implicit_coerce
     def upper_bound(self, value: Optional[RealValue]):
         # TODO: How does documentation for properties work?
