@@ -13,7 +13,7 @@ class NumericMetadata(CommonVariableMetadata, ABC):
     Generic base class for all numeric metadata implementations
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._units: str = ""
         self._display_format: str = ""
 
@@ -24,7 +24,7 @@ class NumericMetadata(CommonVariableMetadata, ABC):
         return self._units
 
     @units.setter
-    def units(self, value: str):
+    def units(self, value: str) -> None:
         self._units = value
 
     # TODO: Formally define format specifications
@@ -33,5 +33,5 @@ class NumericMetadata(CommonVariableMetadata, ABC):
         return self._display_format
 
     @display_format.setter
-    def display_format(self, value: str):
+    def display_format(self, value: str) -> None:
         self._display_format = value

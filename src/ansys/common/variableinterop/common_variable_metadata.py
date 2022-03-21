@@ -15,9 +15,9 @@ class CommonVariableMetadata(ABC):
     additional or more specific metadata as needed.
     """
 
-    def __init__(self):
-        self._description = ""
-        self._custom_metadata = {}
+    def __init__(self) -> None:
+        self._description: str = ""
+        self._custom_metadata: Dict[str, IVariableValue] = {}
 
     @property
     def description(self) -> str:
@@ -25,7 +25,7 @@ class CommonVariableMetadata(ABC):
         return self._description
 
     @description.setter
-    def description(self, value: str):
+    def description(self, value: str) -> None:
         self._description = value
 
     @property

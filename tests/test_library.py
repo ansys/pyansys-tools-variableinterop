@@ -66,7 +66,7 @@ from ansys.common import variableinterop as ansysvars
         # TODO: Other cases such as passing in non-integers
     ],
 )
-def test_integer_value_constructor(cons_arg: Any, expect_exception: BaseException):
+def test_integer_value_constructor(cons_arg: Any, expect_exception: BaseException) -> None:
     """
     Tests that the IntegerValue constructor behaves as expected
     Parameters
@@ -91,7 +91,7 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: BaseExceptio
         # (ansysvars.IntegerValue(9223372036854775807), 1, ValueError),
     ],
 )
-def test_integer_value_add(left: Any, right: Any, expect_exception: BaseException):
+def test_integer_value_add(left: Any, right: Any, expect_exception: BaseException) -> None:
     """
     Tests that adding IntegerValue objects together works, and generally
     degrades into numpy objects.
@@ -126,7 +126,7 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: BaseExceptio
         #  (ansysvars.IntegerValue(2), ansysvars.RealValue(3.2), TypeError),
     ],
 )
-def test_integer_value_sub(left: Any, right: Any, expect_exception: BaseException):
+def test_integer_value_sub(left: Any, right: Any, expect_exception: BaseException) -> None:
     """
     Tests that subtraction of IntegerValue works and generally degrades into
     a numpy int64.

@@ -9,7 +9,7 @@ from .variable_value import IntegerValue
 class IntegerMetadata(NumericMetadata):
     """Common metadata for VariableType.INTEGER and VariableType.INTEGERL_ARRAY"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._lower_bound: Optional[IntegerValue] = None
         self._upper_bound: Optional[IntegerValue] = None
         self._enumerated_values: List[IntegerValue] = []
@@ -35,7 +35,7 @@ class IntegerMetadata(NumericMetadata):
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
-    def lower_bound(self, value: Optional[IntegerValue]):
+    def lower_bound(self, value: Optional[IntegerValue]) -> None:
         # TODO: How does documentation for properties work?
         self._lower_bound = value
 
@@ -56,7 +56,7 @@ class IntegerMetadata(NumericMetadata):
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
-    def upper_bound(self, value: Optional[IntegerValue]):
+    def upper_bound(self, value: Optional[IntegerValue]) -> None:
         # TODO: How does documentation for properties work?
         self._upper_bound = value
 
@@ -67,7 +67,7 @@ class IntegerMetadata(NumericMetadata):
         return self._enumerated_values
 
     @enumerated_values.setter
-    def enumerated_values(self, value: List[IntegerValue]):
+    def enumerated_values(self, value: List[IntegerValue]) -> None:
         self._enumerated_values = value
 
     @property
@@ -75,5 +75,5 @@ class IntegerMetadata(NumericMetadata):
         return self._enumerated_aliases
 
     @enumerated_aliases.setter
-    def enumerated_aliases(self, value: List[str]):
+    def enumerated_aliases(self, value: List[str]) -> None:
         self._enumerated_aliases = value

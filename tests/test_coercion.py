@@ -45,7 +45,7 @@ class NotConvertible:
         # TODO: Lots more cases
     ],
 )
-def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException):
+def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException) -> None:
     """
     Tests implicit_coerce decorator
 
@@ -92,7 +92,9 @@ def accept_real_value(value: RealValue) -> RealValue:
         # TODO: Lots more cases
     ],
 )
-def test_coerce_real_value(source: Any, expect: IVariableValue, expect_exception: BaseException):
+def test_coerce_real_value(
+    source: Any, expect: IVariableValue, expect_exception: BaseException
+) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept RealValue
 
@@ -140,7 +142,7 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
 )
 def test_coerce_optional_real_value(
     source: Any, expect: IVariableValue, expect_exception: BaseException
-):
+) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
 
@@ -178,7 +180,7 @@ def accept_with_multiple_args(
     return value1, value2
 
 
-def test_coerce_multiple_args():
+def test_coerce_multiple_args() -> None:
     """
     Tests implicit_coerce decorator when multiple values to be converted
 

@@ -9,7 +9,7 @@ from .variable_value import RealValue
 class RealMetadata(NumericMetadata):
     """Common metadata for VariableType.REAL and VariableType.REAL_ARRAY"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._lower_bound: Optional[RealValue] = None
         self._upper_bound: Optional[RealValue] = None
         self._enumerated_values: List[RealValue] = []
@@ -35,7 +35,7 @@ class RealMetadata(NumericMetadata):
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
-    def lower_bound(self, value: Optional[RealValue]):
+    def lower_bound(self, value: Optional[RealValue]) -> None:
         # TODO: How does documentation for properties work?
         self._lower_bound = value
 
@@ -56,7 +56,7 @@ class RealMetadata(NumericMetadata):
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
-    def upper_bound(self, value: Optional[RealValue]):
+    def upper_bound(self, value: Optional[RealValue]) -> None:
         # TODO: How does documentation for properties work?
         self._upper_bound = value
 
@@ -67,7 +67,7 @@ class RealMetadata(NumericMetadata):
         return self._enumerated_values
 
     @enumerated_values.setter
-    def enumerated_values(self, value: List[RealValue]):
+    def enumerated_values(self, value: List[RealValue]) -> None:
         self._enumerated_values = value
 
     @property
@@ -75,5 +75,5 @@ class RealMetadata(NumericMetadata):
         return self._enumerated_aliases
 
     @enumerated_aliases.setter
-    def enumerated_aliases(self, value: List[str]):
+    def enumerated_aliases(self, value: List[str]) -> None:
         self._enumerated_aliases = value
