@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from typing import List, Optional
 
 from .coercion import implicit_coerce
+from .integer_value import IntegerValue
 from .numeric_metadata import NumericMetadata
 from .variable_type import VariableType
-from .variable_value import IntegerValue
 
 
 class IntegerMetadata(NumericMetadata):

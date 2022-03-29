@@ -2,6 +2,8 @@
 This module contains utilities for coercing arbitrary Python objects into the appropriate
 IVariableValue type.
 """
+from __future__ import annotations
+
 import functools
 import inspect
 import typing
@@ -9,14 +11,16 @@ from typing import Any
 
 import numpy as np
 
-from ansys.common.variableinterop import variable_value as vv
+from .integer_value import IntegerValue
+from .real_value import RealValue
+from .variable_value import IVariableValue
 
 # A dictionary that maps source types to what variableinterop type it should be mapped to
 TYPE_MAPPINGS = {
-    int: vv.IntegerValue,
-    np.integer: vv.IntegerValue,
-    float: vv.RealValue,
-    np.inexact: vv.RealValue,
+    int: IntegerValue,
+    np.integer: IntegerValue,
+    float: RealValue,
+    np.inexact: RealValue,
 }
 
 
@@ -84,7 +88,7 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # TODO: Lots of diminutive cases. This currently just handles Optional[T]
         arg_type = _get_optional_type(arg_type)
 
-    if arg_type == vv.IVariableValue:
+    if arg_type == IVariableValue:
         for cls in type(arg).__mro__:
             if cls in TYPE_MAPPINGS:
                 return TYPE_MAPPINGS[cls](arg)
@@ -92,14 +96,15 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # TODO: types come out to
         #  <class 'ansys.common.variableinterop.variable_value.IVariableValue'>.
         #  Can that be simplified?
-        raise TypeError(f"Type {type(arg)} cannot be converted to {vv.IVariableValue}")
+        raise TypeError(f"Type {type(arg)} cannot be converted to {IVariableValue}")
 
     # TODO: This probably doesn't have all the right semantics for our set of implicit
     #  type conversions
-    if issubclass(arg_type, vv.IVariableValue):
+    if issubclass(arg_type, IVariableValue):
         if arg is None:
             raise TypeError(f"Type {type(arg)} cannot be converted to {arg_type}")
-        return arg_type(arg)
+        # ignore because mypy does not know about subclass constructors
+        return arg_type(arg)  # type: ignore
 
     # TODO: More types and other error conditions
 
