@@ -1,22 +1,22 @@
-"""Definition of IVariableValueVisitor."""
+"""Definition of IVariableMetadataVisitor."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 
-from ansys.common.variableinterop.boolean_value import BooleanValue
-from ansys.common.variableinterop.integer_value import IntegerValue
-from ansys.common.variableinterop.real_value import RealValue
-from ansys.common.variableinterop.string_value import StringValue
+from ansys.common.variableinterop.boolean_metadata import BooleanMetadata
+from ansys.common.variableinterop.integer_metadata import IntegerMetadata
+from ansys.common.variableinterop.real_metadata import RealMetadata
+from ansys.common.variableinterop.string_metadata import StringMetadata
 
 T = TypeVar("T")
 
 
-class IVariableValueVisitor(ABC, Generic[T]):
+class IVariableMetadataVisitor(ABC, Generic[T]):
     """
     The interface to be implemented to instantiate the visitor pattern.
 
-    Pass an instance to IVariableValue.accept().
+    Pass an instance to CommonVariableMetadata.accept().
     """
 
     # Single dispatch would make this prettier, but doesn't work with
@@ -24,13 +24,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     #  https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
-    def visit_integer(self, value: IntegerValue) -> T:
+    def visit_integer(self, metadata: IntegerMetadata) -> T:
         """
-        Will be called if accept is called on an IntegerValue.
+        Will be called if accept is called on an IntegerMetadata.
 
         Parameters
         ----------
-        value The IntegerValue being visited.
+        metadata The IntegerMetadata being visited
 
         Returns
         -------
@@ -39,13 +39,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_real(self, value: RealValue) -> T:
+    def visit_real(self, metadata: RealMetadata) -> T:
         """
-        Will be called if accept is called on a RealValue.
+        Will be called if accept is called on a RealMetadata.
 
         Parameters
         ----------
-        value The RealValue being visited.
+        metadata The RealMetadata being visited
 
         Returns
         -------
@@ -54,13 +54,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_boolean(self, value: BooleanValue) -> T:
+    def visit_boolean(self, metadata: BooleanMetadata) -> T:
         """
-        Will be called if accept is called on a BooleanValue.
+        Will be called if accept is called on a BooleanMetadata.
 
         Parameters
         ----------
-        value The BooleanValue being visited.
+        metadata The BooleanMetadata being visited
 
         Returns
         -------
@@ -69,13 +69,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_string(self, value: StringValue) -> T:
+    def visit_string(self, metadata: StringMetadata) -> T:
         """
-        Will be called if accept is called on a StringValue.
+        Will be called if accept is called on a StringMetadata.
 
         Parameters
         ----------
-        value The StringValue being visited.
+        metadata The StringMetadata being visited
 
         Returns
         -------
