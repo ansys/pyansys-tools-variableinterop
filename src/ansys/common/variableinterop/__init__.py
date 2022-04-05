@@ -72,6 +72,7 @@ from .ivariable_visitor import IVariableValueVisitor
 from .numeric_metadata import NumericMetadata
 from .real_metadata import RealMetadata
 from .real_value import RealValue
+from .string_value import StringValue
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 
