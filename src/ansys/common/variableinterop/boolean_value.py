@@ -23,7 +23,7 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
     def accept(
             self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
-        raise NotImplementedError
+        return visitor.visit_boolean(self)
 
     def variable_type(self) -> VariableType:
         return VariableType.BOOLEAN
