@@ -1,3 +1,4 @@
+"""Definition of IntegerValue."""
 from __future__ import annotations
 
 import numpy as np
@@ -10,6 +11,8 @@ from .variable_type import VariableType
 
 class IntegerValue(np.int64, variable_value.IVariableValue):
     """
+    Wrapper around an integer value.
+
     In Python IntegerValue is implemented by extending NumPy's int64 type. This means that
     they will decay naturally into numpy.int64 objects when using numpy's arithmetic
     operators. It also means that they inherit many of the numpy behaviors, which may be
@@ -18,12 +21,27 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    # equality definition here
+
+    # hashcode definition here
+
     def accept(
         self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
-        # inheritdoc (What is the correct way to do this?)
         return visitor.visit_int(self)
 
     def variable_type(self) -> VariableType:
-        # inheritdoc (What is the correct way to do this?)
         return VariableType.INTEGER
+
+    def to_api_string(self) -> str:
+        raise NotImplementedError
+
+    def from_api_string(self, value: str) -> None:
+        raise NotImplementedError
+
+    # to_formatted_string here
+
+    # from_formatted_string here
+
+    def get_modelcenter_type(self) -> str:
+        raise NotImplementedError
