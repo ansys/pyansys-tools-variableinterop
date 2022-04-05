@@ -57,15 +57,20 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def from_api_string(self, value: str) -> None:
+    @staticmethod
+    def from_api_string(var_type: VariableType, source: str) -> IVariableValue:
         """
-        Convert an API string back into a value.
+        Create a value from an API string.
 
         Parameters
         ----------
-        value
-        The string to convert.
+        var_type the variable type
+        source the string from which to convert
+
+        Returns
+        -------
+        An IVariableValue implementation with the specified type
+
         """
         raise NotImplementedError
 

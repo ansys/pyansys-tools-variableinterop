@@ -36,7 +36,16 @@ class RealValue(np.float64, variable_value.IVariableValue):
     def to_api_string(self) -> str:
         raise NotImplementedError
 
-    def from_api_string(self, value: str) -> None:
+    @staticmethod
+    def from_api_string(value: str) -> RealValue:
+        """
+        Convert an API string back into a value.
+
+        Parameters
+        ----------
+        value
+        The string to convert.
+        """
         raise NotImplementedError
 
     # to_formatted_string here
