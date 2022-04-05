@@ -4,10 +4,11 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 
-from ansys.common.variableinterop.boolean_value import BooleanValue
-from ansys.common.variableinterop.integer_value import IntegerValue
-from ansys.common.variableinterop.real_value import RealValue
-from ansys.common.variableinterop.string_value import StringValue
+import ansys.common.variableinterop.boolean_value as boolean_value
+import ansys.common.variableinterop.integer_value as integer_value
+import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.string_value as string_value
+
 
 T = TypeVar("T")
 
@@ -24,7 +25,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
     #  https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
-    def visit_integer(self, value: IntegerValue) -> T:
+    def visit_integer(self, value: integer_value.IntegerValue) -> T:
         """
         Will be called if accept is called on an IntegerValue.
 
@@ -39,7 +40,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_real(self, value: RealValue) -> T:
+    def visit_real(self, value: real_value.RealValue) -> T:
         """
         Will be called if accept is called on a RealValue.
 
@@ -54,7 +55,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_boolean(self, value: BooleanValue) -> T:
+    def visit_boolean(self, value: boolean_value.BooleanValue) -> T:
         """
         Will be called if accept is called on a BooleanValue.
 
@@ -69,7 +70,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_string(self, value: StringValue) -> T:
+    def visit_string(self, value: string_value.StringValue) -> T:
         """
         Will be called if accept is called on a StringValue.
 
