@@ -63,6 +63,7 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
+from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .integer_metadata import IntegerMetadata
