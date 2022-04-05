@@ -19,7 +19,7 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariable_visitor.IVariableVisitor[ivariable_visitor.T]
+            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
     ) -> ivariable_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
