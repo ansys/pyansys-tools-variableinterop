@@ -24,6 +24,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_string(self)
 
+    @property
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.STRING
 

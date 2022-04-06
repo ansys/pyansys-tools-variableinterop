@@ -19,6 +19,7 @@ class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
     ) -> common_variable_metadata.T:
         return visitor.visit_boolean(self)
 
+    @property
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN
 
