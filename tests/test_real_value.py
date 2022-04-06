@@ -2,7 +2,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import RealValue
+from ansys.common.variableinterop import IntegerValue, RealValue
 
 
 @pytest.mark.parametrize(
@@ -54,3 +54,65 @@ def test_construct(
                 assert instance == expect_equality
             else:
                 assert numpy.isnan(instance)
+
+
+def __valid_toint_id_gen(orig_val: RealValue) -> str:
+    """
+    Generate an ID for the parameterized tests for converting
+    RealValues to IntegerValues when the conversion is valid.
+
+    Parameters
+    ----------
+    orig_val the original value
+
+    Returns
+    -------
+    a suitable ID for the test
+    """
+    return str(orig_val)
+
+@pytest.mark.parametrize(
+    "orig_real,expected_result",
+    [
+        pytest.param(RealValue(0.0), IntegerValue(0)),
+        pytest.param(RealValue(1.0), IntegerValue(1)),
+        pytest.param(RealValue(1.45), IntegerValue(1)),
+        pytest.param(RealValue(1.49), IntegerValue(1)),
+        pytest.param(RealValue(1.5), IntegerValue(2)),
+        pytest.param(RealValue(1.7), IntegerValue(2)),
+        pytest.param(RealValue(2.1), IntegerValue(2)),
+        pytest.param(RealValue(2.5), IntegerValue(3)),
+        pytest.param(RealValue(2.7), IntegerValue(3)),
+        pytest.param(RealValue(-1.0), IntegerValue(-1)),
+        pytest.param(RealValue(-1.45), IntegerValue(-1)),
+        pytest.param(RealValue(-1.49), IntegerValue(-1)),
+        pytest.param(RealValue(-1.5), IntegerValue(-2)),
+        pytest.param(RealValue(-1.7), IntegerValue(-2)),
+        pytest.param(RealValue(-2.1), IntegerValue(-2)),
+        pytest.param(RealValue(-2.5), IntegerValue(-3)),
+        pytest.param(RealValue(-2.7), IntegerValue(-3))
+    ], ids=__valid_toint_id_gen
+)
+def test_intvalue_conversion_valid(
+        orig_real: RealValue, expected_result: IntegerValue):
+    # Execute
+    result: IntegerValue = orig_real.to_int_value()
+
+    # Verify
+    assert isinstance(result, IntegerValue)
+    assert result == expected_result
+
+@pytest.mark.parametrize(
+    "orig_real,expected_exception",
+    [
+        pytest.param(RealValue(9.3e18), OverflowError, id="over max"),
+        pytest.param(RealValue(-9.3e18), OverflowError, id="under min"),
+        pytest.param(RealValue(numpy.float64('inf')), OverflowError, id="+infinity"),
+        pytest.param(RealValue(numpy.float64('-inf')), OverflowError, id="-infinity"),
+        pytest.param(RealValue(numpy.float64('NaN')), ValueError, id="NaN"),
+    ],
+)
+def test_initvalue_conversion_invalid(
+        orig_real: RealValue, expected_exception: BaseException):
+    with _create_exception_context(expected_exception):
+        result: IntegerValue = orig_real.to_int_value()

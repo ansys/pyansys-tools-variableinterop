@@ -1,8 +1,11 @@
 """Definition of RealValue."""
 from __future__ import annotations
 
+from decimal import ROUND_HALF_UP, Decimal
+
 import numpy as np
 
+import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -47,6 +50,24 @@ class RealValue(np.float64, variable_value.IVariableValue):
         The string to convert.
         """
         raise NotImplementedError
+
+    def to_int_value(self) -> integer_value.IntegerValue:
+        """
+        Convert this RealValue to an IntegerValue.
+
+        The conversion is performed according to the type
+        interoperability specifications. The value is rounded to the
+        nearest integer, where values with a 5 in the tenths place are
+        always rounded away from zero. (Note that this is different
+        from the "default" Python rounding behavior.)
+
+        Returns
+        -------
+        An IntegerValue that is the result of rounding this value
+        to the nearest integer (values with a 5 in the tenths place
+        are rounded away from zero).
+        """
+        return integer_value.IntegerValue(Decimal(self).to_integral(ROUND_HALF_UP))
 
     # to_formatted_string here
 
