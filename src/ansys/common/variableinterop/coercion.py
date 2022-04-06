@@ -9,8 +9,10 @@ from typing import Any
 
 import numpy as np
 
+from .boolean_value import BooleanValue
 from .integer_value import IntegerValue
 from .real_value import RealValue
+from .string_value import StringValue
 from .variable_value import IVariableValue
 
 # A dictionary that maps source types to what variableinterop type it should be mapped to
@@ -19,6 +21,10 @@ TYPE_MAPPINGS = {
     np.integer: IntegerValue,
     float: RealValue,
     np.inexact: RealValue,
+    bool: BooleanValue,
+    np.bool_: BooleanValue,
+    str: StringValue,
+    np.str_: StringValue
 }
 
 
