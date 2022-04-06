@@ -4,8 +4,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Dict
 
-from .variable_type import VariableType
-from .variable_value import IVariableValue
+import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
+import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 
 class CommonVariableMetadata(ABC):
@@ -22,13 +23,28 @@ class CommonVariableMetadata(ABC):
     def __init__(self) -> None:
         """Initialize all members."""
         self._description: str = ""
-        self._custom_metadata: Dict[str, IVariableValue] = {}
+        self._custom_metadata: Dict[str, variable_value.IVariableValue] = {}
 
     # equality definition here
 
     # clone here
 
-    # accept here
+    @abstractmethod
+    def accept(
+            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T]
+    ) -> ivariablemetadata_visitor.T:
+        """
+        Invoke the visitor pattern of this object using the passed in visitor implementation.
+
+        Parameters
+        ----------
+        visitor The visitor object to call
+
+        Returns
+        -------
+        The results of the visitor invocation
+        """
+        raise NotImplementedError
 
     @property
     def description(self) -> str:
@@ -48,13 +64,13 @@ class CommonVariableMetadata(ABC):
         self._description = value
 
     @property
-    def custom_metadata(self) -> Dict[str, IVariableValue]:
+    def custom_metadata(self) -> Dict[str, variable_value.IVariableValue]:
         """Additional, custom metadata may be stored in this dictionary."""
         return self._custom_metadata
 
     @property
     @abstractmethod
-    def variable_type(self) -> VariableType:
+    def variable_type(self) -> variable_type.VariableType:
         """
         Variable type of this object.
 

@@ -3,26 +3,38 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import ansys.common.variableinterop.integer_value as integer_value
+import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
+import ansys.common.variableinterop.numeric_metadata as variable_metadata
+import ansys.common.variableinterop.variable_type as variable_type
+
 from .coercion import implicit_coerce
-from .integer_value import IntegerValue
-from .numeric_metadata import NumericMetadata
-from .variable_type import VariableType
 
 
-class IntegerMetadata(NumericMetadata):
-    """Common metadata for VariableType.INTEGER and VariableType.INTEGERL_ARRAY."""
+class IntegerMetadata(variable_metadata.NumericMetadata):
+    """Common metadata for VariableType.INTEGER and VariableType.INTEGER_ARRAY."""
 
     def __init__(self) -> None:
-        self._lower_bound: Optional[IntegerValue] = None
-        self._upper_bound: Optional[IntegerValue] = None
-        self._enumerated_values: List[IntegerValue] = []
+        super().__init__()
+        self._lower_bound: Optional[integer_value.IntegerValue] = None
+        self._upper_bound: Optional[integer_value.IntegerValue] = None
+        self._enumerated_values: List[integer_value.IntegerValue] = []
         self._enumerated_aliases: List[str] = []
 
-    def variable_type(self) -> VariableType:
-        return VariableType.INTEGER
+    # equality definition here
+
+    # clone here
+
+    def accept(
+            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[variable_metadata.T]
+    ) -> variable_metadata.T:
+        return visitor.visit_integer(self)
+
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.INTEGER
 
     @property
-    def lower_bound(self) -> Optional[IntegerValue]:
+    def lower_bound(self) -> Optional[integer_value.IntegerValue]:
         """
         A hard lower bound for this variable.
 
@@ -41,15 +53,17 @@ class IntegerMetadata(NumericMetadata):
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
-    def lower_bound(self, value: Optional[IntegerValue]) -> None:
+    def lower_bound(self, value: Optional[integer_value.IntegerValue]) -> None:
         """Set the lower bound."""
         self._lower_bound = value
 
     @property
-    def upper_bound(self) -> Optional[IntegerValue]:
+    def upper_bound(self) -> Optional[integer_value.IntegerValue]:
         """
-        A hard upper bound for this variable. Systems utilizing this variable should
-        prevent setting the value above this upper bound. This is typically used to
+        Hard upper bound for this variable.
+
+        Systems utilizing this variable should prevent setting the
+        value above this upper bound. This is typically used to
         represent physical impossibilities (100%) or limits of the simulation
         software (values above this will cause an error or invalid result). This may not
         be the soft bounds used for an optimization design parameter or DOE exploration.
@@ -62,14 +76,14 @@ class IntegerMetadata(NumericMetadata):
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
-    def upper_bound(self, value: Optional[IntegerValue]) -> None:
+    def upper_bound(self, value: Optional[integer_value.IntegerValue]) -> None:
         """Set the upper bound."""
         self._upper_bound = value
 
     # TODO need implicit coerce for arrays
 
     @property
-    def enumerated_values(self) -> List[IntegerValue]:
+    def enumerated_values(self) -> List[integer_value.IntegerValue]:
         """
         Get the list of enumerated values.
 
@@ -81,7 +95,7 @@ class IntegerMetadata(NumericMetadata):
         return self._enumerated_values
 
     @enumerated_values.setter
-    def enumerated_values(self, value: List[IntegerValue]) -> None:
+    def enumerated_values(self, value: List[integer_value.IntegerValue]) -> None:
         """
         Set the list of enumerated values.
 

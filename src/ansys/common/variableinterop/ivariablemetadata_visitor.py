@@ -2,12 +2,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
-from ansys.common.variableinterop.boolean_metadata import BooleanMetadata
-from ansys.common.variableinterop.integer_metadata import IntegerMetadata
-from ansys.common.variableinterop.real_metadata import RealMetadata
-from ansys.common.variableinterop.string_metadata import StringMetadata
+if TYPE_CHECKING:
+    import ansys.common.variableinterop.boolean_metadata as boolean_metadata
+    import ansys.common.variableinterop.integer_metadata as integer_metadata
+    import ansys.common.variableinterop.real_metadata as real_metadata
+    import ansys.common.variableinterop.string_metadata as string_metadata
 
 T = TypeVar("T")
 
@@ -24,7 +25,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     #  https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
-    def visit_integer(self, metadata: IntegerMetadata) -> T:
+    def visit_integer(self, metadata: integer_metadata.IntegerMetadata) -> T:
         """
         Will be called if accept is called on an IntegerMetadata.
 
@@ -39,7 +40,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_real(self, metadata: RealMetadata) -> T:
+    def visit_real(self, metadata: real_metadata.RealMetadata) -> T:
         """
         Will be called if accept is called on a RealMetadata.
 
@@ -54,7 +55,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_boolean(self, metadata: BooleanMetadata) -> T:
+    def visit_boolean(self, metadata: boolean_metadata.BooleanMetadata) -> T:
         """
         Will be called if accept is called on a BooleanMetadata.
 
@@ -69,7 +70,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_string(self, metadata: StringMetadata) -> T:
+    def visit_string(self, metadata: string_metadata.StringMetadata) -> T:
         """
         Will be called if accept is called on a StringMetadata.
 

@@ -11,6 +11,8 @@ from typing import Any
 
 import numpy as np
 
+import ansys.common.variableinterop.real_value as real_value
+
 from .integer_value import IntegerValue
 from .real_value import RealValue
 from .variable_value import IVariableValue

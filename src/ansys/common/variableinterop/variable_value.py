@@ -4,8 +4,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
-from .variable_type import VariableType
+import ansys.common.variableinterop.variable_type as variable_type
 
 
 class IVariableValue(ABC):
@@ -36,7 +35,7 @@ class IVariableValue(ABC):
 
     @property
     @abstractmethod
-    def variable_type(self) -> VariableType:
+    def variable_type(self) -> variable_type.VariableType:
         """
         Get the variable type of this object.
 

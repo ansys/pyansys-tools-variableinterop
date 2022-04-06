@@ -2,12 +2,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
-import ansys.common.variableinterop.boolean_value as boolean_value
-import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.string_value as string_value
+if TYPE_CHECKING:
+    import ansys.common.variableinterop.boolean_value as boolean_value
+    import ansys.common.variableinterop.integer_value as integer_value
+    import ansys.common.variableinterop.real_value as real_value
+    import ansys.common.variableinterop.string_value as string_value
 
 
 T = TypeVar("T")

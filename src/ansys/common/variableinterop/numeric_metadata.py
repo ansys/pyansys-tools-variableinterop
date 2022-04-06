@@ -2,14 +2,12 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import TypeVar
 
-from .common_variable_metadata import CommonVariableMetadata
-
-T = TypeVar("T")
+import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
+import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 
 
-class NumericMetadata(CommonVariableMetadata, ABC):
+class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
     """Generic base class for all numeric metadata implementations."""
 
     def __init__(self) -> None:
@@ -21,7 +19,10 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
     # clone here
 
-    # accept here
+    def accept(
+            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[common_variable_metadata.T]
+    ) -> common_variable_metadata.T:
+        raise NotImplementedError
 
     @property
     def units(self) -> str:

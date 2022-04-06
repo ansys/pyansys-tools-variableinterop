@@ -3,33 +3,38 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
+import ansys.common.variableinterop.numeric_metadata as variable_metadata
+import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.variable_type as variable_type
+
 from .coercion import implicit_coerce
-from .numeric_metadata import NumericMetadata
-from .real_value import RealValue
-from .variable_type import VariableType
 
 
-class RealMetadata(NumericMetadata):
+class RealMetadata(variable_metadata.NumericMetadata):
     """Common metadata for VariableType.REAL and VariableType.REAL_ARRAY."""
 
     def __init__(self) -> None:
         super().__init__()
-        self._lower_bound: Optional[RealValue] = None
-        self._upper_bound: Optional[RealValue] = None
-        self._enumerated_values: List[RealValue] = []
+        self._lower_bound: Optional[real_value.RealValue] = None
+        self._upper_bound: Optional[real_value.RealValue] = None
+        self._enumerated_values: List[real_value.RealValue] = []
         self._enumerated_aliases: List[str] = []
 
     # equality definition here
 
     # clone here
 
-    # accept here
+    def accept(
+            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[variable_metadata.T]
+    ) -> variable_metadata.T:
+        return visitor.visit_real(self)
 
-    def variable_type(self) -> VariableType:
-        return VariableType.INTEGER
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.REAL
 
     @property
-    def lower_bound(self) -> Optional[RealValue]:
+    def lower_bound(self) -> Optional[real_value.RealValue]:
         """
         A hard lower bound for this variable.
 
@@ -48,12 +53,12 @@ class RealMetadata(NumericMetadata):
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
-    def lower_bound(self, value: Optional[RealValue]) -> None:
+    def lower_bound(self, value: Optional[real_value.RealValue]) -> None:
         """Set the lower bound."""
         self._lower_bound = value
 
     @property
-    def upper_bound(self) -> Optional[RealValue]:
+    def upper_bound(self) -> Optional[real_value.RealValue]:
         """
         A hard upper bound for this variable.
 
@@ -72,14 +77,14 @@ class RealMetadata(NumericMetadata):
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
-    def upper_bound(self, value: Optional[RealValue]) -> None:
+    def upper_bound(self, value: Optional[real_value.RealValue]) -> None:
         """Set the upper bound."""
         self._upper_bound = value
 
     # TODO need implicit coerce for arrays
 
     @property
-    def enumerated_values(self) -> List[RealValue]:
+    def enumerated_values(self) -> List[real_value.RealValue]:
         """
         Get the list of enumerated values.
 
@@ -91,7 +96,7 @@ class RealMetadata(NumericMetadata):
         return self._enumerated_values
 
     @enumerated_values.setter
-    def enumerated_values(self, value: List[RealValue]) -> None:
+    def enumerated_values(self, value: List[real_value.RealValue]) -> None:
         """
         Set the list of enumerated values.
 
