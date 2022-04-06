@@ -68,6 +68,7 @@ from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .integer_metadata import IntegerMetadata
 from .integer_value import IntegerValue
+from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .ivariable_visitor import IVariableValueVisitor
 from .numeric_metadata import NumericMetadata
 from .real_metadata import RealMetadata
