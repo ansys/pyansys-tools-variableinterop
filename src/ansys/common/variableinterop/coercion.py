@@ -1,7 +1,5 @@
-"""
-This module contains utilities for coercing arbitrary Python objects into the appropriate
-IVariableValue type.
-"""
+"""This module contains utilities for coercing arbitrary Python objects \
+into the appropriate IVariableValue type."""
 from __future__ import annotations
 
 import functools
@@ -10,8 +8,6 @@ import typing
 from typing import Any
 
 import numpy as np
-
-import ansys.common.variableinterop.real_value as real_value
 
 from .integer_value import IntegerValue
 from .real_value import RealValue
@@ -48,9 +44,9 @@ def _is_optional(arg_type: type) -> bool:
 
 def _get_optional_type(arg_type: type) -> type:
     """
-    If _is_optional(arg_type) returns true, this function will return the type
-    argument to Optional[x]. If _is_optional(arg_type) returns false, this
-    function's behavior is undeclared.
+    If _is_optional(arg_type) returns true, this function will return \
+    the type argument to Optional[x]. If _is_optional(arg_type) returns \
+    false, this function's behavior is undeclared.
 
     Parameters
     ----------
@@ -65,15 +61,16 @@ def _get_optional_type(arg_type: type) -> type:
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     """
-    Attempts to coerce the argument into the given type. This function uses implicit
-    semantics in that lossy conversions are not considered (such as int64->real64 since
-    precision may be lost)
+    Attempt to coerce the argument into the given type.
+
+    This function uses implicit semantics in that lossy conversions are
+    not considered (such as int64->real64 since precision may be lost).
 
     Parameters
     ----------
     arg The object to attempt to convert
-    arg_type The type of object to convert to. Must be IVariableValue or something
-        derived from it.
+    arg_type The type of object to convert to. Must be IVariableValue \
+        or something derived from it.
 
     Returns
     -------
@@ -83,7 +80,6 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     ------
     TypeError if the argument cannot be converted to the supplied type
     """
-
     if _is_optional(arg_type):
         if arg is None:
             return None
@@ -116,8 +112,9 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
 def implicit_coerce(func):
     """
-    Decorator for functions that uses the PEP 484 typing system to try and coerce any arguments
-    that accept IVariableValue or any derived type into an acceptable value
+    Use to decorate functions that use the PEP 484 typing system to try \
+    and coerce any arguments that accept IVariableValue or any derived \
+    type into an acceptable value.
 
     Parameters
     ----------

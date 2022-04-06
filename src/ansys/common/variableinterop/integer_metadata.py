@@ -36,7 +36,7 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
     @property
     def lower_bound(self) -> Optional[integer_value.IntegerValue]:
         """
-        A hard lower bound for this variable.
+        Hard lower bound for this variable.
 
         Systems utilizing this variable should prevent setting the
         value below this lower bound. This is typically used to
@@ -64,9 +64,10 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
 
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used to
-        represent physical impossibilities (100%) or limits of the simulation
-        software (values above this will cause an error or invalid result). This may not
-        be the soft bounds used for an optimization design parameter or DOE exploration.
+        represent physical impossibilities (100%) or limits of the
+        simulation software (values above this will cause an error or
+        invalid result). This may not be the soft bounds used for an
+        optimization design parameter or DOE exploration.
 
         Returns
         -------

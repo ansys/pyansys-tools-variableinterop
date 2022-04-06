@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from typing import Dict
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_type as variable_type_lib
 import ansys.common.variableinterop.variable_value as variable_value
 
 
@@ -31,7 +31,8 @@ class CommonVariableMetadata(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T]
+            self,
+            visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T]
     ) -> ivariablemetadata_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
@@ -70,7 +71,7 @@ class CommonVariableMetadata(ABC):
 
     @property
     @abstractmethod
-    def variable_type(self) -> variable_type.VariableType:
+    def variable_type(self) -> variable_type_lib.VariableType:
         """
         Variable type of this object.
 

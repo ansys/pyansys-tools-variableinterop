@@ -22,7 +22,8 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
     # clone here
 
     def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[common_variable_metadata.T]
+            self,
+            visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[common_variable_metadata.T]
     ) -> common_variable_metadata.T:
         return visitor.visit_string(self)
 

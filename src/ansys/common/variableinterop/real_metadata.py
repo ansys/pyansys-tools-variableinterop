@@ -36,7 +36,7 @@ class RealMetadata(variable_metadata.NumericMetadata):
     @property
     def lower_bound(self) -> Optional[real_value.RealValue]:
         """
-        A hard lower bound for this variable.
+        Hard lower bound for this variable.
 
         Systems utilizing this variable should prevent setting the
         value below this lower bound. This is typically used to
@@ -60,7 +60,7 @@ class RealMetadata(variable_metadata.NumericMetadata):
     @property
     def upper_bound(self) -> Optional[real_value.RealValue]:
         """
-        A hard upper bound for this variable.
+        Hard upper bound for this variable.
 
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used

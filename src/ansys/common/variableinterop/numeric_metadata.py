@@ -20,7 +20,8 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
     # clone here
 
     def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[common_variable_metadata.T]
+            self,
+            visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[common_variable_metadata.T]
     ) -> common_variable_metadata.T:
         raise NotImplementedError
 
