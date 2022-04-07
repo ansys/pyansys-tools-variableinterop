@@ -1,3 +1,5 @@
+from typing import Any
+
 import numpy
 import pytest
 from test_utils import _create_exception_context
@@ -44,7 +46,7 @@ from ansys.common.variableinterop import IntegerValue, RealValue
         pytest.param('1.0', numpy.float64(1.0), None, id="one-text"),
     ])
 def test_construct(
-        arg: any, expect_equality: numpy.float64, expect_exception: BaseException) -> None:
+        arg: Any, expect_equality: numpy.float64, expect_exception: BaseException) -> None:
     """Verify that __init__ for RealValue correctly instantiates the superclass data."""
     with _create_exception_context(expect_exception):
         instance = RealValue(arg)
