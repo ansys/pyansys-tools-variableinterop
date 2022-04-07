@@ -10,7 +10,8 @@ from .variable_type import VariableType
 
 
 class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
-    """
+    """Array of real values.
+
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
     operators. It also means that they inherit many of the numpy behaviors, which may be

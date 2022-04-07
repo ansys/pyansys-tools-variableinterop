@@ -10,7 +10,8 @@ from .variable_type import VariableType
 
 
 class IntegerArrayValue(NDArray[np.int_], variable_value.IVariableValue):
-    """
+    """Array of integer values.
+
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
     operators. It also means that they inherit many of the numpy behaviors, which may be
