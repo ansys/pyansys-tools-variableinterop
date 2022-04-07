@@ -1,12 +1,13 @@
 """Unit tests of IVariableMetadataVisitor, and accept methods of metadata types."""
 
+import pytest
+
 import ansys.common.variableinterop.boolean_metadata as boolean_metadata
+import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
 import ansys.common.variableinterop.integer_metadata as integer_metadata
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.real_metadata as real_metadata
 import ansys.common.variableinterop.string_metadata as string_metadata
-import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
-import pytest
 
 
 class TestVisitor(ivariablemetadata_visitor.IVariableMetadataVisitor[str]):
