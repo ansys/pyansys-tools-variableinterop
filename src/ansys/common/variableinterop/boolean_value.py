@@ -8,14 +8,24 @@ import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
 
-class BooleanValue(np.bool_, variable_value.IVariableValue):
+class BooleanValue(variable_value.IVariableValue):
     """
     Wrapper around a boolean value.
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    def __init__(self, value: bool):
+        self.__value = value
+
     # equality definition here
+    def __eq__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value == other.__value
+        elif isinstance(other, bool):
+            return self.__value == other
+        else:
+            return False
 
     # hashcode definition here
 
