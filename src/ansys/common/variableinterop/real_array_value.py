@@ -5,10 +5,10 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from .variable_type import VariableType
+from ansys.common.variableinterop import VariableType, RealValue
 
 
-class RealArrayValue(np.ndarray, variable_value.RealValue):
+class RealArrayValue(np.ndarray, RealValue):
     """
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
@@ -22,10 +22,21 @@ class RealArrayValue(np.ndarray, variable_value.RealValue):
         return super().__new__(cls, shape=shape_, dtype=np.float_)
 
     def accept(
-        self,
-        visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
+            self,
+            visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
         return visitor.visit_real_array(self)
 
     def variable_type(self) -> VariableType:
         return VariableType.REAL_ARRAY
+
+    # TODO: full implementation
+
+    def to_api_string(self) -> str:
+        raise NotImplementedError
+
+    def from_api_string(self, value: str) -> None:
+        raise NotImplementedError
+
+    def get_modelcenter_type(self) -> str:
+        raise NotImplementedError

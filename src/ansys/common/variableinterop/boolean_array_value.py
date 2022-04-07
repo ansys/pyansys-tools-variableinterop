@@ -5,10 +5,10 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from .variable_type import VariableType
+from ansys.common.variableinterop import VariableType, BooleanValue
 
 
-class BooleanArrayValue(np.ndarray, variable_value.BooleanValue):
+class BooleanArrayValue(np.ndarray, BooleanValue):
     """
     In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
@@ -29,3 +29,14 @@ class BooleanArrayValue(np.ndarray, variable_value.BooleanValue):
 
     def variable_type(self) -> VariableType:
         return VariableType.BOOLEAN_ARRAY
+
+    # TODO: full implementation
+
+    def to_api_string(self) -> str:
+        raise NotImplementedError
+
+    def from_api_string(self, value: str) -> None:
+        raise NotImplementedError
+
+    def get_modelcenter_type(self) -> str:
+        raise NotImplementedError

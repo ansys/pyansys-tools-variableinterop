@@ -73,5 +73,15 @@ from .real_metadata import RealMetadata
 from .real_value import RealValue
 from .variable_type import VariableType
 from .variable_value import IVariableValue
+from .string_value import StringValue
+from .boolean_value import BooleanValue
+from .boolean_array_value import BooleanArrayValue
+from .integer_array_value import IntegerArrayValue
+from .real_array_value import RealArrayValue
+from .string_array_value import StringArrayValue
+from .boolean_array_metadata import BooleanArrayMetadata
+from .integer_array_metadata import IntegerArrayMetadata
+from .real_array_metadata import RealArrayMetadata
+from .string_array_metadata import StringArrayMetadata
 
 # TODO: Get rid of star
