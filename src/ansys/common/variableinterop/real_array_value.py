@@ -5,10 +5,10 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from ansys.common.variableinterop import VariableType, RealValue
+from ansys.common.variableinterop import VariableType
 
 
-class RealArrayValue(np.ndarray, RealValue):
+class RealArrayValue(np.ndarray, variable_value.IVariableValue):
     """
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array

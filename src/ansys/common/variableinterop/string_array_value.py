@@ -5,10 +5,10 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from ansys.common.variableinterop import VariableType, StringValue
+from ansys.common.variableinterop import VariableType
 
 
-class StringArrayValue(np.ndarray, StringValue):
+class StringArrayValue(np.ndarray, variable_value.IVariableValue):
     """
     In Python StringArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
