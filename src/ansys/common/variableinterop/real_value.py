@@ -5,6 +5,7 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import numpy as np
 
+import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
@@ -68,6 +69,19 @@ class RealValue(np.float64, variable_value.IVariableValue):
         are rounded away from zero).
         """
         return integer_value.IntegerValue(Decimal(self).to_integral(ROUND_HALF_UP))
+
+    def to_boolean_value(self) -> boolean_value.BooleanValue:
+        """
+        Convert this RealValue to a BooleanValue.
+
+        The conversion is performed according to the type
+        interoperability specifications. Any value other than exactly 0
+        is considered to be 'True'.
+        Returns
+        -------
+        A BooleanValue that is the result of converting this RealValue.
+        """
+        return boolean_value.BooleanValue(self != 0)
 
     # to_formatted_string here
 

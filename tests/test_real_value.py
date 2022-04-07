@@ -4,7 +4,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import IntegerValue, RealValue
+from ansys.common.variableinterop import BooleanValue, IntegerValue, RealValue
 
 
 @pytest.mark.parametrize(
@@ -120,6 +120,34 @@ def test_intvalue_conversion_invalid(
         orig_real: RealValue, expected_exception: BaseException):
     with _create_exception_context(expected_exception):
         result: IntegerValue = orig_real.to_int_value()
+
+
+@pytest.mark.parametrize(
+    'orig_real,expected_result',
+    [
+        pytest.param(RealValue(0), BooleanValue(False), id="zero"),
+        pytest.param(RealValue(-0.01), BooleanValue(True), id="negative"),
+        pytest.param(RealValue(0.01), BooleanValue(True), id="positive"),
+        pytest.param(RealValue(float('inf')), BooleanValue(True), id="inf"),
+        pytest.param(RealValue(float('-inf')), BooleanValue(True), id="-inf"),
+        pytest.param(RealValue(float('nan')), BooleanValue(True), id="NaN"),
+
+    ],
+)
+def test_boolean_value_conversion(
+        orig_real: RealValue, expected_result: BooleanValue) -> None:
+    """
+    Verify that RealValues are correctly converted to BooleanValues
+    Parameters
+    ----------
+    orig_real the original real
+    expected_result the expected boolean
+    """
+    result: BooleanValue = orig_real.to_boolean_value()
+
+    # TODO: Figure out the whole numpy.bool_ decomposition issue here
+    # assert type(result) is BooleanValue
+    assert result == expected_result
 
 
 @pytest.mark.parametrize(
