@@ -84,7 +84,6 @@ from .string_array_metadata import StringArrayMetadata
 from .string_array_value import StringArrayValue
 from .string_metadata import StringMetadata
 from .string_value import StringValue
-from .string_value import StringValue
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 
