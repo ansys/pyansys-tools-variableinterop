@@ -114,7 +114,7 @@ def test_intvalue_conversion_valid(
         pytest.param(RealValue(numpy.float64('NaN')), ValueError, id="NaN"),
     ],
 )
-def test_initvalue_conversion_invalid(
+def test_intvalue_conversion_invalid(
         orig_real: RealValue, expected_exception: BaseException):
     with _create_exception_context(expected_exception):
         result: IntegerValue = orig_real.to_int_value()
