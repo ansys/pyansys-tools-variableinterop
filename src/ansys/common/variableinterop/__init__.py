@@ -67,7 +67,6 @@ from .boolean_array_metadata import BooleanArrayMetadata
 from .boolean_array_value import BooleanArrayValue
 from .boolean_metadata import BooleanMetadata
 from .boolean_value import BooleanValue
-from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .integer_array_metadata import IntegerArrayMetadata
