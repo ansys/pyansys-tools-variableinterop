@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+from numpy.typing import NDArray
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
@@ -8,7 +9,7 @@ import ansys.common.variableinterop.variable_value as variable_value
 from .variable_type import VariableType
 
 
-class BooleanArrayValue(np.ndarray, variable_value.IVariableValue):
+class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     """
     In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
