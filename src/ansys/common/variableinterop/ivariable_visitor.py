@@ -3,6 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 
+import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.real_value as real_value
 
@@ -42,6 +43,21 @@ class IVariableValueVisitor(ABC, Generic[T]):
         Parameters
         ----------
         value The RealValue being visited
+
+        Returns
+        -------
+        The result
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_file(self, value: file_value.FileValue) -> T:
+        """
+        Will be called if accept is called on an FileValue
+
+        Parameters
+        ----------
+        value The FileValue being visited
 
         Returns
         -------

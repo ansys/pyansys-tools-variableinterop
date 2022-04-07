@@ -65,9 +65,13 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
+from .file_metadata import FileMetadata
+from .file_scope import FileScope
+from .file_value import EMPTY_FILE, FileValue
 from .integer_metadata import IntegerMetadata
 from .integer_value import IntegerValue
 from .ivariable_visitor import IVariableValueVisitor
+from .non_managing_file_scope import NonManagingFileScope
 from .numeric_metadata import NumericMetadata
 from .real_metadata import RealMetadata
 from .real_value import RealValue
