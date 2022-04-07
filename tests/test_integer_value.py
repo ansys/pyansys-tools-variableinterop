@@ -1,3 +1,5 @@
+from typing import Any
+
 import numpy
 import pytest
 from test_utils import _create_exception_context
@@ -29,7 +31,7 @@ from ansys.common.variableinterop import IntegerValue
         pytest.param('-1', numpy.int64(-1), None, id="negative-one-text"),
         pytest.param('1', numpy.int64(1), None, id="one-text"),
     ])
-def test_construct(arg: any, expect_equality: numpy.int64, expect_exception: BaseException) -> None:
+def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: BaseException) -> None:
     """Verify that __init__ for IntegerValue correctly instantiates the superclass data."""
     with _create_exception_context(expect_exception):
         instance = IntegerValue(arg)

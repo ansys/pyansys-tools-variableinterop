@@ -1,3 +1,5 @@
+from typing import Any
+
 import numpy
 import pytest
 
@@ -16,7 +18,7 @@ from ansys.common.variableinterop import BooleanValue
         pytest.param("something", numpy.bool_(True), id="non-empty-string"),
         pytest.param("false", numpy.bool_(True), id="non-empty-string-says-false"),
     ])
-def test_construct(arg: any, expect_equality: numpy.bool_) -> None:
+def test_construct(arg: Any, expect_equality: numpy.bool_) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
     instance: BooleanValue = BooleanValue(arg)
     assert instance == expect_equality
