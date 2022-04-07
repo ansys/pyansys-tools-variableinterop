@@ -17,7 +17,7 @@ class StringArrayValue(np.ndarray, variable_value.StringValue):
     For example, when converting from real to integer, the value will be floored instead
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
 
-    (TODO) ndarray cannot hold string values; question as to what approack we should
+    (TODO) ndarray cannot hold string values; question as to what approach we should
            take here instead of deriving from that.
     """
 
