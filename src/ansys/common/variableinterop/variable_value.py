@@ -57,22 +57,6 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    @staticmethod
-    def from_api_string(var_type: VariableType, source: str) -> IVariableValue:
-        """
-        Create a value from an API string.
-
-        Parameters
-        ----------
-        var_type the variable type
-        source the string from which to convert
-
-        Returns
-        -------
-        An IVariableValue implementation with the specified type
-
-        """
-        raise NotImplementedError
 
     # to_formatted_string here
 
