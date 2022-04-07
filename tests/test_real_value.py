@@ -73,6 +73,7 @@ def __valid_toint_id_gen(orig_val: RealValue) -> str:
     """
     return str(orig_val)
 
+
 @pytest.mark.parametrize(
     "orig_real,expected_result",
     [
@@ -104,6 +105,7 @@ def test_intvalue_conversion_valid(
     assert isinstance(result, IntegerValue)
     assert result == expected_result
 
+
 @pytest.mark.parametrize(
     "orig_real,expected_exception",
     [
@@ -118,3 +120,96 @@ def test_intvalue_conversion_invalid(
         orig_real: RealValue, expected_exception: BaseException):
     with _create_exception_context(expected_exception):
         result: IntegerValue = orig_real.to_int_value()
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param('4.5', RealValue(4.5), id="basic, positive"),
+        pytest.param('-4.5', RealValue(-4.5), id="basic negative"),
+        pytest.param('0', RealValue(0), id="zero"),
+        pytest.param('2.8E8', RealValue(2.8E8), id="sci notation, positive, capital E"),
+        pytest.param('-2.8E8', RealValue(-2.8E8), id="sci notation, negative, capital E"),
+        pytest.param('2.8e8', RealValue(2.8E8), id="sci notation, positive, lowercase e"),
+        pytest.param('2.8e-8', RealValue(2.8E-8), id="sci notation, negative-exponent"),
+        pytest.param('.4', RealValue(0.4), id="no leading zero"),
+        pytest.param('4.0', RealValue(4.0), id="whole number, point zero"),
+        pytest.param('4.', RealValue(4.0), id="whole number, decimal, no zero"),
+        pytest.param('4', RealValue(4), id="whole number, no decimal"),
+        pytest.param('+4.7', RealValue(4.7), id="explicit positive"),
+        pytest.param('1.7976931348623157e+308', RealValue(1.7976931348623157e+308),
+                     id="absolute maximum"),
+        pytest.param('-1.7976931348623157e+308', RealValue(-1.7976931348623157e+308),
+                     id="absolute minimum"),
+        pytest.param('2.2250738585072014e-308', RealValue(2.2250738585072014e-308),
+                     id="epsilon"),
+        pytest.param(' \t\r\n  867.5309', RealValue(867.5309), id="leading whitespace"),
+        pytest.param('867.5309   \t\r\n', RealValue(867.5309), id="trailing whitespace"),
+        pytest.param('Inf', RealValue(numpy.float64('inf')), id="Inf"),
+        pytest.param('inf', RealValue(numpy.float64('inf')), id="inf"),
+        pytest.param('INF', RealValue(numpy.float64('inf')), id="INF"),
+        pytest.param('Infinity', RealValue(numpy.float64('inf')), id="Infinity"),
+        pytest.param('infinity', RealValue(numpy.float64('inf')), id="infinity"),
+        pytest.param('INFINITY', RealValue(numpy.float64('inf')), id="INFINITY"),
+        pytest.param('-Inf', RealValue(numpy.float64('-inf')), id="negative Inf"),
+        pytest.param('-inf', RealValue(numpy.float64('-inf')), id="negative inf"),
+        pytest.param('-INF', RealValue(numpy.float64('-inf')), id="negative INF"),
+        pytest.param('-Infinity', RealValue(numpy.float64('-inf')), id="negative Infinity"),
+        pytest.param('-infinity', RealValue(numpy.float64('-inf')), id="negative infinity"),
+        pytest.param('-INFINITY', RealValue(numpy.float64('-inf')), id="negative INFINITY"),
+        pytest.param('1.7976931348623157e+309', RealValue(numpy.float64('Inf')),
+                     id="over maximum"),
+        pytest.param('-1.7976931348623157e+309', RealValue(numpy.float64('-Inf')),
+                     id="under minimum"),
+        pytest.param('NaN', RealValue(numpy.float64('NaN')),
+                     id="NaN"),
+        pytest.param('nan', RealValue(numpy.float64('NaN')),
+                     id="nan"),
+    ],
+)
+def test_from_api_string_valid(
+        source: str, expected_result: RealValue) -> None:
+    """
+    Verify that valid cases work on RealValue.from_api_string.
+
+    Parameters
+    ----------
+    source the string to convert
+    expected_result the expected result
+    """
+    # Execute
+    actual_result: RealValue = RealValue.from_api_string(source)
+
+    #Verify
+    assert isinstance(actual_result, RealValue)
+    if not numpy.isnan(expected_result):
+        assert actual_result == expected_result
+    else:
+        assert numpy.isnan(actual_result)
+
+
+@pytest.mark.parametrize(
+    "source,expected_exception",
+    [
+        pytest.param('60Ɛϛ˙ㄥ98', ValueError, id='garbage'),
+        pytest.param('1,204.5', ValueError, id='thousands separator'),
+        pytest.param('1 204.5', ValueError, id='internal whitespace'),
+        pytest.param('2.2.2', ValueError, id='multiple decimals'),
+        pytest.param('true', ValueError, id='boolean literal'),
+        pytest.param('', ValueError, id='empty string'),
+        pytest.param(None, TypeError, id='None'),
+    ],
+)
+def test_from_api_string_invalid(
+        source: str, expected_exception: BaseException) -> None:
+    """
+    Verify that invalid cases correctly raise on from_api_string.
+
+    Parameters
+    ----------
+    source the string to convert
+    expected_exception the expected error raised
+    """
+    # Execute
+    with _create_exception_context(expected_exception):
+        actual_result: RealValue = RealValue.from_api_string(source)

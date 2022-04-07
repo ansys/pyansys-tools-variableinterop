@@ -49,7 +49,7 @@ class RealValue(np.float64, variable_value.IVariableValue):
         value
         The string to convert.
         """
-        raise NotImplementedError
+        return RealValue(float(value))
 
     def to_int_value(self) -> integer_value.IntegerValue:
         """
