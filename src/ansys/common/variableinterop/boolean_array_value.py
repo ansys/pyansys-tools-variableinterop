@@ -5,7 +5,7 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from ansys.common.variableinterop.variable_type import VariableType
+from .variable_type import VariableType
 
 
 class BooleanArrayValue(np.ndarray, variable_value.IVariableValue):

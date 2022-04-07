@@ -5,7 +5,7 @@ import numpy as np
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
-from ansys.common.variableinterop import VariableType
+from .variable_type import VariableType
 
 
 class StringArrayValue(np.ndarray, variable_value.IVariableValue):
