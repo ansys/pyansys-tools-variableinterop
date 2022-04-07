@@ -8,6 +8,7 @@ import ansys.common.variableinterop.variable_value as variable_value
 from .variable_type import VariableType
 
 
+# TODO: fix inheritance typing once we have the file type defined.
 class FileArrayValue(np.ndarray, variable_value.IVariableValue):
     """Array of file values.
 
