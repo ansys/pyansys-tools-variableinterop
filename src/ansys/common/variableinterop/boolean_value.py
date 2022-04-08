@@ -1,11 +1,13 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
-
 from ansys.common.variableinterop.variable_value import IVariableValue
-from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-from ansys.common.variableinterop.to_bool_visitor import ToBoolVisitor
-from ansys.common.variableinterop.variable_type import VariableType
-from typing import TypeVar
+from numpy import bool_
+from typing import TYPE_CHECKING, TypeVar
+
+if TYPE_CHECKING:
+    from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
+    from ansys.common.variableinterop.to_bool_visitor import ToBoolVisitor
+    from ansys.common.variableinterop.variable_type import VariableType
 
 
 class BooleanValue(IVariableValue):
@@ -20,7 +22,7 @@ class BooleanValue(IVariableValue):
     def __init__(self, source: object = None):
         if source is None:
             self.__value = False
-        elif isinstance(source, bool):
+        elif isinstance(source, (bool, bool_)):
             self.__value = source
         elif isinstance(source, IVariableValue):
             self.__value = source.accept(ToBoolVisitor())
@@ -31,7 +33,7 @@ class BooleanValue(IVariableValue):
     def __eq__(self, other):
         if isinstance(other, BooleanValue):
             return self.__value == other.__value
-        elif isinstance(other, bool):
+        elif isinstance(other, (bool, bool_)):
             return self.__value == other
         else:
             return False

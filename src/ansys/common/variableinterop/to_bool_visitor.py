@@ -1,5 +1,5 @@
-from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.boolean_value import BooleanValue
+from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.integer_value import IntegerValue
 from ansys.common.variableinterop.real_value import RealValue
 from ansys.common.variableinterop.string_value import StringValue
