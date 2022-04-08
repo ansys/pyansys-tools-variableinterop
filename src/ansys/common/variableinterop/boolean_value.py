@@ -5,6 +5,7 @@ from typing import Dict
 
 import numpy as np
 
+import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -77,6 +78,27 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
             real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)
             return real_equiv.to_boolean_value()
 
+    @staticmethod
+    def to_integer_value(orig: BooleanValue) -> integer_value.IntegerValue:
+        """
+        Convert a given BooleanValue to an IntegerValue
+        True is converted to 1 and False is converted to 0
+        (Note: this is temporarily a static until we can get the
+        non-numpy64-bool derived version working, since there's currently no way to actually have
+        a BooleanValue instance at the moment).
+        Parameters
+        ----------
+        orig the original BooleanValue
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        # TODO: Change back to an instance value if/when the work to make an independent
+        # Boolean class is done.
+        if orig:
+            return integer_value.IntegerValue(1)
+        else:
+            return integer_value.IntegerValue(0)
     # to_formatted_string here
 
     # from_formatted_string here

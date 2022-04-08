@@ -4,7 +4,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue
+from ansys.common.variableinterop import BooleanValue, IntegerValue
 
 
 @pytest.mark.parametrize(
@@ -107,4 +107,27 @@ def test_to_api_string(source: BooleanValue, expected_result: str) -> None:
 
     # Verify
     assert type(result) is str
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param(BooleanValue(True), IntegerValue(1), id='true'),
+        pytest.param(BooleanValue(False), IntegerValue(0), id='false')
+    ]
+)
+def test_to_int_value(source: BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to IntegerValue works correctly.
+    Parameters
+    ----------
+    source the original BooleanValue
+    expected_result the expected result of the conversion
+    """
+    # Execute
+    result: IntegerValue = BooleanValue.to_integer_value(source)
+
+    # Verify
+    assert type(result) is IntegerValue
     assert result == expected_result
