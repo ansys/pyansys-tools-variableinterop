@@ -37,6 +37,21 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     def to_api_string(self) -> str:
         return str(self)
 
+    def to_real_value(self) -> real_value.RealValue:
+        """
+        Convert this IntegerValue to a RealValue.
+
+        Note that since a RealValue is a 64-bit floating point number, it has a 52-bit mantissa.
+        That means that a portion of the range of 64-bit IntegerValues cannot be completely
+        accurately represented by RealValues; this conversion is sometimes lossy for IntegerValues
+        of sufficient magnitude.
+
+        Returns
+        -------
+        A RealValue with the same numeric value as this IntegerValue.
+        """
+        return real_value.RealValue(self)
+
     @staticmethod
     def from_api_string(value: str) -> IntegerValue:
         """

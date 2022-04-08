@@ -4,7 +4,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import IntegerValue
+from ansys.common.variableinterop import IntegerValue, RealValue
 
 
 @pytest.mark.parametrize(
@@ -149,4 +149,38 @@ def test_to_api_string(source: IntegerValue, expected_result: str):
 
     # Verify
     assert type(result) is str
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'source,expected_result',
+    [
+        pytest.param(IntegerValue(0), RealValue(0.0), id='zero'),
+        pytest.param(IntegerValue(1), RealValue(1.0), id='one'),
+        pytest.param(IntegerValue(-1), RealValue(-1.0), id='negative one'),
+        pytest.param(IntegerValue(8675309), RealValue(8675309.0), id='larger'),
+        pytest.param(IntegerValue(-8675309), RealValue(-8675309.0), id='larger negative'),
+        pytest.param(IntegerValue(4503599627370495), RealValue(4503599627370495.0),
+                     id='max 52-bit mantissa'),
+        pytest.param(IntegerValue(-4503599627370496), RealValue(-4503599627370496.0),
+                     id='min 52-bit mantissa'),
+        pytest.param(IntegerValue(9223372036854775807), RealValue(9.223372036854776e+18),
+                     id='max 64 bit'),
+        pytest.param(IntegerValue(-9223372036854775808), RealValue(-9.223372036854776e+18),
+                     id='min 64 bit'),
+    ],
+)
+def test_to_real_value(source: IntegerValue, expected_result: RealValue) -> None:
+    """
+    Verify that conversions to RealValue work correctly.
+    Parameters
+    ----------
+    source the original IntegerValue
+    expected_result the expected RealValue
+    """
+    # Execute
+    result: RealValue = source.to_real_value()
+
+    # Verify
+    assert type(result) is RealValue
     assert result == expected_result
