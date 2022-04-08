@@ -4,7 +4,14 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue, IntegerValue, RealValue
+from ansys.common.variableinterop import (
+    BooleanValue,
+    IntegerValue,
+    IVariableValue,
+    RealValue,
+    StringValue,
+    to_real_value,
+)
 
 
 @pytest.mark.parametrize(
@@ -274,3 +281,61 @@ def test_to_api_string(
     # Verify
     assert type(result) is str
     assert result == expected_value
+
+
+@pytest.mark.parametrize(
+    'source,expected_value',
+    [
+        pytest.param(IntegerValue(0), RealValue(0.0), id='integer 0'),
+        pytest.param(IntegerValue(1), RealValue(1.0), id='integer 1'),
+        pytest.param(IntegerValue(-1), RealValue(-1.0), id='integer -1'),
+        pytest.param(IntegerValue(8675309), RealValue(8675309.0), id='larger'),
+        pytest.param(IntegerValue(-8675309), RealValue(-8675309.0), id='larger negative'),
+        pytest.param(IntegerValue(9223372036854775807), RealValue(9.223372036854776e+18),
+                     id='max 64 bit'),
+        pytest.param(IntegerValue(-9223372036854775808), RealValue(-9.223372036854776e+18),
+                     id='min 64 bit'),
+        pytest.param(RealValue(867.5309), RealValue(867.5309), id='loopback'),
+        pytest.param(RealValue(1.7976931348623157e+308), numpy.float64(1.7976931348623157e+308),
+                     id="loopback min"),
+        pytest.param(RealValue(-1.7976931348623157e+308), numpy.float64(-1.7976931348623157e+308),
+                     id="loopback max"),
+        pytest.param(StringValue('4.5'), RealValue(4.5), id="string, positive"),
+        pytest.param(StringValue('-4.5'), RealValue(-4.5), id="string, negative"),
+        pytest.param(StringValue('0'), RealValue(0), id="string, zero"),
+        pytest.param(StringValue('2.8E8'), RealValue(2.8E8),
+                     id="string, sci notation, positive, capital E"),
+        pytest.param(StringValue('-2.8e8'), RealValue(-2.8E8),
+                     id="string, sci notation, negative, lowercase E"),
+        pytest.param(StringValue('5E-2'), RealValue(0.05),
+                     id="string, sci notation, negative exponent"),
+        pytest.param(StringValue('-Infinity'), RealValue(numpy.float64('-inf')),
+                     id="negative Infinity"),
+        pytest.param(StringValue('Infinity'), RealValue(numpy.float64('inf')), id="Infinity"),
+        pytest.param(StringValue('NaN'), RealValue(numpy.float64('nan')), id="NaN"),
+
+        # TODO: Add boolean value tests when boolean types are ready
+        # pytest.param(BooleanValue(True), RealValue(1.0), id='boolean true'),
+        # pytest.param(BooleanValue(False), RealValue(0.0), id='boolean false'),
+    ],
+)
+def test_runtime_convert_valid(
+        source: IVariableValue, expected_value: RealValue) -> None:
+    """
+    Verify that the runtime_convert method works on valid cases.
+
+    Parameters
+    ----------
+    source the source variable to convert to RealValue
+    expected_value the expected result of the conversion
+    """
+
+    # Execute
+    result: RealValue = to_real_value(source)
+
+    # Verify
+    assert type(result) is RealValue
+    if not numpy.isnan(expected_value):
+        assert result == expected_value
+    else:
+        assert numpy.isnan(expected_value)
