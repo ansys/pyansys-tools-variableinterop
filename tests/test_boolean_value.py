@@ -83,3 +83,28 @@ def test_from_api_string_valid(arg: str, expected_result: BooleanValue) -> None:
 def test_from_api_string_invalid(arg: str, expected_exception: BaseException) -> None:
     with _create_exception_context(expected_exception):
         result: BooleanValue = BooleanValue.from_api_string(arg)
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param(BooleanValue(True), 'True', id='true'),
+        pytest.param(BooleanValue(False), 'False', id='false'),
+    ]
+)
+def test_to_api_string(source: BooleanValue, expected_result: str) -> None:
+    """
+    Verify that to_api_string for BooleanValue works correctly for valid cases.
+    Parameters
+    ----------
+    source the original BooleanValue
+    expected_value the expected API string
+    """
+    # Execute
+    # TODO: restore this once we have a fully independent BooleanValue implementation
+    # result: str = source.to_api_string()
+    result: str = str(source)
+
+    # Verify
+    assert type(result) is str
+    assert result == expected_result

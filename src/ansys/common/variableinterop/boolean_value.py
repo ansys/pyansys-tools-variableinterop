@@ -32,7 +32,7 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
         return VariableType.BOOLEAN
 
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        return str(self)
 
     __api_str_values: Dict[str, bool] = {
         'yes': True,
