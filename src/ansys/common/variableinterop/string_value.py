@@ -29,7 +29,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
         return VariableType.STRING
 
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        return str(self)
 
     @staticmethod
     def from_api_string(value: str) -> StringValue:

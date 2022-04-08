@@ -56,3 +56,30 @@ def test_from_api_string_rejects_none() -> None:
     """
     with _create_exception_context(TypeError):
         result: StringValue = StringValue.from_api_string(None)
+
+
+@pytest.mark.parametrize(
+    "source,expected_value",
+    [
+        pytest.param(StringValue(""), "", id="empty"),
+        pytest.param(StringValue(" \t\r\n"), " \t\r\n", id="whitespace only"),
+        pytest.param(StringValue("ASCII-only"), "ASCII-only", id="ascii-codespace"),
+        pytest.param(StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), "(ノ-_-)ノ ミᴉᴉɔsɐ-uou",
+                     id="unicode-codespace"),
+        pytest.param(StringValue("Escapes>\n\r\t\\\"<"), "Escapes>\n\r\t\\\"<",
+                     id="characters escaped in formatted string unmodified")
+    ])
+def test_to_api_string(source: StringValue, expected_value: str) -> None:
+    """
+    Verify that to_api_string for StringValue works correctly for valid cases.
+    Parameters
+    ----------
+    source the original StringValue
+    expected_value the expected API string
+    """
+    # Execute
+    result: str = source.to_api_string()
+
+    # Verify
+    assert type(result) is str
+    assert result == expected_value
