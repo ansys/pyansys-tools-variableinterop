@@ -5,8 +5,6 @@ Custom Exception types.
 from configparser import ConfigParser
 from typing import Dict
 
-from ansys.common.variableinterop.variable_value import IVariableValue
-from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
 from ansys.common.variableinterop.boolean_value import BooleanValue
 from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
@@ -15,6 +13,7 @@ from ansys.common.variableinterop.real_array_value import RealArrayValue
 from ansys.common.variableinterop.real_value import RealValue
 from ansys.common.variableinterop.string_array_value import StringArrayValue
 from ansys.common.variableinterop.string_value import StringValue
+from ansys.common.variableinterop.variable_type import VariableType
 
 
 def _error(name: str, *args: object) -> str:
