@@ -122,3 +122,31 @@ def test_from_api_string_invalid(source: str, expected_exception: IntegerValue) 
     """
     with _create_exception_context(expected_exception):
         result: IntegerValue = IntegerValue.from_api_string(source)
+
+
+@pytest.mark.parametrize(
+    'source,expected_result',
+    [
+        pytest.param(IntegerValue(0), '0', id='zero'),
+        pytest.param(IntegerValue(1), '1', id='one'),
+        pytest.param(IntegerValue(-1), '-1', id='negative one'),
+        pytest.param(IntegerValue(8675309), '8675309', id='longer'),
+        pytest.param(IntegerValue(-8675309), '-8675309', id='negative, longer'),
+        pytest.param(IntegerValue(9223372036854775807), '9223372036854775807', id='max 64 bit'),
+        pytest.param(IntegerValue(-9223372036854775808), '-9223372036854775808', id='min 64 bit'),
+    ]
+)
+def test_to_api_string(source: IntegerValue, expected_result: str):
+    """
+    Verify that to_api_string for IntegerValue works correctly for valid cases.
+    Parameters
+    ----------
+    source the original IntegerValue
+    expected_value the expected API string
+    """
+    # Execute
+    result: str = source.to_api_string()
+
+    # Verify
+    assert type(result) is str
+    assert result == expected_result

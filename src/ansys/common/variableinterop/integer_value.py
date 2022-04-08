@@ -35,7 +35,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
         return VariableType.INTEGER
 
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        return str(self)
 
     @staticmethod
     def from_api_string(value: str) -> IntegerValue:
