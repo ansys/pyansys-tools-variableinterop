@@ -66,6 +66,17 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def to_formatted_string(self, locale_name: str) -> str:
+        """
+        Format this value in the given locale.
+
+        Parameters
+        ----------
+        locale_name The name of the locale to format to. Platform specific.
+
+        Returns
+        -------
+        The formatted value.
+        """
         raise NotImplementedError
 
     @abstractmethod

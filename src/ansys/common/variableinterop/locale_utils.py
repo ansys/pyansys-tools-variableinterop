@@ -1,8 +1,12 @@
+"""Utilities for dealing with locales."""
 import locale
 from typing import Any, Callable
 
 
 class LocaleUtils:
+    """
+    Contains utilities for dealing with locales.
+    """
     @staticmethod
     def perform_safe_locale_action(locale_name: str, action: Callable) -> Any:
         """
