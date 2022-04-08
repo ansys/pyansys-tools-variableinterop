@@ -36,7 +36,8 @@ def _error(name: str, *args: object) -> str:
 
 
 class IncompatibleTypesException(Exception):
-    """Exception raised when attempting to convert from one IVariableValue to an incompatible type."""
+    """Exception raised when attempting to convert from one IVariableValue to an
+    incompatible type."""
 
     def __init__(self, from_value: IVariableValue, to_value: IVariableValue):
         _class_names: Dict[VariableType, str] = {
