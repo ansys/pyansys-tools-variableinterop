@@ -59,6 +59,3 @@ def test_to_boolean_visitor(
         result: IVariableValue = source.accept(sut)
         assert type(expect) == type(result)
         assert expect == result
-
-
-
