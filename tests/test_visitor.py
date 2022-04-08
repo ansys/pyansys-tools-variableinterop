@@ -51,7 +51,7 @@ class TestVisitor(ivariable_visitor.IVariableValueVisitor[str]):
     [
         pytest.param(real_value.RealValue(1.0), 1.0, id="Real"),
         pytest.param(integer_value.IntegerValue(1), 1, id="Integer"),
-        #pytest.param(boolean_value.BooleanValue(True), True, id="Boolean"),
+        pytest.param(boolean_value.BooleanValue(True), True, id="Boolean"),
         pytest.param(string_value.StringValue("錦蛇"), "錦蛇", id="String"),
     ]
 )
