@@ -1,10 +1,13 @@
 """Unit tests of ToBooleanVisitor"""
-import sys
-
 import numpy
 import pytest
+import sys
 
-from ansys.common.variableinterop import IVariableValue, BooleanValue, IntegerValue, RealValue, ToBooleanVisitor
+from ansys.common.variableinterop import BooleanValue
+from ansys.common.variableinterop import IntegerValue
+from ansys.common.variableinterop import IVariableValue
+from ansys.common.variableinterop import RealValue
+from ansys.common.variableinterop import ToBooleanVisitor
 from tests.test_utils import _create_exception_context
 
 
