@@ -65,6 +65,10 @@ class IVariableValue(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def to_formatted_string(self, locale_name: str) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
     def get_modelcenter_type(self) -> str:
         """
         Get the ModelCenter type string for this value type.

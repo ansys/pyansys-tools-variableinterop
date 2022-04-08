@@ -32,5 +32,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
     def from_api_string(self, value: str) -> None:
         raise NotImplementedError
 
+    def to_formatted_string(self, locale_name: str) -> str:
+        return self
+
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
