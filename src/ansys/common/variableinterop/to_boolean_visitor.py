@@ -70,7 +70,8 @@ class ToBooleanVisitor(ivariable_visitor.IVariableValueVisitor[boolean_value.Boo
                 pass
             raise ValueError
 
-    def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> boolean_value.BooleanValue:
+    def visit_boolean_array(
+            self, value: boolean_array_value.BooleanArrayValue) -> boolean_value.BooleanValue:
         """
         Visit a BooleanArrayValue
         :param value: The value being visited
@@ -78,7 +79,8 @@ class ToBooleanVisitor(ivariable_visitor.IVariableValueVisitor[boolean_value.Boo
         """
         raise ValueError
 
-    def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> boolean_value.BooleanValue:
+    def visit_integer_array(
+            self, value: integer_array_value.IntegerArrayValue) -> boolean_value.BooleanValue:
         """
         Visit an IntegerArrayValue
         :param value: The value being visited
@@ -86,7 +88,8 @@ class ToBooleanVisitor(ivariable_visitor.IVariableValueVisitor[boolean_value.Boo
         """
         raise ValueError
 
-    def visit_real_array(self, value: real_array_value.RealArrayValue) -> boolean_value.BooleanValue:
+    def visit_real_array(
+            self, value: real_array_value.RealArrayValue) -> boolean_value.BooleanValue:
         """
         Visit a RealArrayValue
         :param value: The value being visited
@@ -94,7 +97,8 @@ class ToBooleanVisitor(ivariable_visitor.IVariableValueVisitor[boolean_value.Boo
         """
         raise ValueError
 
-    def visit_string_array(self, value: string_array_value.StringArrayValue) -> boolean_value.BooleanValue:
+    def visit_string_array(
+            self, value: string_array_value.StringArrayValue) -> boolean_value.BooleanValue:
         """
         Visit a StringArrayValue
         :param value: The value being visited

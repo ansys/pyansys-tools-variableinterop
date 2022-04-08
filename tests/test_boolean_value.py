@@ -1,6 +1,5 @@
 from typing import Any
 
-import numpy
 import pytest
 
 from ansys.common.variableinterop import BooleanValue
