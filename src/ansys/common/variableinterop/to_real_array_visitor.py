@@ -11,7 +11,7 @@ from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
 
 
-class ToRealArrayVisitor(IVariableValueVisitor):
+class ToRealArrayVisitor(IVariableValueVisitor[RealArrayValue]):
     """Visitor pattern to call conversion methods to RealArrayValue"""
 
     def visit_integer(self, value: IntegerValue) -> RealArrayValue:

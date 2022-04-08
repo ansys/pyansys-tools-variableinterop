@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import NDArray, ArrayLike
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
@@ -21,7 +21,9 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    def __new__(cls, shape_):
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values:
+            return np.array(values, dtype=np.bool_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.bool_)
 
     def accept(
@@ -35,9 +37,7 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
         return VariableType.BOOLEAN_ARRAY
 
     def to_real_array_value(self) -> RealArrayValue:
-        copy = self.astype(np.float_)
-        copy.__class__ = RealArrayValue
-        return copy
+        return self.astype(np.float_).view(RealArrayValue)
 
     # TODO: full implementation
 
