@@ -4,9 +4,8 @@ from __future__ import annotations
 import numpy as np
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
-
-from .variable_type import VariableType
 
 
 class RealValue(np.float64, variable_value.IVariableValue):
@@ -30,8 +29,9 @@ class RealValue(np.float64, variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_real(self)
 
-    def variable_type(self) -> VariableType:
-        return VariableType.REAL
+    @property
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.REAL
 
     def to_api_string(self) -> str:
         raise NotImplementedError

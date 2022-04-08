@@ -4,8 +4,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
-from .variable_type import VariableType
+import ansys.common.variableinterop.variable_type as variable_type_lib
 
 
 class IVariableValue(ABC):
@@ -19,7 +18,7 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariable_visitor.IVariableVisitor[ivariable_visitor.T]
+            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
     ) -> ivariable_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
@@ -36,7 +35,7 @@ class IVariableValue(ABC):
 
     @property
     @abstractmethod
-    def variable_type(self) -> VariableType:
+    def variable_type(self) -> variable_type_lib.VariableType:
         """
         Get the variable type of this object.
 
