@@ -241,3 +241,36 @@ def test_from_api_string_invalid(
     # Execute
     with _create_exception_context(expected_exception):
         actual_result: RealValue = RealValue.from_api_string(source)
+
+
+@pytest.mark.parametrize(
+    'source,expected_value',
+    [
+        pytest.param(RealValue(3.0),  '3.0', id='whole number'),
+        pytest.param(RealValue(4.5),  '4.5', id='accurate with one place'),
+        pytest.param(RealValue(1.7976931348623157e+308), '1.7976931348623157e+308', id='max'),
+        pytest.param(RealValue(-1.7976931348623157e+308), '-1.7976931348623157e+308', id='min'),
+        pytest.param(RealValue(0.0), '0.0', id='zero'),
+        pytest.param(RealValue(float('inf')), 'Infinity', id='Infinity'),
+        pytest.param(RealValue(float('-inf')), '-Infinity', id='-Infinity'),
+        pytest.param(RealValue(float('nan')), 'NaN', id='NaN'),
+        pytest.param(RealValue(2.2250738585072014e-308), '2.2250738585072014e-308', id='epsilon'),
+        pytest.param(RealValue(1.0000000000000002), '1.0000000000000002', id='epsilon+1'),
+    ]
+)
+def test_to_api_string(
+        source: RealValue, expected_value: str) -> None:
+    """
+    Verify that the to_api_string method works correctly.
+
+    Parameters
+    ----------
+    source the original RealValue.
+    expected_value the original string.
+    """
+    # Execute
+    result: str = source.to_api_string()
+
+    # Verify
+    assert type(result) is str
+    assert result == expected_value

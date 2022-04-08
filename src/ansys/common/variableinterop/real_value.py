@@ -29,6 +29,30 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
     # hashcode definition here
 
+    __CANONICAL_INF = "Infinity"
+    """
+    This is the canonical API string representation for infinity.
+
+    from_api_string will accept other values provided they are
+    unambiguously infinity.
+    """
+
+    __CANONICAL_NEG_INF = "-Infinity"
+    """
+    This is the canonical API string representation for negative infinity.
+
+    from_api_string will accept other values provided they are
+    unambiguously negative infinity.
+    """
+
+    __CANONICAL_NAN = "NaN"
+    """
+    This is the canonical API string representation for NaN.
+
+    from_api_string will accept other values provided they are
+    unambiguously NaN.
+    """
+
     def accept(
             self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
@@ -38,7 +62,13 @@ class RealValue(np.float64, variable_value.IVariableValue):
         return VariableType.REAL
 
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        if np.isnan(self):
+            return RealValue.__CANONICAL_NAN
+        if np.isposinf(self):
+            return RealValue.__CANONICAL_INF
+        if np.isneginf(self):
+            return RealValue.__CANONICAL_NEG_INF
+        return str(self)
 
     @staticmethod
     def from_api_string(value: str) -> RealValue:
