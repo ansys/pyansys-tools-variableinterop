@@ -7,9 +7,8 @@ import numpy as np
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
-
-from .variable_type import VariableType
 
 
 class BooleanValue(np.bool_, variable_value.IVariableValue):
@@ -26,10 +25,11 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
     def accept(
             self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
-        raise NotImplementedError
+        return visitor.visit_boolean(self)
 
-    def variable_type(self) -> VariableType:
-        return VariableType.BOOLEAN
+    @property
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.BOOLEAN
 
     def to_api_string(self) -> str:
         return str(self)
