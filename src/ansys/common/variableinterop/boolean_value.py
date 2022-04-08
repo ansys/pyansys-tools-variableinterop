@@ -1,16 +1,17 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
-from ansys.common.variableinterop.variable_value import IVariableValue
 from numpy import bool_
 from typing import TYPE_CHECKING, TypeVar
 
+import ansys.common.variableinterop.variable_value as variable_value
+
 if TYPE_CHECKING:
-    from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-    from ansys.common.variableinterop.to_bool_visitor import ToBoolVisitor
-    from ansys.common.variableinterop.variable_type import VariableType
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+    import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
+    import ansys.common.variableinterop.variable_type as variable_type
 
 
-class BooleanValue(IVariableValue):
+class BooleanValue(variable_value.IVariableValue):
     """
     Wrapper around a boolean value.
 
@@ -24,8 +25,8 @@ class BooleanValue(IVariableValue):
             self.__value = False
         elif isinstance(source, (bool, bool_)):
             self.__value = source
-        elif isinstance(source, IVariableValue):
-            self.__value = source.accept(ToBoolVisitor())
+        elif isinstance(source, variable_value.IVariableValue):
+            self.__value = source.accept(to_bool_visitor.ToBoolVisitor())
         else:
             raise ValueError
 
@@ -45,12 +46,12 @@ class BooleanValue(IVariableValue):
 
     T = TypeVar("T")
 
-    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
     @property
-    def variable_type(self) -> VariableType:
-        return VariableType.BOOLEAN
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.BOOLEAN
 
     def to_api_string(self) -> str:
         raise NotImplementedError

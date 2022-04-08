@@ -4,21 +4,23 @@ import numpy
 import pytest
 
 from ansys.common.variableinterop import BooleanValue
+from tests.test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
-    "arg,expect_equality",
+    "arg,expect_equality,expect_exception",
     [
-        pytest.param(True, numpy.bool_(True), id="true"),
-        pytest.param(False, numpy.bool_(False), id="false"),
-        pytest.param(None, numpy.bool_(False), id="none"),
+        pytest.param(True, True, None, id="true"),
+        pytest.param(False, False, None, id="false"),
+        pytest.param(None, False, None, id="none"),
 
         # TODO: Should we even accept strings?
-        pytest.param("", numpy.bool_(False), id="empty-string"),
-        pytest.param("something", numpy.bool_(True), id="non-empty-string"),
-        pytest.param("false", numpy.bool_(True), id="non-empty-string-says-false"),
+        pytest.param("", None, ValueError, id="empty-string"),
+        pytest.param("something", None, ValueError, id="non-empty-string"),
+        pytest.param("false", None, ValueError, id="non-empty-string-says-false"),
     ])
-def test_construct(arg: Any, expect_equality: numpy.bool_) -> None:
+def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseException) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
-    instance: BooleanValue = BooleanValue(arg)
-    assert instance == expect_equality
+    with _create_exception_context(expect_exception):
+        instance: BooleanValue = BooleanValue(arg)
+        assert instance == expect_equality
