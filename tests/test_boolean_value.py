@@ -4,7 +4,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue
+from ansys.common.variableinterop import BooleanValue, RealValue
 
 
 @pytest.mark.parametrize(
@@ -107,4 +107,27 @@ def test_to_api_string(source: BooleanValue, expected_result: str) -> None:
 
     # Verify
     assert type(result) is str
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param(BooleanValue(True), RealValue(1.0), id='true'),
+        pytest.param(BooleanValue(False), RealValue(0.0), id='false')
+    ]
+)
+def test_to_real_value(source: BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to RealValue works correctly.
+    Parameters
+    ----------
+    source the original BooleanValue
+    expected_result the expected result of the conversion
+    """
+    # Execute
+    result: RealValue = BooleanValue.to_real_value(source)
+
+    # Verify
+    assert type(result) is RealValue
     assert result == expected_result

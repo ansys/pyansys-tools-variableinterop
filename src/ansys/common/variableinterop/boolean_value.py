@@ -34,6 +34,31 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
     def to_api_string(self) -> str:
         return str(self)
 
+    @staticmethod
+    def to_real_value(orig: BooleanValue) -> real_value.RealValue:
+        """
+        Convert a given BooleanValue to a RealValue.
+
+        True is converted to 1.0 and False is is converted to 0.0
+        (Note: this is temporarily a static until we can get the
+        non-numpy64-bool derived version working, since there's currently no way to actually have
+        a BooleanValue instance at the moment).
+
+        Parameters
+        ----------
+        orig the original BooleanValue
+
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        # TODO: Change back to an instance value if/when the work to make an independent
+        # Boolean class is done.
+        if orig:
+            return real_value.RealValue(1.0)
+        else:
+            return real_value.RealValue(0.0)
+
     __api_str_values: Dict[str, bool] = {
         'yes': True,
         'y': True,
