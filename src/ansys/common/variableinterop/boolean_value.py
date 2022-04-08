@@ -15,8 +15,6 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    # equality definition here
-
     # hashcode definition here
 
     def accept(
@@ -33,10 +31,6 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
 
     def from_api_string(self, value: str) -> None:
         raise NotImplementedError
-
-    # to_formatted_string here
-
-    # from_formatted_string here
 
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError

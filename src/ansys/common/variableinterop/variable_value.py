@@ -10,10 +10,6 @@ import ansys.common.variableinterop.variable_type as variable_type_lib
 class IVariableValue(ABC):
     """Interface that defines the common behavior between variable types."""
 
-    # equality definition here
-
-    # hashcode definition here
-
     # clone here
 
     @abstractmethod
@@ -67,10 +63,6 @@ class IVariableValue(ABC):
         The string to convert.
         """
         raise NotImplementedError
-
-    # to_formatted_string here
-
-    # from_formatted_string here
 
     @abstractmethod
     def get_modelcenter_type(self) -> str:
