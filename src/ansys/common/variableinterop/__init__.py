@@ -76,6 +76,8 @@ from .real_metadata import RealMetadata
 from .real_value import RealValue
 from .string_metadata import StringMetadata
 from .string_value import StringValue
+from .to_bool_visitor import ToBoolVisitor
+from .to_boolean_visitor import ToBooleanVisitor
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 

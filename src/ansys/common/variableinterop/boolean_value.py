@@ -1,22 +1,31 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
-import numpy as np
+from ansys.common.variableinterop.variable_value import IVariableValue
+from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
+from ansys.common.variableinterop.to_bool_visitor import ToBoolVisitor
+from ansys.common.variableinterop.variable_type import VariableType
+from typing import TypeVar
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
 
-
-class BooleanValue(variable_value.IVariableValue):
+class BooleanValue(IVariableValue):
     """
     Wrapper around a boolean value.
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    def __init__(self, value: bool):
-        self.__value = value
+    __value: bool
+
+    def __init__(self, source: object = None):
+        if source is None:
+            self.__value = False
+        elif isinstance(source, bool):
+            self.__value = source
+        elif isinstance(source, IVariableValue):
+            self.__value = source.accept(ToBoolVisitor())
+        else:
+            raise ValueError
 
     # equality definition here
     def __eq__(self, other):
@@ -27,16 +36,19 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return False
 
+    def __bool__(self):
+        return self.__value
+
     # hashcode definition here
 
-    def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    T = TypeVar("T")
+
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
     @property
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.BOOLEAN
+    def variable_type(self) -> VariableType:
+        return VariableType.BOOLEAN
 
     def to_api_string(self) -> str:
         raise NotImplementedError
