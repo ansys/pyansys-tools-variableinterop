@@ -29,6 +29,7 @@ class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_real_array(self)
 
+    @property
     def variable_type(self) -> VariableType:
         return VariableType.REAL_ARRAY
 

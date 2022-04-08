@@ -5,6 +5,7 @@ from numpy.typing import NDArray
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
+from ansys.common.variableinterop.real_array_value import RealArrayValue
 
 from .variable_type import VariableType
 
@@ -32,8 +33,14 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_string_array(self)
 
+    @property
     def variable_type(self) -> VariableType:
         return VariableType.STRING_ARRAY
+
+    def to_real_array_value(self) -> RealArrayValue:
+        copy = self.astype(np.float_)
+        copy.__class__ = RealArrayValue
+        return copy
 
     # TODO: full implementation
 
