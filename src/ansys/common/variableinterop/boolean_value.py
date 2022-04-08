@@ -31,6 +31,16 @@ class BooleanValue(variable_value.IVariableValue):
             raise ValueError
 
     # equality definition here
+    def __eq__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value == other.__value
+        elif isinstance(other, (bool, bool_)):
+            return self.__value == other
+        else:
+            return False
+
+    def __bool__(self):
+        return self.__value
 
     # hashcode definition here
 

@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 
 from ansys.common.variableinterop import BooleanValue
-from tests.test_utils import _create_exception_context
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
