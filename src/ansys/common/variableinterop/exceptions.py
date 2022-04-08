@@ -39,7 +39,7 @@ class IncompatibleTypesException(Exception):
     """Exception raised when attempting to convert from one IVariableValue to an
     incompatible type."""
 
-    def __init__(self, from_value: IVariableValue, to_value: IVariableValue):
+    def __init__(self, from_type: VariableType, to_type: VariableType):
         _class_names: Dict[VariableType, str] = {
             VariableType.STRING: StringValue.__name__,
             VariableType.REAL: RealValue.__name__,
@@ -51,9 +51,9 @@ class IncompatibleTypesException(Exception):
             VariableType.BOOLEAN_ARRAY: BooleanArrayValue.__name__
         }
 
-        self.from_value: IVariableValue = from_value
-        self.to_value: IVariableValue = to_value
+        self.from_type: VariableType = from_type
+        self.to_type: VariableType = to_type
         self.message = _error("ERROR_INCOMPATIBLE_TYPES",
-                              _class_names[self.from_value.variable_type],
-                              _class_names[self.to_value.variable_type])
+                              _class_names[self.from_type],
+                              _class_names[self.to_type])
         super().__init__(self.message)
