@@ -2,10 +2,14 @@
 
 import pytest
 
+import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.boolean_value as boolean_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.string_value as string_value
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -29,13 +33,17 @@ class TestVisitor(ivariable_visitor.IVariableValueVisitor[str]):
     def visit_string(self, value: string_value.StringValue) -> str:
         return value + ""
 
-    # IntegerArray
+    def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> str:
+        return value
 
-    # RealArray
+    def visit_real_array(self, value: real_array_value.RealArrayValue) -> str:
+        return value
 
-    # BooleanArray
+    def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> str:
+        return value
 
-    # StringArray
+    def visit_string_array(self, value: string_array_value.StringArrayValue) -> str:
+        return value
 
 
 @pytest.mark.parametrize(
