@@ -16,7 +16,7 @@ class ToBooleanVisitor(IVariableValueVisitor[BooleanValue]):
         :param value: The value being visited
         :return: A BooleanValue equivalent
         """
-        return BooleanValue(value)
+        return BooleanValue(bool(value))
 
     def visit_integer(self, value: IntegerValue) -> BooleanValue:
         """
