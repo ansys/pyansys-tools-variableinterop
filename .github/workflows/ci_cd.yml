@@ -60,8 +60,7 @@ jobs:
 
       - name: Setup locale for tests
         run: |
-          sudo mkdir /usr/share/locale-langpack/de
-          sudo apt-get install $(check-language-support)
+          sudo locale-gen de_DE.UTF-8
 
       - name: Unit testing
         run: |
