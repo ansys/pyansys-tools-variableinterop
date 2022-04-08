@@ -36,7 +36,7 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
         -------
         The numpy string returned by the action.
         """
-        restore_local = locale.getlocale(locale.LC_ALL)
+        restore_local = locale.getlocale(locale.LC_CTYPE)
         locale.setlocale(locale.LC_ALL, self._locale_name)
         try:
             result = action()
