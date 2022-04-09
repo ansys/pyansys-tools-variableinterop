@@ -319,7 +319,7 @@ def test_to_api_string(
         # pytest.param(BooleanValue(False), RealValue(0.0), id='boolean false'),
     ],
 )
-def test_runtime_convert_valid(
+def test_to_real_value_valid(
         source: IVariableValue, expected_value: RealValue) -> None:
     """
     Verify that the runtime_convert method works on valid cases.
@@ -352,7 +352,7 @@ def test_runtime_convert_valid(
         pytest.param(StringValue(''), ValueError, id='empty string')
     ],
 )
-def test_to_real_value(
+def test_to_real_value_invalid(
         source: IVariableValue, expected_exception: BaseException) -> None:
     """
     Verify that the runtime_convert method works on invalid cases.
