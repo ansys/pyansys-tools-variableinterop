@@ -37,7 +37,7 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
         return VariableType.INTEGER_ARRAY
 
     def to_real_array_value(self) -> RealArrayValue:
-        return self.astype(np.float_).view(RealArrayValue)
+        return self.astype(np.float64).view(RealArrayValue)
 
     # TODO: full implementation
 
