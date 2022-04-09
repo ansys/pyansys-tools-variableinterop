@@ -14,7 +14,7 @@ from test_utils import _create_exception_context
 
         # TODO: uncomment when we figure out what to do with BooleanValue since it can't
         #       inherit np.bool_
-        # pytest.param(BooleanValue(False), IncompatibleTypesException, id="BooleanValue"),
+        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
 
         pytest.param(StringValue(""), None, IncompatibleTypesException, id="StringValue"),
         pytest.param(IntegerArrayValue(values=[1, 2]), RealArrayValue(values=[1.0, 2.0]), None,
