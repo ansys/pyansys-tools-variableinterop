@@ -1,12 +1,8 @@
-import ansys.common.variableinterop.boolean_array_value as boolean_array_value
-import ansys.common.variableinterop.boolean_value as boolean_value
-import ansys.common.variableinterop.integer_array_value as integer_array_value
-import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.real_array_value as real_array_value
-import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.string_array_value as string_array_value
-import ansys.common.variableinterop.string_value as string_value
+from ansys.common.variableinterop import (
+    boolean_array_value, boolean_value, integer_array_value, integer_value,
+    ivariable_visitor, real_array_value, real_value, string_array_value,
+    string_value
+)
 
 
 class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
@@ -28,7 +24,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return value != 0
+        return boolean_value.int64_to_bool(value)
 
     def visit_real(self, value: real_value.RealValue) -> bool:
         """
@@ -36,7 +32,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return value != 0.0
+        return boolean_value.float_to_bool(value)
 
     def visit_string(self, value: string_value.StringValue) -> bool:
         """
@@ -44,21 +40,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        _value: str = value.strip().lower()
-        if _value in boolean_value.BooleanValue.api_to_bool:
-            return boolean_value.BooleanValue.api_to_bool[_value]
-        else:
-            try:
-                _f_value: float = float(_value)
-                return _f_value != 0.0
-            except ValueError:
-                pass
-            try:
-                _i_value: int = int(_value)
-                return _i_value != 0
-            except ValueError:
-                pass
-            raise ValueError
+        return boolean_value.str_to_bool(value)
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> bool:
         """

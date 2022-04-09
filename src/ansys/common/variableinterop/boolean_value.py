@@ -5,12 +5,69 @@ from typing import TYPE_CHECKING, TypeVar, Dict
 
 import numpy as np
 
-import ansys.common.variableinterop.variable_value as variable_value
+from ansys.common.variableinterop import variable_value
 
 if TYPE_CHECKING:
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-    import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
-    import ansys.common.variableinterop.variable_type as variable_type
+    from ansys.common.variableinterop import (
+        ivariable_visitor, to_bool_visitor, variable_type
+    )
+
+
+def int64_to_bool(val: np.int64) -> bool:
+    """
+    Convert a numpy int64 to a bool value per interchange
+    specifications.
+    """
+    return val != 0
+
+
+def int_to_bool(val: int) -> bool:
+    """
+    Convert an int to a bool value per interchange specifications.
+    """
+    return val != 0
+
+
+def float_to_bool(val: float) -> bool:
+    """
+    Convert a float value to a bool per interchange specifications.
+    """
+    return val != 0.0
+
+
+api_str_to_bool: Dict[str, bool] = {
+    'yes': True,
+    'y': True,
+    'true': True,
+    'no': False,
+    'n': False,
+    'false': False
+}
+"""
+A mapping of acceptable normalized values for API string conversion
+to their corresponding bool value.
+"""
+
+
+def str_to_bool(val: str):
+    """
+    Convert a str to a bool per interchange specifications.
+    """
+    _value: str = val.strip().lower()
+    if _value in api_str_to_bool:
+        return api_str_to_bool[_value]
+    else:
+        try:
+            _f_value: float = float(_value)
+            return float_to_bool(_f_value)
+        except ValueError:
+            pass
+        try:
+            _i_value: int = int(_value)
+            return int_to_bool(_i_value)
+        except ValueError:
+            pass
+        raise ValueError
 
 
 class BooleanValue(variable_value.IVariableValue):
@@ -19,8 +76,6 @@ class BooleanValue(variable_value.IVariableValue):
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    __value: bool
 
     def __init__(self, source: object = None):
         """
@@ -33,11 +88,13 @@ class BooleanValue(variable_value.IVariableValue):
         Others: raises an exception
         """
         if source is None:
-            self.__value = False
-        elif isinstance(source, (bool, np.bool_)):
-            self.__value = source
+            self.__value: bool = False
+        elif isinstance(source, bool):
+            self.__value: bool = source
+        elif isinstance(source, np.bool_):
+            self.__value: bool = bool(source)
         elif isinstance(source, variable_value.IVariableValue):
-            self.__value = source.accept(to_bool_visitor.ToBoolVisitor())
+            self.__value: bool = source.accept(to_bool_visitor.ToBoolVisitor())
         else:
             raise ValueError
 
@@ -61,20 +118,11 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return self.__value
 
-    api_to_bool: Dict[str, bool] = {
-        'yes': True,
-        'y': True,
-        'true': True,
-        'no': False,
-        'n': False,
-        'false': False
-    }
-    """
-    A mapping of acceptable normalized values for API string conversion
-    to their corresponding bool value.
-    """
-
-    # hashcode definition here
+    def __hash__(self):
+        """
+        Returns a hash code for this object
+        """
+        return hash(self.__value)
 
     T = TypeVar("T")
 
