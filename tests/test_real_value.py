@@ -339,3 +339,28 @@ def test_runtime_convert_valid(
         assert result == expected_value
     else:
         assert numpy.isnan(expected_value)
+
+
+@pytest.mark.parametrize(
+    "source,expected_exception",
+    [
+        pytest.param(StringValue('60Ɛϛ˙ㄥ98'), ValueError, id='garbage'),
+        pytest.param(StringValue('1,204.5'), ValueError, id='thousands separator'),
+        pytest.param(StringValue('1 204.5'), ValueError, id='internal whitespace'),
+        pytest.param(StringValue('2.2.2'), ValueError, id='multiple decimals'),
+        pytest.param(StringValue('true'), ValueError, id='boolean literal'),
+        pytest.param(StringValue(''), ValueError, id='empty string')
+    ],
+)
+def test_to_real_value(
+        source: IVariableValue, expected_exception: BaseException) -> None:
+    """
+    Verify that the runtime_convert method works on invalid cases.
+
+    Parameters
+    ----------
+    source the source variable to convert to IntegerValue
+    expected_exception the expected error to raise
+    """
+    with _create_exception_context(expected_exception):
+        result: RealValue = to_real_value(source)
