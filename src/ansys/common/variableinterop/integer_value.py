@@ -1,6 +1,8 @@
 """Definition of IntegerValue."""
 from __future__ import annotations
 
+from typing import TypeVar
+
 import numpy as np
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -25,9 +27,9 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
     # hashcode definition here
 
-    def accept(
-        self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    T = TypeVar("T")
+
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
     @property

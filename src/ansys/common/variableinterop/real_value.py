@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
+from typing import TypeVar
 
 import numpy as np
 
@@ -52,9 +53,9 @@ class RealValue(np.float64, variable_value.IVariableValue):
     unambiguously NaN.
     """
 
-    def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    T = TypeVar("T")
+
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real(self)
 
     @property

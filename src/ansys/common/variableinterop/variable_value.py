@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor, T
 import ansys.common.variableinterop.variable_type as variable_type_lib
 
 
@@ -18,8 +18,8 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
-    ) -> ivariable_visitor.T:
+            self, visitor: IVariableValueVisitor[T]
+    ) -> T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
 
