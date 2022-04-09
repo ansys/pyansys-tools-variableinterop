@@ -1,7 +1,7 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, TypeVar, Dict
 
 import numpy as np
 
@@ -60,6 +60,19 @@ class BooleanValue(variable_value.IVariableValue):
         Return the true-ness or false-ness of this object.
         """
         return self.__value
+
+    api_to_bool: Dict[str, bool] = {
+        'yes': True,
+        'y': True,
+        'true': True,
+        'no': False,
+        'n': False,
+        'false': False
+    }
+    """
+    A mapping of acceptable normalized values for API string conversion
+    to their corresponding bool value.
+    """
 
     # hashcode definition here
 

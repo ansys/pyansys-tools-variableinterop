@@ -45,18 +45,8 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :return: A bool equivalent
         """
         _value: str = value.strip().lower()
-        if _value == "true":
-            return True
-        elif _value == "false":
-            return False
-        elif _value == "yes":
-            return True
-        elif _value == "no":
-            return False
-        elif _value == "y":
-            return True
-        elif _value == "n":
-            return False
+        if _value in boolean_value.BooleanValue.api_to_bool:
+            return boolean_value.BooleanValue.api_to_bool[_value]
         else:
             try:
                 _f_value: float = float(_value)
