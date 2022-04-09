@@ -10,7 +10,7 @@ from ansys.common.variableinterop.real_array_value import RealArrayValue
 from .variable_type import VariableType
 
 
-class IntegerArrayValue(NDArray[np.int_], variable_value.IVariableValue):
+class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
     """Array of integer values.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -23,8 +23,8 @@ class IntegerArrayValue(NDArray[np.int_], variable_value.IVariableValue):
 
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
-            return np.array(values, dtype=np.int_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.int_)
+            return np.array(values, dtype=np.int64).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=np.int64)
 
     def accept(
             self,

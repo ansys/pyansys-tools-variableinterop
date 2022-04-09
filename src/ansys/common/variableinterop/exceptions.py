@@ -2,6 +2,7 @@
 Custom Exception types.
 """
 
+import os
 from configparser import ConfigParser
 from typing import Dict
 
@@ -30,11 +31,11 @@ def _error(name: str, *args: object) -> str:
     """
 
     parser = ConfigParser()
-    parser.read("strings.properties")
+    parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))
     return parser.get("Errors", name).format(*args)
 
 
-class IncompatibleTypesException(Exception):
+class IncompatibleTypesException(BaseException):
     """Exception raised when attempting to convert from one IVariableValue to an
     incompatible type."""
 

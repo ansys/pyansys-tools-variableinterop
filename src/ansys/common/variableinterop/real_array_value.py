@@ -9,7 +9,7 @@ import ansys.common.variableinterop.variable_value as variable_value
 from .variable_type import VariableType
 
 
-class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
+class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     """Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -22,8 +22,11 @@ class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
 
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
-            return np.array(values, dtype=np.float_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.float_)
+            return np.array(values, dtype=np.float64).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=np.float64)
+
+    def __eq__(self, other: RealArrayValue) -> bool:
+        return np.count_nonzero(self - other) == 0
 
     def accept(
             self,
