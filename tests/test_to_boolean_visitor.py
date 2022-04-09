@@ -1,4 +1,4 @@
-"""Unit tests of ToBooleanVisitor"""
+"""Unit tests of ToBooleanValueVisitor"""
 import sys
 
 import numpy
@@ -10,7 +10,7 @@ from ansys.common.variableinterop import (
     IntegerValue,
     IVariableValue,
     RealValue,
-    ToBooleanVisitor,
+    ToBooleanValueVisitor,
 )
 
 
@@ -50,14 +50,14 @@ def test_to_boolean_visitor(
         expect_exception: BaseException
 ) -> None:
     """
-    Tests ToBooleanVisitor handling of various input IVariableValues
+    Tests ToBooleanValueVisitor handling of various input IVariableValues
     :param source: Source value to test visitor against
     :param expect: Expected return value from visitor, None if
         expected to throw.
     :param expect_exception: Expected exception to be thrown from
             visitor, None if expected to return a value.
     """
-    sut = ToBooleanVisitor()
+    sut = ToBooleanValueVisitor()
     with _create_exception_context(expect_exception):
         result: IVariableValue = source.accept(sut)
         assert type(expect) == type(result)
