@@ -10,7 +10,7 @@ from ansys.common.variableinterop import (
     IntegerValue,
     IVariableValue,
     RealValue,
-    ToBooleanValueVisitor,
+    ToBooleanValueVisitor
 )
 
 
