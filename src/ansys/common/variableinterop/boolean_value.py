@@ -62,11 +62,6 @@ def str_to_bool(val: str):
             return float_to_bool(_f_value)
         except ValueError:
             pass
-        try:
-            _i_value: int = int(_value)
-            return int_to_bool(_i_value)
-        except ValueError:
-            pass
         raise ValueError
 
 
