@@ -25,7 +25,25 @@ class CommonVariableMetadata(ABC):
         self._description: str = ""
         self._custom_metadata: Dict[str, variable_value.IVariableValue] = {}
 
-    # equality definition here
+    def __eq__(self, other):
+        return self.are_equal(other)
+
+    def are_equal(self, metadata: CommonVariableMetadata) -> bool:
+        """Determine if a given metadata is equal to this metadata.
+
+        Parameters
+        ----------
+        metadata Metadata to compare this object to.
+
+        Returns
+        -------
+        True if metadata objects are equal, false otherwise.
+        """
+        equal: bool = (isinstance(metadata, CommonVariableMetadata) and
+                       self.variable_type == metadata.variable_type and
+                       self._description == metadata._description and
+                       self._custom_metadata == metadata._custom_metadata)
+        return equal
 
     # clone here
 

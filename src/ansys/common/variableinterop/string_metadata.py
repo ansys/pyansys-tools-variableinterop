@@ -17,7 +17,8 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         self._enumerated_values: List[string_value.StringValue] = []
         self._enumerated_aliases: List[str] = []
 
-    # equality definition here
+    def __eq__(self, other):
+        return self.are_equal(other)
 
     # clone here
 
@@ -80,3 +81,20 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         The list of aliases to set.
         """
         self._enumerated_aliases = value
+
+    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
+        """Determine if a given metadata is equal to this metadata.
+
+        Parameters
+        ----------
+        metadata Metadata to compare this object to.
+
+        Returns
+        -------
+        True if metadata objects are equal, false otherwise.
+        """
+        equal: bool = (isinstance(metadata, StringMetadata) and
+                       super().are_equal(metadata) and
+                       self._enumerated_values == metadata._enumerated_values and
+                       self._enumerated_aliases == metadata._enumerated_aliases)
+        return equal
