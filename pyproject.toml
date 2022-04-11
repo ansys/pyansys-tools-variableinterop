@@ -46,4 +46,4 @@ mypy = {version="^0.940", optional=true}
 dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["pytest", "pytest-cov"]
+test = ["overrides, pytest", "pytest-cov"]
