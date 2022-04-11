@@ -126,6 +126,12 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return hash(self.__value)
 
+    def __str__(self):
+        """
+        Return the string representation of this object.
+        """
+        return str(self.__value)
+
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
