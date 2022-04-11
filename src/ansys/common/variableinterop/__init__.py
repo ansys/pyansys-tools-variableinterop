@@ -69,6 +69,7 @@ from .boolean_metadata import BooleanMetadata
 from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
+from .exceptions import IncompatibleTypesException
 from .integer_array_metadata import IntegerArrayMetadata
 from .integer_array_value import IntegerArrayValue
 from .integer_metadata import IntegerMetadata
@@ -84,6 +85,7 @@ from .string_array_metadata import StringArrayMetadata
 from .string_array_value import StringArrayValue
 from .string_metadata import StringMetadata
 from .string_value import StringValue
+from .to_real_array_visitor import ToRealArrayVisitor
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 

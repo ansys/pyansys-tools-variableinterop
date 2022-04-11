@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import NDArray, ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -14,7 +14,7 @@ from .variable_type import VariableType
 T = TypeVar("T")
 
 
-class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
+class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     """Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -25,8 +25,13 @@ class RealArrayValue(NDArray[np.float_], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    def __new__(cls, shape_):
-        return super().__new__(cls, shape=shape_, dtype=np.float_)
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values:
+            return np.array(values, dtype=np.float64).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=np.float64)
+
+    def __eq__(self, other: RealArrayValue) -> bool:
+        return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
