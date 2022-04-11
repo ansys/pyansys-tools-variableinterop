@@ -14,6 +14,7 @@ from .variable_type import VariableType
 
 T = TypeVar("T")
 
+
 class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     """Array of boolean values.
 
@@ -48,8 +49,8 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def to_api_string(self) -> str:
         raise NotImplementedError
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
+    @staticmethod
+    def from_api_string(value: str) -> None:
         raise NotImplementedError
 
     @overrides

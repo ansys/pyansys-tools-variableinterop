@@ -35,11 +35,26 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
     @overrides
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        return str(self)
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
+    @staticmethod
+    def from_api_string(value: str) -> StringValue:
+        """
+        Convert an API string back to a string value.
+
+        The string is stored exactly as specified; no escaping is performed
+        as with from_formatted string.
+
+        Parameters
+        ----------
+        value
+        The string to convert.
+        """
+        if value is None:
+            raise TypeError("Cannot create a StringValue from None.")
+
+        # No conversion / escaping when coming from API string
+        return StringValue(value)
 
     # to_formatted_string here
 
