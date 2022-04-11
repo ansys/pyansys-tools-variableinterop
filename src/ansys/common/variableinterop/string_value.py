@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import numpy as np
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -14,6 +13,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
+
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # equality definition here
 

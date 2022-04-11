@@ -2,60 +2,52 @@
 
 import pytest
 
-import ansys.common.variableinterop.boolean_array_value as boolean_array_value
-import ansys.common.variableinterop.boolean_value as boolean_value
-import ansys.common.variableinterop.integer_array_value as integer_array_value
-import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.real_array_value as real_array_value
-import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.string_array_value as string_array_value
-import ansys.common.variableinterop.string_value as string_value
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop as acvi
+from test_utils import _create_exception_context
 
 
-class TestVisitor(ivariable_visitor.IVariableValueVisitor[str]):
+class TestVisitor(acvi.IVariableValueVisitor[str]):
     """
     Implementation of IVariableValueVisitor for testing.
 
     Simply returns the value when visited.
     """
 
-    def visit_integer(self, value: integer_value.IntegerValue) -> str:
+    def visit_integer(self, value: acvi.IntegerValue) -> str:
         return value + 0
 
-    def visit_real(self, value: real_value.RealValue) -> str:
+    def visit_real(self, value: acvi.RealValue) -> str:
         return value + 0.0
 
-    def visit_boolean(self, value: boolean_value.BooleanValue) -> str:
+    def visit_boolean(self, value: acvi.BooleanValue) -> str:
         return value or False
 
-    def visit_string(self, value: string_value.StringValue) -> str:
+    def visit_string(self, value: acvi.StringValue) -> str:
         return value + ""
 
-    def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> str:
+    def visit_integer_array(self, value: acvi.IntegerArrayValue) -> str:
         return value
 
-    def visit_real_array(self, value: real_array_value.RealArrayValue) -> str:
+    def visit_real_array(self, value: acvi.RealArrayValue) -> str:
         return value
 
-    def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> str:
+    def visit_boolean_array(self, value: acvi.BooleanArrayValue) -> str:
         return value
 
-    def visit_string_array(self, value: string_array_value.StringArrayValue) -> str:
+    def visit_string_array(self, value: acvi.StringArrayValue) -> str:
         return value
 
 
 @pytest.mark.parametrize(
     "value,expected",
     [
-        pytest.param(real_value.RealValue(1.0), 1.0, id="Real"),
-        pytest.param(integer_value.IntegerValue(1), 1, id="Integer"),
-        pytest.param(boolean_value.BooleanValue(True), True, id="Boolean"),
-        pytest.param(string_value.StringValue("錦蛇"), "錦蛇", id="String"),
+        pytest.param(acvi.RealValue(1.0), 1.0, id="Real"),
+        pytest.param(acvi.IntegerValue(1), 1, id="Integer"),
+        pytest.param(acvi.BooleanValue(True), True, id="Boolean"),
+        pytest.param(acvi.StringValue("錦蛇"), "錦蛇", id="String"),
     ]
 )
-def test_visiting_a_value_should_work(value: variable_value.IVariableValue, expected: any) -> None:
+def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: any) -> None:
     """
     Verifies that the visitor pattern is working for IVariableValue.
 
@@ -71,5 +63,50 @@ def test_visiting_a_value_should_work(value: variable_value.IVariableValue, expe
     result = value.accept(visitor)
 
     # Verification
-    assert result is not variable_value.IVariableValue
+    assert result is not acvi.IVariableValue
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    "value,expected_result,expected_exception",
+    [
+        pytest.param(acvi.IntegerValue(0), None, acvi.IncompatibleTypesException,
+                     id="IntegerValue"),
+        pytest.param(acvi.RealValue(0), None, acvi.IncompatibleTypesException, id="RealValue"),
+
+        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
+        #       inherit np.bool_
+        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+
+        pytest.param(acvi.StringValue(""), None, acvi.IncompatibleTypesException, id="StringValue"),
+        pytest.param(acvi.IntegerArrayValue(values=[1, 2]), acvi.RealArrayValue(values=[1.0, 2.0]),
+                     None, id="IntegerArrayValue"),
+        pytest.param(acvi.RealArrayValue(values=[1, 2]), acvi.RealArrayValue(values=[1, 2]),
+                     None, id="RealArrayValue"),
+        pytest.param(acvi.BooleanArrayValue(values=[True, False]),
+                     acvi.RealArrayValue(values=[1.0, 0.0]), None, id="BooleanArrayValue"),
+        pytest.param(acvi.StringArrayValue(values=["1", "2.5"]),
+                     acvi.RealArrayValue(values=[1.0, 2.5]), None, id="StringArrayValue"),
+    ])
+def test_to_real_array_visitor(value: acvi.IVariableValue,
+                               expected_result: acvi.RealArrayValue,
+                               expected_exception: BaseException):
+    """Verify that ToRealArrayVisitor gets the expected result, or that the expected exception is
+    raised."""
+
+    with _create_exception_context(expected_exception):
+        instance = acvi.ToRealArrayVisitor()
+        try:
+            # SUT
+            result: acvi.RealArrayValue = value.accept(instance)
+
+            # Verify (no exception)
+            assert result == expected_result
+
+        except acvi.IncompatibleTypesException as e:
+            # Verify (expected exception)
+            assert e.message == \
+                   ("Error: Cannot convert from type {0} to type {1}.\n"
+                    "Reason: The types are incompatible.") \
+                   .format(value.__class__.__name__, acvi.RealArrayValue.__name__)
+            raise e

@@ -87,6 +87,7 @@ from .string_metadata import StringMetadata
 from .string_value import StringValue
 from .to_bool_visitor import ToBoolVisitor
 from .to_boolean_value_visitor import ToBooleanValueVisitor
+from .to_real_array_visitor import ToRealArrayVisitor
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 

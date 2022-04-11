@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import numpy as np
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
 from .variable_type import VariableType
@@ -20,6 +19,8 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+
     # TODO: __new__() implementation (what will the data type be?)
 
     def accept(
@@ -28,6 +29,7 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_file_array(self)
 
+    @property
     def variable_type(self) -> VariableType:
         return VariableType.FILE_ARRAY
 

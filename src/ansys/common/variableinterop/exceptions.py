@@ -5,7 +5,8 @@ Custom Exception types.
 import os
 from configparser import ConfigParser
 from typing import Union
-from ansys.common.variableinterop import variable_type, variable_type_util
+
+import ansys.common.variableinterop.variable_type as variable_type
 
 
 def _error(name: str, *args: object) -> str:
@@ -20,12 +21,13 @@ def _error(name: str, *args: object) -> str:
     -------
     The formatted error string.
     """
+
     parser = ConfigParser()
     parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))
     return parser.get("Errors", name).format(*args)
 
 
-class IncompatibleTypesException(Exception):
+class IncompatibleTypesException(BaseException):
     """Exception raised when attempting to convert from one IVariableValue to an
     incompatible type."""
     def __init__(
@@ -39,13 +41,13 @@ class IncompatibleTypesException(Exception):
         """
         if isinstance(from_type, variable_type.VariableType):
             self.from_type: variable_type.VariableType = from_type
-            self.from_type_str: str = variable_type_util.to_type_name(from_type)
+            self.from_type_str: str = from_type.associated_type_name
         else:
             self.from_type = None
             self.from_type_str: str = from_type
         if isinstance(to_type, variable_type.VariableType):
             self.to_type: variable_type.VariableType = from_type
-            self.to_type_str: str = variable_type_util.to_type_name(to_type)
+            self.to_type_str: str = to_type.associated_type_name
         else:
             self.to_type = None
             self.to_type_str: str = to_type

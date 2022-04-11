@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING, TypeVar, Dict
 
 import numpy as np
 
-import ansys.common.variableinterop.exceptions as exceptions
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -71,6 +69,8 @@ class BooleanValue(variable_value.IVariableValue):
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+
     def __init__(self, source: object = None):
         """
         Construct a BooleanValue from various source types. Supported
@@ -81,6 +81,9 @@ class BooleanValue(variable_value.IVariableValue):
         IVariableValue: Constructs a BooleanValue per the specification
         Others: raises an exception
         """
+
+        import ansys.common.variableinterop.exceptions as exceptions
+
         if source is None:
             self.__value: bool = False
         elif isinstance(source, bool):
