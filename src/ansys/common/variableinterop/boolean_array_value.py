@@ -5,7 +5,7 @@ from numpy.typing import NDArray, ArrayLike
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
-from ansys.common.variableinterop.real_array_value import RealArrayValue
+import ansys.common.variableinterop.real_array_value as real_array_value
 
 from .variable_type import VariableType
 
@@ -36,8 +36,8 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def variable_type(self) -> VariableType:
         return VariableType.BOOLEAN_ARRAY
 
-    def to_real_array_value(self) -> RealArrayValue:
-        return self.astype(np.float64).view(RealArrayValue)
+    def to_real_array_value(self) -> real_array_value.RealArrayValue:
+        return self.astype(np.float64).view(real_array_value.RealArrayValue)
 
     # TODO: full implementation
 
