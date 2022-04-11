@@ -1,5 +1,4 @@
 """Unit tests of IVariableVisitor, and accept methods of value types."""
-from typing import Type, Dict
 
 import pytest
 
