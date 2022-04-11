@@ -1,3 +1,5 @@
+import numpy as np
+
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.exceptions as exceptions
@@ -36,7 +38,7 @@ class ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[real_array_valu
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) \
             -> real_array_value.RealArrayValue:
-        return value
+        return np.copy(value).view(real_array_value.RealArrayValue)
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) \
             -> real_array_value.RealArrayValue:
