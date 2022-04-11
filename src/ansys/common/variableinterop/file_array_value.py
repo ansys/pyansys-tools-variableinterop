@@ -28,6 +28,7 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_file_array(self)
 
+    @property
     def variable_type(self) -> VariableType:
         return VariableType.FILE_ARRAY
 
