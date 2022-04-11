@@ -10,6 +10,8 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.variable_type as variable_type
 
 
+
+
 class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     """Array of string values.
 
@@ -40,6 +42,7 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
 
     def to_boolean_array_value(self) -> boolean_array_value.BooleanArrayValue:
+        # TODO: use BooleanValue.to_api_string() when that is available
         def as_bool(value: str):
             normalized: str = str.lower(str.strip(value))
             if normalized in ("yes", "y", "true"):
