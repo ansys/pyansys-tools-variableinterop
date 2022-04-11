@@ -1,5 +1,4 @@
 """Definition of VariableType."""
-from enum import Enum
 from typing import Dict
 import ansys.common.variableinterop.variable_type as variable_type
 
@@ -36,4 +35,3 @@ def to_type_name(var_type: variable_type.VariableType):
     Get the name of the associated IVariableValue type.
     """
     return to_type(var_type).__name__
-

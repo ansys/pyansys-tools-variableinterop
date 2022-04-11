@@ -1,6 +1,6 @@
 """Definition of VariableType."""
 from enum import Enum
-from typing import Dict, Type
+from typing import Dict
 
 
 class VariableType(Enum):
