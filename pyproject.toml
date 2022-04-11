@@ -30,7 +30,6 @@ numpy = "^1.22.3"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
-overrides = {version="^6.1"}
 pyansys_sphinx_theme =  {version="^0.2", optional=true}
 sphinx-copybutton =  {version="^0.5", optional=true}
 
@@ -42,8 +41,11 @@ pytest-cov = {version="^3.0", optional=true}
 pre-commit = {version="^2.17.0", optional=true}
 mypy = {version="^0.940", optional=true}
 
+[tool.poetry.dev-dependencies]
+overrides = {version="^6.1"}
+
 [tool.poetry.extras]
 dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["overrides, pytest", "pytest-cov"]
+test = ["overrides", "pytest", "pytest-cov"]
