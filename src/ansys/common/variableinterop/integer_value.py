@@ -72,10 +72,6 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             # Otherwise, parse as an int.
             return IntegerValue(value)
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
-
     # to_formatted_string here
 
     # from_formatted_string here

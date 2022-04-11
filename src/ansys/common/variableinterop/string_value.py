@@ -56,10 +56,6 @@ class StringValue(np.str_, variable_value.IVariableValue):
         # No conversion / escaping when coming from API string
         return StringValue(value)
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
-
     # to_formatted_string here
 
     # from_formatted_string here

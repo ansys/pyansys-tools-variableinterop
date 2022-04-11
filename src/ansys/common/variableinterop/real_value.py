@@ -56,10 +56,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
     unambiguously NaN.
     """
 
-    def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
-
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real(self)
@@ -121,10 +117,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
         A BooleanValue that is the result of converting this RealValue.
         """
         return boolean_value.BooleanValue(self != 0)
-
-    @overrides
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
 
     # to_formatted_string here
 

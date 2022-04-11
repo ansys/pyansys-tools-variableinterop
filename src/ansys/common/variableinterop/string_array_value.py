@@ -49,8 +49,8 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     def to_api_string(self) -> str:
         raise NotImplementedError
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
+    @staticmethod
+    def from_api_string(value: str) -> None:
         raise NotImplementedError
 
     @overrides

@@ -81,10 +81,6 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
             real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)
             return real_equiv.to_boolean_value()
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
-
     # to_formatted_string here
 
     # from_formatted_string here
