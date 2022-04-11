@@ -25,7 +25,6 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
     def __eq__(self, other):
         return self.are_equal(other)
 
-
     # clone here
 
     def accept(

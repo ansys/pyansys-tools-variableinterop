@@ -14,6 +14,8 @@ from ansys.common.variableinterop.real_array_metadata import RealArrayMetadata
 from ansys.common.variableinterop.string_value import StringValue
 from ansys.common.variableinterop.string_metadata import StringMetadata
 from ansys.common.variableinterop.string_array_metadata import StringArrayMetadata
+from ansys.common.variableinterop.string_metadata import StringMetadata
+from ansys.common.variableinterop.string_value import StringValue
 
 
 def assert_are_equal(metadata1, metadata2) -> None:
@@ -653,4 +655,3 @@ def test_are_equal_different_enumerated_aliases(
     metadata2 = metadata_type()
     metadata2.enumerated_aliases = value2
     assert_are_not_equal(metadata1, metadata2)
-
