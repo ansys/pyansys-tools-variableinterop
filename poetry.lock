@@ -298,8 +298,8 @@ testing = ["pytest", "pytest-cov", "matplotlib"]
 name = "overrides"
 version = "6.1.0"
 description = "A decorator to automatically detect mismatch when overriding a method."
-category = "dev"
-optional = false
+category = "main"
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -668,8 +668,8 @@ python-versions = ">=3.6"
 name = "typing-utils"
 version = "0.1.0"
 description = "utils to inspect Python type annotations"
-category = "dev"
-optional = false
+category = "main"
+optional = true
 python-versions = ">=3.6.1"
 
 [package.extras]
@@ -719,15 +719,15 @@ docs = ["sphinx", "jaraco.packaging (>=9)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
 
 [extras]
-dev = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
-docs = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton"]
+dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
+docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["pytest", "pytest-cov"]
+test = ["overrides", "pytest", "pytest-cov"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "39db03fefbae8aec8f5caabd29d673b451cb08d68b7cec58688c17983429fa60"
+content-hash = "7f77ef37f4919397ca0ec50e66d3a3fc6cb6195527ad9abcc441a222f9d419bb"
 
 [metadata.files]
 alabaster = [
