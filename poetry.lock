@@ -722,12 +722,12 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["pytest", "pytest-cov"]
+test = ["pytest-cov"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "3068918abe664df96ddd21c1a0e2f568404d55bf847dd39c7777114e57b7b504"
+content-hash = "0b823d9abfc56b99d0b23cd2970a293d85c696b89451dff404964f50964908a6"
 
 [metadata.files]
 alabaster = [
