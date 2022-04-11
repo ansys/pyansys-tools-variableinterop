@@ -1,12 +1,17 @@
 from __future__ import annotations
 
+from typing import TypeVar
+
 import numpy as np
 from numpy.typing import NDArray, ArrayLike
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
+T = TypeVar("T")
 
 
 class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
@@ -28,13 +33,12 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     def __eq__(self, other: RealArrayValue) -> bool:
         return np.array_equal(self, other)
 
-    def accept(
-            self,
-            visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    @overrides
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
     @property
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.REAL_ARRAY
 
@@ -43,11 +47,14 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
 
     # TODO: full implementation
 
+    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 
+    @overrides
     def from_api_string(self, value: str) -> None:
         raise NotImplementedError
 
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
