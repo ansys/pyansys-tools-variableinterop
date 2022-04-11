@@ -1,15 +1,21 @@
 from __future__ import annotations
 
+from typing import TypeVar
+
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import NDArray, ArrayLike
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop.real_array_value as real_array_value
 
 from .variable_type import VariableType
 
+T = TypeVar("T")
 
-class IntegerArrayValue(NDArray[np.int_], variable_value.IVariableValue):
+
+class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
     """Array of integer values.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -20,25 +26,33 @@ class IntegerArrayValue(NDArray[np.int_], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    def __new__(cls, shape_):
-        return super().__new__(cls, shape=shape_, dtype=np.int_)
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values:
+            return np.array(values, dtype=np.int64).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=np.int64)
 
-    def accept(
-            self,
-            visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    @overrides
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer_array(self)
 
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> VariableType:
         return VariableType.INTEGER_ARRAY
 
+    def to_real_array_value(self) -> real_array_value.RealArrayValue:
+        return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
     # TODO: full implementation
 
+    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 
+    @overrides
     def from_api_string(self, value: str) -> None:
         raise NotImplementedError
 
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError

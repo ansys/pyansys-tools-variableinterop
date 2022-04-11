@@ -1,12 +1,18 @@
 from __future__ import annotations
 
+from typing import TypeVar
+
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import NDArray, ArrayLike
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop.real_array_value as real_array_value
 
 from .variable_type import VariableType
+
+T = TypeVar("T")
 
 
 class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
@@ -18,30 +24,35 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     slightly different from the behaviors specified in the variable interop standards.
     For example, when converting from real to integer, the value will be floored instead
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
-
-    TODO: ndarray cannot hold string values; question as to what approach we should
-          take here instead of deriving from that.
     """
 
-    def __new__(cls, shape_):
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values:
+            return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
-    def accept(
-            self,
-            visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
-    ) -> variable_value.T:
+    @overrides
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> VariableType:
         return VariableType.STRING_ARRAY
 
+    def to_real_array_value(self) -> real_array_value.RealArrayValue:
+        return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
     # TODO: full implementation
 
+    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 
+    @overrides
     def from_api_string(self, value: str) -> None:
         raise NotImplementedError
 
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError

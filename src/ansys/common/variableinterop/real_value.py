@@ -2,14 +2,18 @@
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
+from typing import TypeVar
 
 import numpy as np
+from overrides import overrides
 
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
+
+T = TypeVar("T")
 
 
 class RealValue(np.float64, variable_value.IVariableValue):
@@ -55,12 +59,17 @@ class RealValue(np.float64, variable_value.IVariableValue):
     def accept(
             self, visitor: ivariable_visitor.IVariableValueVisitor[variable_value.T]
     ) -> variable_value.T:
+
+    @overrides
+    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.REAL
 
+    @overrides
     def to_api_string(self) -> str:
         if np.isnan(self):
             return RealValue.__CANONICAL_NAN
@@ -113,9 +122,14 @@ class RealValue(np.float64, variable_value.IVariableValue):
         """
         return boolean_value.BooleanValue(self != 0)
 
+    @overrides
+    def from_api_string(self, value: str) -> None:
+        raise NotImplementedError
+
     # to_formatted_string here
 
     # from_formatted_string here
 
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
