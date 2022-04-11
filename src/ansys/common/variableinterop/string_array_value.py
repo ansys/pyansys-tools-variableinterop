@@ -10,8 +10,6 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.variable_type as variable_type
 
 
-
-
 class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     """Array of string values.
 
