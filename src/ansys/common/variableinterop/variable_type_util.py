@@ -1,9 +1,8 @@
 """Definition of VariableType."""
 from enum import Enum
-from typing import Dict, TYPE_CHECKING
+from typing import Dict
 
 from ansys.common.variableinterop import variable_type
-
 from ansys.common.variableinterop import boolean_array_value
 from ansys.common.variableinterop import boolean_value
 from ansys.common.variableinterop import integer_array_value
