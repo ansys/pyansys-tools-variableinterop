@@ -4,9 +4,13 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
+from overrides import overrides
 
+import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
+
+T = TypeVar("T")
 
 
 class IntegerValue(np.int64, variable_value.IVariableValue):
@@ -27,20 +31,47 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
     # hashcode definition here
 
-    T = TypeVar("T")
-
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.INTEGER
 
+    @overrides
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        return str(self)
 
-    def from_api_string(self, value: str) -> None:
-        raise NotImplementedError
+    @staticmethod
+    def from_api_string(value: str) -> IntegerValue:
+        """
+        Create an integer value from an API string.
+
+        Leading and trailing whitespace is ignored.
+        Values which can be correctly parsed as floating-point numbers
+        are parsed in that manner, then rounded to integers. When rounding,
+        values with a 5 in the tenths place are rounded away from zero.
+
+        Parameters
+        ----------
+        value the string to parse
+
+        Returns
+        -------
+        An integer value parsed from the API string.
+        """
+        if value is None:
+            raise TypeError("Cannot create integer values from NoneType")
+
+        # Check to see if this looks like a float.
+        if any(char == "E" or char == "e" or char == "." for char in value):
+            # If so, convert it according to those rules.
+            return real_value.RealValue(value).to_int_value()
+        else:
+            # Otherwise, parse as an int.
+            return IntegerValue(value)
 
     # to_formatted_string here
 
