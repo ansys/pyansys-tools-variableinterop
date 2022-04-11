@@ -31,6 +31,9 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
             return np.array(values, dtype=np.bool_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.bool_)
 
+    def __eq__(self, other) -> bool:
+        return np.array_equal(self, other)
+
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
