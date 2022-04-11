@@ -1,3 +1,5 @@
+import numpy as np
+
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.boolean_value as boolean_value
@@ -49,4 +51,4 @@ class ToStringArrayVisitor(ivariable_visitor.
 
     def visit_string_array(self, value: string_array_value.StringArrayValue) \
             -> string_array_value.StringArrayValue:
-        return value
+        return np.copy(value).view(string_array_value.StringArrayValue)
