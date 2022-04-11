@@ -70,7 +70,8 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: any)
 @pytest.mark.parametrize(
     "value,expected_result,expected_exception",
     [
-        pytest.param(acvi.IntegerValue(0), None, acvi.IncompatibleTypesException, id="IntegerValue"),
+        pytest.param(acvi.IntegerValue(0), None, acvi.IncompatibleTypesException,
+                     id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, acvi.IncompatibleTypesException, id="RealValue"),
 
         # TODO: uncomment when we figure out what to do with BooleanValue since it can't
