@@ -1,3 +1,5 @@
+import numpy as np
+
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.boolean_value as boolean_value
@@ -37,7 +39,7 @@ class ToIntegerArrayVisitor(ivariable_visitor
 
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) \
             -> integer_array_value.IntegerArrayValue:
-        return value
+        return np.copy(value).view(integer_array_value.IntegerArrayValue)
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) \
             -> integer_array_value.IntegerArrayValue:
