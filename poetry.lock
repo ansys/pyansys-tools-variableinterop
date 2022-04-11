@@ -299,7 +299,7 @@ name = "overrides"
 version = "6.1.0"
 description = "A decorator to automatically detect mismatch when overriding a method."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -669,7 +669,7 @@ name = "typing-utils"
 version = "0.1.0"
 description = "utils to inspect Python type annotations"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6.1"
 
 [package.extras]
@@ -722,12 +722,12 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["pytest-cov"]
+test = ["pytest", "pytest-cov"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "0c2ee4609dd6e1f53a9f978720a02dce8b5e094f4824f7e7323bdec51823beaa"
+content-hash = "3068918abe664df96ddd21c1a0e2f568404d55bf847dd39c7777114e57b7b504"
 
 [metadata.files]
 alabaster = [
