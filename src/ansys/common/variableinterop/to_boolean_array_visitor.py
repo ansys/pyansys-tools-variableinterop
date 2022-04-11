@@ -17,23 +17,23 @@ class ToBooleanArrayVisitor(ivariable_visitor.
                             IVariableValueVisitor[boolean_array_value.BooleanArrayValue]):
     """Visitor pattern to call conversion methods to BooleanArrayValue"""
 
-    def visit_integer(
-            self, value: integer_value.IntegerValue) -> boolean_array_value.BooleanArrayValue:
+    def visit_integer(self, value: integer_value.IntegerValue) \
+            -> boolean_array_value.BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
-    def visit_real(
-            self, value: real_value.RealValue) -> boolean_array_value.BooleanArrayValue:
+    def visit_real(self, value: real_value.RealValue) \
+            -> boolean_array_value.BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
-    def visit_boolean(
-            self, value: boolean_value.BooleanValue) -> boolean_array_value.BooleanArrayValue:
+    def visit_boolean(self, value: boolean_value.BooleanValue) \
+            -> boolean_array_value.BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
-    def visit_string(
-            self, value: string_value.StringValue) -> boolean_array_value.BooleanArrayValue:
+    def visit_string(self, value: string_value.StringValue) \
+            -> boolean_array_value.BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
