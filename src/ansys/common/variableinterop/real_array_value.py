@@ -26,9 +26,7 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
     def __eq__(self, other: RealArrayValue) -> bool:
-        if other.shape != self.shape:
-            return False
-        return np.count_nonzero(self - other) == 0
+        return np.array_equal(self, other)
 
     def accept(
             self,
