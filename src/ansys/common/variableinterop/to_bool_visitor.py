@@ -1,7 +1,6 @@
 from ansys.common.variableinterop import (
-    boolean_array_value, boolean_value, integer_array_value, integer_value,
-    ivariable_visitor, real_array_value, real_value, string_array_value,
-    string_value
+    boolean_array_value, boolean_value, exceptions, integer_array_value, integer_value,
+    ivariable_visitor, real_array_value, real_value, string_array_value, string_value
 )
 
 
@@ -46,30 +45,30 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         """
         Visit a BooleanArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> bool:
         """
         Visit an IntegerArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) -> bool:
         """
         Visit a RealArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_string_array(self, value: string_array_value.StringArrayValue) -> bool:
         """
         Visit a StringArrayValue
         :param value: The value being visited
-        :return: A bool equivalent
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")

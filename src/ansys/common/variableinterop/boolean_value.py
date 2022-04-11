@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, TypeVar, Dict
 
 import numpy as np
 
-from ansys.common.variableinterop import variable_value
+from ansys.common.variableinterop import exceptions, variable_value
 
 if TYPE_CHECKING:
     from ansys.common.variableinterop import (
@@ -91,7 +91,8 @@ class BooleanValue(variable_value.IVariableValue):
         elif isinstance(source, variable_value.IVariableValue):
             self.__value: bool = source.accept(to_bool_visitor.ToBoolVisitor())
         else:
-            raise ValueError
+            raise exceptions.IncompatibleTypesException(
+                type(source).__name__, variable_type.VariableType.BOOLEAN)
 
     # equality definition here
     def __eq__(self, other):

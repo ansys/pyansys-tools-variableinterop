@@ -1,9 +1,9 @@
 """Definition of BooleanMetadata."""
 from __future__ import annotations
 
-import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.variable_type as variable_type
+from ansys.common.variableinterop import common_variable_metadata
+from ansys.common.variableinterop import ivariablemetadata_visitor
+from ansys.common.variableinterop import variable_type
 
 
 class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):

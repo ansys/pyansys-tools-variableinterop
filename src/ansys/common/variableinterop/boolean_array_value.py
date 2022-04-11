@@ -3,10 +3,9 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import NDArray
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
-
-from .variable_type import VariableType
+from ansys.common.variableinterop import ivariable_visitor
+from ansys.common.variableinterop import variable_type
+from ansys.common.variableinterop import variable_value
 
 
 class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
@@ -29,7 +28,7 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     ) -> variable_value.T:
         return visitor.visit_boolean_array(self)
 
-    def variable_type(self) -> VariableType:
+    def variable_type(self) -> variable_type.VariableType:
         return VariableType.BOOLEAN_ARRAY
 
     # TODO: full implementation

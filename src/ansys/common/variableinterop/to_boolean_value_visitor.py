@@ -1,7 +1,7 @@
 from ansys.common.variableinterop import (
-    boolean_array_value, boolean_value, integer_array_value, integer_value,
-    ivariable_visitor, real_array_value, real_value, string_array_value,
-    string_value, to_bool_visitor
+    boolean_array_value, boolean_value, exceptions, integer_array_value, integer_value,
+    ivariable_visitor, real_array_value, real_value, string_array_value, string_value,
+    to_bool_visitor, variable_value
 )
 
 
@@ -54,7 +54,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :param value: The value being visited
         :raise ValueError
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), variable_value.BOOLEAN)
 
     def visit_integer_array(
             self, value: integer_array_value.IntegerArrayValue) -> boolean_value.BooleanValue:
@@ -63,7 +63,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :param value: The value being visited
         :raise ValueError
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), variable_value.BOOLEAN)
 
     def visit_real_array(
             self, value: real_array_value.RealArrayValue) -> boolean_value.BooleanValue:
@@ -72,7 +72,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :param value: The value being visited
         :raise ValueError
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), variable_value.BOOLEAN)
 
     def visit_string_array(
             self, value: string_array_value.StringArrayValue) -> boolean_value.BooleanValue:
@@ -81,4 +81,4 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :param value: The value being visited
         :raise ValueError
         """
-        raise ValueError
+        raise exceptions.IncompatibleTypesException(value.variable_type(), variable_value.BOOLEAN)
