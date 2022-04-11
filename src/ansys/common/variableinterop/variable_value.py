@@ -14,7 +14,10 @@ class IVariableValue(ABC):
 
     # hashcode definition here
 
-    # clone here
+    @abstractmethod
+    def clone(self) -> IVariableValue:
+        """Get a deep copy of this value."""
+        raise NotImplementedError
 
     @abstractmethod
     def accept(

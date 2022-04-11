@@ -56,3 +56,16 @@ def test_construct(
                 assert instance == expect_equality
             else:
                 assert numpy.isnan(instance)
+
+
+def test_clone() -> None:
+    """Verifies that clone returns a new RealValue with the same value."""
+    # Setup
+    sut: RealValue = RealValue(6.9)
+
+    # SUT
+    result: RealValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == 6.9

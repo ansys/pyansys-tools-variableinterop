@@ -22,3 +22,17 @@ def test_construct(arg: Any, expect_equality: numpy.bool_) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
     instance: BooleanValue = BooleanValue(arg)
     assert instance == expect_equality
+
+
+@pytest.mark.skip("Enable when bool type fixed")
+def test_clone() -> None:
+    """Verifies that clone returns a new BooleanValue with the same value."""
+    # Setup
+    sut: BooleanValue = BooleanValue(True)
+
+    # SUT
+    result: BooleanValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result is True

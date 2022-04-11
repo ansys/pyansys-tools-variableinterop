@@ -20,3 +20,16 @@ def test_construct(arg: str, expect_equality: numpy.str_) -> None:
     """Verify that __init__ for StringValue correctly instantiates the superclass data"""
     instance: StringValue = StringValue(arg)
     assert instance == expect_equality
+
+
+def test_clone() -> None:
+    """Verifies that clone returns a new StringValue with the same value."""
+    # Setup
+    sut: StringValue = StringValue("word")
+
+    # SUT
+    result: StringValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == "word"

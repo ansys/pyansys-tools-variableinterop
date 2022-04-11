@@ -38,3 +38,16 @@ def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: Bas
 
         if expect_exception is None:
             assert instance == expect_equality
+
+
+def test_clone() -> None:
+    """Verifies that clone returns a new IntegerValue with the same value."""
+    # Setup
+    sut: IntegerValue = IntegerValue(7)
+
+    # SUT
+    result: IntegerValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == 7
