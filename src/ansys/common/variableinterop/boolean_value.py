@@ -5,12 +5,11 @@ from typing import TYPE_CHECKING, TypeVar, Dict
 
 import numpy as np
 
-from ansys.common.variableinterop import exceptions, variable_value
-
-if TYPE_CHECKING:
-    from ansys.common.variableinterop import (
-        ivariable_visitor, to_bool_visitor, variable_type
-    )
+import ansys.common.variableinterop.exceptions as exceptions
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
+import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 
 def int64_to_bool(val: np.int64) -> bool:

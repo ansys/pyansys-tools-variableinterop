@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue, IncompatibleTypesException, VariableType
+import ansys.common.variableinterop as acvi
 
 
 @pytest.mark.parametrize(
@@ -14,24 +14,24 @@ from ansys.common.variableinterop import BooleanValue, IncompatibleTypesExceptio
         pytest.param(None, False, None, id="none"),
 
         # TODO: Should we even accept strings?
-#       pytest.param(
-#           "",
-#           None,
-#           IncompatibleTypesException("str", VariableType.BOOLEAN),
-#           id="empty-string"),
-#       pytest.param(
-#           "something",
-#           None,
-#           IncompatibleTypesException("str", VariableType.BOOLEAN),
-#           id="non-empty-string"),
-#       pytest.param(
-#           "false",
-#           None,
-#           IncompatibleTypesException("str", VariableType.Boolean),
-#           id="non-empty-string-says-false"),
+        pytest.param(
+            "",
+            None,
+            acvi.IncompatibleTypesException,
+            id="empty-string"),
+        pytest.param(
+            "something",
+            None,
+            acvi.IncompatibleTypesException,
+            id="non-empty-string"),
+        pytest.param(
+            "false",
+            None,
+            acvi.IncompatibleTypesException,
+            id="non-empty-string-says-false"),
     ])
 def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseException) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
     with _create_exception_context(expect_exception):
-        instance: BooleanValue = BooleanValue(arg)
+        instance: acvi.BooleanValue = acvi.BooleanValue(arg)
         assert instance == expect_equality

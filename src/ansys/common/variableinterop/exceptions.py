@@ -2,6 +2,7 @@
 Custom Exception types.
 """
 
+import os
 from configparser import ConfigParser
 from typing import Union
 from ansys.common.variableinterop import variable_type, variable_type_util
@@ -20,7 +21,7 @@ def _error(name: str, *args: object) -> str:
     The formatted error string.
     """
     parser = ConfigParser()
-    parser.read("strings.properties")
+    parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))
     return parser.get("Errors", name).format(*args)
 
 

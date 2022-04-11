@@ -1,7 +1,13 @@
-from ansys.common.variableinterop import (
-    boolean_array_value, boolean_value, exceptions, integer_array_value, integer_value,
-    ivariable_visitor, real_array_value, real_value, string_array_value, string_value
-)
+import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.boolean_value as boolean_value
+import ansys.common.variableinterop.exceptions as exceptions
+import ansys.common.variableinterop.integer_array_value as integer_array_value
+import ansys.common.variableinterop.integer_value as integer_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.string_array_value as string_array_value
+import ansys.common.variableinterop.string_value as string_value
 
 
 class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
