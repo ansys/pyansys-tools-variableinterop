@@ -6,11 +6,12 @@ import numpy as np
 from numpy.typing import NDArray, ArrayLike
 from overrides import overrides
 
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar("T")
 
@@ -45,7 +46,7 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
 
     def to_boolean_array_value(self) -> boolean_array_value.BooleanArrayValue:
         # TODO: use BooleanValue.to_api_string() when that is available
-        def as_bool(value: str):
+        def as_bool(value: str) -> np.bool_:
             normalized: str = str.lower(str.strip(value))
             if normalized in ("yes", "y", "true"):
                 return np.bool_(True)
@@ -56,6 +57,9 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
                 return np.bool_(np.float64(value))
 
         return np.vectorize(as_bool)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_integer_array_value(self) -> integer_array_value.IntegerArrayValue:
+        return self.to_real_array_value().to_integer_array_value()
 
     # TODO: full implementation
 

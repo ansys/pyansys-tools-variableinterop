@@ -6,10 +6,11 @@ import numpy as np
 from numpy.typing import NDArray, ArrayLike
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar("T")
 
@@ -44,6 +45,14 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
 
     def to_boolean_array_value(self):
         return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_integer_array_value(self):
+        def away_from_zero(x: np.float64) -> np.int64:
+            f = np.floor if x < 0 else np.ceil
+            return np.int64(f(x))
+
+        return np.vectorize(away_from_zero)(self).astype(np.int64) \
+            .view(integer_array_value.IntegerArrayValue)
 
     # TODO: full implementation
 

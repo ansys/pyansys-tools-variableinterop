@@ -6,11 +6,11 @@ import numpy as np
 from numpy.typing import NDArray, ArrayLike
 from overrides import overrides
 
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.real_array_value as real_array_value
-
-from .variable_type import VariableType
+import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop.variable_type as variable_type
 
 T = TypeVar("T")
 
@@ -38,13 +38,16 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 
-    @property  # type: ignore
+    @property
     @overrides
-    def variable_type(self) -> VariableType:
-        return VariableType.BOOLEAN_ARRAY
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.BOOLEAN_ARRAY
 
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
+    def to_integer_array_value(self) -> integer_array_value.IntegerArrayValue:
+        return self.astype(np.int64).view(integer_array_value.IntegerArrayValue)
 
     # TODO: full implementation
 

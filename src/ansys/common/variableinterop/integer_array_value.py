@@ -9,8 +9,8 @@ from overrides import overrides
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
-import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar("T")
 
@@ -30,6 +30,9 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
         if values:
             return np.array(values, dtype=np.int64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.int64)
+
+    def __eq__(self, other):
+        return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
