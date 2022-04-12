@@ -70,6 +70,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             # Otherwise, parse as an int.
             return IntegerValue(value)
 
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%G", self))

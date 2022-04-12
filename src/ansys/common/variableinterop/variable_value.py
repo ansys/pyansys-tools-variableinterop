@@ -53,9 +53,20 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    # to_formatted_string here
+    @abstractmethod
+    def to_formatted_string(self, locale_name: str) -> str:
+        """
+        Convert this value to a formatted string.
 
-    # from_formatted_string here
+        Parameters
+        ----------
+        locale_name The locale to format in.
+
+        Returns
+        -------
+        A string appropriate for use in user facing areas.
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def get_modelcenter_type(self) -> str:

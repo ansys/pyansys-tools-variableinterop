@@ -53,6 +53,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
         # No conversion / escaping when coming from API string
         return StringValue(value)
 
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         return self
 

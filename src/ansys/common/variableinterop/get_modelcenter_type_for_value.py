@@ -13,8 +13,8 @@ class GetModelCenterTypeForValue:
     @staticmethod
     def get_modelcenter_type(value: variable_value.IVariableValue) -> str:
         """
-        Get the corresponding ModelCenter type for an IVariableValue
-        asdf
+        Get the corresponding ModelCenter type for an IVariableValue.
+
         Parameters
         ----------
         value The value for which to get the type.
