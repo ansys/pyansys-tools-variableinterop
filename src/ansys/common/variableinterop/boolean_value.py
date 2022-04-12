@@ -138,6 +138,7 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return str(self.__value)
 
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
@@ -175,9 +176,11 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
-    # to_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+            locale_name, lambda: locale.format_string("%s", self))
+        return result
 
-    # from_formatted_string here
-
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError

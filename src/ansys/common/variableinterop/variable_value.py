@@ -11,10 +11,6 @@ class IVariableValue(ABC):
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
-    # equality definition here
-
-    # hashcode definition here
-
     # clone here
 
     @abstractmethod
