@@ -17,6 +17,17 @@ from ansys.common.variableinterop.string_array_metadata import StringArrayMetada
 from ansys.common.variableinterop.string_metadata import StringMetadata # noqa
 from ansys.common.variableinterop.string_value import StringValue
 
+all_metadata_types = [
+    "IntegerMetadata",
+    "IntegerArrayMetadata",
+    "RealMetadata",
+    "RealArrayMetadata",
+    "BooleanMetadata",
+    "BooleanArrayMetadata",
+    "StringMetadata",
+    "StringArrayMetadata"
+    ]
+
 
 def assert_are_equal(metadata1, metadata2) -> None:
     """
@@ -66,37 +77,25 @@ def assert_are_not_equal(metadata1, metadata2) -> None:
     assert metadata2 != metadata1
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata",
-        "BooleanMetadata",
-        "BooleanArrayMetadata",
-        "StringMetadata",
-        "StringArrayMetadata"
-    ],
-)
-def test_are_equal_empty(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_are_equal_empty(type_name: str) -> None:
     """Tests whether empty metadata objects of the same type are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata2 = metadata_type()
     assert_are_equal(metadata1, metadata2)
 
 
-def test_different_metadata_classes_are_not_equal() -> None:
+def test_different_metadata_types_are_not_equal() -> None:
     """
     Tests whether empty metadata objects of different type are not
     equal.
@@ -110,33 +109,21 @@ def test_different_metadata_classes_are_not_equal() -> None:
     assert_are_not_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata",
-        "BooleanMetadata",
-        "BooleanArrayMetadata",
-        "StringMetadata",
-        "StringArrayMetadata"
-    ],
-)
-def test_are_equal_same_description(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_are_equal_same_description(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same description are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description: ćma na łące patrzy na słońce."
     metadata2 = metadata_type()
@@ -144,33 +131,21 @@ def test_are_equal_same_description(class_name: str) -> None:
     assert_are_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata",
-        "BooleanMetadata",
-        "BooleanArrayMetadata",
-        "StringMetadata",
-        "StringArrayMetadata"
-    ],
-)
-def test_are_equal_different_description(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_are_equal_different_description(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different descriptions are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description: ćma na łące patrzy na słońce."
     metadata2 = metadata_type()
@@ -179,33 +154,21 @@ def test_are_equal_different_description(class_name: str) -> None:
     assert_are_not_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata",
-        "BooleanMetadata",
-        "BooleanArrayMetadata",
-        "StringMetadata",
-        "StringArrayMetadata"
-    ],
-)
-def test_are_equal_same_custom_metadata(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_are_equal_same_custom_metadata(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same custom_metadata are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.custom_metadata["key1"] = BooleanValue(1)
     metadata1.custom_metadata["key2"] = BooleanValue(0)
@@ -215,33 +178,21 @@ def test_are_equal_same_custom_metadata(class_name: str) -> None:
     assert_are_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata",
-        "BooleanMetadata",
-        "BooleanArrayMetadata",
-        "StringMetadata",
-        "StringArrayMetadata"
-    ],
-)
-def test_are_equal_different_custom_metadata(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_are_equal_different_custom_metadata(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different custom_metadata are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.custom_metadata["key1"] = BooleanValue(1)
     metadata1.custom_metadata["key2"] = BooleanValue(0)
@@ -253,30 +204,29 @@ def test_are_equal_different_custom_metadata(class_name: str) -> None:
 
 # NumericMetadata:
 
+numeric_metadata_types = [
+    "IntegerMetadata",
+    "IntegerArrayMetadata",
+    "RealMetadata",
+    "RealArrayMetadata"
+    ]
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata"
-    ],
-)
-def test_are_equal_same_units(class_name: str) -> None:
+
+@pytest.mark.parametrize("type_name", numeric_metadata_types)
+def test_are_equal_same_units(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same units are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description."
     metadata1.units = "km per hr"
@@ -286,29 +236,21 @@ def test_are_equal_same_units(class_name: str) -> None:
     assert_are_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata"
-    ],
-)
-def test_are_equal_different_units(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", numeric_metadata_types)
+def test_are_equal_different_units(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different units are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description."
     metadata1.units = "km per hr"
@@ -318,29 +260,21 @@ def test_are_equal_different_units(class_name: str) -> None:
     assert_are_not_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata"
-    ],
-)
-def test_are_equal_same_display_format(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", numeric_metadata_types)
+def test_are_equal_same_display_format(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same display format are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description."
     metadata1.units = "seconds"
@@ -352,29 +286,21 @@ def test_are_equal_same_display_format(class_name: str) -> None:
     assert_are_equal(metadata1, metadata2)
 
 
-@pytest.mark.parametrize(
-    "class_name",
-    [
-        "IntegerMetadata",
-        "IntegerArrayMetadata",
-        "RealMetadata",
-        "RealArrayMetadata"
-    ],
-)
-def test_are_equal_different_display_format(class_name: str) -> None:
+@pytest.mark.parametrize("type_name", numeric_metadata_types)
+def test_are_equal_different_display_format(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different display format are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
 
     Returns
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.description = "Some description."
     metadata1.units = "seconds"
@@ -390,7 +316,7 @@ def test_are_equal_different_display_format(class_name: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "class_name, bound, value1, value2",
+    "type_name, bound, value1, value2",
     [
         ("IntegerMetadata", "lower_bound", None, None),
         ("IntegerMetadata", "lower_bound", 10, 10),
@@ -413,14 +339,14 @@ def test_are_equal_different_display_format(class_name: str) -> None:
     ],
 )
 def test_are_equal_same_bound(
-        class_name: str, bound: str, value1: Any, value2: Any) -> None:
+        type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same bound value are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     bound Name of the bound to test.
     value1 First value of the bound to test.
     value2 Second value of the bound to test.
@@ -429,7 +355,7 @@ def test_are_equal_same_bound(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     setattr(metadata1, bound, value1)
     metadata2 = metadata_type()
@@ -438,7 +364,7 @@ def test_are_equal_same_bound(
 
 
 @pytest.mark.parametrize(
-    "class_name, bound, value1, value2",
+    "type_name, bound, value1, value2",
     [
         ("IntegerMetadata", "lower_bound", None, IntegerValue(0)),
         ("IntegerMetadata", "lower_bound", IntegerValue(0), None),
@@ -461,14 +387,14 @@ def test_are_equal_same_bound(
     ],
 )
 def test_are_equal_different_bound(
-        class_name: str, bound: str, value1: Any, value2: Any) -> None:
+        type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different bound values are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     bound Name of the bound to test.
     value1 First value of the bound to test.
     value2 Second value of the bound to test.
@@ -477,7 +403,7 @@ def test_are_equal_different_bound(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     setattr(metadata1, bound, value1)
     metadata2 = metadata_type()
@@ -486,7 +412,7 @@ def test_are_equal_different_bound(
 
 
 @pytest.mark.parametrize(
-    "class_name, value1, value2",
+    "type_name, value1, value2",
     [
         ("IntegerMetadata", None, None),
         ("IntegerMetadata", [IntegerValue(0)], [0]),
@@ -505,14 +431,14 @@ def test_are_equal_different_bound(
     ],
 )
 def test_are_equal_same_enumerated_values(
-        class_name: str, value1: Any, value2: Any) -> None:
+        type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same enumerated_values value are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     value1 First value of the enumerated_values property to test.
     value2 Second value of the enumerated_values property to test.
 
@@ -520,7 +446,7 @@ def test_are_equal_same_enumerated_values(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.enumerated_values = value1
     metadata2 = metadata_type()
@@ -529,7 +455,7 @@ def test_are_equal_same_enumerated_values(
 
 
 @pytest.mark.parametrize(
-    "class_name, value1, value2",
+    "type_name, value1, value2",
     [
         ("IntegerMetadata", None, []),
         ("IntegerMetadata", [IntegerValue(0)], [1]),
@@ -549,14 +475,14 @@ def test_are_equal_same_enumerated_values(
     ],
 )
 def test_are_equal_different_enumerated_values(
-        class_name: str, value1: Any, value2: Any) -> None:
+        type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different enumerated_values value are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     value1 First value of the enumerated_values property to test.
     value2 Second value of the enumerated_values property to test.
 
@@ -564,7 +490,7 @@ def test_are_equal_different_enumerated_values(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.enumerated_values = value1
     metadata2 = metadata_type()
@@ -573,7 +499,7 @@ def test_are_equal_different_enumerated_values(
 
 
 @pytest.mark.parametrize(
-    "class_name, value1, value2",
+    "type_name, value1, value2",
     [
         ("IntegerMetadata", None, None),
         ("IntegerMetadata", "", ""),
@@ -592,14 +518,14 @@ def test_are_equal_different_enumerated_values(
     ],
 )
 def test_are_equal_same_enumerated_aliases(
-        class_name: str, value1: Any, value2: Any) -> None:
+        type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same enumerated_values value are equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     value1 First value of the enumerated_aliases property to test.
     value2 Second value of the enumerated_aliases property to test.
 
@@ -607,7 +533,7 @@ def test_are_equal_same_enumerated_aliases(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.enumerated_aliases = value1
     metadata2 = metadata_type()
@@ -616,7 +542,7 @@ def test_are_equal_same_enumerated_aliases(
 
 
 @pytest.mark.parametrize(
-    "class_name, value1, value2",
+    "type_name, value1, value2",
     [
         ("IntegerMetadata", None, []),
         ("IntegerMetadata", [], ""),
@@ -634,14 +560,14 @@ def test_are_equal_same_enumerated_aliases(
     ],
 )
 def test_are_equal_different_enumerated_aliases(
-        class_name: str, value1: Any, value2: Any) -> None:
+        type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different enumerated_values value are not equal.
 
     Parameters
     ----------
-    class_name Name of the class to test.
+    type_name Name of the metadata type to test.
     value1 First value of the enumerated_aliases property to test.
     value2 Second value of the enumerated_aliases property to test.
 
@@ -649,7 +575,7 @@ def test_are_equal_different_enumerated_aliases(
     -------
     nothing
     """
-    metadata_type = globals()[class_name]
+    metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata1.enumerated_aliases = value1
     metadata2 = metadata_type()
