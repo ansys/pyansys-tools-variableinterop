@@ -28,21 +28,21 @@ class BooleanValue(variable_value.IVariableValue):
         Convert a numpy int64 to a bool value per interchange
         specifications.
         """
-        return val != 0
+        return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
         """
         Convert an int to a bool value per interchange specifications.
         """
-        return val != 0
+        return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
         """
         Convert a float value to a bool per interchange specifications.
         """
-        return val != 0.0
+        return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
         'yes': True,
