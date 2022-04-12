@@ -2,8 +2,8 @@
 Custom Exception types.
 """
 
-import os
 from configparser import ConfigParser
+import os
 from typing import Dict
 
 from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue

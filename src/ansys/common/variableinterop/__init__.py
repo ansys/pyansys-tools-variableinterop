@@ -70,6 +70,7 @@ from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
+from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
 from .integer_array_metadata import IntegerArrayMetadata
 from .integer_array_value import IntegerArrayValue
 from .integer_metadata import IntegerMetadata
