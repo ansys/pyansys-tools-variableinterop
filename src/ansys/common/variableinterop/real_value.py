@@ -68,13 +68,16 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
     @overrides
     def to_api_string(self) -> str:
+        return str(self)
+
+    def __str__(self) -> str:
         if np.isnan(self):
             return RealValue.__CANONICAL_NAN
         if np.isposinf(self):
             return RealValue.__CANONICAL_INF
         if np.isneginf(self):
             return RealValue.__CANONICAL_NEG_INF
-        return str(self)
+        return np.float64.__str__(self)
 
     @staticmethod
     def from_api_string(value: str) -> RealValue:
