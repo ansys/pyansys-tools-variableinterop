@@ -59,11 +59,11 @@ class BooleanValue(variable_value.IVariableValue):
     """
 
     @staticmethod
-    def str_to_bool(val: str):
+    def str_to_bool(val: str) -> bool:
         """
         Convert a str to a bool per interchange specifications.
         """
-        _value: str = val.strip().lower()
+        _value: str = str.lower(str.strip(val))
         if _value in BooleanValue.api_str_to_bool:
             return BooleanValue.api_str_to_bool[_value]
         else:
@@ -166,13 +166,7 @@ class BooleanValue(variable_value.IVariableValue):
         value
         The string to convert.
         """
-        normalized: str = str.lower(str.strip(value))
-        if normalized in BooleanValue.api_str_to_bool:
-            return BooleanValue(BooleanValue.api_str_to_bool[normalized])
-        else:
-            # Try to parse as real, allow exception to bubble up
-            real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)
-            return real_equiv.to_boolean_value()
+        return BooleanValue(BooleanValue.str_to_bool(value))
 
     # to_formatted_string here
 
