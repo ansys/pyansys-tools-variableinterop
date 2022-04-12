@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+import copy
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
@@ -14,10 +15,9 @@ class IVariableValue(ABC):
 
     # hashcode definition here
 
-    @abstractmethod
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
-        raise NotImplementedError
+        return copy.deepcopy(self)
 
     @abstractmethod
     def accept(

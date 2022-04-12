@@ -1,7 +1,6 @@
 """Definition of StringValue."""
 from __future__ import annotations
 
-import copy
 from typing import TypeVar
 
 import numpy as np
@@ -24,10 +23,6 @@ class StringValue(np.str_, variable_value.IVariableValue):
     # equality definition here
 
     # hashcode definition here
-
-    @overrides
-    def clone(self) -> StringValue:
-        return copy.deepcopy(self)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:

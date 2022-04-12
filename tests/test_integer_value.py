@@ -152,7 +152,6 @@ def test_to_api_string(source: IntegerValue, expected_result: str):
     assert result == expected_result
 
 
-
 def test_clone() -> None:
     """Verifies that clone returns a new IntegerValue with the same value."""
     # Setup

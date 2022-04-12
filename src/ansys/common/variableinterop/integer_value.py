@@ -1,7 +1,6 @@
 """Definition of IntegerValue."""
 from __future__ import annotations
 
-import copy
 from typing import TypeVar
 
 import numpy as np
@@ -30,10 +29,6 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     # equality definition here
 
     # hashcode definition here
-
-    @overrides
-    def clone(self) -> IntegerValue:
-        return copy.deepcopy(self)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
