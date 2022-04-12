@@ -14,6 +14,7 @@ from .variable_type import VariableType
 
 T = TypeVar("T")
 
+
 class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     """Array of boolean values.
 
@@ -29,6 +30,9 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
         if values:
             return np.array(values, dtype=np.bool_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.bool_)
+
+    def __eq__(self, other) -> bool:
+        return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -48,8 +52,8 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def to_api_string(self) -> str:
         raise NotImplementedError
 
-    @overrides
-    def from_api_string(self, value: str) -> None:
+    @staticmethod
+    def from_api_string(value: str) -> None:
         raise NotImplementedError
 
     @overrides
