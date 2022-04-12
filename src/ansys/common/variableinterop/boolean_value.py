@@ -1,7 +1,7 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import TypeVar, Dict
 
 import numpy as np
 from overrides import overrides
@@ -14,58 +14,6 @@ import ansys.common.variableinterop.variable_value as variable_value
 T = TypeVar("T")
 
 
-def int64_to_bool(val: np.int64) -> bool:
-    """
-    Convert a numpy int64 to a bool value per interchange
-    specifications.
-    """
-    return val != 0
-
-
-def int_to_bool(val: int) -> bool:
-    """
-    Convert an int to a bool value per interchange specifications.
-    """
-    return val != 0
-
-
-def float_to_bool(val: float) -> bool:
-    """
-    Convert a float value to a bool per interchange specifications.
-    """
-    return val != 0.0
-
-
-api_str_to_bool: Dict[str, bool] = {
-    'yes': True,
-    'y': True,
-    'true': True,
-    'no': False,
-    'n': False,
-    'false': False
-}
-"""
-A mapping of acceptable normalized values for API string conversion
-to their corresponding bool value.
-"""
-
-
-def str_to_bool(val: str):
-    """
-    Convert a str to a bool per interchange specifications.
-    """
-    _value: str = val.strip().lower()
-    if _value in api_str_to_bool:
-        return api_str_to_bool[_value]
-    else:
-        try:
-            _f_value: float = float(_value)
-            return float_to_bool(_f_value)
-        except ValueError:
-            pass
-        raise ValueError
-
-
 class BooleanValue(variable_value.IVariableValue):
     """
     Wrapper around a boolean value.
@@ -74,6 +22,57 @@ class BooleanValue(variable_value.IVariableValue):
     """
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+
+    @staticmethod
+    def int64_to_bool(val: np.int64) -> bool:
+        """
+        Convert a numpy int64 to a bool value per interchange
+        specifications.
+        """
+        return val != 0
+
+    @staticmethod
+    def int_to_bool(val: int) -> bool:
+        """
+        Convert an int to a bool value per interchange specifications.
+        """
+        return val != 0
+
+    @staticmethod
+    def float_to_bool(val: float) -> bool:
+        """
+        Convert a float value to a bool per interchange specifications.
+        """
+        return val != 0.0
+
+    api_str_to_bool: Dict[str, bool] = {
+        'yes': True,
+        'y': True,
+        'true': True,
+        'no': False,
+        'n': False,
+        'false': False
+    }
+    """
+    A mapping of acceptable normalized values for API string conversion
+    to their corresponding bool value.
+    """
+
+    @staticmethod
+    def str_to_bool(val: str):
+        """
+        Convert a str to a bool per interchange specifications.
+        """
+        _value: str = val.strip().lower()
+        if _value in BooleanValue.api_str_to_bool:
+            return BooleanValue.api_str_to_bool[_value]
+        else:
+            try:
+                _f_value: float = float(_value)
+                return BooleanValue.float_to_bool(_f_value)
+            except ValueError:
+                pass
+            raise ValueError
 
     def __init__(self, source: object = None):
         """
@@ -144,18 +143,6 @@ class BooleanValue(variable_value.IVariableValue):
     def to_api_string(self) -> str:
         return str(self)
 
-    __api_str_values: Dict[str, bool] = {
-        'yes': True,
-        'y': True,
-        'true': True,
-        'no': False,
-        'n': False,
-        'false': False
-    }
-    """
-    Defines acceptable normalized values for API string conversion.
-    """
-
     @staticmethod
     def from_api_string(value: str) -> BooleanValue:
         """
@@ -180,8 +167,8 @@ class BooleanValue(variable_value.IVariableValue):
         The string to convert.
         """
         normalized: str = str.lower(str.strip(value))
-        if (normalized in BooleanValue.__api_str_values):
-            return BooleanValue(BooleanValue.__api_str_values[normalized])
+        if normalized in BooleanValue.api_str_to_bool:
+            return BooleanValue(BooleanValue.api_str_to_bool[normalized])
         else:
             # Try to parse as real, allow exception to bubble up
             real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)

@@ -34,7 +34,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :return: A BooleanValue equivalent
         """
         return boolean_value.BooleanValue(
-            boolean_value.int64_to_bool(value))
+            boolean_value.BooleanValue.int64_to_bool(value))
 
     def visit_real(self, value: real_value.RealValue) -> boolean_value.BooleanValue:
         """
@@ -43,7 +43,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :return: A BooleanValue equivalent
         """
         return boolean_value.BooleanValue(
-            boolean_value.float_to_bool(value))
+            boolean_value.BooleanValue.float_to_bool(value))
 
     def visit_string(self, value: string_value.StringValue) -> boolean_value.BooleanValue:
         """
@@ -52,7 +52,7 @@ class ToBooleanValueVisitor(ivariable_visitor.IVariableValueVisitor[boolean_valu
         :return: A BooleanValue equivalent
         """
         return boolean_value.BooleanValue(
-            boolean_value.str_to_bool(value))
+            boolean_value.BooleanValue.str_to_bool(value))
 
     def visit_boolean_array(
             self, value: boolean_array_value.BooleanArrayValue) -> boolean_value.BooleanValue:

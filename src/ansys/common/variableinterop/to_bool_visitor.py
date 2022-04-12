@@ -28,7 +28,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return boolean_value.int64_to_bool(value)
+        return boolean_value.BooleanValue.int64_to_bool(value)
 
     def visit_real(self, value: real_value.RealValue) -> bool:
         """
@@ -36,7 +36,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return boolean_value.float_to_bool(value)
+        return boolean_value.BooleanValue.float_to_bool(value)
 
     def visit_string(self, value: string_value.StringValue) -> bool:
         """
@@ -44,7 +44,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return boolean_value.str_to_bool(value)
+        return boolean_value.BooleanValue.str_to_bool(value)
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> bool:
         """
