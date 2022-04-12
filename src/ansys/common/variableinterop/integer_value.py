@@ -7,7 +7,6 @@ from typing import TypeVar
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -28,6 +27,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+
     # hashcode definition here
 
     @overrides
@@ -47,16 +48,13 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     def from_api_string(value: str) -> IntegerValue:
         """
         Create an integer value from an API string.
-
         Leading and trailing whitespace is ignored.
         Values which can be correctly parsed as floating-point numbers
         are parsed in that manner, then rounded to integers. When rounding,
         values with a 5 in the tenths place are rounded away from zero.
-
         Parameters
         ----------
         value the string to parse
-
         Returns
         -------
         An integer value parsed from the API string.

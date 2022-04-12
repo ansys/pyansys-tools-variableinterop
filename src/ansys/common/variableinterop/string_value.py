@@ -6,7 +6,6 @@ from typing import TypeVar
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -19,6 +18,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
+
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # hashcode definition here
 
@@ -39,10 +40,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
     def from_api_string(value: str) -> StringValue:
         """
         Convert an API string back to a string value.
-
         The string is stored exactly as specified; no escaping is performed
         as with from_formatted string.
-
         Parameters
         ----------
         value
