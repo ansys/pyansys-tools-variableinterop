@@ -10,9 +10,11 @@ from ansys.common.variableinterop import (
     RealArrayValue,
     RealValue,
     StringArrayValue,
-    StringValue, variable_type as variable_type_lib, ivariable_visitor as ivariable_visitor,
-    VariableType
+    StringValue,
+    VariableType,
 )
+from ansys.common.variableinterop import ivariable_visitor as ivariable_visitor
+from ansys.common.variableinterop import variable_type as variable_type_lib
 
 
 class TestUnknownValue(IVariableValue):

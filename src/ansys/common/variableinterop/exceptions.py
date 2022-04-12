@@ -2,8 +2,8 @@
 Custom Exception types.
 """
 
-import os
 from configparser import ConfigParser
+import os
 from typing import Union
 
 import ansys.common.variableinterop.variable_type as variable_type

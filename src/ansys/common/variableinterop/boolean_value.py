@@ -1,7 +1,7 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
-from typing import TypeVar, Dict
+from typing import Dict, TypeVar
 
 import numpy as np
 from overrides import overrides

@@ -32,7 +32,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # equality definition here
-
     # hashcode definition here
 
     __CANONICAL_INF = "Infinity"
