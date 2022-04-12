@@ -93,5 +93,6 @@ from .to_real_array_visitor import ToRealArrayVisitor
 from .value_from_api_string import from_api_string
 from .variable_type import VariableType
 from .variable_value import IVariableValue
+from .var_type_array_check import var_type_is_array
 
 # TODO: Get rid of star
