@@ -1,7 +1,9 @@
 """Definition of RealMetadata."""
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, TypeVar
+
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.numeric_metadata as variable_metadata
@@ -10,10 +12,13 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 from .coercion import implicit_coerce
 
+T = TypeVar("T")
+
 
 class RealMetadata(variable_metadata.NumericMetadata):
     """Common metadata for VariableType.REAL and VariableType.REAL_ARRAY."""
 
+    @overrides
     def __init__(self) -> None:
         super().__init__()
         self._lower_bound: Optional[real_value.RealValue] = None
@@ -25,12 +30,12 @@ class RealMetadata(variable_metadata.NumericMetadata):
 
     # clone here
 
-    def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[variable_metadata.T]
-    ) -> variable_metadata.T:
+    @overrides
+    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_real(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.REAL
 
