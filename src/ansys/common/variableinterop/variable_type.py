@@ -5,6 +5,10 @@ from enum import Enum
 class VariableType(Enum):
     """Enumeration listing the possible variable types."""
 
+    # When editing this enumeration,
+    # be sure to also update the IVariableTypePseudoVisitor
+    # and its implementation of the pseudo-visitor pattern
+    # appropriately.
     UNKNOWN = 0
     """If the type is unknown."""
     INTEGER = 1

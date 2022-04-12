@@ -1,7 +1,9 @@
 """Definition of IntegerMetadata."""
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, TypeVar
+
+from overrides import overrides
 
 import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
 import ansys.common.variableinterop.integer_value as integer_value
@@ -11,10 +13,13 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 from .coercion import implicit_coerce
 
+T = TypeVar("T")
+
 
 class IntegerMetadata(variable_metadata.NumericMetadata):
     """Common metadata for VariableType.INTEGER and VariableType.INTEGER_ARRAY."""
 
+    @overrides
     def __init__(self) -> None:
         super().__init__()
         self._lower_bound: Optional[integer_value.IntegerValue] = None
@@ -27,12 +32,12 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
 
     # clone here
 
-    def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[variable_metadata.T]
-    ) -> variable_metadata.T:
+    @overrides
+    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.INTEGER
 
