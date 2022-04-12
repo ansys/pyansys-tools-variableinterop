@@ -7,8 +7,8 @@ from numpy.typing import NDArray, ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.variable_value as variable_value
-
-from .variable_type import VariableType
+import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.variable_type as variable_type
 
 T = TypeVar("T")
 
@@ -38,10 +38,13 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
-    @property  # type: ignore
+    @property
     @overrides
-    def variable_type(self) -> VariableType:
-        return VariableType.REAL_ARRAY
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.REAL_ARRAY
+
+    def to_boolean_array_value(self):
+        return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
 
     # TODO: full implementation
 

@@ -8,8 +8,8 @@ from overrides import overrides
 
 import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.real_array_value as real_array_value
-
-from .variable_type import VariableType
+import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.variable_type as variable_type
 
 T = TypeVar("T")
 
@@ -36,13 +36,27 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
-    @property  # type: ignore
+    @property
     @overrides
-    def variable_type(self) -> VariableType:
-        return VariableType.STRING_ARRAY
+    def variable_type(self) -> variable_type.VariableType:
+        return variable_type.VariableType.STRING_ARRAY
 
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
+    def to_boolean_array_value(self) -> boolean_array_value.BooleanArrayValue:
+        # TODO: use BooleanValue.to_api_string() when that is available
+        def as_bool(value: str):
+            normalized: str = str.lower(str.strip(value))
+            if normalized in ("yes", "y", "true"):
+                return np.bool_(True)
+            elif normalized in ("no", "n", "false"):
+                return np.bool_(False)
+            else:
+                # Try to parse as real then convert to boolean
+                return np.bool_(np.float64(value))
+
+        return np.vectorize(as_bool)(self).view(boolean_array_value.BooleanArrayValue)
 
     # TODO: full implementation
 
