@@ -1,12 +1,14 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
+import locale
 from typing import Dict, TypeVar
 
 import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -20,8 +22,6 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    # equality definition here
 
     # hashcode definition here
 
@@ -81,9 +81,10 @@ class BooleanValue(np.bool_, variable_value.IVariableValue):
             real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)
             return real_equiv.to_boolean_value()
 
-    # to_formatted_string here
-
-    # from_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+            locale_name, lambda: locale.format_string("%s", self))
+        return result
 
     @overrides
     def get_modelcenter_type(self) -> str:

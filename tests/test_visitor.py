@@ -1,5 +1,7 @@
 """Unit tests of IVariableVisitor, and accept methods of value types."""
 
+from typing import Any
+
 import pytest
 
 import ansys.common.variableinterop as acvi
@@ -48,7 +50,7 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
         pytest.param(acvi.StringValue("錦蛇"), "錦蛇", id="String"),
     ]
 )
-def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: any) -> None:
+def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any) -> None:
     """
     Verifies that the visitor pattern is working for IVariableValue.
 

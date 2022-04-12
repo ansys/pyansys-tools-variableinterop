@@ -10,10 +10,6 @@ import ansys.common.variableinterop.variable_type as variable_type_lib
 class IVariableValue(ABC):
     """Interface that defines the common behavior between variable types."""
 
-    # equality definition here
-
-    # hashcode definition here
-
     # clone here
 
     @abstractmethod
@@ -56,9 +52,32 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    # to_formatted_string here
+    @abstractmethod
+    def from_api_string(self, value: str) -> None:
+        """
+        Convert an API string back into a value.
 
-    # from_formatted_string here
+        Parameters
+        ----------
+        value
+        The string to convert.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def to_formatted_string(self, locale_name: str) -> str:
+        """
+        Format this value in the given locale.
+
+        Parameters
+        ----------
+        locale_name The name of the locale to format to. Platform specific.
+
+        Returns
+        -------
+        The formatted value.
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def get_modelcenter_type(self) -> str:

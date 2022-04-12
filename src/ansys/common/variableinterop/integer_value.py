@@ -1,12 +1,14 @@
 """Definition of IntegerValue."""
 from __future__ import annotations
 
+import locale
 from typing import TypeVar
 
 import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -25,8 +27,6 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     example, when converting from real to integer, the value will be floored instead of
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    # equality definition here
 
     # hashcode definition here
 
@@ -72,9 +72,10 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             # Otherwise, parse as an int.
             return IntegerValue(value)
 
-    # to_formatted_string here
-
-    # from_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+            locale_name, lambda: locale.format_string("%G", self))
+        return result
 
     @overrides
     def get_modelcenter_type(self) -> str:

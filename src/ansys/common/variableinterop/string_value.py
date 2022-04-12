@@ -20,8 +20,6 @@ class StringValue(np.str_, variable_value.IVariableValue):
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    # equality definition here
-
     # hashcode definition here
 
     @overrides
@@ -56,9 +54,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
         # No conversion / escaping when coming from API string
         return StringValue(value)
 
-    # to_formatted_string here
-
-    # from_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        return self
 
     @overrides
     def get_modelcenter_type(self) -> str:

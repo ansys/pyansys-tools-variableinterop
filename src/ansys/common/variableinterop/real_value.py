@@ -1,6 +1,7 @@
 """Definition of RealValue."""
 from __future__ import annotations
 
+import locale
 from decimal import ROUND_HALF_UP, Decimal
 from typing import TypeVar
 
@@ -10,6 +11,7 @@ from overrides import overrides
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -118,9 +120,10 @@ class RealValue(np.float64, variable_value.IVariableValue):
         """
         return boolean_value.BooleanValue(self != 0)
 
-    # to_formatted_string here
-
-    # from_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+            locale_name, lambda: locale.format_string("%.15G", self))
+        return result
 
     @overrides
     def get_modelcenter_type(self) -> str:
