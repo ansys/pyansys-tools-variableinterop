@@ -26,11 +26,13 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
+    @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
         return np.array_equal(self, other)
 

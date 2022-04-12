@@ -26,11 +26,13 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.int64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.int64)
 
+    @overrides
     def __eq__(self, other):
         return np.array_equal(self, other)
 
