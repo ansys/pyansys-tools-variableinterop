@@ -6,7 +6,6 @@ from typing import TypeVar
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -25,6 +24,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     example, when converting from real to integer, the value will be floored instead of
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
+
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # equality definition here
 
@@ -91,6 +92,5 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
     # from_formatted_string here
 
-    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError

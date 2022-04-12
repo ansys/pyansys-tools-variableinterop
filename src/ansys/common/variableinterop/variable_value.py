@@ -3,12 +3,13 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
 
 
 class IVariableValue(ABC):
     """Interface that defines the common behavior between variable types."""
+
+    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # equality definition here
 
