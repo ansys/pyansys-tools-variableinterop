@@ -46,11 +46,10 @@ class IncompatibleTypesException(BaseException):
             self.from_type = None
             self.from_type_str: str = from_type
         if isinstance(to_type, variable_type.VariableType):
-            self.to_type: variable_type.VariableType = from_type
+            self.to_type: variable_type.VariableType = to_type
             self.to_type_str: str = to_type.associated_type_name
         else:
             self.to_type = None
             self.to_type_str: str = to_type
-        self.to_type: variable_type.VariableType = to_type
         self.message = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
         super().__init__(self.message)

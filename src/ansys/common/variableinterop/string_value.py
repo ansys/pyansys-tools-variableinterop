@@ -21,8 +21,6 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
-    # equality definition here
-
     # hashcode definition here
 
     @overrides
@@ -42,10 +40,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
     def from_api_string(value: str) -> StringValue:
         """
         Convert an API string back to a string value.
-
         The string is stored exactly as specified; no escaping is performed
         as with from_formatted string.
-
         Parameters
         ----------
         value
@@ -57,9 +53,8 @@ class StringValue(np.str_, variable_value.IVariableValue):
         # No conversion / escaping when coming from API string
         return StringValue(value)
 
-    # to_formatted_string here
-
-    # from_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        return self
 
     @overrides
     def get_modelcenter_type(self) -> str:

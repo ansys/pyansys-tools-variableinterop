@@ -29,21 +29,21 @@ class BooleanValue(variable_value.IVariableValue):
         Convert a numpy int64 to a bool value per interchange
         specifications.
         """
-        return val != 0
+        return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
         """
         Convert an int to a bool value per interchange specifications.
         """
-        return val != 0
+        return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
         """
         Convert a float value to a bool per interchange specifications.
         """
-        return val != 0.0
+        return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
         'yes': True,
@@ -89,12 +89,20 @@ class BooleanValue(variable_value.IVariableValue):
 
         if source is None:
             self.__value: bool = False
-        elif isinstance(source, bool):
-            self.__value: bool = source
-        elif isinstance(source, np.bool_):
+        elif isinstance(source, (bool, np.bool_)):
             self.__value: bool = bool(source)
         elif isinstance(source, variable_value.IVariableValue):
             self.__value: bool = source.accept(to_bool_visitor.ToBoolVisitor())
+        elif isinstance(
+                source,
+                (
+                    int, np.byte, np.ubyte, np.short, np.ushort, np.intc,
+                    np.uintc, np.int_, np.uint, np.longlong, np.ulonglong
+                )):
+            self.__value: bool = bool(source != 0)
+        elif isinstance(
+                source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
+            self.__value: bool = bool(source != 0.0)
         else:
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
@@ -131,6 +139,7 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return str(self.__value)
 
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
@@ -165,18 +174,6 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return real_value.RealValue(0.0)
 
-    __api_str_values: Dict[str, bool] = {
-        'yes': True,
-        'y': True,
-        'true': True,
-        'no': False,
-        'n': False,
-        'false': False
-    }
-    """
-    Defines acceptable normalized values for API string conversion.
-    """
-
     @staticmethod
     def from_api_string(value: str) -> BooleanValue:
         """
@@ -202,9 +199,11 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
-    # to_formatted_string here
+    def to_formatted_string(self, locale_name: str) -> str:
+        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+            locale_name, lambda: locale.format_string("%s", self))
+        return result
 
-    # from_formatted_string here
-
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
