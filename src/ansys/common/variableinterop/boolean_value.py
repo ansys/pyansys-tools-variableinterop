@@ -179,11 +179,10 @@ class BooleanValue(variable_value.IVariableValue):
 
     def to_integer_value(self) -> integer_value.IntegerValue:
         """
-        Convert a given BooleanValue to an IntegerValue
-        True is converted to 1 and False is converted to 0
-        (Note: this is temporarily a static until we can get the
-        non-numpy64-bool derived version working, since there's currently no way to actually have
-        a BooleanValue instance at the moment).
+        Convert a given BooleanValue to an IntegerValue.
+
+        True is converted to 1 and False is converted to 0.
+
         Parameters
         ----------
         orig the original BooleanValue
