@@ -7,6 +7,7 @@ import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
+import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -175,6 +176,24 @@ class BooleanValue(variable_value.IVariableValue):
         The string to convert.
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
+
+    def to_integer_value(self) -> integer_value.IntegerValue:
+        """
+        Convert a given BooleanValue to an IntegerValue.
+
+        True is converted to 1 and False is converted to 0.
+
+        Parameters
+        ----------
+        orig the original BooleanValue
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        if self:
+            return integer_value.IntegerValue(1)
+        else:
+            return integer_value.IntegerValue(0)
 
     def to_formatted_string(self, locale_name: str) -> str:
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(

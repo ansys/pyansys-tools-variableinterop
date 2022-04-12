@@ -36,6 +36,7 @@ def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseExcept
         instance: acvi.BooleanValue = acvi.BooleanValue(arg)
         assert instance == expect_equality
 
+
 @pytest.mark.parametrize(
     "arg,expected_result",
     [
@@ -118,4 +119,27 @@ def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
 
     # Verify
     assert type(result) is str
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param(acvi.BooleanValue(True), acvi.IntegerValue(1), id='true'),
+        pytest.param(acvi.BooleanValue(False), acvi.IntegerValue(0), id='false')
+    ]
+)
+def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to IntegerValue works correctly.
+    Parameters
+    ----------
+    source the original BooleanValue
+    expected_result the expected result of the conversion
+    """
+    # Execute
+    result: acvi.IntegerValue = source.to_integer_value()
+
+    # Verify
+    assert type(result) is acvi.IntegerValue
     assert result == expected_result
