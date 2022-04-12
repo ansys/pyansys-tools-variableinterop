@@ -313,10 +313,8 @@ def test_to_api_string(
                      id="negative Infinity"),
         pytest.param(StringValue('Infinity'), RealValue(numpy.float64('inf')), id="Infinity"),
         pytest.param(StringValue('NaN'), RealValue(numpy.float64('nan')), id="NaN"),
-
-        # TODO: Add boolean value tests when boolean types are ready
-        # pytest.param(BooleanValue(True), RealValue(1.0), id='boolean true'),
-        # pytest.param(BooleanValue(False), RealValue(0.0), id='boolean false'),
+        pytest.param(BooleanValue(True), RealValue(1.0), id='boolean true'),
+        pytest.param(BooleanValue(False), RealValue(0.0), id='boolean false'),
     ],
 )
 def test_to_real_value_valid(

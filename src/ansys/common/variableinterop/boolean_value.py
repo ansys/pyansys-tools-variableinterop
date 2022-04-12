@@ -143,8 +143,7 @@ class BooleanValue(variable_value.IVariableValue):
     def to_api_string(self) -> str:
         return str(self)
 
-    @staticmethod
-    def to_real_value(orig: BooleanValue) -> real_value.RealValue:
+    def to_real_value(self) -> real_value.RealValue:
         """
         Convert a given BooleanValue to a RealValue.
 
@@ -161,9 +160,7 @@ class BooleanValue(variable_value.IVariableValue):
         -------
         A RealValue with value representing the original BooleanValue.
         """
-        # TODO: Change back to an instance value if/when the work to make an independent
-        # Boolean class is done.
-        if orig:
+        if self:
             return real_value.RealValue(1.0)
         else:
             return real_value.RealValue(0.0)
