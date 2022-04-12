@@ -88,12 +88,20 @@ class BooleanValue(variable_value.IVariableValue):
 
         if source is None:
             self.__value: bool = False
-        elif isinstance(source, bool):
-            self.__value: bool = source
-        elif isinstance(source, np.bool_):
+        elif isinstance(source, (bool, np.bool_)):
             self.__value: bool = bool(source)
         elif isinstance(source, variable_value.IVariableValue):
             self.__value: bool = source.accept(to_bool_visitor.ToBoolVisitor())
+        elif isinstance(
+                source,
+                (
+                    int, np.byte, np.ubyte, np.short, np.ushort, np.intc,
+                    np.uintc, np.int_, np.uint, np.longlong, np.ulonglong
+                )):
+            self.__value: bool = bool(source != 0)
+        elif isinstance(
+                source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
+            self.__value: bool = bool(source != 0.0)
         else:
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
