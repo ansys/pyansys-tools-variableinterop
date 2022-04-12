@@ -7,6 +7,7 @@ from test_utils import _create_exception_context
 from ansys.common.variableinterop import (
     IntegerValue,
     IVariableValue,
+    BooleanValue,
     RealValue,
     StringValue,
     to_integer_value,
@@ -206,7 +207,11 @@ def test_to_api_string(source: IntegerValue, expected_result: str):
         pytest.param(StringValue('-1.5'), IntegerValue(-2),
                      id='string, rounding, to odd, negative'),
         pytest.param(StringValue('-2.5'), IntegerValue(-3),
-                     id='string, rounding, to even, negative')
+                     id='string, rounding, to even, negative'),
+        pytest.param(BooleanValue(True), IntegerValue(1),
+                     id='boolean true'),
+        pytest.param(BooleanValue(False), IntegerValue(0),
+                     id='boolean false')
     ]
 )
 def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue):

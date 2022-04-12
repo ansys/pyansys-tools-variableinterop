@@ -133,8 +133,7 @@ class BooleanValue(variable_value.IVariableValue):
             real_equiv: real_value.RealValue = real_value.RealValue.from_api_string(normalized)
             return real_equiv.to_boolean_value()
 
-    @staticmethod
-    def to_integer_value(orig: BooleanValue) -> integer_value.IntegerValue:
+    def to_integer_value(self) -> integer_value.IntegerValue:
         """
         Convert a given BooleanValue to an IntegerValue
         True is converted to 1 and False is converted to 0
@@ -148,9 +147,7 @@ class BooleanValue(variable_value.IVariableValue):
         -------
         A RealValue with value representing the original BooleanValue.
         """
-        # TODO: Change back to an instance value if/when the work to make an independent
-        # Boolean class is done.
-        if orig:
+        if self:
             return integer_value.IntegerValue(1)
         else:
             return integer_value.IntegerValue(0)

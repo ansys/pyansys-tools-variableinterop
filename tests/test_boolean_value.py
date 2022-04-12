@@ -22,6 +22,9 @@ def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseExcept
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
     instance: BooleanValue = BooleanValue(arg)
     assert instance == expect_equality
+    with _create_exception_context(expect_exception):
+        instance: BooleanValue = BooleanValue(arg)
+        assert instance == expect_equality
 
 
 @pytest.mark.parametrize(
@@ -125,11 +128,8 @@ def test_to_int_value(source: BooleanValue, expected_result: str) -> None:
     expected_result the expected result of the conversion
     """
     # Execute
-    result: IntegerValue = BooleanValue.to_integer_value(source)
+    result: IntegerValue = source.to_integer_value()
 
     # Verify
     assert type(result) is IntegerValue
     assert result == expected_result
-    with _create_exception_context(expect_exception):
-        instance: BooleanValue = BooleanValue(arg)
-        assert instance == expect_equality
