@@ -57,26 +57,46 @@ from ansys.common.variableinterop import (
         pytest.param(StringValue("yes"), BooleanValue(True), None, id="StringValue(yes)"),
         pytest.param(StringValue("no"), BooleanValue(False), None, id="StringValue(no)"),
         pytest.param(StringValue("  true  "), BooleanValue(True), None, id="StringValue(  true  )"),
-        pytest.param(StringValue("  false  "), BooleanValue(False), None, id="StringValue(  false  )"),
+        pytest.param(
+            StringValue("  false  "), BooleanValue(False), None, id="StringValue(  false  )"),
         pytest.param(StringValue("  TRUE  "), BooleanValue(True), None, id="StringValue(  TRUE  )"),
-        pytest.param(StringValue("  FALSE  "), BooleanValue(False), None, id="StringValue(  FALSE  )"),
-        pytest.param(StringValue(str(numpy.iinfo(numpy.int64).min)), BooleanValue(True), None, id="StringValue(INT64_MIN)"),
+        pytest.param(
+            StringValue("  FALSE  "), BooleanValue(False), None, id="StringValue(  FALSE  )"),
+        pytest.param(
+            StringValue(str(numpy.iinfo(numpy.int64).min)), BooleanValue(True), None,
+            id="StringValue(INT64_MIN)"),
         pytest.param(StringValue("-1"), BooleanValue(True), None, id="StringValue(-1)"),
         pytest.param(StringValue("0"), BooleanValue(False), None, id="StringValue(0)"),
         pytest.param(StringValue("1"), BooleanValue(True), None, id="StringValue(1)"),
-        pytest.param(StringValue(str(numpy.iinfo(numpy.int64).max)), BooleanValue(True), None, id="StringValue(INT64_MAX)"),
-        pytest.param(StringValue("1234567890123456789"), BooleanValue(True), None, id="StringValue(1234567890123456789)"),
+        pytest.param(
+            StringValue(str(numpy.iinfo(numpy.int64).max)), BooleanValue(True), None,
+            id="StringValue(INT64_MAX)"),
+        pytest.param(
+            StringValue("1234567890123456789"), BooleanValue(True), None,
+            id="StringValue(1234567890123456789)"),
         pytest.param(StringValue("-inf"), BooleanValue(True), None, id="StringValue(-inf)"),
-        pytest.param(StringValue(str(-sys.float_info.max)), BooleanValue(True), None, id="StringValue(-DLB_MAX)"),
+        pytest.param(
+            StringValue(str(-sys.float_info.max)), BooleanValue(True), None,
+            id="StringValue(-DLB_MAX)"),
         pytest.param(StringValue("-1.0"), BooleanValue(True), None, id="StringValue(-1.0)"),
-        pytest.param(StringValue(str(-sys.float_info.epsilon)), BooleanValue(True), None, id="StringValue(-DBL_EPSILON)"),
-        pytest.param(StringValue(str(-sys.float_info.min)), BooleanValue(True), None, id="StringValue(-DBL_MIN)"),
+        pytest.param(
+            StringValue(str(-sys.float_info.epsilon)), BooleanValue(True), None,
+            id="StringValue(-DBL_EPSILON)"),
+        pytest.param(
+            StringValue(str(-sys.float_info.min)), BooleanValue(True), None,
+            id="StringValue(-DBL_MIN)"),
         pytest.param(StringValue("-0.0"), BooleanValue(False), None, id="StringValue(-0.0)"),
         pytest.param(StringValue("0.0"), BooleanValue(False), None, id="StringValue(0.0)"),
-        pytest.param(StringValue(str(sys.float_info.min)), BooleanValue(True), None, id="StringValue(DLB_MIN)"),
-        pytest.param(StringValue(str(sys.float_info.epsilon)), BooleanValue(True), None, id="StringValue(DBL_EPSILON)"),
+        pytest.param(
+            StringValue(str(sys.float_info.min)), BooleanValue(True), None,
+            id="StringValue(DLB_MIN)"),
+        pytest.param(
+            StringValue(str(sys.float_info.epsilon)), BooleanValue(True), None,
+            id="StringValue(DBL_EPSILON)"),
         pytest.param(StringValue("1.0"), BooleanValue(True), None, id="StringValue(1.0)"),
-        pytest.param(StringValue(str(sys.float_info.max)), BooleanValue(True), None, id="StringValue(DBL_MAX)"),
+        pytest.param(
+            StringValue(str(sys.float_info.max)), BooleanValue(True), None,
+            id="StringValue(DBL_MAX)"),
         pytest.param(StringValue("inf"), BooleanValue(True), None, id="StringValue(inf)"),
         pytest.param(StringValue("nan"), BooleanValue(True), None, id="StringValue(nan)"),
         # Other Types
