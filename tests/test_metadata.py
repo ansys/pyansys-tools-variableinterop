@@ -582,10 +582,9 @@ def test_are_equal_different_enumerated_aliases(
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_clone_same_custom_metadata(type_name: str) -> None:
+def test_clone_custom_metadata(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same custom_metadata are properly cloned.
+    Tests whether metadata objects are properly cloned.
 
     Parameters
     ----------
