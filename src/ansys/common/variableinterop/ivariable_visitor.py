@@ -5,9 +5,13 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
+    import ansys.common.variableinterop.boolean_array_value as boolean_array_value
     import ansys.common.variableinterop.boolean_value as boolean_value
+    import ansys.common.variableinterop.integer_array_value as integer_array_value
     import ansys.common.variableinterop.integer_value as integer_value
+    import ansys.common.variableinterop.real_array_value as real_array_value
     import ansys.common.variableinterop.real_value as real_value
+    import ansys.common.variableinterop.string_array_value as string_array_value
     import ansys.common.variableinterop.string_value as string_value
 
 
@@ -85,10 +89,62 @@ class IVariableValueVisitor(ABC, Generic[T]):
         """
         raise NotImplementedError
 
-    # IntegerArray
+    @abstractmethod
+    def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> T:
+        """
+        Will be called if accept is called on an IntegerArrayValue.
 
-    # RealArray
+        Parameters
+        ----------
+        value The IntegerArrayValue being visited.
 
-    # BooleanArray
+        Returns
+        -------
+        The result.
+        """
+        raise NotImplementedError
 
-    # StringArray
+    @abstractmethod
+    def visit_real_array(self, value: real_array_value.RealArrayValue) -> T:
+        """
+        Will be called if accept is called on a RealArrayValue.
+
+        Parameters
+        ----------
+        value The RealArrayValue being visited.
+
+        Returns
+        -------
+        The result.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> T:
+        """
+        Will be called if accept is called on a BooleanArrayValue.
+
+        Parameters
+        ----------
+        value The BooleanArrayValue being visited.
+
+        Returns
+        -------
+        The result.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_string_array(self, value: string_array_value.StringArrayValue) -> T:
+        """
+        Will be called if accept is called on a StringArrayValue.
+
+        Parameters
+        ----------
+        value The StringArrayValue being visited.
+
+        Returns
+        -------
+        The result.
+        """
+        raise NotImplementedError

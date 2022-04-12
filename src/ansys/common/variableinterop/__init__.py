@@ -63,20 +63,32 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
+from .boolean_array_metadata import BooleanArrayMetadata
+from .boolean_array_value import BooleanArrayValue
 from .boolean_metadata import BooleanMetadata
 from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
+from .exceptions import IncompatibleTypesException
+from .integer_array_metadata import IntegerArrayMetadata
+from .integer_array_value import IntegerArrayValue
 from .integer_metadata import IntegerMetadata
 from .integer_value import IntegerValue
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .ivariable_visitor import IVariableValueVisitor
 from .ivariablemetadata_visitor import IVariableMetadataVisitor
 from .numeric_metadata import NumericMetadata
+from .real_array_metadata import RealArrayMetadata
+from .real_array_value import RealArrayValue
 from .real_metadata import RealMetadata
 from .real_value import RealValue
+from .string_array_metadata import StringArrayMetadata
+from .string_array_value import StringArrayValue
 from .string_metadata import StringMetadata
 from .string_value import StringValue
+from .to_boolean_array_visitor import ToBooleanArrayVisitor
+from .to_real_array_visitor import ToRealArrayVisitor
+from .value_from_api_string import from_api_string
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 
