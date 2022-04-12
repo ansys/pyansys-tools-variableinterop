@@ -40,7 +40,7 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
-    @property
+    @property   # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.REAL_ARRAY

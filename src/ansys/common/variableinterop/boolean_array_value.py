@@ -40,7 +40,7 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 
-    @property
+    @property   # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN_ARRAY
