@@ -14,7 +14,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
     An IVariableValueVisitor which returns a bool equivalent of the object visited
     """
 
-    def visit_boolean(self, value: boolean_value.BooleanValue) -> bool:
+    def visit_boolean(self, value: "boolean_value.BooleanValue") -> bool:
         """
         Visit a BooleanValue
         :param value: The value being visited
@@ -28,7 +28,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return value != 0
+        return boolean_value.BooleanValue.int64_to_bool(value)
 
     def visit_real(self, value: real_value.RealValue) -> bool:
         """
@@ -36,7 +36,7 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        return value != 0.0
+        return boolean_value.BooleanValue.float_to_bool(value)
 
     def visit_string(self, value: string_value.StringValue) -> bool:
         """
@@ -44,50 +44,40 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :return: A bool equivalent
         """
-        _value: str = value.strip().lower()
-        if _value in boolean_value.BooleanValue.api_to_bool:
-            return boolean_value.BooleanValue.api_to_bool[_value]
-        else:
-            try:
-                _f_value: float = float(_value)
-                return _f_value != 0.0
-            except ValueError:
-                pass
-            try:
-                _i_value: int = int(_value)
-                return _i_value != 0
-            except ValueError:
-                pass
-            raise ValueError
+        return boolean_value.BooleanValue.str_to_bool(value)
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> bool:
         """
         Visit a BooleanArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        import ansys.common.variableinterop.exceptions as exceptions
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> bool:
         """
         Visit an IntegerArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        import ansys.common.variableinterop.exceptions as exceptions
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) -> bool:
         """
         Visit a RealArrayValue
         :param value: The value being visited
-        :raise ValueError
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        import ansys.common.variableinterop.exceptions as exceptions
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_string_array(self, value: string_array_value.StringArrayValue) -> bool:
         """
         Visit a StringArrayValue
         :param value: The value being visited
-        :return: A bool equivalent
+        :raise IncompatibleTypesException
         """
-        raise ValueError
+        import ansys.common.variableinterop.exceptions as exceptions
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")

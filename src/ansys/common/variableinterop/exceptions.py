@@ -4,17 +4,9 @@ Custom Exception types.
 
 import os
 from configparser import ConfigParser
-from typing import Dict
+from typing import Union
 
-from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
-from ansys.common.variableinterop.boolean_value import BooleanValue
-from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
-from ansys.common.variableinterop.integer_value import IntegerValue
-from ansys.common.variableinterop.real_array_value import RealArrayValue
-from ansys.common.variableinterop.real_value import RealValue
-from ansys.common.variableinterop.string_array_value import StringArrayValue
-from ansys.common.variableinterop.string_value import StringValue
-from ansys.common.variableinterop.variable_type import VariableType
+import ansys.common.variableinterop.variable_type as variable_type
 
 
 def _error(name: str, *args: object) -> str:
@@ -38,22 +30,26 @@ def _error(name: str, *args: object) -> str:
 class IncompatibleTypesException(BaseException):
     """Exception raised when attempting to convert from one IVariableValue to an
     incompatible type."""
-
-    def __init__(self, from_type: VariableType, to_type: VariableType):
-        _class_names: Dict[VariableType, str] = {
-            VariableType.STRING: StringValue.__name__,
-            VariableType.REAL: RealValue.__name__,
-            VariableType.INTEGER: IntegerValue.__name__,
-            VariableType.BOOLEAN: BooleanValue.__name__,
-            VariableType.STRING_ARRAY: StringArrayValue.__name__,
-            VariableType.REAL_ARRAY: RealArrayValue.__name__,
-            VariableType.INTEGER_ARRAY: IntegerArrayValue.__name__,
-            VariableType.BOOLEAN_ARRAY: BooleanArrayValue.__name__
-        }
-
-        self.from_type: VariableType = from_type
-        self.to_type: VariableType = to_type
-        self.message = _error("ERROR_INCOMPATIBLE_TYPES",
-                              _class_names[self.from_type],
-                              _class_names[self.to_type])
+    def __init__(
+            self,
+            from_type: Union[variable_type.VariableType, str],
+            to_type: Union[variable_type.VariableType, str]):
+        """
+        Construct exception.
+        :param from_type a VariableType or a string identifying the type converting from.
+        :param to_type a VariableType or a string identifying the type converting to.
+        """
+        if isinstance(from_type, variable_type.VariableType):
+            self.from_type: variable_type.VariableType = from_type
+            self.from_type_str: str = from_type.associated_type_name
+        else:
+            self.from_type = None
+            self.from_type_str: str = from_type
+        if isinstance(to_type, variable_type.VariableType):
+            self.to_type: variable_type.VariableType = to_type
+            self.to_type_str: str = to_type.associated_type_name
+        else:
+            self.to_type = None
+            self.to_type_str: str = to_type
+        self.message = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
         super().__init__(self.message)

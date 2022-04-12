@@ -58,6 +58,10 @@ jobs:
       - name: Install variableinterop, with test extra
         run: pip install $(echo dist/*)[test]
 
+      - name: Setup locale for tests
+        run: |
+          sudo locale-gen de_DE.UTF-8
+
       - name: Unit testing
         run: |
           cd tests  # so we're testing the install, not local
