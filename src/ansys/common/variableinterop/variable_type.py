@@ -51,6 +51,7 @@ class VariableType(Enum):
 
         # TODO: Update with file type names when available.
         class_map: Dict[VariableType, str] = {
+            VariableType.UNKNOWN: "unknown",
             VariableType.STRING: string_value.StringValue.__name__,
             VariableType.REAL: real_value.RealValue.__name__,
             VariableType.INTEGER: integer_value.IntegerValue.__name__,
