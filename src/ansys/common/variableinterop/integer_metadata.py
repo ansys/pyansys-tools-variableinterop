@@ -1,8 +1,11 @@
 """Definition of IntegerMetadata."""
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, TypeVar
 
+from overrides import overrides
+
+import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.numeric_metadata as variable_metadata
@@ -10,10 +13,13 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 from .coercion import implicit_coerce
 
+T = TypeVar("T")
+
 
 class IntegerMetadata(variable_metadata.NumericMetadata):
     """Common metadata for VariableType.INTEGER and VariableType.INTEGER_ARRAY."""
 
+    @overrides
     def __init__(self) -> None:
         super().__init__()
         self._lower_bound: Optional[integer_value.IntegerValue] = None
@@ -21,16 +27,17 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
         self._enumerated_values: List[integer_value.IntegerValue] = []
         self._enumerated_aliases: List[str] = []
 
-    # equality definition here
+    def __eq__(self, other):
+        return self.are_equal(other)
 
     # clone here
 
-    def accept(
-            self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[variable_metadata.T]
-    ) -> variable_metadata.T:
+    @overrides
+    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.INTEGER
 
@@ -131,3 +138,22 @@ class IntegerMetadata(variable_metadata.NumericMetadata):
         The list of aliases to set.
         """
         self._enumerated_aliases = value
+
+    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
+        """Determine if a given metadata is equal to this metadata.
+
+        Parameters
+        ----------
+        metadata Metadata to compare this object to.
+
+        Returns
+        -------
+        True if metadata objects are equal, false otherwise.
+        """
+        equal: bool = (isinstance(metadata, IntegerMetadata) and
+                       super().are_equal(metadata) and
+                       self._lower_bound == metadata._lower_bound and
+                       self._upper_bound == metadata._upper_bound and
+                       self._enumerated_values == metadata._enumerated_values and
+                       self._enumerated_aliases == metadata._enumerated_aliases)
+        return equal

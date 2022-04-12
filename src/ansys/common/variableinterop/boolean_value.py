@@ -2,13 +2,11 @@
 from __future__ import annotations
 
 import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.variable_type as variable_type
-import numpy as np
-from typing import TYPE_CHECKING, TypeVar, Dict
-
 import ansys.common.variableinterop.variable_value as variable_value
+import numpy as np
+from overrides import overrides
+from typing import TYPE_CHECKING, TypeVar, Dict
 
 if TYPE_CHECKING:
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -79,15 +77,16 @@ class BooleanValue(variable_value.IVariableValue):
 
     # hashcode definition here
 
-    T = TypeVar("T")
-
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
-    @property
+    @property  # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN
 
+    @overrides
     def to_api_string(self) -> str:
         return str(self)
 
@@ -159,5 +158,6 @@ class BooleanValue(variable_value.IVariableValue):
 
     # from_formatted_string here
 
+    @overrides
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
