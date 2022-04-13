@@ -2,20 +2,18 @@ from typing import Any
 
 import pytest
 
+from ansys.common.variableinterop.boolean_array_metadata import BooleanArrayMetadata  # noqa
+from ansys.common.variableinterop.boolean_metadata import BooleanMetadata  # noqa
 from ansys.common.variableinterop.boolean_value import BooleanValue
-from ansys.common.variableinterop.boolean_metadata import BooleanMetadata # noqa
-from ansys.common.variableinterop.boolean_array_metadata import BooleanArrayMetadata # noqa
-from ansys.common.variableinterop.integer_value import IntegerValue
+from ansys.common.variableinterop.integer_array_metadata import IntegerArrayMetadata  # noqa
 from ansys.common.variableinterop.integer_metadata import IntegerMetadata
-from ansys.common.variableinterop.integer_array_metadata import IntegerArrayMetadata # noqa
-from ansys.common.variableinterop.real_value import RealValue
+from ansys.common.variableinterop.integer_value import IntegerValue
+from ansys.common.variableinterop.real_array_metadata import RealArrayMetadata  # noqa
 from ansys.common.variableinterop.real_metadata import RealMetadata
-from ansys.common.variableinterop.real_array_metadata import RealArrayMetadata # noqa
-from ansys.common.variableinterop.string_value import StringValue # noqa
-from ansys.common.variableinterop.string_metadata import StringMetadata # noqa
-from ansys.common.variableinterop.string_array_metadata import StringArrayMetadata # noqa
-from ansys.common.variableinterop.string_metadata import StringMetadata # noqa
-from ansys.common.variableinterop.string_value import StringValue
+from ansys.common.variableinterop.real_value import RealValue
+from ansys.common.variableinterop.string_array_metadata import StringArrayMetadata  # noqa
+from ansys.common.variableinterop.string_metadata import StringMetadata  # noqa
+from ansys.common.variableinterop.string_value import StringValue  # noqa
 
 all_metadata_types = [
     "IntegerMetadata",
@@ -581,3 +579,26 @@ def test_are_equal_different_enumerated_aliases(
     metadata2 = metadata_type()
     metadata2.enumerated_aliases = value2
     assert_are_not_equal(metadata1, metadata2)
+
+
+@pytest.mark.parametrize("type_name", all_metadata_types)
+def test_clone_custom_metadata(type_name: str) -> None:
+    """
+    Tests whether metadata objects are properly cloned.
+
+    Parameters
+    ----------
+    type_name Name of the metadata type to test.
+
+    Returns
+    -------
+    nothing
+    """
+    metadata_type = globals()[type_name]
+    metadata1 = metadata_type()
+    metadata1.custom_metadata["key1"] = IntegerValue(1)
+    metadata1.custom_metadata["key2"] = IntegerValue(0)
+    metadata2 = metadata1.clone()
+    assert_are_equal(metadata1, metadata2)
+    assert metadata1.custom_metadata["key1"] is not metadata2.custom_metadata["key1"]
+    assert metadata1.custom_metadata["key2"] is not metadata2.custom_metadata["key2"]

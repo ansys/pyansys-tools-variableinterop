@@ -5,9 +5,9 @@ import pytest
 from test_utils import _create_exception_context
 
 from ansys.common.variableinterop import (
+    BooleanValue,
     IntegerValue,
     IVariableValue,
-    BooleanValue,
     RealValue,
     StringValue,
     to_integer_value,
@@ -294,3 +294,16 @@ def test_to_integer_value_invalid(source: IVariableValue, expected_exception: Ba
     # Execute
     with _create_exception_context(expected_exception):
         result: IntegerValue = to_integer_value(source)
+
+
+def test_clone() -> None:
+    """Verifies that clone returns a new IntegerValue with the same value."""
+    # Setup
+    sut: IntegerValue = IntegerValue(7)
+
+    # SUT
+    result: IntegerValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == 7

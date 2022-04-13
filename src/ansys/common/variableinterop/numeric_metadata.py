@@ -41,8 +41,6 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
                        self._display_format == metadata._display_format)
         return equal
 
-    # clone here
-
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         raise NotImplementedError
