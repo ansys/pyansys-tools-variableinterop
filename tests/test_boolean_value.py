@@ -202,14 +202,14 @@ binary_tests: List[
     * operator :
         operator to perform on the two operands
     * bool_expected : Any
-        expected results if working with bool values. If operation 
+        expected results if working with bool values. If operation
         raises an Exception, the type of the exception.
     * np_bool_expected : Any
         expected results if working with np.bool_ values. If operation
         raises an Exception, the type of the Exception.
     * booleanValueExpected : Any
         expected results if working with BooleanValue values or None if
-        same as np_bool_expected. If operation raises an Exception, 
+        same as np_bool_expected. If operation raises an Exception,
         the type of the Exception.
 """
 binary_same_boolean_types_tests = cross_types(binary_tests)
