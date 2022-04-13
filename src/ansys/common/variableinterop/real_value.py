@@ -107,7 +107,7 @@ class RealValue(np.float64, variable_value.IVariableValue):
         to the nearest integer (values with a 5 in the tenths place
         are rounded away from zero).
         """
-        return integer_value.IntegerValue(Decimal(self).to_integral(ROUND_HALF_UP))
+        return integer_value.IntegerValue(self)
 
     def to_boolean_value(self) -> boolean_value.BooleanValue:
         """

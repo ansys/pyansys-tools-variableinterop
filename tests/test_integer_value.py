@@ -13,6 +13,7 @@ from ansys.common.variableinterop import (
     to_integer_value,
 )
 
+
 @pytest.mark.parametrize(
     "arg,expect_equality,expect_exception",
     [
@@ -25,17 +26,25 @@ from ansys.common.variableinterop import (
         pytest.param(-9223372036854775809, None, OverflowError, id="min-1"),
         pytest.param(1.4, numpy.int64(1), None, id="1.4-to-1"),
 
-        # TODO: Should we override the numpy behavior for any of these cases?
         pytest.param(None, None, TypeError, id="None"),
-        pytest.param(1.6, numpy.int64(1), None, id="1.6-to-1"),
+        pytest.param(1.6, numpy.int64(1), None, id="from builtins.float(1.6) should floor"),
+        pytest.param(RealValue(1.6), numpy.int64(2), None,
+                     id="from RealValue(1.6) should round to 2"),
+        pytest.param(RealValue(4.5), numpy.int64(5), None,
+                     id="from RealValue(4.5) should round to 5"),
         pytest.param(True, numpy.int64(1), None, id="True-to-1"),
         pytest.param(False, numpy.int64(0), None, id="False-to-0"),
 
-        # TODO: Should we support string representations at all?
-        # Should we pass-through to numpy, mimic fromAPIString, mimic fromFormattedString?
         pytest.param('some garbage text', None, ValueError, id="garbage-text"),
         pytest.param('-1', numpy.int64(-1), None, id="negative-one-text"),
         pytest.param('1', numpy.int64(1), None, id="one-text"),
+        pytest.param('1.5', None, ValueError, id="builtins.string with decimal should fail"),
+        pytest.param(StringValue('0.5'), numpy.int64(1), None,
+                     id="from StringValue('0.5') should round"),
+        pytest.param(StringValue('0.5'), numpy.int64(1), None,
+                     id="from StringValue('0.5') should round"),
+
+        pytest.param(IntegerValue(8675309), IntegerValue(8675309), None, id="from other IntegerValue")
     ])
 def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: BaseException) -> None:
     """Verify that __init__ for IntegerValue correctly instantiates the superclass data."""

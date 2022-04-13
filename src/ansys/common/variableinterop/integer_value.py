@@ -1,8 +1,9 @@
 """Definition of IntegerValue."""
 from __future__ import annotations
 
+from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import TypeVar
+from typing import Any, TypeVar
 
 import numpy as np
 from overrides import overrides
@@ -26,6 +27,38 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     example, when converting from real to integer, the value will be floored instead of
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
+
+    def __new__(cls, arg: Any):
+        """
+        Create a new instance.
+
+        Construction behaves differently for floating-point numbers and strings depending on
+        whether the argument is an IVariableValue or not.
+
+        IVariableValue instances are converted according to the standard interop rules.
+        Reals are rounded. Values with a .5 in the tenths place are rounded away from zero.
+        Strings are converted to reals, then rounded according to those rules.
+
+        Parameters
+        ----------
+        arg the argument from which to construct this instance
+        """
+
+        if isinstance(arg, variable_value.IVariableValue):
+            # Constructing from an IVariableValue is handled specially.
+            if arg.variable_type == variable_type.VariableType.REAL:
+                # For IVariableValues representing a real, use a different rounding strategy.
+                return super().__new__(cls, Decimal(arg).to_integral(ROUND_HALF_UP))
+            elif arg.variable_type == variable_type.VariableType.STRING:
+                # For IVariableValues representing a string, convert to RealValue to use
+                # the alternate rounding strategy.
+                return cls.__new__(cls, real_value.RealValue.from_api_string(arg))
+            else:
+                # For other IVariableValues, attempt to use the default conversions.
+                return super().__new__(cls, arg)
+        else:
+            # For non-IVariableValues, use the superclass behavior.
+            return super().__new__(cls, arg)
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
