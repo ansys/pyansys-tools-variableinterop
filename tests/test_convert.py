@@ -5,8 +5,7 @@ import pytest
 
 import ansys.common.variableinterop as acvi
 import ansys.common.variableinterop.utils.convert as convert
-
-from test_utils import _create_exception_context, _test_conversion
+from test_utils import _test_conversion
 
 
 # region To Scalar Tests
