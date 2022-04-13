@@ -1,5 +1,6 @@
 """Definition of VariableType."""
 from typing import Dict
+
 import ansys.common.variableinterop.variable_type as variable_type
 
 
