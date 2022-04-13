@@ -32,6 +32,10 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
         return super().__new__(cls, shape=shape_, dtype=np.int64)
 
     @overrides
+    def clone(self) -> IntegerArrayValue:
+        return np.copy(self).view(IntegerArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer_array(self)
 

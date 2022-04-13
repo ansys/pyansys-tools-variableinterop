@@ -34,6 +34,10 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
         return np.array_equal(self, other)
 
     @overrides
+    def clone(self) -> RealArrayValue:
+        return np.copy(self).view(RealArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 

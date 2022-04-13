@@ -32,6 +32,10 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
     @overrides
+    def clone(self) -> StringArrayValue:
+        return np.copy(self).view(StringArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
