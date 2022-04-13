@@ -16,7 +16,15 @@ class StringValue(np.str_, variable_value.IVariableValue):
     """
     Wrapper around a string value.
 
-    If you want the variable interop standard conversions, use xxxx (TODO)
+    In Python IntegerValue is implemented by extending NumPy's str_ type. This means that
+    they will decay naturally into numpy.str_ objects when used with other types
+    operators. It also means that they inherit many of the numpy behaviors, which may be
+    slightly different from the behaviors specified in the variable interop standards. For
+    example, when converting from string to integer, values parseable as a floating-point number
+    are rejected instead of parsed as such and rounded.
+    If you want the variable interop standard conversions, use the from_api_string method
+    on any given variable interop type to get an instance of that type, which should decompose
+    naturally to the analogous NumPy type.
     """
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor

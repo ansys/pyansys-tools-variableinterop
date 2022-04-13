@@ -22,11 +22,13 @@ class RealValue(np.float64, variable_value.IVariableValue):
     Wrapper around a real value.
 
     In Python RealValue is implemented by extending NumPy's float64 type. This means that
-    they will decay naturally into numpy.float64 objects when using numpy's arithmetic
+    they will decay naturally into numpy.float64 objects when using NumPy's arithmetic
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards.
     For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    of rounded. If you want the variable interop standard conversions, use to_int_value() to get
+    an IntegerValue with variable interop standard rounding (away from zero). IntegerValue
+    decomposes naturally to numpy.int64.
     """
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor

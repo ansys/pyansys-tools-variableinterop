@@ -21,11 +21,15 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     Wrapper around an integer value.
 
     In Python IntegerValue is implemented by extending NumPy's int64 type. This means that
-    they will decay naturally into numpy.int64 objects when using numpy's arithmetic
+    they will decay naturally into numpy.int64 objects when using NumPy's arithmetic
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards. For
     example, when converting from real to integer, the value will be floored instead of
-    rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    rounded. If you want the variable interop standard conversions, use the to_real_value
+    function on this class to get a RealValue, which will be rounded according to the
+    variable interop standards and decomposes naturally into a numpy.float64. Other conversions
+    to analogous Python or NumPy types are identical between the variable interop standards
+    and the default Python / NumPy behavior.
     """
 
     def __new__(cls, arg: Any):
