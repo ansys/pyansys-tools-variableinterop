@@ -293,8 +293,8 @@ def test_clone() -> None:
     # Verification
     assert result is not sut
     assert result == 6.9
-    
-    
+
+
 @pytest.mark.parametrize(
     'source,expected_value',
     [
