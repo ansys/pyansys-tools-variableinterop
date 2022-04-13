@@ -199,9 +199,11 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                      acvi.IntegerArrayValue(values=[-1, 0, 1]),
                      None,
                      id="IntegerArrayValue"),
+        # TODO: expected results to be updated after merging utils.convert
         # Reals should round away from zero, i.e. 0.1 rounds to 1 and -0.1 to -1
-        pytest.param(acvi.RealArrayValue(values=[-0.9, -0.1, 0.0, 0.1, 0.9]),
-                     acvi.IntegerArrayValue(values=[-1, -1, 0, 1, 1]),
+        #   ^ this is not correct
+        pytest.param(acvi.RealArrayValue(values=[-0.9, -0.5, -0.1, 0.0, 0.1, 0.5, 0.9]),
+                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1]),
                      None,
                      id="RealArrayValue"),
         pytest.param(acvi.BooleanArrayValue(values=[True, False]),
@@ -209,8 +211,9 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                      None,
                      id="BooleanArrayValue"),
         # Test rounding from string arrays as well
-        pytest.param(acvi.StringArrayValue(values=["-0.9", "-0.1", "0", "0.1", "0.9", "50"]),
-                     acvi.IntegerArrayValue(values=[-1, -1, 0, 1, 1, 50]),
+        pytest.param(acvi.StringArrayValue(
+                        values=["-0.9", "-0.5", "-0.1", "0", "0.1", "0.5", "0.9", "50"]),
+                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1, 50]),
                      None,
                      id="StringArrayValue_valid"),
         pytest.param(acvi.StringArrayValue(values=["1", "2", "this raises ValueError"]),
