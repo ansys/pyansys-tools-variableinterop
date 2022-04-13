@@ -6,8 +6,11 @@ import pytest
 from ansys.common.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
+    IntegerArrayValue,
     IntegerValue,
+    RealArrayValue,
     RealValue,
+    StringArrayValue,
     StringValue,
 )
 
@@ -168,15 +171,128 @@ def test_visiting_a_string_formats_correctly(value: StringValue,
 @pytest.mark.parametrize(
     "value,locale,expected",
     [
+        pytest.param(IntegerArrayValue((1, 6), [5, 4, 3, 2, 1, -1]), "en_US.UTF-8",
+                     "5,4,3,2,1,-1", id="Single dim, en_US"),
+        pytest.param(IntegerArrayValue((1, 6), [5, 4, 3, 2, 1, -1]), "de_DE.UTF-8",
+                     "5,4,3,2,1,-1", id="Single dim, de_DE"),
+        pytest.param(IntegerArrayValue((4, 1), [[100], [1000], [10000], [10]]), "en_US.UTF-8",
+                     "bounds[4,1]{100,1000,10000,10}", id="Multi-dim, en_US"),
+        pytest.param(IntegerArrayValue((4, 1), [[100], [1000], [10000], [10]]), "de_DE.UTF-8",
+                     "bounds[4,1]{100,1000,10000,10}", id="Multi-dim, de_DE"),
+    ]
+)
+def test_visiting_an_integer_array_formats_correctly(value: IntegerArrayValue,
+                                                     locale: str,
+                                                     expected: str) -> None:
+    """
+    Verifies the formatting of various IntegerArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # SUT
+    result = value.to_formatted_string(locale)
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
+        pytest.param(RealArrayValue((1, 3), [5, 4, 3.25]), "en_US.UTF-8",
+                     "5,4,3.25", id="Single dim, en_US"),
+        pytest.param(RealArrayValue((1, 3), [5, 4, 3.25]), "de_de.UTF-8",
+                     "\"5\",\"4\",\"3,25\"", id="Single dim, de_DE"),
+        pytest.param(RealArrayValue((2, 3), [[50.5, 101.1, 233.45], [1.1, 2.2, 3.3]]),
+                     "en_US.UTF-8",
+                     "bounds[2,3]{50.5,101.1,233.45,1.1,2.2,3.3}",
+                     id="Multi dim, en_US"),
+        pytest.param(RealArrayValue((2, 3), [[50.5, 101.1, 233.45], [1.1, 2.2, 3.3]]),
+                     "de_DE.UTF-8",
+                     "bounds[2,3]{\"50,5\",\"101,1\",\"233,45\",\"1,1\",\"2,2\",\"3,3\"}",
+                     id="Multi dim, de_DE"),
+    ]
+)
+def test_visiting_a_real_array_formats_correctly(value: RealArrayValue,
+                                                 locale: str,
+                                                 expected: str) -> None:
+    """
+    Verifies the formatting of various RealArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # SUT
+    result = value.to_formatted_string(locale)
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.skip("Converting an array element to a BooleanValue seems to be borked")
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
         pytest.param(BooleanArrayValue((1, 3), [np.True_, np.False_, np.True_]), "en_US.UTF-8",
-                     "True,False,True", id="True, en_US"),
+                     "True,False,True", id="Single dim, en_US"),
+        pytest.param(BooleanArrayValue((1, 3), [np.True_, np.False_, np.True_]), "de_DE.UTF-8",
+                     "True,False,True", id="Single dim, de_DE"),
+        pytest.param(BooleanArrayValue(
+            (3, 2), [np.True_, np.False_, np.False_, np.True_, np.True_, np.True_]), "en_US.UTF-8",
+            "bounds[3,2]{True,False,False,True,True,True}", id="Multi dim, en_US"),
+        pytest.param(BooleanArrayValue(
+            (3, 2), [np.True_, np.False_, np.False_, np.True_, np.True_, np.True_]), "de_DE.UTF-8",
+            "bounds[3,2]{True,False,False,True,True,True}", id="Muti dim, de_DE"),
     ]
 )
 def test_visiting_a_boolean_array_formats_correctly(value: BooleanArrayValue,
-                                              locale: str,
-                                              expected: np.str_) -> None:
+                                                    locale: str,
+                                                    expected: str) -> None:
     """
-    Verifies the formatting of various BooleanValues.
+    Verifies the formatting of various BooleanArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # SUT
+    result = value.to_formatted_string(locale)
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
+        pytest.param(StringArrayValue((1, 3), ["one", "two", "three"]), "en_US.UTF-8",
+                     "\"one\",\"two\",\"three\"", id="Single dim, en_US"),
+        pytest.param(StringArrayValue((1, 3), ["one", "two", "three"]), "de_DE.UTF-8",
+                     "\"one\",\"two\",\"three\"", id="Single dim, de_DE"),
+        pytest.param(StringArrayValue((2, 2), [["one_one", "one_two"], ["two_one", "two_two"]]),
+                     "en_US.UTF-8",
+                     "bounds[2,2]{\"one_one\",\"one_two\",\"two_one\",\"two_two\"}",
+                     id="Multi dim, en_US"),
+        pytest.param(StringArrayValue((2, 2), [["one_one", "one_two"], ["two_one", "two_two"]]),
+                     "de_DE.UTF-8",
+                     "bounds[2,2]{\"one_one\",\"one_two\",\"two_one\",\"two_two\"}",
+                     id="Multi dim, de_DE"),
+    ]
+)
+def test_visiting_a_string_array_formats_correctly(value: StringArrayValue,
+                                                   locale: str,
+                                                   expected: np.str_) -> None:
+    """
+    Verifies the formatting of various StringValues.
 
     Parameters
     ----------

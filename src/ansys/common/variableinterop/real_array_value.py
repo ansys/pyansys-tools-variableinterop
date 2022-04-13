@@ -1,12 +1,17 @@
 from __future__ import annotations
 
+import functools
+import locale
 from typing import TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from overrides import overrides
 
+from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+from ansys.common.variableinterop.locale_utils import LocaleUtils
+import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -55,6 +60,28 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     @staticmethod
     def from_api_string(value: str) -> None:
         raise NotImplementedError
+
+    # TODO: overrides when right branch merged over
+    def to_formatted_string(self, locale_name: str) -> str:
+        def parse_real_element(elem: np.float64) -> str:
+            value: str = real_value.RealValue(elem).to_formatted_string(locale_name)
+
+            # Old form arrays (without quotes around each item) do not work for languages where ','
+            # is the decimal separator. Use new form for those languages.
+            def escape_if_needed(val: str) -> str:
+                if locale.localeconv()["decimal_point"] == ',':
+                    val = "\"" + val + "\""
+                return val
+
+            value = LocaleUtils.perform_safe_locale_action(
+                locale_name,
+                functools.partial(escape_if_needed, val=value))
+            return value
+
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            parse_real_element)
+        return api_string
 
     @overrides
     def get_modelcenter_type(self) -> str:

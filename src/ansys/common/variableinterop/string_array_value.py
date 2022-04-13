@@ -6,8 +6,10 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from overrides import overrides
 
+from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.string_value as string_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -67,6 +69,15 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     @staticmethod
     def from_api_string(value: str) -> None:
         raise NotImplementedError
+
+    # TODO: overrides when right branch merged over
+    def to_formatted_string(self, locale_name: str) -> str:
+
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            lambda elem:
+                "\"" + string_value.StringValue(elem).to_formatted_string(locale_name) + "\"")
+        return api_string
 
     @overrides
     def get_modelcenter_type(self) -> str:
