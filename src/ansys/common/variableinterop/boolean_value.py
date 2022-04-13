@@ -7,6 +7,8 @@ from typing import TypeVar, Dict
 import numpy as np
 from overrides import overrides
 
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.locale_utils as locale_utils
 import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
 import ansys.common.variableinterop.integer_value as integer_value
@@ -23,7 +25,6 @@ class BooleanValue(variable_value.IVariableValue):
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
@@ -103,7 +104,6 @@ class BooleanValue(variable_value.IVariableValue):
                 source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value: np.bool_ = np.bool_(source != 0.0)
         else:
-            import ansys.common.variableinterop.exceptions as exceptions
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
 

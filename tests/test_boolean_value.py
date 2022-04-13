@@ -55,6 +55,24 @@ def test_boolean_unary_operators(
         value: bool,
         operator: Callable[[BooleanTypes], BooleanTypes],
         expected: bool):
+    """
+    Testing of unary operators against the different Boolean types to
+    see what bool and numpy.bool_ do and to see if BooleanValue is
+    consistent with numpy.bool_.
+
+    Parameters
+    ----------
+    _ : str
+        An identifier of the operator testing
+    type_ : Type
+        The type of Boolean to test: bool, numpy.bool_ or BooleanValue
+    value : bool
+        The value of the Boolean operand to test.
+    operator : Callable[[BooleanTypes], BooleanTypes]
+        A lambda or function that represents the unary operation.
+    expected : bool
+        The value of the expected Boolean results.
+    """
     # Setup
     operand = type_(value)
 
@@ -69,15 +87,6 @@ def test_boolean_unary_operators(
 
 
 binary_tests: List[
-    # Members of Tuple in order:
-    #   identifier:           an identifier of the test,
-    #   operand1:             first operand
-    #   operand2:             second operand
-    #   operator:             operator to perform on the two operands
-    #   bool_expected:        expected results if working with bool values
-    #   np_bool_expected:     expected results if working with np.bool_ values
-    #   booleanValueExpected: expected results if working with BooleanValue values or None if same
-    #                           as np_bool_expected.
     Tuple[str, bool, bool, Callable[[BooleanTypes, BooleanTypes], BooleanTypes], Any, Any, Any]
 ] = [
     # addition
@@ -183,7 +192,26 @@ binary_tests: List[
     (">>",       True, False, lambda a, b: a >> b, 1, np.int8(1), None),
     (">>",       True,  True, lambda a, b: a >> b, 0, np.int8(0), None),
 ]
-
+"""List of binary operation tests. Each tuple contains in order:
+    * identifier : str
+        an identifier of the test,
+    * operand1 : bool
+        first Boolean operand
+    * operand2 : bool
+        second Boolean operand
+    * operator :
+        operator to perform on the two operands
+    * bool_expected : Any
+        expected results if working with bool values. If operation 
+        raises an Exception, the type of the exception.
+    * np_bool_expected : Any
+        expected results if working with np.bool_ values. If operation
+        raises an Exception, the type of the Exception.
+    * booleanValueExpected : Any
+        expected results if working with BooleanValue values or None if
+        same as np_bool_expected. If operation raises an Exception, 
+        the type of the Exception.
+"""
 binary_same_boolean_types_tests = cross_types(binary_tests)
 
 
@@ -199,6 +227,34 @@ def test_boolean_binary_operators_same_types(
         b_expected: Union[bool, int],
         np_expected: Union[np.bool_, np.int8, Exception],
         bv_expected: Union[acvi.BooleanValue, Exception]):
+    """
+    Testing of binary operators against the different Boolean types to
+    see what bool and numpy.bool_ do and to see if BooleanValue is
+    consistent with numpy.bool_.
+
+    Parameters
+    ----------
+    _ : str
+        An identifier of the operator testing.
+    type_ :
+        The type of Boolean to test: bool, numpy.bool or BooleanValue.
+    value1 : bool
+        Value of the first Boolean operand
+    value2 : bool
+        Value of the second Boolean operand
+    operator :
+        Operator to perform on the two operands
+    b_expected : Any
+        Expected results if working with bool values. If operation
+        raises an Exception, the type of the exception.
+    np_expected : Any
+        Expected results if working with np.bool_ values. If operation
+        raises an Exception, the type of the Exception.
+    bv_expected : Any
+        Expected results if working with BooleanValue values or None if
+        same as np_bool_expected. If operation raises an Exception,
+        the type of the Exception.
+    """
     # Setup
     operand1 = type_(value1)
     operand2 = type_(value2)
@@ -234,22 +290,6 @@ def test_boolean_binary_operators_same_types(
         # Verify type of result is same as expected
         assert isinstance(result, type(expected)), \
             f"type of result is {type(result)}, expected {type(expected)}"
-
-
-boolean_cross_types = [
-    [bool, bool],
-    [np.bool_, np.bool_],
-    [acvi.BooleanValue, acvi.BooleanValue],
-
-    [acvi.BooleanValue, bool],
-    [acvi.BooleanValue, np.bool_],
-    [bool, acvi.BooleanValue],
-    [np.bool_, acvi.BooleanValue],
-
-    [bool, np.bool_],
-    [np.bool_, bool],
-]
-"""Array of pairs of types"""
 
 # endregion
 

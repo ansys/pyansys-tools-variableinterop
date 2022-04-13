@@ -10,6 +10,7 @@ from overrides import overrides
 
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.integer_value as integer_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -28,8 +29,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
     For example, when converting from real to integer, the value will be floored instead
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     # equality definition here
 
