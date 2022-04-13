@@ -1,8 +1,8 @@
 """Definition of RealValue."""
 from __future__ import annotations
 
-import locale
 from decimal import ROUND_HALF_UP, Decimal
+import locale
 from typing import TypeVar
 
 import numpy as np
@@ -31,8 +31,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
     """
 
     # equality definition here
-
-    # hashcode definition here
 
     __CANONICAL_INF = "Infinity"
     """

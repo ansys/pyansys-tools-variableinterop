@@ -282,6 +282,18 @@ def test_to_api_string(
     assert type(result) is str
     assert result == expected_value
 
+def test_clone() -> None:
+    """Verifies that clone returns a new RealValue with the same value."""
+    # Setup
+    sut: RealValue = RealValue(6.9)
+
+    # SUT
+    result: RealValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == 6.9
+
 
 @pytest.mark.parametrize(
     'source,expected_value',

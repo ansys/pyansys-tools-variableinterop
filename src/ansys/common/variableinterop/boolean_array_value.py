@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import NDArray, ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor

@@ -1,5 +1,6 @@
 """Definition of VariableType."""
 from typing import Dict
+
 import ansys.common.variableinterop.variable_type as variable_type
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
