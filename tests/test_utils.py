@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from typing import Type
+from typing import Type, Callable
 
 import pytest
 
@@ -77,4 +77,45 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
                        ("Error: Cannot convert from type {0} to type {1}.\n"
                         "Reason: The types are incompatible.") \
                        .format(value.__class__.__name__, result_type.__name__)
+            raise e
+
+
+def _test_conversion(source: acvi.IVariableValue,
+                     expected_result: acvi.IVariableValue,
+                     expected_exception_type: BaseException,
+                     conversion_method: Callable[[acvi.IVariableValue], acvi.IVariableValue],
+                     result_type: Type[acvi.IVariableValue]) -> None:
+    """
+    Helper function to test ``utils.convert`` module.
+    Another line.
+
+    Parameters
+    ----------
+    source
+        (IVariableValue) The IVariableValue to be converted.
+    expected_result
+        (IVariableValue) The expected result of the test.
+    expected_exception_type
+        (BaseException) The expected exception type.
+    conversion_method
+        (Callable[[IVariableValue], IVariableValue]) The function to use for this test.
+    result_type
+        (IVariableValue) The type of the expected result.
+    """
+    with _create_exception_context(expected_exception_type):
+        try:
+            # SUT
+            result: acvi.IVariableValue = conversion_method(source)
+
+            # Verify (no exception)
+            assert type(result) == type(expected_result)
+            assert result == expected_result
+
+        except expected_exception_type as e:
+            # Verify (expected exception)
+            if expected_exception_type == acvi.IncompatibleTypesException:
+                assert e.message == \
+                       ("Error: Cannot convert from type {0} to type {1}.\n"
+                        "Reason: The types are incompatible.") \
+                       .format(source.__class__.__name__, result_type.__name__)
             raise e
