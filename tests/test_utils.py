@@ -87,20 +87,19 @@ def _test_conversion(source: acvi.IVariableValue,
                      result_type: Type[acvi.IVariableValue]) -> None:
     """
     Helper function to test ``utils.convert`` module.
-    Another line.
 
     Parameters
     ----------
-    source
-        (IVariableValue) The IVariableValue to be converted.
-    expected_result
+    source : IVariableValue
+        The IVariableValue to be converted.
+    expected_result : IVariableValue
         (IVariableValue) The expected result of the test.
-    expected_exception_type
-        (BaseException) The expected exception type.
-    conversion_method
-        (Callable[[IVariableValue], IVariableValue]) The function to use for this test.
-    result_type
-        (IVariableValue) The type of the expected result.
+    expected_exception_type : BaseException
+        The expected exception type.
+    conversion_method : Callable[[IVariableValue], IVariableValue]
+        The function to use for this test.
+    result_type : IVariableValue
+        The type of the expected result.
     """
     with _create_exception_context(expected_exception_type):
         try:
