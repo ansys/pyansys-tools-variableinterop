@@ -5,9 +5,9 @@ import pytest
 from test_utils import _create_exception_context
 
 from ansys.common.variableinterop import (
+    BooleanValue,
     IntegerValue,
     IVariableValue,
-    BooleanValue,
     RealValue,
     StringValue,
     to_integer_value,
