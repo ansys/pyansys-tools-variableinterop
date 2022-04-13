@@ -5,7 +5,6 @@ from test_utils import _create_exception_context
 
 import ansys.common.variableinterop as acvi
 
-
 @pytest.mark.parametrize(
     "arg,expect_equality,expect_exception",
     [
@@ -125,6 +124,24 @@ def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
 @pytest.mark.parametrize(
     "source,expected_result",
     [
+        pytest.param(acvi.BooleanValue(True), acvi.RealValue(1.0), id='true'),
+        pytest.param(acvi.BooleanValue(False), acvi.RealValue(0.0), id='false')
+    ]
+)
+def test_to_real_value(source: acvi.BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to RealValue works correctly.
+    """
+    result: acvi.RealValue = source.to_real_value()
+
+    # Verify
+    assert type(result) is acvi.RealValue
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
         pytest.param(acvi.BooleanValue(True), acvi.IntegerValue(1), id='true'),
         pytest.param(acvi.BooleanValue(False), acvi.IntegerValue(0), id='false')
     ]
@@ -143,3 +160,17 @@ def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
     # Verify
     assert type(result) is acvi.IntegerValue
     assert result == expected_result
+
+
+@pytest.mark.skip("Enable when bool type fixed")
+def test_clone() -> None:
+    """Verifies that clone returns a new BooleanValue with the same value."""
+    # Setup
+    sut: acvi.BooleanValue = acvi.BooleanValue(True)
+
+    # SUT
+    result: acvi.BooleanValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result is True

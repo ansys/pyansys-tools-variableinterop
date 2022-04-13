@@ -3,9 +3,9 @@
 from typing import Any
 
 import pytest
+from test_utils import _create_exception_context, _test_to_value_visitor
 
 import ansys.common.variableinterop as acvi
-from test_utils import _create_exception_context, _test_to_value_visitor
 
 
 class TestVisitor(acvi.IVariableValueVisitor[str]):
@@ -22,7 +22,7 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
         return value + 0.0
 
     def visit_boolean(self, value: acvi.BooleanValue) -> str:
-        return value or False
+        return value
 
     def visit_string(self, value: acvi.StringValue) -> str:
         return value + ""

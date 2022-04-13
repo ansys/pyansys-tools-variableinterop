@@ -11,7 +11,7 @@ from ansys.common.variableinterop import (
     IVariableValue,
     RealValue,
     StringValue,
-    ToBoolVisitor
+    ToBoolVisitor,
 )
 
 
