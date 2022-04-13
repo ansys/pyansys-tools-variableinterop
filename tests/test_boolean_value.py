@@ -413,6 +413,24 @@ def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
 @pytest.mark.parametrize(
     "source,expected_result",
     [
+        pytest.param(acvi.BooleanValue(True), acvi.RealValue(1.0), id='true'),
+        pytest.param(acvi.BooleanValue(False), acvi.RealValue(0.0), id='false')
+    ]
+)
+def test_to_real_value(source: acvi.BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to RealValue works correctly.
+    """
+    result: acvi.RealValue = source.to_real_value()
+
+    # Verify
+    assert type(result) is acvi.RealValue
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
         pytest.param(acvi.BooleanValue(True), acvi.IntegerValue(1), id='true'),
         pytest.param(acvi.BooleanValue(False), acvi.IntegerValue(0), id='false')
     ]
