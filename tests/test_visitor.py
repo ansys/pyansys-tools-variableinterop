@@ -3,9 +3,9 @@
 from typing import Any
 
 import pytest
+from test_utils import _create_exception_context, _test_to_value_visitor
 
 import ansys.common.variableinterop as acvi
-from test_utils import _create_exception_context, _test_to_value_visitor
 
 
 class TestVisitor(acvi.IVariableValueVisitor[str]):

@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import Callable, TypeVar
 
 import numpy as np
-from numpy.typing import NDArray, ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from overrides import overrides
 
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.variable_value as variable_value
 
 from .variable_type import VariableType
 
@@ -54,7 +55,24 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
 
     @staticmethod
     def from_api_string(value: str) -> None:
+        # TODO: use __value_to_string
         raise NotImplementedError
+
+    # TODO: overrides when right branch merged over
+    def to_formatted_string(self, locale_name: str) -> str:
+        api_string: str = self.__value_to_string(
+            lambda elem: boolean_value.BooleanValue(elem).to_formatted_string(locale_name))
+        return api_string
+
+    def __value_to_string(self, stringify_action: Callable):
+        api_string: str = ""
+        # Specify bounds for arrays of more than 1d:
+        if self.ndim > 1:
+            api_string = "bounds[" + ','.join(map(str, self.shape)) + "]{"
+        api_string += ','.join(map(stringify_action, np.nditer(self)))
+        if self.ndim > 1:
+            api_string += "}"
+        return api_string
 
     @overrides
     def get_modelcenter_type(self) -> str:
