@@ -53,7 +53,7 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
         raise NotImplementedError
 
     @staticmethod
-    def from_api_string(self, value: str) -> None:
+    def from_api_string(value: str) -> None:
         raise NotImplementedError
 
     @overrides
