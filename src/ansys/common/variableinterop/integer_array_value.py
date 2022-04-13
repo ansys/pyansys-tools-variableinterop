@@ -10,6 +10,7 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.integer_value as integer_value
 
 T = TypeVar("T")
 
@@ -51,11 +52,50 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
 
     @overrides
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        """Convert this array value to an API formatted string.
+
+        Convert to string using API semantics (US-EN locale).
+
+        Returns
+        -------
+        str
+            An API string representation of this array value.
+        """
+        api_string: str = ""
+        # Specify bounds for arrays of more than 1d:
+        if self.ndim > 1:
+            api_string = "bounds[" + ','.join(map(str, self.shape)) + "]{"
+        api_string += ','.join(map(
+            lambda elem: integer_value.IntegerValue(elem).to_api_string(),
+            np.nditer(self)))
+        if self.ndim > 1:
+            api_string += "}"
+        return api_string
 
     @staticmethod
-    def from_api_string(value: str) -> None:
-        raise NotImplementedError
+    def from_api_string(value: str) -> IntegerArrayValue:
+        """Convert API formatted string to an IntegerArrayValue value.
+
+        Parameters
+        ----------
+        value : str
+            API string to be parsed.
+
+        Returns
+        -------
+        IntegerArrayValue
+            Result of a parse as IntegerArrayValue object.
+        """
+        value = value.strip()
+        shape = None
+        if value.startswith('bounds'):
+            (bounds, separator, values) = value.partition(']{')
+            shape = tuple(np.fromstring(bounds.lstrip('bounds['), dtype=int, sep=','))
+            values = values.rstrip('}')
+        else:
+            values = value
+        array = list(map(integer_value.IntegerValue.from_api_string, values.split(',')))
+        return np.reshape(IntegerArrayValue(values=array), shape)
 
     @overrides
     def get_modelcenter_type(self) -> str:
