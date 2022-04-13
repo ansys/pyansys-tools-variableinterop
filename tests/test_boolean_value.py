@@ -77,7 +77,7 @@ def test_from_api_string_valid(arg: str, expected_result: acvi.BooleanValue) -> 
     arg the string to parse
     expected_result the expected result
     """
-    #Execute
+    # Execute
     result: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
 
     assert result == expected_result
@@ -94,7 +94,7 @@ def test_from_api_string_valid(arg: str, expected_result: acvi.BooleanValue) -> 
 )
 def test_from_api_string_invalid(arg: str, expected_exception: BaseException) -> None:
     with _create_exception_context(expected_exception):
-        result: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
+        _: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
 
 
 @pytest.mark.parametrize(

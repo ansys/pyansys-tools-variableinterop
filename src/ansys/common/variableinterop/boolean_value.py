@@ -1,11 +1,13 @@
 """Definition of BooleanValue."""
 from __future__ import annotations
 
+import locale
 from typing import TypeVar, Dict
 
 import numpy as np
 from overrides import overrides
 
+import ansys.common.variableinterop.locale_utils as locale_utils
 import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -196,7 +198,7 @@ class BooleanValue(variable_value.IVariableValue):
             return integer_value.IntegerValue(0)
 
     def to_formatted_string(self, locale_name: str) -> str:
-        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self))
         return result
 
