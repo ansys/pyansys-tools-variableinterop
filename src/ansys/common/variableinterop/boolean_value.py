@@ -4,7 +4,6 @@ from __future__ import annotations
 import locale
 from typing import TYPE_CHECKING, Dict, TypeVar
 
-import locale
 import numpy as np
 from overrides import overrides
 
@@ -13,9 +12,8 @@ if TYPE_CHECKING:
 
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.locale_utils as locale_utils
-import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
-import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar("T")

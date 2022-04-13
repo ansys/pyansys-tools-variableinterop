@@ -13,6 +13,7 @@ from ansys.common.variableinterop import (
     to_integer_value,
 )
 
+
 @pytest.mark.parametrize(
     "arg,expect_equality,expect_exception",
     [
