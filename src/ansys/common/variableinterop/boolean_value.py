@@ -4,6 +4,7 @@ from __future__ import annotations
 import locale
 from typing import TYPE_CHECKING, Dict, TypeVar
 
+import locale
 import numpy as np
 from overrides import overrides
 
@@ -12,7 +13,9 @@ if TYPE_CHECKING:
 
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.locale_utils as locale_utils
+import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar("T")
@@ -220,6 +223,28 @@ class BooleanValue(variable_value.IVariableValue):
     @overrides
     def to_api_string(self) -> str:
         return str(self)
+
+    def to_real_value(self) -> real_value.RealValue:
+        """
+        Convert a given BooleanValue to a RealValue.
+
+        True is converted to 1.0 and False is is converted to 0.0
+        (Note: this is temporarily a static until we can get the
+        non-numpy64-bool derived version working, since there's currently no way to actually have
+        a BooleanValue instance at the moment).
+
+        Parameters
+        ----------
+        orig the original BooleanValue
+
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        if self:
+            return real_value.RealValue(1.0)
+        else:
+            return real_value.RealValue(0.0)
 
     @staticmethod
     def from_api_string(value: str) -> BooleanValue:

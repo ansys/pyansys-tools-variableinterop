@@ -8,6 +8,7 @@ from overrides import overrides
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_value as boolean_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -25,8 +26,6 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     For example, when converting from real to integer, the value will be floored instead
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:

@@ -22,7 +22,7 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
         return value + 0.0
 
     def visit_boolean(self, value: acvi.BooleanValue) -> str:
-        return value or False
+        return value
 
     def visit_string(self, value: acvi.StringValue) -> str:
         return value + ""

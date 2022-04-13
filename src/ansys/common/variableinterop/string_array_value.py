@@ -8,8 +8,9 @@ from overrides import overrides
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
-import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_value as string_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -27,8 +28,6 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
@@ -38,7 +37,7 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
-    @property
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.STRING_ARRAY
