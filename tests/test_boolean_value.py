@@ -1,63 +1,75 @@
 from typing import Any
 
-import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue
+import ansys.common.variableinterop as acvi
 
 
 @pytest.mark.parametrize(
-    "arg,expect_equality",
+    "arg,expect_equality,expect_exception",
     [
-        pytest.param(True, numpy.bool_(True), id="true"),
-        pytest.param(False, numpy.bool_(False), id="false"),
-        pytest.param(None, numpy.bool_(False), id="none"),
+        pytest.param(True, True, None, id="true"),
+        pytest.param(False, False, None, id="false"),
+        pytest.param(None, False, None, id="none"),
 
         # TODO: Should we even accept strings?
-        pytest.param("", numpy.bool_(False), id="empty-string"),
-        pytest.param("something", numpy.bool_(True), id="non-empty-string"),
-        pytest.param("false", numpy.bool_(True), id="non-empty-string-says-false"),
+        pytest.param(
+            "",
+            None,
+            acvi.IncompatibleTypesException,
+            id="empty-string"),
+        pytest.param(
+            "something",
+            None,
+            acvi.IncompatibleTypesException,
+            id="non-empty-string"),
+        pytest.param(
+            "false",
+            None,
+            acvi.IncompatibleTypesException,
+            id="non-empty-string-says-false"),
     ])
-def test_construct(arg: Any, expect_equality: numpy.bool_) -> None:
+def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseException) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
-    instance: BooleanValue = BooleanValue(arg)
-    assert instance == expect_equality
+    with _create_exception_context(expect_exception):
+        instance: acvi.BooleanValue = acvi.BooleanValue(arg)
+        assert instance == expect_equality
 
 
 @pytest.mark.parametrize(
     "arg,expected_result",
     [
-        pytest.param('True', BooleanValue(True), id='True'),
-        pytest.param('TRUE', BooleanValue(True), id='TRUE'),
-        pytest.param('true', BooleanValue(True), id='true'),
-        pytest.param('TrUe', BooleanValue(True), id='TrUe'),
-        pytest.param('False', BooleanValue(False), id='False'),
-        pytest.param('FALSE', BooleanValue(False), id='FALSE'),
-        pytest.param('false', BooleanValue(False), id='false'),
-        pytest.param('FaLsE', BooleanValue(False), id='FaLsE'),
-        pytest.param('Yes', BooleanValue(True), id='Yes'),
-        pytest.param('YES', BooleanValue(True), id='YES'),
-        pytest.param('y', BooleanValue(True), id='y'),
-        pytest.param('Y', BooleanValue(True), id='Y'),
-        pytest.param('No', BooleanValue(False), id='No'),
-        pytest.param('no', BooleanValue(False), id='no'),
-        pytest.param('n', BooleanValue(False), id='n'),
-        pytest.param('N', BooleanValue(False), id='N'),
-        pytest.param('0', BooleanValue(False), id='zero'),
-        pytest.param('0.0', BooleanValue(False), id='zero point zero'),
-        pytest.param('1', BooleanValue(True), id='one point zero'),
-        pytest.param('1.0', BooleanValue(True), id='one point zero'),
-        pytest.param('true \r\n\t', BooleanValue(True), id='trailing whitespace true'),
-        pytest.param('false \r\n\t', BooleanValue(False), id='trailing whitespace false'),
-        pytest.param('\r\n\t true', BooleanValue(True), id='leading whitespace true'),
-        pytest.param('\r\n\t false', BooleanValue(False), id='leading whitespace false'),
-        pytest.param('NaN', BooleanValue(True), id='NaN'),
-        pytest.param('Infinity', BooleanValue(True), id='infinity'),
-        pytest.param('-Infinity', BooleanValue(True), id='negative infinity'),
+        pytest.param('True', acvi.BooleanValue(True), id='True'),
+        pytest.param('TRUE', acvi.BooleanValue(True), id='TRUE'),
+        pytest.param('true', acvi.BooleanValue(True), id='true'),
+        pytest.param('TrUe', acvi.BooleanValue(True), id='TrUe'),
+        pytest.param('False', acvi.BooleanValue(False), id='False'),
+        pytest.param('FALSE', acvi.BooleanValue(False), id='FALSE'),
+        pytest.param('false', acvi.BooleanValue(False), id='false'),
+        pytest.param('FaLsE', acvi.BooleanValue(False), id='FaLsE'),
+        pytest.param('Yes', acvi.BooleanValue(True), id='Yes'),
+        pytest.param('YES', acvi.BooleanValue(True), id='YES'),
+        pytest.param('y', acvi.BooleanValue(True), id='y'),
+        pytest.param('Y', acvi.BooleanValue(True), id='Y'),
+        pytest.param('No', acvi.BooleanValue(False), id='No'),
+        pytest.param('no', acvi.BooleanValue(False), id='no'),
+        pytest.param('n', acvi.BooleanValue(False), id='n'),
+        pytest.param('N', acvi.BooleanValue(False), id='N'),
+        pytest.param('0', acvi.BooleanValue(False), id='zero'),
+        pytest.param('0.0', acvi.BooleanValue(False), id='zero point zero'),
+        pytest.param('1', acvi.BooleanValue(True), id='one point zero'),
+        pytest.param('1.0', acvi.BooleanValue(True), id='one point zero'),
+        pytest.param('true \r\n\t', acvi.BooleanValue(True), id='trailing whitespace true'),
+        pytest.param('false \r\n\t', acvi.BooleanValue(False), id='trailing whitespace false'),
+        pytest.param('\r\n\t true', acvi.BooleanValue(True), id='leading whitespace true'),
+        pytest.param('\r\n\t false', acvi.BooleanValue(False), id='leading whitespace false'),
+        pytest.param('NaN', acvi.BooleanValue(True), id='NaN'),
+        pytest.param('Infinity', acvi.BooleanValue(True), id='infinity'),
+        pytest.param('-Infinity', acvi.BooleanValue(True), id='negative infinity'),
     ]
 )
-def test_from_api_string_valid(arg: str, expected_result: BooleanValue) -> None:
+def test_from_api_string_valid(arg: str, expected_result: acvi.BooleanValue) -> None:
     """
     Verify that BooleanValue.from_api_string works for valid cases
     Parameters
@@ -66,7 +78,7 @@ def test_from_api_string_valid(arg: str, expected_result: BooleanValue) -> None:
     expected_result the expected result
     """
     #Execute
-    result: BooleanValue = BooleanValue.from_api_string(arg)
+    result: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
 
     assert result == expected_result
 
@@ -82,17 +94,17 @@ def test_from_api_string_valid(arg: str, expected_result: BooleanValue) -> None:
 )
 def test_from_api_string_invalid(arg: str, expected_exception: BaseException) -> None:
     with _create_exception_context(expected_exception):
-        result: BooleanValue = BooleanValue.from_api_string(arg)
+        result: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
 
 
 @pytest.mark.parametrize(
     "source,expected_result",
     [
-        pytest.param(BooleanValue(True), 'True', id='true'),
-        pytest.param(BooleanValue(False), 'False', id='false'),
+        pytest.param(acvi.BooleanValue(True), 'True', id='true'),
+        pytest.param(acvi.BooleanValue(False), 'False', id='false'),
     ]
 )
-def test_to_api_string(source: BooleanValue, expected_result: str) -> None:
+def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
     """
     Verify that to_api_string for BooleanValue works correctly for valid cases.
     Parameters
@@ -110,14 +122,37 @@ def test_to_api_string(source: BooleanValue, expected_result: str) -> None:
     assert result == expected_result
 
 
+@pytest.mark.parametrize(
+    "source,expected_result",
+    [
+        pytest.param(acvi.BooleanValue(True), acvi.IntegerValue(1), id='true'),
+        pytest.param(acvi.BooleanValue(False), acvi.IntegerValue(0), id='false')
+    ]
+)
+def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
+    """
+    Verify that conversion to IntegerValue works correctly.
+    Parameters
+    ----------
+    source the original BooleanValue
+    expected_result the expected result of the conversion
+    """
+    # Execute
+    result: acvi.IntegerValue = source.to_integer_value()
+
+    # Verify
+    assert type(result) is acvi.IntegerValue
+    assert result == expected_result
+
+
 @pytest.mark.skip("Enable when bool type fixed")
 def test_clone() -> None:
     """Verifies that clone returns a new BooleanValue with the same value."""
     # Setup
-    sut: BooleanValue = BooleanValue(True)
+    sut: acvi.BooleanValue = acvi.BooleanValue(True)
 
     # SUT
-    result: BooleanValue = sut.clone()
+    result: acvi.BooleanValue = sut.clone()
 
     # Verification
     assert result is not sut
