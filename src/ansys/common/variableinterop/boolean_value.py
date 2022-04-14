@@ -7,7 +7,6 @@ from typing import Dict, TypeVar
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
