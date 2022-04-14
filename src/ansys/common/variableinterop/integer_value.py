@@ -7,6 +7,7 @@ from typing import TypeVar
 import numpy as np
 from overrides import overrides
 
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -27,8 +28,6 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
     # hashcode definition here
 
     @overrides
@@ -43,6 +42,21 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     @overrides
     def to_api_string(self) -> str:
         return str(self)
+
+    def to_real_value(self) -> real_value.RealValue:
+        """
+        Convert this IntegerValue to a RealValue.
+
+        Note that since a RealValue is a 64-bit floating point number, it has a 52-bit mantissa.
+        That means that a portion of the range of 64-bit IntegerValues cannot be completely
+        accurately represented by RealValues; this conversion is sometimes lossy for IntegerValues
+        of sufficient magnitude.
+
+        Returns
+        -------
+        A RealValue with the same numeric value as this IntegerValue.
+        """
+        return real_value.RealValue(self)
 
     @staticmethod
     def from_api_string(value: str) -> IntegerValue:

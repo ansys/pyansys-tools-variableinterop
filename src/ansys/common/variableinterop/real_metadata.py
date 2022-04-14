@@ -30,8 +30,6 @@ class RealMetadata(variable_metadata.NumericMetadata):
     def __eq__(self, other):
         return self.are_equal(other)
 
-    # clone here
-
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_real(self)

@@ -8,6 +8,11 @@ import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.locale_utils as local_utils
+import ansys.common.variableinterop.exceptions as exceptions
+import ansys.common.variableinterop.integer_value as integer_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.locale_utils as locale_utils
+import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.to_bool_visitor as to_bool_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -21,8 +26,6 @@ class BooleanValue(variable_value.IVariableValue):
 
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
-
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
@@ -85,60 +88,124 @@ class BooleanValue(variable_value.IVariableValue):
         IVariableValue: Constructs a BooleanValue per the specification
         Others: raises an exception
         """
-
-        import ansys.common.variableinterop.exceptions as exceptions
-
         if source is None:
-            self.__value: bool = False
+            self.__value: np.bool_ = np.False_
         elif isinstance(source, (bool, np.bool_)):
-            self.__value: bool = bool(source)
+            self.__value: np.bool_ = np.bool_(source)
         elif isinstance(source, variable_value.IVariableValue):
-            self.__value: bool = source.accept(to_bool_visitor.ToBoolVisitor())
+            self.__value: np.bool_ = np.bool_(source.accept(to_bool_visitor.ToBoolVisitor()))
         elif isinstance(
                 source,
                 (
                     int, np.byte, np.ubyte, np.short, np.ushort, np.intc,
                     np.uintc, np.int_, np.uint, np.longlong, np.ulonglong
                 )):
-            self.__value: bool = bool(source != 0)
+            self.__value: np.bool_ = np.bool_(source != 0)
         elif isinstance(
                 source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
-            self.__value: bool = bool(source != 0.0)
+            self.__value: np.bool_ = np.bool_(source != 0.0)
         else:
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
 
-    # equality definition here
-    def __eq__(self, other):
-        """
-        Tests that the two objects are equivalent.
-        """
+    def __add__(self, other):
         if isinstance(other, BooleanValue):
-            return self.__value == other.__value
-        elif isinstance(other, (bool, np.bool_)):
-            return self.__value == other
+            return self.__value.__add__(other.__value)
         else:
-            # TODO: instead of assuming not equal, should we test
-            #  against the Python "falseness" of other?
-            return False
+            return self.__value.__add__(other)
+
+    def __and__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__and__(other.__value)
+        else:
+            return self.__value.__and__(other)
 
     def __bool__(self):
-        """
-        Return the true-ness or false-ness of this object.
-        """
-        return self.__value
+        return self.__value.__bool__()
+
+    def __eq__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__eq__(other.__value)
+        else:
+            return self.__value.__eq__(other)
+
+    def __floordiv__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__floordiv__(other.__value)
+        else:
+            return self.__value.__floordiv__(other)
+
+    def __gt__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__gt__(other.__value)
+        else:
+            return self.__value.__gt__(other)
+
+    def __ge__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__ge__(other.__value)
+        else:
+            return self.__value.__ge__(other)
 
     def __hash__(self):
-        """
-        Returns a hash code for this object
-        """
-        return hash(self.__value)
+        return self.__value.__hash__()
+
+    def __lshift__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__lshift__(other.__value)
+        else:
+            return self.__value.__lshift__(other)
+
+    def __mod__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__mod__(other.__value)
+        else:
+            return self.__value.__mod__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__mul__(other.__value)
+        else:
+            return self.__value.__mul__(other)
+
+    def __ne__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__ne__(other.__value)
+        else:
+            return self.__value.__ne__(other)
+
+    def __or__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__or__(other.__value)
+        else:
+            return self.__value.__or__(other)
+
+    def __pow__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__pow__(other.__value)
+        else:
+            return self.__value.__pow__(other)
+
+    def __rshift__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__rshift__(other.__value)
+        else:
+            return self.__value.__rshift__(other)
 
     def __str__(self):
-        """
-        Return the string representation of this object.
-        """
-        return str(self.__value)
+        return self.__value.__str__()
+
+    def __truediv__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__truediv__(other.__value)
+        else:
+            return self.__value.__truediv__(other)
+
+    def __xor__(self, other):
+        if isinstance(other, BooleanValue):
+            return self.__value.__xor__(other.__value)
+        else:
+            return self.__value.__xor__(other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -152,6 +219,28 @@ class BooleanValue(variable_value.IVariableValue):
     @overrides
     def to_api_string(self) -> str:
         return str(self)
+
+    def to_real_value(self) -> real_value.RealValue:
+        """
+        Convert a given BooleanValue to a RealValue.
+
+        True is converted to 1.0 and False is converted to 0.0
+        (Note: this is temporarily a static until we can get the
+        non-numpy64-bool derived version working, since there's currently no way to actually have
+        a BooleanValue instance at the moment).
+
+        Parameters
+        ----------
+        orig the original BooleanValue
+
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        if self:
+            return real_value.RealValue(1.0)
+        else:
+            return real_value.RealValue(0.0)
 
     @staticmethod
     def from_api_string(value: str) -> BooleanValue:
@@ -178,9 +267,27 @@ class BooleanValue(variable_value.IVariableValue):
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
+    def to_integer_value(self) -> integer_value.IntegerValue:
+        """
+        Convert a given BooleanValue to an IntegerValue.
+
+        True is converted to 1 and False is converted to 0.
+
+        Parameters
+        ----------
+        orig the original BooleanValue
+        Returns
+        -------
+        A RealValue with value representing the original BooleanValue.
+        """
+        if self:
+            return integer_value.IntegerValue(1)
+        else:
+            return integer_value.IntegerValue(0)
+
     @overrides
     def to_formatted_string(self, locale_name: str) -> str:
-        result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self))
         return result
 

@@ -4,17 +4,19 @@ from typing import TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
+class RealArrayValue(CommonArrayValue[np.float64]):
     """Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -30,14 +32,14 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
-    def __eq__(self, other: RealArrayValue) -> bool:
+    def __eq__(self, other: object) -> bool:
         return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
-    @property
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.REAL_ARRAY
