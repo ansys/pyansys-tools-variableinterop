@@ -233,3 +233,53 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
     _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToIntegerArrayVisitor,
                            acvi.IntegerArrayValue)
 # endregion
+
+
+# region ToStringArrayVisitor
+@pytest.mark.parametrize(
+    "value,expected_result,expected_exception",
+    [
+        pytest.param(acvi.IntegerValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="IntegerValue"),
+        pytest.param(acvi.RealValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="RealValue"),
+
+        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
+        #       inherit np.bool_
+        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+
+        pytest.param(acvi.StringValue(""),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="StringValue"),
+        pytest.param(acvi.IntegerArrayValue(values=[-1, 0, 1]),
+                     acvi.StringArrayValue(values=["-1", "0", "1"]),
+                     None,
+                     id="IntegerArrayValue"),
+        pytest.param(acvi.RealArrayValue(values=[-1.5, 0.5, 1.5]),
+                     acvi.StringArrayValue(values=["-1.5", "0.5", "1.5"]),
+                     None,
+                     id="RealArrayValue"),
+        pytest.param(acvi.BooleanArrayValue(values=[True, False]),
+                     acvi.StringArrayValue(values=["True", "False"]),
+                     None,
+                     id="BooleanArrayValue"),
+        pytest.param(acvi.StringArrayValue(values=["1.0", "string cheese"]),
+                     acvi.StringArrayValue(values=["1.0", "string cheese"]),
+                     None,
+                     id="StringArrayValue")
+    ])
+def test_to_string_array_visitor(value: acvi.IVariableValue,
+                                 expected_result: acvi.StringArrayValue,
+                                 expected_exception: BaseException):
+    """
+    Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
+    raised.
+    """
+    _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToStringArrayVisitor,
+                           acvi.StringArrayValue)
+# endregion

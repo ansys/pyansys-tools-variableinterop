@@ -92,6 +92,7 @@ from .to_boolean_array_visitor import ToBooleanArrayVisitor
 from .to_integer_array_visitor import ToIntegerArrayVisitor
 from .to_integer_visitor import to_integer_value
 from .to_real_array_visitor import ToRealArrayVisitor
+from .to_string_array_visitor import ToStringArrayVisitor
 from .value_from_api_string import from_api_string
 from .variable_type import VariableType
 from .variable_value import IVariableValue
