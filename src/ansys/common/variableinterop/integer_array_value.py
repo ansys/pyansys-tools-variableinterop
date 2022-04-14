@@ -3,19 +3,19 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
+class IntegerArrayValue(CommonArrayValue[np.int64]):
     """Array of integer values.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
