@@ -1,7 +1,6 @@
 """Definition of RealValue."""
 from __future__ import annotations
 
-from decimal import ROUND_HALF_UP, Decimal
 import locale
 from typing import TypeVar
 
