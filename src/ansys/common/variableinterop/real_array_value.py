@@ -59,7 +59,3 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError

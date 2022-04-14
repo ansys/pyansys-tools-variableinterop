@@ -289,7 +289,3 @@ class BooleanValue(variable_value.IVariableValue):
         result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self))
         return result
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError

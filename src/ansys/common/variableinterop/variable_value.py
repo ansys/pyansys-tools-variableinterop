@@ -75,17 +75,6 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def get_modelcenter_type(self) -> str:
-        """
-        Get the ModelCenter type string for this value type.
-
-        Returns
-        -------
-        String to use as the type for a variable on the ModelCenter API.
-        """
-        raise NotImplementedError
-
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
     """Interface that defines common behavior for array types. Inherits ``IVariableValue``."""

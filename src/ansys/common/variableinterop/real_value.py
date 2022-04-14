@@ -126,7 +126,3 @@ class RealValue(np.float64, variable_value.IVariableValue):
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%.15G", self))
         return result
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError

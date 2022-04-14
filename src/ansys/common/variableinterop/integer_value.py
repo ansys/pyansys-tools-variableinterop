@@ -89,7 +89,3 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%G", self))
         return result
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError
