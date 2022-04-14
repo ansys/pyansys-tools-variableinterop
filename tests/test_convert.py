@@ -94,7 +94,7 @@ def test_to_string_value(source: acvi.IVariableValue,
 def test_to_real_value_raises(source: acvi.IVariableValue,
                               expected_exception: BaseException):
     """
-    Test behavior of convert.to_real_value()
+    Test behavior of convert.to_real_value() when it is expected to raise an exception
 
     Parameters
     ----------
@@ -120,7 +120,7 @@ def test_to_real_value_raises(source: acvi.IVariableValue,
 def test_to_integer_value_raises(source: acvi.IVariableValue,
                                  expected_exception: BaseException):
     """
-    Test behavior of convert.to_integer_value()
+    Test behavior of convert.to_integer_value() when it is expected to raise an exception
 
     Parameters
     ----------
@@ -146,7 +146,7 @@ def test_to_integer_value_raises(source: acvi.IVariableValue,
 def test_to_boolean_value_raises(source: acvi.IVariableValue,
                                  expected_exception: BaseException):
     """
-    Test behavior of convert.to_boolean_value()
+    Test behavior of convert.to_boolean_value() when it is expected to raise an exception
 
     Parameters
     ----------
@@ -172,7 +172,7 @@ def test_to_boolean_value_raises(source: acvi.IVariableValue,
 def test_to_string_value_raises(source: acvi.IVariableValue,
                                 expected_exception: BaseException):
     """
-    Test behavior of convert.to_string_value()
+    Test behavior of convert.to_string_value() when it is expected to raise an exception
 
     Parameters
     ----------
