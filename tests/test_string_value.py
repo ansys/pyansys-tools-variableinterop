@@ -83,3 +83,16 @@ def test_to_api_string(source: StringValue, expected_value: str) -> None:
     # Verify
     assert type(result) is str
     assert result == expected_value
+
+
+def test_clone() -> None:
+    """Verifies that clone returns a new StringValue with the same value."""
+    # Setup
+    sut: StringValue = StringValue("word")
+
+    # SUT
+    result: StringValue = sut.clone()
+
+    # Verification
+    assert result is not sut
+    assert result == "word"

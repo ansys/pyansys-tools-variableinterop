@@ -5,6 +5,7 @@ from typing import List, Optional, TypeVar
 
 from overrides import overrides
 
+import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.numeric_metadata as variable_metadata
 import ansys.common.variableinterop.real_value as real_value
@@ -26,9 +27,8 @@ class RealMetadata(variable_metadata.NumericMetadata):
         self._enumerated_values: List[real_value.RealValue] = []
         self._enumerated_aliases: List[str] = []
 
-    # equality definition here
-
-    # clone here
+    def __eq__(self, other):
+        return self.are_equal(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -136,3 +136,22 @@ class RealMetadata(variable_metadata.NumericMetadata):
         The list of aliases to set.
         """
         self._enumerated_aliases = value
+
+    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
+        """Determine if a given metadata is equal to this metadata.
+
+        Parameters
+        ----------
+        metadata Metadata to compare this object to.
+
+        Returns
+        -------
+        True if metadata objects are equal, false otherwise.
+        """
+        equal: bool = (isinstance(metadata, RealMetadata) and
+                       super().are_equal(metadata) and
+                       self._lower_bound == metadata._lower_bound and
+                       self._upper_bound == metadata._upper_bound and
+                       self._enumerated_values == metadata._enumerated_values and
+                       self._enumerated_aliases == metadata._enumerated_aliases)
+        return equal

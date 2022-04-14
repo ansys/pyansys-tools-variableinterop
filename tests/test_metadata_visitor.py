@@ -1,5 +1,7 @@
 """Unit tests of IVariableMetadataVisitor, and accept methods of metadata types."""
 
+from typing import Any
+
 import pytest
 
 import ansys.common.variableinterop.boolean_metadata as boolean_metadata
@@ -48,7 +50,7 @@ class TestVisitor(ivariablemetadata_visitor.IVariableMetadataVisitor[str]):
     ]
 )
 def test_visiting_a_metadata_should_work(metadata: common_variable_metadata.CommonVariableMetadata,
-                                         expected: any) -> None:
+                                         expected: Any) -> None:
     """
     Verifies that the visitor pattern is working for CommonVariableMetadata.
 
