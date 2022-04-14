@@ -9,7 +9,9 @@ from overrides import overrides
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.string_array_value as string_array_value
 from .variable_value import CommonArrayValue
+
 
 T = TypeVar("T")
 
@@ -44,6 +46,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_boolean_array_value(self):
         return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
     # TODO: full implementation
 

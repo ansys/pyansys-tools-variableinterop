@@ -10,7 +10,9 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.string_array_value as string_array_value
 from .variable_value import CommonArrayValue
+
 
 T = TypeVar("T")
 
@@ -45,6 +47,9 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
     # TODO: full implementation
 
