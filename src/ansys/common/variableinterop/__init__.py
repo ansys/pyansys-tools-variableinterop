@@ -94,6 +94,7 @@ from .to_real_array_visitor import ToRealArrayVisitor
 from .value_from_api_string import from_api_string
 from .variable_type import VariableType
 from .variable_value import IVariableValue
+from .utils import convert
 from .var_type_array_check import var_type_is_array
 from .vartype_arrays_and_elements import to_array_type
 from .vartype_arrays_and_elements import get_element_type
