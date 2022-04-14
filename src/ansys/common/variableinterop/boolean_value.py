@@ -26,8 +26,6 @@ class BooleanValue(variable_value.IVariableValue):
     If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
         """
@@ -106,7 +104,6 @@ class BooleanValue(variable_value.IVariableValue):
                 source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value: np.bool_ = np.bool_(source != 0.0)
         else:
-            import ansys.common.variableinterop.exceptions as exceptions
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
 
@@ -226,7 +223,7 @@ class BooleanValue(variable_value.IVariableValue):
         """
         Convert a given BooleanValue to a RealValue.
 
-        True is converted to 1.0 and False is is converted to 0.0
+        True is converted to 1.0 and False is converted to 0.0
         (Note: this is temporarily a static until we can get the
         non-numpy64-bool derived version working, since there's currently no way to actually have
         a BooleanValue instance at the moment).
