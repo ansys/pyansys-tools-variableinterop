@@ -3,10 +3,13 @@ from __future__ import annotations
 
 import distutils.util
 import locale
+from typing import List
 
 import numpy as np
 
+from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_value as boolean_value
+from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudo_visitor
 import ansys.common.variableinterop.locale_utils as locale_utils
@@ -29,7 +32,7 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
 
     def visit_int(self) -> integer_value.IntegerValue:
         # We need to use atof and then convert to int, as atoi does not support scientific notation
-        result: variable_value.IVariableValue = locale_utils.LocaleUtils.perform_safe_locale_action(
+        result: integer_value.IntegerValue = locale_utils.LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: np.int64(locale.atof(self._value)))
         return result
 
@@ -47,10 +50,14 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
         return self._value
 
     def visit_file(self) -> variable_value.IVariableValue:
-        raise
+        raise NotImplementedError
 
     def visit_int_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda shape_or_val: IntegerArrayValue(values=shape_or_val) if isinstance(shape_or_val, List) \
+                else IntegerArrayValue(shape_=shape_or_val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_int())
 
     def visit_real_array(self) -> variable_value.IVariableValue:
         raise
@@ -62,4 +69,4 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
         raise
 
     def visit_file_array(self) -> variable_value.IVariableValue:
-        raise
+        raise NotImplementedError
