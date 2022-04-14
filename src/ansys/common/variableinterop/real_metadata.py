@@ -5,8 +5,8 @@ from typing import List, Optional, TypeVar
 
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
+import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.numeric_metadata as variable_metadata
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -29,8 +29,6 @@ class RealMetadata(variable_metadata.NumericMetadata):
 
     def __eq__(self, other):
         return self.are_equal(other)
-
-    # clone here
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:

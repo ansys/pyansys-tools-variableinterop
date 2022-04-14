@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+import copy
 from typing import Dict
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
@@ -45,7 +46,9 @@ class CommonVariableMetadata(ABC):
                        self._custom_metadata == metadata._custom_metadata)
         return equal
 
-    # clone here
+    def clone(self) -> CommonVariableMetadata:
+        """Get a deep copy of this metadata."""
+        return copy.deepcopy(self)
 
     @abstractmethod
     def accept(

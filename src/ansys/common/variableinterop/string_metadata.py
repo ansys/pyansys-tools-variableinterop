@@ -25,8 +25,6 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
     def __eq__(self, other):
         return self.are_equal(other)
 
-    # clone here
-
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_string(self)
