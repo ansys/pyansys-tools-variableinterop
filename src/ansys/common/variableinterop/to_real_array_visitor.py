@@ -3,6 +3,7 @@ import numpy as np
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.exceptions as exceptions
+import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -29,6 +30,10 @@ class ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[real_array_valu
                                                     variable_type.VariableType.REAL_ARRAY)
 
     def visit_string(self, value: string_value.StringValue) -> real_array_value.RealArrayValue:
+        raise exceptions.IncompatibleTypesException(value.variable_type,
+                                                    variable_type.VariableType.REAL_ARRAY)
+
+    def visit_file(self, value: file_value.FileValue) -> real_array_value.RealArrayValue:
         raise exceptions.IncompatibleTypesException(value.variable_type,
                                                     variable_type.VariableType.REAL_ARRAY)
 
