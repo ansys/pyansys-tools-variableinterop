@@ -44,7 +44,8 @@ from ansys.common.variableinterop import (
         pytest.param(StringValue('0.5'), numpy.int64(1), None,
                      id="from StringValue('0.5') should round"),
 
-        pytest.param(IntegerValue(8675309), IntegerValue(8675309), None, id="from other IntegerValue")
+        pytest.param(IntegerValue(8675309), IntegerValue(8675309), None,
+                     id="from other IntegerValue")
     ])
 def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: BaseException) -> None:
     """Verify that __init__ for IntegerValue correctly instantiates the superclass data."""
