@@ -1,9 +1,10 @@
 from contextlib import contextmanager
-from typing import Type, Callable
+from typing import Type
 
 import pytest
 
 import ansys.common.variableinterop as acvi
+
 
 # TODO: search google, is there a standard way to do this?
 
