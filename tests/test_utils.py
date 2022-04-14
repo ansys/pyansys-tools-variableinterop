@@ -80,41 +80,22 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
             raise e
 
 
-def _test_conversion(source: acvi.IVariableValue,
-                     expected_result: acvi.IVariableValue,
-                     expected_exception_type: BaseException,
-                     conversion_method: Callable[[acvi.IVariableValue], acvi.IVariableValue],
-                     result_type: Type[acvi.IVariableValue]) -> None:
+def _assert_incompatible_types_exception(message: str,
+                                         from_: str,
+                                         to: str) -> None:
     """
-    Helper function to test ``utils.convert`` module.
+    Helper function to assert IncompatibleTypesException gave the expected message.
 
     Parameters
     ----------
-    source : IVariableValue
-        The IVariableValue to be converted.
-    expected_result : IVariableValue
-        (IVariableValue) The expected result of the test.
-    expected_exception_type : BaseException
-        The expected exception type.
-    conversion_method : Callable[[IVariableValue], IVariableValue]
-        The function to use for this test.
-    result_type : IVariableValue
-        The type of the expected result.
+    message
+        Expected error message.
+    from_
+        Type of the source value.
+    to
+        Type to which the test was trying to convert source.
     """
-    with _create_exception_context(expected_exception_type):
-        try:
-            # SUT
-            result: acvi.IVariableValue = conversion_method(source)
-
-            # Verify (no exception)
-            assert type(result) == type(expected_result)
-            assert result == expected_result
-
-        except expected_exception_type as e:
-            # Verify (expected exception)
-            if expected_exception_type == acvi.IncompatibleTypesException:
-                assert e.message == \
-                       ("Error: Cannot convert from type {0} to type {1}.\n"
-                        "Reason: The types are incompatible.") \
-                       .format(source.__class__.__name__, result_type.__name__)
-            raise e
+    assert message == \
+           ("Error: Cannot convert from type {0} to type {1}.\n"
+            "Reason: The types are incompatible.") \
+           .format(from_, to)
