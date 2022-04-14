@@ -127,6 +127,16 @@ class ArrayToFromStringUtil:
 
     @staticmethod
     def _value_regex_match(value_str: str) -> Optional[Match[str]]:
+        """
+        Parses a single value, that may be quoted.
+        Parameters
+        ----------
+        value_str The string to parse.
+
+        Returns
+        -------
+        The regex match object, or None if not matched.
+        """
         match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._quoted_value_regex,
                                                 value_str, flags=re.IGNORECASE)
         if match is None:
