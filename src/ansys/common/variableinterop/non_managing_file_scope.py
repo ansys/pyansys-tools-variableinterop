@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from os import PathLike
 from typing import Any, Optional
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.file_value as file_value
@@ -27,30 +27,11 @@ class NonManagingFileScope(file_scope.FileScope):
         def __init__(
             self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[Any]
         ) -> None:
-            self._id: UUID = uuid4()
-            self._path: PathLike = to_read
-            self._mime_type: str = "" if (mime_type is None) else mime_type
-            self._file_encoding: Any = encoding
+            super().__init__(to_read, mime_type, encoding, uuid4())
 
         @property
         def actual_content_file_name(self) -> Optional[PathLike]:
-            return self._path
-
-        @property
-        def mime_type(self) -> str:
-            return self.mime_type
-
-        @property
-        def original_file_name(self) -> Optional[PathLike]:
-            return self._path
-
-        @property
-        def file_encoding(self) -> Any:
-            return self._file_encoding
-
-        @property
-        def id(self) -> UUID:
-            return self._id
+            return self._original_path
 
         def write_file(self, file_name: PathLike) -> None:
             # TODO: Implement
