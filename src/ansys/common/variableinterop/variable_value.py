@@ -1,11 +1,11 @@
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import copy
+from abc import ABC, abstractmethod
 from typing import Tuple, TypeVar, Generic
 
-from numpy.typing import DTypeLike, NDArray
+from numpy.typing import NDArray
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib

@@ -10,7 +10,7 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
-from ansys.common.variableinterop.variable_value import CommonArrayValue
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
