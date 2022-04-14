@@ -15,9 +15,8 @@ T = TypeVar("T")
 class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
     """Common metadata for VariableType.BOOLEAN and VariableType.BOOLEAN_ARRAY."""
 
-    # equality definition here
-
-    # clone here
+    def __eq__(self, other):
+        return self.are_equal(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -27,5 +26,20 @@ class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN
+
+    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
+        """Determine if a given metadata is equal to this metadata.
+
+        Parameters
+        ----------
+        metadata Metadata to compare this object to.
+
+        Returns
+        -------
+        True if metadata objects are equal, false otherwise.
+        """
+        equal: bool = (isinstance(metadata, BooleanMetadata) and
+                       super().are_equal(metadata))
+        return equal
 
     # TODO need implicit coerce for arrays
