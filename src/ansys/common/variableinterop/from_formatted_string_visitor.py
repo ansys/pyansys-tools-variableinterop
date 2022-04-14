@@ -66,36 +66,28 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
     def visit_int_array(self) -> variable_value.IVariableValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
-            lambda shape_or_val:
-                IntegerArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
-                else IntegerArrayValue(shape_=shape_or_val),
+            lambda val: IntegerArrayValue(values=val),
             lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_int())
 
     @overrides
     def visit_real_array(self) -> variable_value.IVariableValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
-            lambda shape_or_val:
-            RealArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
-            else RealArrayValue(shape_=shape_or_val),
+            lambda val: RealArrayValue(values=val),
             lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_real())
 
     @overrides
     def visit_bool_array(self) -> variable_value.IVariableValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
-            lambda shape_or_val:
-            BooleanArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
-            else BooleanArrayValue(shape_=shape_or_val),
+            lambda val: BooleanArrayValue(values=val),
             lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_boolean())
 
     @overrides
     def visit_string_array(self) -> variable_value.IVariableValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
-            lambda shape_or_val:
-            StringArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
-            else StringArrayValue(shape_=shape_or_val),
+            lambda val: StringArrayValue(values=val),
             lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_string())
 
     @overrides

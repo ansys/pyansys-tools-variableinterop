@@ -1,5 +1,5 @@
 """Definition of ArrayToFromStringUtil."""
-
+from math import prod
 import re
 from typing import Any, Callable, List, Match, Optional, Tuple
 
@@ -87,24 +87,24 @@ class ArrayToFromStringUtil:
             # parse bounds as tuple
             bounds: str = match.groupdict()["boundList"]
             lengths: Tuple = tuple([int(b) for b in bounds.split(',')])
-            # make empty array of size bounds
-            array = create_action(lengths)
 
-            # parse each value
+            # parse each value into a flat list
             comma_after_last_value: str = ""
-            with np.nditer(array, op_flags=['writeonly']) as array_iter:
-                for i in array_iter:
-                    match = ArrayToFromStringUtil._value_regex_match(value_str)
-                    if match is not None:
-                        converted: IVariableValue = valueify_action(match.groupdict()["value"])
-                        i[...] = converted
-                        value_str = match.groupdict()["rest"]
-                        comma_after_last_value = match.groupdict()["comma"]
-                    else:
-                        raise FormatException
+            converted_list: List[IVariableValue] = []
+            for i in range(prod(lengths)):
+                match = ArrayToFromStringUtil._value_regex_match(value_str)
+                if match is not None:
+                    converted: IVariableValue = valueify_action(match.groupdict()["value"])
+                    converted_list.append(converted)
+                    value_str = match.groupdict()["rest"]
+                    comma_after_last_value = match.groupdict()["comma"]
+                else:
+                    raise FormatException
             # ensure there were no extra values
             if comma_after_last_value == ",":
                 raise FormatException
+            # create the array from the values
+            array = create_action(np.reshape(converted_list, lengths).tolist())
 
         else:  # No bounds
             match = re.search(
