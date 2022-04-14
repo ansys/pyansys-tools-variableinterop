@@ -37,6 +37,11 @@ class ToBooleanArrayVisitor(ivariable_visitor.
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
+    def visit_file(self, value: string_value.StringValue) \
+            -> boolean_array_value.BooleanArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) \
             -> boolean_array_value.BooleanArrayValue:
         return value.to_boolean_array_value()
