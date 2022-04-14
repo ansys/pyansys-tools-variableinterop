@@ -1,6 +1,7 @@
 """Provides a visitor implementation that converts the visited value to a RealValue."""
 from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
 from ansys.common.variableinterop.boolean_value import BooleanValue
+from ansys.common.variableinterop.file_value import FileValue
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
 from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
 from ansys.common.variableinterop.integer_value import IntegerValue
@@ -27,6 +28,9 @@ class ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
     def visit_string(self, value: StringValue) -> IntegerValue:
         return IntegerValue.from_api_string(value.to_api_string())
+
+    def visit_file(self, value: FileValue) -> IntegerValue:
+        raise IncompatibleTypesException(VariableType.FILE, VariableType.INTEGER)
 
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.INTEGER_ARRAY, VariableType.INTEGER)
