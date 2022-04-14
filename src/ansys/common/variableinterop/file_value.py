@@ -3,6 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 from typing import Final
+from overrides import overrides
 from os import PathLike
 from typing import Any, Optional
 from uuid import UUID
@@ -88,6 +89,14 @@ class FileValue(variable_value.IVariableValue, ABC):
     @abstractmethod
     def get_contents(self, encoding: Optional[Any]) -> str:
         ...
+
+    @overrides
+    def get_modelcenter_type(self) -> str:
+        raise NotImplementedError
+
+    @overrides
+    def to_api_string(self) -> str:
+        raise NotImplementedError
 
     # TODO: Async get_contents
 
