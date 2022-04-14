@@ -5,7 +5,7 @@ import locale
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
@@ -14,12 +14,12 @@ import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.locale_utils import LocaleUtils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
+class RealArrayValue(CommonArrayValue[np.float64]):
     """Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
