@@ -26,10 +26,15 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
+
+    @overrides
+    def __hash__(self):
+        return super().__hash__()
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:

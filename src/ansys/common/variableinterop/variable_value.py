@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import copy
+import random
 from abc import ABC, abstractmethod
 from typing import Tuple, TypeVar, Generic
 
+import numpy as np
 from numpy.typing import NDArray
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -78,6 +80,27 @@ class IVariableValue(ABC):
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
     """Interface that defines common behavior for array types. Inherits ``IVariableValue``."""
+
+    def __hash__(self) -> int:
+        flat: np.flatiter = self.flat
+        length: int = len(flat)
+
+        # Sample from array data at up to 16 pseudo-random indices
+        num_samples = min(16, length)
+        if length <= 16:
+            indices = range(length)
+        else:
+            rand_generator = random.Random(42)
+            indices = set()
+            while len(indices) < num_samples:
+                indices.add(rand_generator.randint(0, length-1))
+
+        # Simple hash calculation
+        hash_ = 0
+        for i in indices:
+            hash_ = (hash_ * 17 + hash(flat[i])) % 2147483648  # signed int32 max value
+
+        return hash_
 
     def get_lengths(self) -> Tuple[int]:
         """
