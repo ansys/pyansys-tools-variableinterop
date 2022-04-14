@@ -3,6 +3,7 @@ import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.string_array_value as string_array_value
@@ -45,6 +46,14 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :return: A bool equivalent
         """
         return boolean_value.BooleanValue.str_to_bool(value)
+
+    def visit_file(self, value: file_value.FileValue) -> bool:
+        """
+        Visit a FileValue
+        :param value the FileValue in question
+        """
+        import ansys.common.variableinterop.exceptions as exceptions
+        raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> bool:
         """
