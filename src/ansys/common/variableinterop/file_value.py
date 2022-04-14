@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-# when we support Python 3.8
-# from typing import Final
+from typing import Final
 from os import PathLike
 from typing import Any, Optional
 from uuid import UUID
@@ -29,11 +28,9 @@ class FileValue(variable_value.IVariableValue, ABC):
     def variable_type(self) -> VariableType:
         return VariableType.FILE
 
-    # TODO: Once we support Python 3.8 minimum, make this Final[str]
-    BINARY_MIMETYPE: str = "application/octet-stream"
+    BINARY_MIMETYPE: Final[str] = "application/octet-stream"
 
-    # TODO: Once we support Python 3.8 minimum, make this Final[str]
-    TEXT_MIMETYPE: str = "text/plain"
+    TEXT_MIMETYPE: Final[str] = "text/plain"
 
     @property
     @abstractmethod
