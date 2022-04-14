@@ -44,6 +44,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return np.copy(self).view(StringArrayValue)
 
     @overrides
+    def __hash__(self):
+        return super().__hash__()
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
