@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import distutils.util
 import locale
-from typing import List
 
 import numpy as np
 from overrides import overrides
