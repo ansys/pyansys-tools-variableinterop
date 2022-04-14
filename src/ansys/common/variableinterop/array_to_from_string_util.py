@@ -6,11 +6,13 @@ import numpy as np
 import re
 from numpy.typing import NDArray
 
+from ansys.common.variableinterop.exceptions import FormatException
 from ansys.common.variableinterop.variable_value import CommonArrayValue, IVariableValue
 
 
 class ArrayToFromStringUtil:
-    """"""
+    """Utility methods for converting CommonValueArrays to/from string \
+    representations."""
 
     # Regular Expression pattern, as a string, of an array value with the optional curly braces.
     # Captures the list of values, unparsed, in valueList.
@@ -18,12 +20,12 @@ class ArrayToFromStringUtil:
     # Regular Expression pattern, as a string, of an array value with the optional bounds prefix
     # Captures the list of values, unparsed, in valueList and the list of
     # array bounds, unparsed, in boundList.
-    _array_with_bounds_regex: str = r'^\s*' + r'BOUNDS\s*\[(?P<boundList>[\d,\s]*)\]\s' + \
+    _array_with_bounds_regex: str = r'^\s*' + r'BOUNDS\s*\[(?P<boundList>[\d,\s]*)\]\s*' + \
         _array_with_curly_braces_regex + r'\s*$'
     #
-    _quoted_value_regex: str = r'^\s*""(?P<value>(([^""\\])|(\\.))*)""\s*(?P<comma>,?)(?P<rest>.*)$'
+    _quoted_value_regex: str = r'^\s*"(?P<value>(([^"\\])|(\\.))*)"\s*(?P<comma>,?)(?P<rest>.*)$'
     #
-    _unquoted_value_regex: str = r'^\s*(?P<value>[^,""]*[^,""\s])\s*(?P<comma>,?)(?P<rest>.*)$'
+    _unquoted_value_regex: str = r'^\s*(?P<value>[^,"]*[^,"\s])\s*(?P<comma>,?)(?P<rest>.*)$'
 
     @staticmethod
     def value_to_string(value: NDArray, stringify_action: Callable) -> str:
@@ -57,45 +59,56 @@ class ArrayToFromStringUtil:
                         create_action: Callable[[Any], CommonArrayValue],
                         valueify_action: Callable[[str], IVariableValue]) -> CommonArrayValue:
         """
+        Convert a string into a CommonValueArray object.
+
+        valueify_action allows converting the value arbitrarily, so
+        both API and display strings can use this method.
 
         Parameters
         ----------
-        value
-        create_action
-        valueify_action
+        value The string value to parse.
+        create_action An action that takes either a shape or a list of initial values, and creates \
+            a new array of the correct type.
+        valueify_action The action used to parse each individual value to the correct type.
 
         Returns
         -------
-
+        A new array object with the parsed values.
         """
 
         array: CommonArrayValue
 
         # check for bounds string
-        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._array_with_bounds_regex, value)
-        # TODO: Why is regex not matching?
+        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._array_with_bounds_regex, value,
+                                         flags=re.IGNORECASE)
         if match is not None:  # There are bounds
             value_str: str = match.groupdict()["valueList"]
 
-            # parse bounds
+            # parse bounds as tuple
             bounds: str = match.groupdict()["boundList"]
-            lengths: List[int] = [int(b) for b in bounds.split(',')]
-            array = create_action(lengths)  # TODO: prolly wrong format
+            lengths: Tuple = tuple([int(b) for b in bounds.split(',')])
+            # make empty array of size bounds
+            array = create_action(lengths)
 
+            # parse each value
             comma_after_last_value: str = ""
-            for i in []:  # TODO: loop over all array indexes
-                match = ArrayToFromStringUtil._value_regex_match(value_str)
-                if match is not None:
-                    array[i] = valueify_action(match.groupdict()["value"])
-                    value_str = match.groupdict()["rest"]
-                    comma_after_last_value = match.groupdict()["comma"]
-                else:
-                    raise Exception  # TODO: FormatException
+            with np.nditer(array, op_flags=['writeonly']) as array_iter:
+                for i in array_iter:
+                    match = ArrayToFromStringUtil._value_regex_match(value_str)
+                    if match is not None:
+                        converted: IVariableValue = valueify_action(match.groupdict()["value"])
+                        i[...] = converted
+                        value_str = match.groupdict()["rest"]
+                        comma_after_last_value = match.groupdict()["comma"]
+                    else:
+                        raise FormatException
+            # ensure there were no extra values
             if comma_after_last_value == ",":
-                raise Exception  # TODO: FormatException
+                raise FormatException
 
         else:  # No bounds
-            match = re.search(ArrayToFromStringUtil._array_with_curly_braces_regex, value)
+            match = re.search(ArrayToFromStringUtil._array_with_curly_braces_regex, value,
+                              flags=re.IGNORECASE)
             value_str: str
             if match is not None:
                 value_str = match.groupdict()["valueList"]
@@ -108,14 +121,15 @@ class ArrayToFromStringUtil:
                 value_str = match.groupdict()["rest"]
                 match = ArrayToFromStringUtil._value_regex_match(value_str)
             if value_str != "":
-                raise Exception  # TODO: FormatException
+                raise FormatException
             array = create_action(value_list)
 
         return array
 
     @staticmethod
     def _value_regex_match(value_str: str) -> Match[AnyStr]:
-        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._quoted_value_regex, value_str)
+        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._quoted_value_regex, value_str,
+                                         flags=re.IGNORECASE)
         if match is None:
             match = re.search(ArrayToFromStringUtil._unquoted_value_regex, value_str)
         return match

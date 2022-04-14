@@ -8,12 +8,15 @@ from typing import List
 import numpy as np
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
+from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
 import ansys.common.variableinterop.boolean_value as boolean_value
 from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudo_visitor
 import ansys.common.variableinterop.locale_utils as locale_utils
+from ansys.common.variableinterop.real_array_value import RealArrayValue
 import ansys.common.variableinterop.real_value as real_value
+from ansys.common.variableinterop.string_array_value import StringArrayValue
 import ansys.common.variableinterop.string_value as string_value
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -55,18 +58,34 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
     def visit_int_array(self) -> variable_value.IVariableValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
-            lambda shape_or_val: IntegerArrayValue(values=shape_or_val) if isinstance(shape_or_val, List) \
+            lambda shape_or_val:
+                IntegerArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
                 else IntegerArrayValue(shape_=shape_or_val),
             lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_int())
 
     def visit_real_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda shape_or_val:
+            RealArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
+            else RealArrayValue(shape_=shape_or_val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_real())
 
     def visit_bool_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda shape_or_val:
+            BooleanArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
+            else BooleanArrayValue(shape_=shape_or_val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_boolean())
 
     def visit_string_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda shape_or_val:
+            StringArrayValue(values=shape_or_val) if isinstance(shape_or_val, List)
+            else StringArrayValue(shape_=shape_or_val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_string())
 
     def visit_file_array(self) -> variable_value.IVariableValue:
         raise NotImplementedError

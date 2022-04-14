@@ -220,7 +220,7 @@ def test_converting_from_an_integer_array(value: str,
                                           locale: str,
                                           expected: IntegerArrayValue) -> None:
     """
-    Verifies the conversion of various strings to IntegerValues.
+    Verifies the conversion of various strings to IntegerArrayValues.
 
     Parameters
     ----------
@@ -233,6 +233,127 @@ def test_converting_from_an_integer_array(value: str,
 
     # SUT
     result: IntegerArrayValue = visitor.visit_int_array()
+
+    # Verification
+    assert np.array_equal(result, expected)
+
+
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
+        pytest.param("5,4,3.25", "en_US.UTF-8", RealArrayValue((1, 3), [5, 4, 3.25]),
+                     id="Single dim, en_US"),
+        pytest.param("\"5\",\"4\",\"3,25\"", "de_DE.UTF-8", RealArrayValue((1, 3), [5, 4, 3.25]),
+                     id="Single dim, de_DE"),
+        pytest.param("bounds[2,3]{50.5,101.1,233.45,1.1,2.2,3.3}",
+                     "en_US.UTF-8",
+                     RealArrayValue((2, 3), [[50.5, 101.1, 233.45], [1.1, 2.2, 3.3]]),
+                     id="Multi dim, en_US"),
+        pytest.param("bounds[2,3]{\"50,5\",\"101,1\",\"233,45\",\"1,1\",\"2,2\",\"3,3\"}",
+                     "de_DE.UTF-8",
+                     RealArrayValue((2, 3), [[50.5, 101.1, 233.45], [1.1, 2.2, 3.3]]),
+                     id="Multi dim, de_DE"),
+    ]
+)
+def test_converting_from_a_real_array(value: str,
+                                      locale: str,
+                                      expected: RealArrayValue) -> None:
+    """
+    Verifies the conversion of various strings to RealArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # Setup
+    visitor = FromFormattedStringVisitor(value, locale)
+
+    # SUT
+    result: RealArrayValue = visitor.visit_real_array()
+
+    # Verification
+    assert np.array_equal(result, expected)
+
+
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
+        pytest.param("True,False,True", "en_US.UTF-8",
+                     BooleanArrayValue((1, 3), [np.True_, np.False_, np.True_]),
+                     id="Single dim, en_US"),
+        pytest.param("True,False,True", "de_DE.UTF-8",
+                     BooleanArrayValue((1, 3), [np.True_, np.False_, np.True_]),
+                     id="Single dim, de_DE"),
+        pytest.param("bounds[3,2]{True,False,False,True,True,True}",
+                     "en_US.UTF-8",
+                     BooleanArrayValue(
+                         (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+                     id="Multi dim, en_US"),
+        pytest.param("bounds[3,2]{True,False,False,True,True,True}",
+                     "de_DE.UTF-8",
+                     BooleanArrayValue(
+                         (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+                     id="Multi dim, de_DE"),
+    ]
+)
+def test_converting_from_a_boolean_array(value: str,
+                                         locale: str,
+                                         expected: BooleanArrayValue) -> None:
+    """
+    Verifies the conversion of various strings to BooleanArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # Setup
+    visitor = FromFormattedStringVisitor(value, locale)
+
+    # SUT
+    result: BooleanArrayValue = visitor.visit_bool_array()
+
+    # Verification
+    assert np.array_equal(result, expected)
+
+
+@pytest.mark.parametrize(
+    "value,locale,expected",
+    [
+        pytest.param("\"one\",\"two\",\"three\"", "en_US.UTF-8",
+                     StringArrayValue((1, 3), ["one", "two", "three"]), id="Single dim, en_US"),
+        pytest.param("\"one\",\"two\",\"three\"", "de_DE.UTF-8",
+                     StringArrayValue((1, 3), ["one", "two", "three"]), id="Single dim, de_DE"),
+        # pytest.param("bounds[2,2]{\"one_one\",\"one_two\",\"two_one\",\"two_two\"}",
+        #              "en_US.UTF-8",
+        #              StringArrayValue((2, 2), [["one_one", "one_two"], ["two_one", "two_two"]]),
+        #              id="Multi dim, en_US"),
+        # pytest.param("bounds[2,2]{\"one_one\",\"one_two\",\"two_one\",\"two_two\"}",
+        #              "de_DE.UTF-8",
+        #              StringArrayValue((2, 2), [["one_one", "one_two"], ["two_one", "two_two"]]),
+        #              id="Multi dim, de_DE"),
+    ]
+)
+def test_converting_from_a_string_array(value: str,
+                                        locale: str,
+                                        expected: StringArrayValue) -> None:
+    """
+    Verifies the conversion of various strings to StringArrayValues.
+
+    Parameters
+    ----------
+    value The value to format.
+    locale The locale to format in.
+    expected The expected output.
+    """
+    # Setup
+    visitor = FromFormattedStringVisitor(value, locale)
+
+    # SUT
+    result: StringArrayValue = visitor.visit_string_array()
 
     # Verification
     assert np.array_equal(result, expected)
