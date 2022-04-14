@@ -94,6 +94,6 @@ from .to_real_value_visitor import to_real_value
 from .value_from_api_string import from_api_string
 from .variable_type import VariableType
 from .variable_value import IVariableValue
-from .vartype_arrays_and_elements import get_element_type, to_array_type
-
-# TODO: Get rid of star
+from .var_type_array_check import var_type_is_array
+from .vartype_arrays_and_elements import to_array_type
+from .vartype_arrays_and_elements import get_element_type
