@@ -12,6 +12,7 @@ import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")

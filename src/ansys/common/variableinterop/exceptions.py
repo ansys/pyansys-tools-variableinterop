@@ -58,9 +58,8 @@ class IncompatibleTypesException(BaseException):
 class FormatException(BaseException):
     """Exception raised when attempting to create an IVariableValue \
     from a string that is incorrectly formatted."""
+
     def __init__(self):
-        """
-        Construct exception.
-        """
-        self.message = _error("ERROR_FORMAT", self.from_type_str, self.to_type_str )
+        """Construct exception."""
+        self.message = _error("ERROR_FORMAT")
         super().__init__(self.message)

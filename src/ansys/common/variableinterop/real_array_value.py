@@ -14,6 +14,7 @@ import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.locale_utils import LocaleUtils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
+
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")

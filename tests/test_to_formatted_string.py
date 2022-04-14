@@ -245,11 +245,15 @@ def test_visiting_a_real_array_formats_correctly(value: RealArrayValue,
         pytest.param(BooleanArrayValue((1, 3), [np.True_, np.False_, np.True_]), "de_DE.UTF-8",
                      "True,False,True", id="Single dim, de_DE"),
         pytest.param(BooleanArrayValue(
-            (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]), "en_US.UTF-8",
-            "bounds[3,2]{True,False,False,True,True,True}", id="Multi dim, en_US"),
+            (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+            "en_US.UTF-8",
+            "bounds[3,2]{True,False,False,True,True,True}",
+            id="Multi dim, en_US"),
         pytest.param(BooleanArrayValue(
-            (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]), "de_DE.UTF-8",
-            "bounds[3,2]{True,False,False,True,True,True}", id="Muti dim, de_DE"),
+            (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+            "de_DE.UTF-8",
+            "bounds[3,2]{True,False,False,True,True,True}",
+            id="Multi dim, de_DE"),
     ]
 )
 def test_visiting_a_boolean_array_formats_correctly(value: BooleanArrayValue,

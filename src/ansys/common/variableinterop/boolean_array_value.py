@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -10,6 +10,7 @@ from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromSt
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
+
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue
 

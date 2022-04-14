@@ -16,7 +16,6 @@ from ansys.common.variableinterop import (
 )
 
 
-
 @pytest.mark.parametrize(
     "value,locale,expected",
     [
@@ -288,13 +287,13 @@ def test_converting_from_a_real_array(value: str,
                      id="Single dim, de_DE"),
         pytest.param("bounds[3,2]{True,False,False,True,True,True}",
                      "en_US.UTF-8",
-                     BooleanArrayValue(
-                         (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+                     BooleanArrayValue((3, 2), [[np.True_, np.False_], [np.False_, np.True_],
+                                                [np.True_, np.True_]]),
                      id="Multi dim, en_US"),
         pytest.param("bounds[3,2]{True,False,False,True,True,True}",
                      "de_DE.UTF-8",
-                     BooleanArrayValue(
-                         (3, 2), [[np.True_, np.False_], [np.False_, np.True_], [np.True_, np.True_]]),
+                     BooleanArrayValue((3, 2), [[np.True_, np.False_], [np.False_, np.True_],
+                                                [np.True_, np.True_]]),
                      id="Multi dim, de_DE"),
     ]
 )

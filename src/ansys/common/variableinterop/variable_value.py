@@ -1,9 +1,9 @@
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
-import copy
 from abc import ABC, abstractmethod
-from typing import Tuple, TypeVar, Generic
+import copy
+from typing import Generic, Tuple, TypeVar
 
 from numpy.typing import NDArray
 

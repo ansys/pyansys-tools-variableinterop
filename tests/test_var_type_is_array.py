@@ -1,5 +1,7 @@
-import ansys.common.variableinterop as acvi
 import pytest
+
+import ansys.common.variableinterop as acvi
+
 
 @pytest.mark.parametrize(
     "vartype,expected_result",

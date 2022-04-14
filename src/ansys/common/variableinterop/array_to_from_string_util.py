@@ -1,9 +1,9 @@
 """Definition of ArrayToFromStringUtil."""
 
-from typing import Callable, Match, AnyStr, List, Tuple, Any
+import re
+from typing import Any, Callable, List, Match, Optional, Tuple
 
 import numpy as np
-import re
 from numpy.typing import NDArray
 
 from ansys.common.variableinterop.exceptions import FormatException
@@ -60,7 +60,6 @@ class ArrayToFromStringUtil:
                         valueify_action: Callable[[str], IVariableValue]) -> CommonArrayValue:
         """
         Convert a string into a CommonValueArray object.
-
         valueify_action allows converting the value arbitrarily, so
         both API and display strings can use this method.
 
@@ -77,12 +76,13 @@ class ArrayToFromStringUtil:
         """
 
         array: CommonArrayValue
+        value_str: str
 
         # check for bounds string
-        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._array_with_bounds_regex, value,
-                                         flags=re.IGNORECASE)
+        match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._array_with_bounds_regex,
+                                                value, flags=re.IGNORECASE)
         if match is not None:  # There are bounds
-            value_str: str = match.groupdict()["valueList"]
+            value_str = match.groupdict()["valueList"]
 
             # parse bounds as tuple
             bounds: str = match.groupdict()["boundList"]
@@ -107,9 +107,8 @@ class ArrayToFromStringUtil:
                 raise FormatException
 
         else:  # No bounds
-            match = re.search(ArrayToFromStringUtil._array_with_curly_braces_regex, value,
-                              flags=re.IGNORECASE)
-            value_str: str
+            match = re.search(
+                ArrayToFromStringUtil._array_with_curly_braces_regex, value, flags=re.IGNORECASE)
             if match is not None:
                 value_str = match.groupdict()["valueList"]
             else:
@@ -127,9 +126,9 @@ class ArrayToFromStringUtil:
         return array
 
     @staticmethod
-    def _value_regex_match(value_str: str) -> Match[AnyStr]:
-        match: Match[AnyStr] = re.search(ArrayToFromStringUtil._quoted_value_regex, value_str,
-                                         flags=re.IGNORECASE)
+    def _value_regex_match(value_str: str) -> Optional[Match[str]]:
+        match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._quoted_value_regex,
+                                                value_str, flags=re.IGNORECASE)
         if match is None:
             match = re.search(ArrayToFromStringUtil._unquoted_value_regex, value_str)
         return match
