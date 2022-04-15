@@ -8,6 +8,7 @@ from overrides import overrides
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_value as string_value
@@ -29,6 +30,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
@@ -55,7 +57,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     def to_boolean_array_value(self) -> boolean_array_value.BooleanArrayValue:
         # TODO: use BooleanValue.to_api_string() when that is available
-        def as_bool(value: str):
+        def as_bool(value: str) -> np.bool_:
             normalized: str = str.lower(str.strip(value))
             if normalized in ("yes", "y", "true"):
                 return np.bool_(True)
@@ -66,6 +68,9 @@ class StringArrayValue(CommonArrayValue[np.str_]):
                 return np.bool_(np.float64(value))
 
         return np.vectorize(as_bool)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_integer_array_value(self) -> integer_array_value.IntegerArrayValue:
+        return self.to_real_array_value().to_integer_array_value()
 
     # TODO: full implementation
 

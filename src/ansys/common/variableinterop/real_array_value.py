@@ -10,6 +10,7 @@ from overrides import overrides
 
 from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.locale_utils import LocaleUtils
 import ansys.common.variableinterop.real_value as real_value
@@ -32,12 +33,14 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
-    def __eq__(self, other: object) -> bool:
+    @overrides
+    def __eq__(self, other: RealArrayValue) -> bool:
         return np.array_equal(self, other)
 
     @overrides
@@ -55,6 +58,14 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_boolean_array_value(self):
         return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_integer_array_value(self):
+        def away_from_zero(x: np.float64) -> np.int64:
+            f = np.floor if x < 0 else np.ceil
+            return np.int64(f(x))
+
+        return np.vectorize(away_from_zero)(self).astype(np.int64) \
+            .view(integer_array_value.IntegerArrayValue)
 
     def to_string_array_value(self) -> string_array_value.StringArrayValue:
         return self.astype(np.str_).view(string_array_value.StringArrayValue)

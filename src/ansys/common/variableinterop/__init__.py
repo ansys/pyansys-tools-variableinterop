@@ -90,6 +90,7 @@ from .string_metadata import StringMetadata
 from .string_value import StringValue
 from .to_bool_visitor import ToBoolVisitor
 from .to_boolean_array_visitor import ToBooleanArrayVisitor
+from .to_integer_array_visitor import ToIntegerArrayVisitor
 from .to_integer_visitor import to_integer_value
 from .to_real_array_visitor import ToRealArrayVisitor
 from .to_real_value_visitor import to_real_value
