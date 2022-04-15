@@ -62,28 +62,11 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def to_string_array_value(self) -> string_array_value.StringArrayValue:
         return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
-    # TODO: full implementation
-
     @overrides
     def to_api_string(self) -> str:
-        """Convert this array value to an API formatted string.
-
-        Convert to string using API semantics (US-EN locale).
-
-        Returns
-        -------
-        str
-            An API string representation of this array value.
-        """
-        api_string: str = ""
-        # Specify bounds for arrays of more than 1d:
-        if self.ndim > 1:
-            api_string = "bounds[" + ','.join(map(str, self.shape)) + "]{"
-        api_string += ','.join(map(
-            lambda elem: integer_value.IntegerValue(elem).to_api_string(),
-            np.nditer(self)))
-        if self.ndim > 1:
-            api_string += "}"
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            lambda elem: integer_value.IntegerValue(elem).to_api_string())
         return api_string
 
     @staticmethod
@@ -92,24 +75,16 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Parameters
         ----------
-        value : str
-            API string to be parsed.
+        value : str API string to be parsed.
 
         Returns
         -------
-        IntegerArrayValue
-            Result of a parse as IntegerArrayValue object.
+        Result of a parse as IntegerArrayValue object.
         """
-        value = value.strip()
-        shape = None
-        if value.startswith('bounds'):
-            (bounds, separator, values) = value.partition(']{')
-            shape = tuple(np.fromstring(bounds.lstrip('bounds['), dtype=int, sep=','))
-            values = values.rstrip('}')
-        else:
-            values = value
-        array = list(map(integer_value.IntegerValue.from_api_string, values.split(',')))
-        return np.reshape(IntegerArrayValue(values=array), shape)
+        return ArrayToFromStringUtil.string_to_value(
+            value,
+            lambda val: IntegerArrayValue(values=val),
+            lambda val: integer_value.IntegerValue.from_api_string(val))
 
     @overrides
     def to_formatted_string(self, locale_name: str) -> str:
