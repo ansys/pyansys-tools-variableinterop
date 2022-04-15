@@ -5,7 +5,7 @@ import pytest
 from ansys.common.variableinterop import BooleanArrayValue
 
 
-@pytest.mark.skip('bool array nditer returning array of bool instead of a bool for each element')
+# @pytest.mark.skip('bool array nditer returning array of bool instead of a bool for each element')
 @pytest.mark.parametrize(
     'source,expected_result',
     [

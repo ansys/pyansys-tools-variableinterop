@@ -13,6 +13,7 @@ import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
@@ -65,7 +66,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: boolean_value.BooleanValue(elem).to_api_string())
+            lambda elem: boolean_value.BooleanValue(elem.tolist()).to_api_string())
         return api_string
 
     @staticmethod
@@ -89,6 +90,6 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def to_formatted_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: boolean_value.BooleanValue(elem).to_formatted_string(locale_name))
+            lambda elem: boolean_value.BooleanValue(elem.tolist()).to_formatted_string(locale_name))
         return api_string
         pass

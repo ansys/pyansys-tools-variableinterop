@@ -1,6 +1,7 @@
 """Unit tests of IVariableMetadataVisitor, and accept methods of metadata types."""
 
 from typing import Any, TypeVar
+
 import pytest
 
 import ansys.common.variableinterop as acvi
