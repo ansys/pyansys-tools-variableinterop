@@ -63,11 +63,12 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
+from ansys.common.variableinterop.utils.coercion import implicit_coerce, implicit_coerce_single
+
 from .boolean_array_metadata import BooleanArrayMetadata
 from .boolean_array_value import BooleanArrayValue
 from .boolean_metadata import BooleanMetadata
 from .boolean_value import BooleanValue
-from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
 from .from_formatted_string_visitor import FromFormattedStringVisitor

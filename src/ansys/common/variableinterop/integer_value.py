@@ -9,8 +9,8 @@ import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.utils.locale_utils as local_utils
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 

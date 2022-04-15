@@ -6,12 +6,12 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
-from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_array_value as string_array_value
+from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.variable_type as variable_type
 
 from .variable_value import CommonArrayValue

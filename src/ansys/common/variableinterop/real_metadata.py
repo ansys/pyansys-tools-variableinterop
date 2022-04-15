@@ -9,9 +9,8 @@ import ansys.common.variableinterop.common_variable_metadata as common_variable_
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.numeric_metadata as variable_metadata
 import ansys.common.variableinterop.real_value as real_value
+from ansys.common.variableinterop.utils.coercion import implicit_coerce
 import ansys.common.variableinterop.variable_type as variable_type
-
-from .coercion import implicit_coerce
 
 T = TypeVar("T")
 

@@ -2,13 +2,20 @@
 Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
+from typing import Any, Optional, Tuple
+
 import numpy
 import pytest
-from typing import Any, Optional, Tuple
 from test_utils import _create_exception_context
 
 from ansys.common.variableinterop import (
-    BooleanValue, IntegerValue, implicit_coerce, IVariableValue, RealValue, StringValue)
+    BooleanValue,
+    IntegerValue,
+    IVariableValue,
+    RealValue,
+    StringValue,
+    implicit_coerce,
+)
 
 
 class IDummy(ABC):

@@ -7,17 +7,17 @@ import locale
 import numpy as np
 from overrides import overrides
 
-from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
 import ansys.common.variableinterop.boolean_value as boolean_value
 from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudo_visitor
-import ansys.common.variableinterop.locale_utils as locale_utils
 from ansys.common.variableinterop.real_array_value import RealArrayValue
 import ansys.common.variableinterop.real_value as real_value
 from ansys.common.variableinterop.string_array_value import StringArrayValue
 import ansys.common.variableinterop.string_value as string_value
+from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
+import ansys.common.variableinterop.utils.locale_utils as locale_utils
 import ansys.common.variableinterop.variable_value as variable_value
 
 
