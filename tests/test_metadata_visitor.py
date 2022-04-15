@@ -1,55 +1,59 @@
 """Unit tests of IVariableMetadataVisitor, and accept methods of metadata types."""
 
-from typing import Any
-
+from typing import Any, TypeVar
 import pytest
 
-import ansys.common.variableinterop.boolean_metadata as boolean_metadata
-import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
-import ansys.common.variableinterop.integer_metadata as integer_metadata
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.real_metadata as real_metadata
-import ansys.common.variableinterop.string_metadata as string_metadata
+import ansys.common.variableinterop as acvi
 
 
-class TestVisitor(ivariablemetadata_visitor.IVariableMetadataVisitor[str]):
+class TestVisitor(acvi.IVariableMetadataVisitor[str]):
     """
     Implementation of IVariableValueVisitor for testing.
 
     Simply returns the metadata variable type when visited.
     """
 
-    def visit_integer(self, metadata: integer_metadata.IntegerMetadata) -> str:
+    T = TypeVar("T")
+
+    def visit_integer(self, metadata: acvi.IntegerMetadata) -> str:
         return metadata.variable_type.name
 
-    def visit_real(self, metadata: real_metadata.RealMetadata) -> str:
+    def visit_real(self, metadata: acvi.RealMetadata) -> str:
         return metadata.variable_type.name
 
-    def visit_boolean(self, metadata: boolean_metadata.BooleanMetadata) -> str:
+    def visit_boolean(self, metadata: acvi.BooleanMetadata) -> str:
         return metadata.variable_type.name
 
-    def visit_string(self, metadata: string_metadata.StringMetadata) -> str:
+    def visit_string(self, metadata: acvi.StringMetadata) -> str:
         return metadata.variable_type.name
 
-    # IntegerArray
+    def visit_integer_array(self, metadata: acvi.IntegerArrayMetadata) -> str:
+        return metadata.variable_type.name
 
-    # RealArray
+    def visit_real_array(self, metadata: acvi.RealArrayMetadata) -> str:
+        return metadata.variable_type.name
 
-    # BooleanArray
+    def visit_boolean_array(self, metadata: acvi.BooleanArrayMetadata) -> str:
+        return metadata.variable_type.name
 
-    # StringArray
+    def visit_string_array(self, metadata: acvi.StringArrayMetadata) -> str:
+        return metadata.variable_type.name
 
 
 @pytest.mark.parametrize(
     "metadata,expected",
     [
-        pytest.param(real_metadata.RealMetadata(), "REAL", id="Real"),
-        pytest.param(integer_metadata.IntegerMetadata(), "INTEGER", id="Integer"),
-        pytest.param(boolean_metadata.BooleanMetadata(), "BOOLEAN", id="Boolean"),
-        pytest.param(string_metadata.StringMetadata(), "STRING", id="String"),
+        pytest.param(acvi.RealMetadata(), "REAL", id="Real"),
+        pytest.param(acvi.IntegerMetadata(), "INTEGER", id="Integer"),
+        pytest.param(acvi.BooleanMetadata(), "BOOLEAN", id="Boolean"),
+        pytest.param(acvi.StringMetadata(), "STRING", id="String"),
+        pytest.param(acvi.RealArrayMetadata(), "REAL_ARRAY", id="RealArray"),
+        pytest.param(acvi.IntegerArrayMetadata(), "INTEGER_ARRAY", id="IntegerArray"),
+        pytest.param(acvi.BooleanArrayMetadata(), "BOOLEAN_ARRAY", id="BooleanArray"),
+        pytest.param(acvi.StringArrayMetadata(), "STRING_ARRAY", id="StringArray"),
     ]
 )
-def test_visiting_a_metadata_should_work(metadata: common_variable_metadata.CommonVariableMetadata,
+def test_visiting_a_metadata_should_work(metadata: acvi.CommonVariableMetadata,
                                          expected: Any) -> None:
     """
     Verifies that the visitor pattern is working for CommonVariableMetadata.

@@ -1,11 +1,20 @@
+from typing import TypeVar
+
 from overrides import overrides
 
-from .boolean_metadata import BooleanMetadata
-from .variable_type import VariableType
+from ansys.common.variableinterop.boolean_metadata import BooleanMetadata
+from ansys.common.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
+from ansys.common.variableinterop.variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):
-    """Metadata for VariableType.BOOLEAN_ARRAY"""
+    """Metadata for BooleanArrayValue"""
+
+    T = TypeVar("T")
+
+    @overrides
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
+        return visitor.visit_boolean_array(self)
 
     @property  # type: ignore
     @overrides

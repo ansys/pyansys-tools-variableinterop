@@ -13,42 +13,42 @@ import ansys.common.variableinterop.string_value as string_value
 import ansys.common.variableinterop.variable_type as variable_type
 
 
-class ToBooleanArrayVisitor(ivariable_visitor.
-                            IVariableValueVisitor[boolean_array_value.BooleanArrayValue]):
-    """Visitor pattern to call conversion methods to BooleanArrayValue"""
+class ToStringArrayVisitor(ivariable_visitor.
+                           IVariableValueVisitor[string_array_value.StringArrayValue]):
+    """Visitor pattern to call conversion methods to StringArrayValue"""
 
     def visit_integer(self, value: integer_value.IntegerValue) \
-            -> boolean_array_value.BooleanArrayValue:
+            -> string_array_value.StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     def visit_real(self, value: real_value.RealValue) \
-            -> boolean_array_value.BooleanArrayValue:
+            -> string_array_value.StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     def visit_boolean(self, value: boolean_value.BooleanValue) \
-            -> boolean_array_value.BooleanArrayValue:
+            -> string_array_value.StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     def visit_string(self, value: string_value.StringValue) \
-            -> boolean_array_value.BooleanArrayValue:
+            -> string_array_value.StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) \
-            -> boolean_array_value.BooleanArrayValue:
-        return value.to_boolean_array_value()
+            -> string_array_value.StringArrayValue:
+        return value.to_string_array_value()
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) \
-            -> boolean_array_value.BooleanArrayValue:
-        return value.to_boolean_array_value()
+            -> string_array_value.StringArrayValue:
+        return value.to_string_array_value()
 
     def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) \
-            -> boolean_array_value.BooleanArrayValue:
-        return np.copy(value).view(boolean_array_value.BooleanArrayValue)
+            -> string_array_value.StringArrayValue:
+        return value.to_string_array_value()
 
     def visit_string_array(self, value: string_array_value.StringArrayValue) \
-            -> boolean_array_value.BooleanArrayValue:
-        return value.to_boolean_array_value()
+            -> string_array_value.StringArrayValue:
+        return np.copy(value).view(string_array_value.StringArrayValue)

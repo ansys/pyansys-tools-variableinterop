@@ -3,18 +3,21 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import NDArray, ArrayLike
+from numpy.typing import ArrayLike
 from overrides import overrides
 
-import ansys.common.variableinterop.variable_value as variable_value
-import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
+class StringArrayValue(CommonArrayValue[np.str_]):
     """Array of string values.
 
     In Python StringArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -25,18 +28,24 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
+    def __eq__(self, other):
+        return np.array_equal(self, other)
+
+    @overrides
+    def clone(self) -> StringArrayValue:
+        return np.copy(self).view(StringArrayValue)
+
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
-    @property
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.STRING_ARRAY
@@ -46,7 +55,7 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
 
     def to_boolean_array_value(self) -> boolean_array_value.BooleanArrayValue:
         # TODO: use BooleanValue.to_api_string() when that is available
-        def as_bool(value: str):
+        def as_bool(value: str) -> np.bool_:
             normalized: str = str.lower(str.strip(value))
             if normalized in ("yes", "y", "true"):
                 return np.bool_(True)
@@ -57,6 +66,9 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
                 return np.bool_(np.float64(value))
 
         return np.vectorize(as_bool)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_integer_array_value(self) -> integer_array_value.IntegerArrayValue:
+        return self.to_real_array_value().to_integer_array_value()
 
     # TODO: full implementation
 
@@ -69,5 +81,5 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError
