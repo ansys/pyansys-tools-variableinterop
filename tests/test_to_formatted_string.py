@@ -205,7 +205,7 @@ def test_visiting_an_integer_array_formats_correctly(value: IntegerArrayValue,
     [
         pytest.param(RealArrayValue((1, 3), [5, 4, 3.25]), "en_US.UTF-8",
                      "5,4,3.25", id="Single dim, en_US"),
-        pytest.param(RealArrayValue((1, 3), [5, 4, 3.25]), "de_de.UTF-8",
+        pytest.param(RealArrayValue((1, 3), [5, 4, 3.25]), "de_DE.UTF-8",
                      "\"5\",\"4\",\"3,25\"", id="Single dim, de_DE"),
         pytest.param(RealArrayValue((2, 3), [[50.5, 101.1, 233.45], [1.1, 2.2, 3.3]]),
                      "en_US.UTF-8",
