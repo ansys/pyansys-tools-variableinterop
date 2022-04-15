@@ -71,13 +71,9 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def from_api_string(value: str) -> None:
         raise NotImplementedError
 
-    # TODO: overrides when right branch merged over
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
             lambda elem: integer_value.IntegerValue(elem).to_formatted_string(locale_name))
         return api_string
-
-    @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
-        raise NotImplementedError

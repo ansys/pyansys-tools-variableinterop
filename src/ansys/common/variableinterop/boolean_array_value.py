@@ -71,14 +71,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def from_api_string(value: str) -> None:
         raise NotImplementedError
 
-    # TODO: overrides when right branch merged over
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
             lambda elem: boolean_value.BooleanValue(elem).to_formatted_string(locale_name))
         return api_string
         pass
-
-    @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
-        raise NotImplementedError

@@ -80,7 +80,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def from_api_string(value: str) -> None:
         raise NotImplementedError
 
-    # TODO: overrides when right branch merged over
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         def parse_real_element(elem: np.float64) -> str:
             value: str = real_value.RealValue(elem).to_formatted_string(locale_name)
@@ -101,7 +101,3 @@ class RealArrayValue(CommonArrayValue[np.float64]):
             self,
             parse_real_element)
         return api_string
-
-    @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
-        raise NotImplementedError
