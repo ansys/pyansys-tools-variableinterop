@@ -2,10 +2,10 @@
 Unit tests for utils.convert
 """
 import pytest
+from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 import ansys.common.variableinterop as acvi
 import ansys.common.variableinterop.utils.convert as convert
-from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 
 # region To Scalar Tests
