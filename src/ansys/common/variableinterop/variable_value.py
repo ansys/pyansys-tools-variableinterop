@@ -1,9 +1,9 @@
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
-import copy
 from abc import ABC, abstractmethod
-from typing import Tuple, TypeVar, Generic
+import copy
+from typing import Generic, Tuple, TypeVar
 
 from numpy.typing import NDArray
 
@@ -29,11 +29,13 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        visitor The visitor object to call
+        visitor
+            The visitor object to call
 
         Returns
         -------
-        The results of the visitor invocation
+        T
+            The results of the visitor invocation
         """
         raise NotImplementedError
 
@@ -45,7 +47,8 @@ class IVariableValue(ABC):
 
         Returns
         -------
-        The variable type of this object
+        VariableType
+            The variable type of this object
         """
         raise NotImplementedError
 
@@ -56,22 +59,25 @@ class IVariableValue(ABC):
 
         Returns
         -------
-        A string appropriate for use in files and APIs.
+        str
+            A string appropriate for use in files and APIs.
         """
         raise NotImplementedError
 
-    # to_formatted_string here
-
-    # from_formatted_string here
-
     @abstractmethod
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         """
-        Get the ModelCenter type string for this value type.
+        Convert this value to a formatted string.
+
+        Parameters
+        ----------
+        locale_name
+            The locale to format in.
 
         Returns
         -------
-        String to use as the type for a variable on the ModelCenter API.
+        str
+            A string appropriate for use in user facing areas.
         """
         raise NotImplementedError
 

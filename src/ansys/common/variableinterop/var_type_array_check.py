@@ -1,7 +1,8 @@
 """Provides a function that allows checking whether a variable type is an array type."""
+from overrides import overrides
+
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudovisitor
 import ansys.common.variableinterop.variable_type as variable_type
-from overrides import overrides
 
 
 class _var_type_is_array_visitor(pseudovisitor.IVariableTypePseudoVisitor[bool]):

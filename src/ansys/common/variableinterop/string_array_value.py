@@ -11,6 +11,7 @@ import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
@@ -35,6 +36,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     def __eq__(self, other):
         return np.array_equal(self, other)
+
+    @overrides
+    def clone(self) -> StringArrayValue:
+        return np.copy(self).view(StringArrayValue)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -76,5 +81,5 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError
