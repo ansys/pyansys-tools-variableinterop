@@ -78,3 +78,24 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
                         "Reason: The types are incompatible.") \
                        .format(value.__class__.__name__, result_type.__name__)
             raise e
+
+
+def _assert_incompatible_types_exception(message: str,
+                                         from_: str,
+                                         to: str) -> None:
+    """
+    Helper function to assert IncompatibleTypesException gave the expected message.
+
+    Parameters
+    ----------
+    message
+        Expected error message.
+    from_
+        Type of the source value.
+    to
+        Type to which the test was trying to convert source.
+    """
+    assert message == \
+           ("Error: Cannot convert from type {0} to type {1}.\n"
+            "Reason: The types are incompatible.") \
+           .format(from_, to)

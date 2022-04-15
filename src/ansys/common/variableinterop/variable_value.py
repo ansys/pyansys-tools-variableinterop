@@ -3,17 +3,18 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
+from typing import Generic, Tuple, TypeVar
+
+from numpy.typing import NDArray
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
 
+T = TypeVar("T")
+
 
 class IVariableValue(ABC):
     """Interface that defines the common behavior between variable types."""
-
-    # equality definition here
-
-    # hashcode definition here
 
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
@@ -63,18 +64,45 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    # to_formatted_string here
-
-    # from_formatted_string here
-
     @abstractmethod
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         """
-        Get the ModelCenter type string for this value type.
+        Convert this value to a formatted string.
+
+        Parameters
+        ----------
+        locale_name
+            The locale to format in.
 
         Returns
         -------
         str
-            String to use as the type for a variable on the ModelCenter API.
+            A string appropriate for use in user facing areas.
         """
         raise NotImplementedError
+
+
+class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
+    """Interface that defines common behavior for array types. Inherits ``IVariableValue``."""
+
+    def get_lengths(self) -> Tuple[int]:
+        """
+        Get dimension sizes of the array.
+
+        Returns
+        -------
+        Tuple[int]
+            Dimension sizes of the array.
+        """
+        return self.shape
+
+    def rank(self) -> int:
+        """
+        Get number of dimensions in the array.
+
+        Returns
+        -------
+        int
+            Number of dimensions in the array.
+        """
+        return len(self.shape)

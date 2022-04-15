@@ -3,19 +3,20 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
+class StringArrayValue(CommonArrayValue[np.str_]):
     """Array of string values.
 
     In Python StringArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -30,6 +31,9 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
+
+    def __eq__(self, other):
+        return np.array_equal(self, other)
 
     @overrides
     def clone(self) -> StringArrayValue:
@@ -72,5 +76,5 @@ class StringArrayValue(NDArray[np.str_], variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

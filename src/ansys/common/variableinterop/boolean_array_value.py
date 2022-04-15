@@ -3,19 +3,20 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 
 from .variable_type import VariableType
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
+class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """Array of boolean values.
 
     In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -50,6 +51,9 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
 
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
+
     # TODO: full implementation
 
     @overrides
@@ -61,5 +65,5 @@ class BooleanArrayValue(NDArray[np.bool_], variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError
