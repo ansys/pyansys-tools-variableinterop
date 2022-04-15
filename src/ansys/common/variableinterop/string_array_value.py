@@ -34,6 +34,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
+    def __eq__(self, other):
+        return np.array_equal(self, other)
+
+    @overrides
+    def clone(self) -> StringArrayValue:
+        return np.copy(self).view(StringArrayValue)
+
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
@@ -80,5 +87,5 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return api_string
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

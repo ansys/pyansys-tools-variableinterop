@@ -11,6 +11,7 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
 
 from .variable_value import CommonArrayValue
@@ -35,6 +36,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return super().__new__(cls, shape=shape_, dtype=np.int64)
 
     @overrides
+    def clone(self) -> IntegerArrayValue:
+        return np.copy(self).view(IntegerArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer_array(self)
 
@@ -48,6 +53,9 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
     # TODO: full implementation
 
@@ -67,5 +75,5 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return api_string
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

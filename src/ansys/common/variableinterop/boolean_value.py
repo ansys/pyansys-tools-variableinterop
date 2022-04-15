@@ -286,11 +286,8 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return integer_value.IntegerValue(0)
 
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self))
         return result
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError

@@ -10,6 +10,7 @@ from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromSt
 import ansys.common.variableinterop.boolean_value as boolean_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue
@@ -19,6 +20,7 @@ T = TypeVar("T")
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """Array of boolean values.
+
     In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
     operators. It also means that they inherit many of the numpy behaviors, which may be
@@ -36,6 +38,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return np.array_equal(self, other)
 
     @overrides
+    def clone(self) -> BooleanArrayValue:
+        return np.copy(self).view(BooleanArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 
@@ -46,6 +52,9 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
     # TODO: full implementation
 
@@ -66,5 +75,5 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         pass
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

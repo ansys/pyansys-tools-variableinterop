@@ -39,12 +39,13 @@ flake8 = {version="^3.9", optional=true}
 
 pytest = {version="^7.0", optional=true}
 pytest-cov = {version="^3.0", optional=true}
+pytest-mock = {version="^3.7", optional=true}
 pre-commit = {version="^2.17.0", optional=true}
 mypy = {version="^0.940", optional=true}
 
 
 [tool.poetry.extras]
-dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
+dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["overrides", "pytest", "pytest-cov"]
+test = ["overrides", "pytest", "pytest-cov", "pytest-mock"]

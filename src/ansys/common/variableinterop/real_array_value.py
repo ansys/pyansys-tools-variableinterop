@@ -13,6 +13,7 @@ import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.locale_utils import LocaleUtils
 import ansys.common.variableinterop.real_value as real_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
 
 from .variable_value import CommonArrayValue
@@ -40,6 +41,10 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return np.array_equal(self, other)
 
     @overrides
+    def clone(self) -> RealArrayValue:
+        return np.copy(self).view(RealArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
@@ -50,6 +55,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_boolean_array_value(self):
         return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
     # TODO: full implementation
 
@@ -84,5 +92,5 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return api_string
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError
