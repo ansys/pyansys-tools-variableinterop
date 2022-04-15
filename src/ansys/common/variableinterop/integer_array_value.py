@@ -49,7 +49,6 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
 
     # TODO: full implementation
 
-    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 

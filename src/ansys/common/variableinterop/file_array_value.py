@@ -39,7 +39,6 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
 
     # TODO: full implementation
 
-    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 

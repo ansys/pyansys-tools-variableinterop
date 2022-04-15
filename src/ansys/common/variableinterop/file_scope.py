@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 import ansys.common.variableinterop.file_value as file_value
 
@@ -40,6 +40,15 @@ class FileScope(AbstractContextManager, ABC):
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[Any]
     ) -> file_value.FileValue:
+        ...
+
+    @abstractmethod
+    def from_api_object(self,
+                        api_object: Dict[str, Optional[str]]) -> file_value.FileValue:
+        ...
+
+    def to_api_string_file_store(self,
+                                 file_var: file_value.FileValue) -> str:
         ...
 
     # TODO: All the many static construction methods

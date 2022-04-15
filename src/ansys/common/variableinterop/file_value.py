@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import json
 from abc import ABC, abstractmethod
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.variable_type as variable_type
 from os import PathLike
 from overrides import overrides
-from typing import Any, Final, Optional, TypeVar
+from typing import Any, Callable, Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
 T = TypeVar('T')
@@ -39,6 +40,17 @@ class FileValue(variable_value.IVariableValue, ABC):
     BINARY_MIMETYPE: Final[str] = "application/octet-stream"
 
     TEXT_MIMETYPE: Final[str] = "text/plain"
+
+    ORIGINAL_FILENAME_KEY: Final[str] = "originalFilename"
+    """JSON key for API serialization representing the original file name."""
+
+    ORIGINAL_FILENAME_KEY: Final[str] = "originalFilename"
+
+    MIMETYPE_KEY: Final[str] = "mimeType"
+
+    ENCODING_KEY: Final[str] = "encoding"
+
+    CONTENTS_KEY: Final[str] = "contents"
 
     @property
     @abstractmethod
@@ -94,9 +106,36 @@ class FileValue(variable_value.IVariableValue, ABC):
     def get_modelcenter_type(self) -> str:
         raise NotImplementedError
 
-    @overrides
-    def to_api_string(self) -> str:
-        raise NotImplementedError
+    @abstractmethod
+    def _has_content(self) -> bool:
+        """
+        Check whether or not this file value has content.
+
+        This information is used to decide whether or not to pass
+        the file value to the file store.
+
+        Returns
+        -------
+        True if there is content, false otherwise.
+        """
+
+    def to_api_string(self, file_store: Callable[[FileValue], str]) -> str:
+        api_obj: Dict[str, Optional[str]] = self.to_api_object(file_store)
+        return json.dumps(api_obj)
+
+    def to_api_object(self, file_store: Callable[[FileValue], str]) -> Dict[str, Optional[str]]:
+        obj: Dict[str, Optional[str]] = {}
+        if self._has_content():
+            content_marker: str = file_store(self)
+            obj[FileValue.CONTENTS_KEY] = content_marker
+
+        if self._original_path:
+            obj[FileValue.ORIGINAL_FILENAME_KEY] = self._original_path
+        if self._mime_type:
+            obj[FileValue.MIMETYPE_KEY] = self._mime_type
+        if self._file_encoding:
+            obj[FileValue.ENCODING_KEY] = self._file_encoding
+        return obj
 
     # TODO: Async get_contents
 
@@ -117,6 +156,10 @@ class EmptyFileValue(FileValue):
         ansys.common.variableinterop.EMPTY_FILE.
         """
         super().__init__(None, None, None, UUID(int = 0))
+
+    @overrides
+    def _has_content(self) -> bool:
+        return False
 
     @property
     @overrides

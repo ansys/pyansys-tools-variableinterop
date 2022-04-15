@@ -8,11 +8,14 @@ definition for more information as to why this pattern is beneficial
 compared to bare switch statements.
 """
 import ansys.common.variableinterop.boolean_value as boolean
+import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.integer_value as integer
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
 import ansys.common.variableinterop.real_value as real
 import ansys.common.variableinterop.string_value as string
 import ansys.common.variableinterop.variable_value as var_value
+import json
+from typing import Optional
 
 
 class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
@@ -22,7 +25,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     The actual type generated is determined by the type that accepts this visitor.
     """
 
-    def __init__(self, source: str):
+    def __init__(self, source: str, fscope: file_scope.FileScope):
         """
         Create a new instance of this class.
 
@@ -31,6 +34,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         source the string from which values should be parsed
         """
         self._source: str = source
+        self._scope: fscope
 
     def visit_unknown(self):
         """
@@ -101,7 +105,11 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         # TODO: implement this as part of file support PBI.
         # Note that doing so will also require extending this
         # class to take a file store (see C# implementation for details).
-        raise NotImplementedError
+        if self._scope is None:
+            raise NotImplementedError("Deserializing a file value requires a file scope.")
+        else:
+            return self._scope.from_api_object(json.load(self._source))
+
 
     def visit_int_array(self) -> var_value.IVariableValue:
         """

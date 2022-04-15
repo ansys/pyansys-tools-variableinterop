@@ -151,7 +151,6 @@ class BooleanValue(variable_value.IVariableValue):
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN
 
-    @overrides
     def to_api_string(self) -> str:
         return str(self)
 

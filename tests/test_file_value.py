@@ -1,3 +1,5 @@
+import json
+
 import ansys.common.variableinterop as acvi
 from os import PathLike
 import pytest
@@ -16,6 +18,13 @@ class __TestFileValue(acvi.FileValue):
 
     def write_file(self, file_name: PathLike) -> None:
         raise NotImplementedError()
+
+    def _has_content(self) -> bool:
+        return bool(self._original_path)
+
+
+def __test_file_store(file_var: acvi.FileValue) -> str:
+    return "file:///" + str(file_var.original_file_name).lstrip('/')
 
 
 __TEST_UUID = UUID("EC6F3C91-ECBD-4D3D-88F3-05062E41CE9F")
@@ -99,6 +108,25 @@ def test_constructor(
         # means the test should expect to see a random, nonempty GUID there.
         assert isinstance(sut.id, UUID)
         assert sut.id != __EMPTY_UUID
+
+
+def test_base_serialization():
+    """Verify that the base serialization routine works."""
+    # Setup
+    sut: __TestFileValue = __TestFileValue('/path/to/orig/file',
+                                           'text/testfile',
+                                           'Shift-JIS',
+                                           __TEST_UUID)
+
+    # Execute
+    serialized: str = sut.to_api_string(__test_file_store)
+
+    # Verify
+    loaded: Any = json.loads(serialized)
+    assert loaded.get(acvi.FileValue.CONTENTS_KEY) == 'file:///path/to/orig/file'
+    assert loaded.get(acvi.FileValue.ORIGINAL_FILENAME_KEY) == '/path/to/orig/file'
+    assert loaded.get(acvi.FileValue.MIMETYPE_KEY) == 'text/testfile'
+    assert loaded.get(acvi.FileValue.ENCODING_KEY) == 'Shift-JIS'
 
 
 def test_empty_file_value():

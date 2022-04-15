@@ -45,17 +45,6 @@ class IVariableValue(ABC):
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def to_api_string(self) -> str:
-        """
-        Convert this value to an API string.
-
-        Returns
-        -------
-        A string appropriate for use in files and APIs.
-        """
-        raise NotImplementedError
-
     # to_formatted_string here
 
     # from_formatted_string here
