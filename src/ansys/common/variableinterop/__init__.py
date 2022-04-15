@@ -70,6 +70,7 @@ from .boolean_value import BooleanValue
 from .coercion import implicit_coerce, implicit_coerce_single
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
+from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
 from .integer_array_metadata import IntegerArrayMetadata
 from .integer_array_value import IntegerArrayValue
@@ -100,5 +101,3 @@ from .var_type_array_check import var_type_is_array
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 from .vartype_arrays_and_elements import get_element_type, to_array_type
-
-# TODO: Get rid of star

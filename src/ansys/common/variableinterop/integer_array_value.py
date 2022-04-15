@@ -6,7 +6,9 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
+from ansys.common.variableinterop.array_to_from_string_util import ArrayToFromStringUtil
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_array_value as string_array_value
@@ -111,4 +113,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     @overrides
     def to_formatted_string(self, locale_name: str) -> str:
-        raise NotImplementedError
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            lambda elem: integer_value.IntegerValue(elem).to_formatted_string(locale_name))
+        return api_string
