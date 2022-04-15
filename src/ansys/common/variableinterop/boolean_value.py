@@ -25,7 +25,8 @@ class BooleanValue(variable_value.IVariableValue):
     """
     Wrapper around a boolean value.
 
-    If you want the variable interop standard conversions, use xxxx (TODO)
+    This type is treated by Python as if it were any other boolean type such as numpy.bool_
+    or builtins.bool.
     """
 
     @staticmethod
