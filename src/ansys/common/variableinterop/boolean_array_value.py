@@ -9,9 +9,8 @@ from overrides import overrides
 import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
-import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.string_array_value as string_array_value
-from .variable_type import VariableType
+import ansys.common.variableinterop.variable_type as variable_type
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
