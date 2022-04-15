@@ -29,11 +29,13 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        visitor The visitor object to call
+        visitor
+            The visitor object to call
 
         Returns
         -------
-        The results of the visitor invocation
+        T
+            The results of the visitor invocation
         """
         raise NotImplementedError
 
@@ -45,7 +47,8 @@ class IVariableValue(ABC):
 
         Returns
         -------
-        The variable type of this object
+        VariableType
+            The variable type of this object
         """
         raise NotImplementedError
 
@@ -56,7 +59,8 @@ class IVariableValue(ABC):
 
         Returns
         -------
-        A string appropriate for use in files and APIs.
+        str
+            A string appropriate for use in files and APIs.
         """
         raise NotImplementedError
 
@@ -67,11 +71,13 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        locale_name The locale to format in.
+        locale_name
+            The locale to format in.
 
         Returns
         -------
-        A string appropriate for use in user facing areas.
+        str
+            A string appropriate for use in user facing areas.
         """
         raise NotImplementedError
 

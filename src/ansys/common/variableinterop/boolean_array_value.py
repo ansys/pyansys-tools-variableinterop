@@ -36,6 +36,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return np.array_equal(self, other)
 
     @overrides
+    def clone(self) -> BooleanArrayValue:
+        return np.copy(self).view(BooleanArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 

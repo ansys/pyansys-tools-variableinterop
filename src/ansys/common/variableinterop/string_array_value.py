@@ -36,6 +36,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return np.array_equal(self, other)
 
     @overrides
+    def clone(self) -> StringArrayValue:
+        return np.copy(self).view(StringArrayValue)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
