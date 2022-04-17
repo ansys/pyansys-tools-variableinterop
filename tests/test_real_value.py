@@ -50,10 +50,10 @@ from ansys.common.variableinterop import (
         pytest.param(IntegerValue(8675309), RealValue(8675309.0), None, id='from IntegerValue'),
         pytest.param(IntegerValue(-8675309), RealValue(-8675309.0), None,
                      id='from IntegerValue negative'),
-        pytest.param(IntegerValue(9223372036854775807), RealValue(9.223372036854776e+18),
-                     None, id='from IntegerValue max 64 bit'),
-        pytest.param(IntegerValue(-9223372036854775808), RealValue(-9.223372036854776e+18),
-                     None, id='from IntegerValue min 64 bit'),
+        pytest.param(BooleanValue(True), RealValue(1.0),
+                     None, id='from BooleanValue true'),
+        pytest.param(BooleanValue(False), RealValue(0.0),
+                     None, id='from BooleanValue false'),
     ]
 )
 def test_construct(

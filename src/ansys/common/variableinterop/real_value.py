@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import locale
-from typing import TypeVar
+from typing import Any, TypeVar
 
 import numpy as np
 from overrides import overrides
@@ -29,6 +29,20 @@ class RealValue(np.float64, variable_value.IVariableValue):
     an IntegerValue with variable interop standard rounding (away from zero). IntegerValue
     decomposes naturally to numpy.int64.
     """
+
+    def __new__(cls, arg: Any):
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        arg the argument from which to construct this instance
+        """
+
+        if isinstance(arg, boolean_value.BooleanValue):
+            return super().__new__(cls, bool(arg))
+        else:
+            return super().__new__(cls, arg)
 
     import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 
