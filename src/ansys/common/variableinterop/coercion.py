@@ -26,6 +26,17 @@ TYPE_MAPPINGS = {
     str: StringValue,
     np.str_: StringValue
 }
+_ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
+    IntegerValue: [int, np.integer, bool, np.bool_, BooleanValue],
+    RealValue: [float, np.inexact, bool, np.bool_, BooleanValue],
+    BooleanValue: [bool, np.bool_,
+                   float, np.inexact, RealValue,
+                   int, np.integer, IntegerValue],
+    StringValue: [int, np.integer, IntegerValue,
+                  bool, np.bool_, BooleanValue,
+                  float, np.inexact, RealValue,
+                  str, np.str_, StringValue],
+}
 
 
 def _is_optional(arg_type: type) -> bool:
@@ -41,10 +52,10 @@ def _is_optional(arg_type: type) -> bool:
     True if the argument passed in is Optional[x] for some x.
     """
     return (
-        hasattr(arg_type, "__origin__")
-        and arg_type.__origin__ == typing.Union  # type: ignore
-        and len(arg_type.__args__) == 2  # type: ignore
-        and arg_type.__args__[1] == type(None)  # type: ignore
+            hasattr(arg_type, "__origin__")
+            and arg_type.__origin__ == typing.Union  # type: ignore
+            and len(arg_type.__args__) == 2  # type: ignore
+            and arg_type.__args__[1] == type(None)  # type: ignore
     )
 
 
@@ -63,6 +74,31 @@ def _get_optional_type(arg_type: type) -> type:
     The 'x' from Optional[x].
     """
     return arg_type.__args__[0]  # type: ignore
+
+
+def _specific_implicit_coerce_allowed(target_arg_type: type, actual_arg_type: type) -> bool:
+    """
+    Check whether implicit coercion from a given type
+    to a given type is allowed or not.
+
+    Parameters
+    ----------
+    target_arg_type the target type of the argument (the type declared on the method)
+    actual_arg_type the actual type of the argument (the type of the actual object being passed)
+
+    Returns
+    -------
+    True if implicit coercion to the target type from the actual type is allowed,
+    False otherwise.
+    """
+    if issubclass(actual_arg_type, target_arg_type):
+        return True
+
+    if target_arg_type in _ALLOWED_SPECIFIC_IMPLICIT_COERCE:
+        return any(issubclass(actual_arg_type, allowed_coerce_type)
+                   for allowed_coerce_type in _ALLOWED_SPECIFIC_IMPLICIT_COERCE[target_arg_type])
+    else:
+        return False
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
@@ -107,8 +143,11 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     if issubclass(arg_type, IVariableValue):
         if arg is None:
             raise TypeError(f"Type {type(arg)} cannot be converted to {arg_type}")
-        # ignore because mypy does not know about subclass constructors
-        return arg_type(arg)  # type: ignore
+        # Check if the proposed conversion is even allowed:
+        if _specific_implicit_coerce_allowed(arg_type, type(arg)):
+            return arg_type(arg)
+        else:
+            raise TypeError(f"Type {type(arg)} cannot be implicitly converted to {arg_type}.")
 
     # TODO: More types and other error conditions
 

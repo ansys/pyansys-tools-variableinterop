@@ -121,14 +121,73 @@ def accept_real_value(value: RealValue) -> RealValue:
     return value
 
 
+@implicit_coerce
+def accept_integer_value(value: IntegerValue) -> IntegerValue:
+    """
+    Test function that accepts an IntegerValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
+def accept_boolean_value(value: BooleanValue) -> BooleanValue:
+    """
+    Test function that accepts a BooleanValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
+def accept_string_value(value: StringValue) -> StringValue:
+    """
+    Test function that accepts a StringValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
 @pytest.mark.parametrize(
     "source,expect,expect_exception",
     [
-        (5, RealValue(5.0), None),
-        (1.2, RealValue(1.2), None),
-        (NotConvertible(), None, TypeError),
-        (None, None, TypeError)
-        # TODO: Lots more cases
+        pytest.param(5, None, TypeError, id ="builtins.int fails"),
+        pytest.param(1.2, RealValue(1.2), None, id="builtins.real"),
+        pytest.param(numpy.float64(-867.5309), RealValue(-867.5309), None, id="numpy.float64"),
+        pytest.param(True, RealValue(1.0), None, id="builtins.bool true"),
+        pytest.param(False, RealValue(0.0), None, id="builtins.bool, false"),
+        pytest.param(BooleanValue(True), RealValue(1.0), None, id="BooleanValue true"),
+        pytest.param(BooleanValue(False), RealValue(0.0), None, id="BooleanValue false"),
+        pytest.param(RealValue(1.2), RealValue(1.2), None, id="RealValue loopback"),
+        pytest.param(IntegerValue(5), None, TypeError, id="IntegerValue fails"),
+        pytest.param('', None, TypeError, id="Empty string fails"),
+        pytest.param('1.2', None, TypeError, id="String containing float representation fails"),
+        pytest.param(StringValue(''), None, TypeError, id="StringValue empty fails"),
+        pytest.param(StringValue(''), None, TypeError,
+                     id="StringValue containing float representation fails"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails.")
     ],
 )
 def test_coerce_real_value(
@@ -153,6 +212,172 @@ def test_coerce_real_value(
         assert expect == result
 
 
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        pytest.param(numpy.int64(9223372036854775807),
+                     IntegerValue(9223372036854775807), None, id="np.int64 max"),
+        pytest.param(numpy.int64(-9223372036854775808),
+                     IntegerValue(-9223372036854775808), None, id="np.int64 min"),
+        pytest.param(9223372036854775807,
+                     IntegerValue(9223372036854775807), None, id="builtins.int 64-bit max"),
+        pytest.param(-9223372036854775808,
+                     IntegerValue(-9223372036854775808), None, id="builtins.int 64-bit min"),
+        pytest.param(True, IntegerValue(1), None, id="builtins.bool True"),
+        pytest.param(numpy.bool_(True), IntegerValue(1), None, id="numpy.bool_ True"),
+        pytest.param(BooleanValue(True), IntegerValue(1), None, id="BooleanValue True"),
+        pytest.param(False, IntegerValue(0), None, id="builtins.bool True"),
+        pytest.param(numpy.bool_(False), IntegerValue(0), None, id="numpy.bool_ True"),
+        pytest.param(BooleanValue(False), IntegerValue(0), None, id="BooleanValue True"),
+        pytest.param(1.2, None, TypeError, id="builtins.float fails"),
+        pytest.param(1.0, None, TypeError, id="builtins.float fails even if integral value"),
+        pytest.param(RealValue(1.0), None, TypeError, id="RealValue fails even if integral value"),
+        pytest.param("1", None, TypeError, id="builtins.str fails even if it contains an int"),
+        pytest.param(numpy.str_("1"), None, TypeError,
+                     id="numpy.str_ fails even if it contains an int"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails.")
+    ],
+)
+def test_coerce_integer_value(
+        source: Any, expect: IVariableValue, expect_exception: BaseException
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept IntegerValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_integer_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        pytest.param(9999, StringValue("9999"), None, id="builtins.int"),
+        pytest.param(numpy.int64(8675309), StringValue("8675309"), None, id="numpy.int64"),
+        pytest.param(IntegerValue(-4747), StringValue("-4747"), None, id="IntegerValue"),
+        pytest.param(9000.1, StringValue("9000.1"), None, id="builtins.float"),
+        pytest.param(numpy.float64(867.5309), StringValue("867.5309"), None, id="numpy.float64"),
+        pytest.param(RealValue(47.47), StringValue("47.47"), None, id="RealValue"),
+        pytest.param(True, StringValue("True"), None, id="builtins.bool True"),
+        pytest.param(False, StringValue("False"), None, id="builtins.bool False"),
+        pytest.param(numpy.bool_(True), StringValue("True"), None, id="numpy.bool_ True"),
+        pytest.param(numpy.bool_(False), StringValue("False"), None, id="numpy.bool_ False"),
+        pytest.param(BooleanValue(True), StringValue("True"), None, id="BooleanValue True"),
+        pytest.param(BooleanValue(False), StringValue("False"), None, id="BooleanValue False"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param("(ノ-_-)ノ ミᴉᴉɔsɐ-uou", StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), None,
+                     id="builtins.str"),
+        pytest.param(numpy.str_("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), None,
+                     id="numpy.str_"),
+        pytest.param(StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"),
+                     None, id="StringValue"),
+        pytest.param(None, None, TypeError, id="NoneType fails.")
+    ],
+)
+def test_coerce_string_value(
+        source: Any, expect: IVariableValue, expect_exception: BaseException
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept StringValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_string_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        pytest.param(numpy.int64(9223372036854775807),
+                     BooleanValue(True), None, id="np.int64 max"),
+        pytest.param(numpy.int64(-9223372036854775808),
+                     BooleanValue(True), None, id="np.int64 min"),
+        pytest.param(numpy.int64(0),
+                     BooleanValue(False), None, id="np.int64 zero"),
+        pytest.param(9223372036854775807,
+                     BooleanValue(True), None, id="builtins.int 64-bit max"),
+        pytest.param(-9223372036854775808,
+                     BooleanValue(True), None, id="builtins.int 64-bit min"),
+        pytest.param(0, BooleanValue(False), None, id="builtins.int zero"),
+        pytest.param(IntegerValue(9223372036854775807),
+                     BooleanValue(True), None, id="IntegerValue max"),
+        pytest.param(IntegerValue(-9223372036854775808),
+                     BooleanValue(True), None, id="IntegerValue min"),
+        pytest.param(IntegerValue(0),
+                     BooleanValue(False), None, id="IntegerValue zero"),
+        pytest.param(-867.5309, BooleanValue(True), None, id="builtins.float negative"),
+        pytest.param(867.5309, BooleanValue(True), None, id="builtins.float positive"),
+        pytest.param(0.0, BooleanValue(False), None, id="builtins.float zero"),
+        pytest.param(numpy.float64(-867.5309), BooleanValue(True), None,
+                     id="numpy.float64 negative"),
+        pytest.param(numpy.float64(867.5309), BooleanValue(True), None,
+                     id="numpy.float64 positive"),
+        pytest.param(numpy.float64(0.0), BooleanValue(False), None, id="numpy.float64 zero"),
+        pytest.param(RealValue(-867.5309), BooleanValue(True), None,
+                     id="RealValue negative"),
+        pytest.param(RealValue(867.5309), BooleanValue(True), None,
+                     id="RealValue positive"),
+        pytest.param(RealValue(0.0), BooleanValue(False), None, id="RealValue zero"),
+        pytest.param(numpy.bool_(True), BooleanValue(True), None, id="numpy.bool_ true"),
+        pytest.param(numpy.bool_(False), BooleanValue(False), None, id="numpy.bool_ false"),
+        pytest.param(BooleanValue(True), BooleanValue(True), None, id="BooleanValue true"),
+        pytest.param(BooleanValue(False), BooleanValue(False), None, id="BooleanValue false"),
+        pytest.param(True, BooleanValue(True), None, id="builtins.bool true"),
+        pytest.param(False, BooleanValue(False), None, id="builtins.bool false"),
+        pytest.param("true", None, TypeError, id="builtins.str fails even if it contains 'true'"),
+        pytest.param(numpy.str_("true"), None, TypeError,
+                     id="numpy.str_ fails even if it contains 'true'"),
+        pytest.param(StringValue("true"), None, TypeError,
+                     id="StringValue fails even if it contains 'true'"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails.")
+    ],
+)
+def test_coerce_boolean_value(
+        source: Any, expect: IVariableValue, expect_exception: BaseException
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept BooleanValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_boolean_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
 @implicit_coerce
 def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
     """
@@ -172,11 +397,21 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
 @pytest.mark.parametrize(
     "source,expect,expect_exception",
     [
-        (5, RealValue(5.0), None),
-        (1.2, RealValue(1.2), None),
-        (NotConvertible(), None, TypeError),
-        (None, None, None)
-        # TODO: Lots more cases
+        pytest.param(5, None, TypeError, id ="builtins.int fails"),
+        pytest.param(1.2, RealValue(1.2), None, id="builtins.real"),
+        pytest.param(True, RealValue(1.0), None, id="builtins.bool true"),
+        pytest.param(False, RealValue(0.0), None, id="builtins.bool, false"),
+        pytest.param(BooleanValue(True), RealValue(1.0), None, id="BooleanValue true"),
+        pytest.param(BooleanValue(False), RealValue(0.0), None, id="BooleanValue false"),
+        pytest.param(RealValue(1.2), RealValue(1.2), None, id="RealValue loopback"),
+        pytest.param(IntegerValue(5), None, TypeError, id="IntegerValue fails"),
+        pytest.param('', None, TypeError, id="Empty string fails"),
+        pytest.param('1.2', None, TypeError, id="String containing float representation fails"),
+        pytest.param(StringValue(''), None, TypeError, id="StringValue empty fails"),
+        pytest.param(StringValue(''), None, TypeError,
+                     id="StringValue containing float representation fails"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, None, id="None coerced to None")
     ],
 )
 def test_coerce_optional_real_value(
