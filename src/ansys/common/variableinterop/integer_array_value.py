@@ -40,6 +40,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def __eq__(self, other):
         return np.array_equal(self, other)
 
+    @overrides
+    def __hash__(self):
+        return super().__hash__()
+
     def clone(self) -> IntegerArrayValue:
         return np.copy(self).view(IntegerArrayValue)
 

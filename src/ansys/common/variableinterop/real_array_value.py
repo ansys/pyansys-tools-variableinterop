@@ -44,6 +44,10 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return np.array_equal(self, other)
 
     @overrides
+    def __hash__(self):
+        return super().__hash__()
+
+    @overrides
     def clone(self) -> RealArrayValue:
         return np.copy(self).view(RealArrayValue)
 

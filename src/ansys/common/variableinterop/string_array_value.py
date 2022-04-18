@@ -36,8 +36,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
+    @overrides
     def __eq__(self, other):
         return np.array_equal(self, other)
+
+    @overrides
+    def __hash__(self):
+        return super().__hash__()
 
     @overrides
     def clone(self) -> StringArrayValue:

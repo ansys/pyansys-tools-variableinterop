@@ -41,6 +41,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return np.array_equal(self, other)
 
     @overrides
+    def __hash__(self):
+        return super().__hash__()
+
+    @overrides
     def clone(self) -> BooleanArrayValue:
         return np.copy(self).view(BooleanArrayValue)
 
