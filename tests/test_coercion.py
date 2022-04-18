@@ -470,3 +470,29 @@ def test_coerce_multiple_args() -> None:
     assert RealValue(2.3) == result1
     assert IntegerValue == type(result2)
     assert IntegerValue(28) == result2
+
+@pytest.mark.parametrize(
+    'arg',
+    [
+        pytest.param(RealValue(42), id="RealValue"),
+        pytest.param(IntegerValue(9001), id="IntegerValue"),
+        pytest.param(BooleanValue(True), id="BooleanValue"),
+        pytest.param(StringValue("string data"), id="StringValue")
+    ])
+def test_no_coerce_no_copy(arg: IVariableValue) -> None:
+    """
+    Verifies that if no type coercion is necessary, no unnecessary copies are made.
+
+    Parameters
+    ----------
+    arg the argument to pass to the decorated function
+
+    """
+    # Setup
+    sut = Impl()
+
+    # Execute
+    result = sut.variable_argument(arg)
+
+    # Verify
+    assert result is arg, "No copy should have been made"

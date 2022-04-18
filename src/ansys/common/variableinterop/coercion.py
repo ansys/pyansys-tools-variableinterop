@@ -128,6 +128,10 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # TODO: Lots of diminutive cases. This currently just handles Optional[T]
         arg_type = _get_optional_type(arg_type)
 
+    if issubclass(type(arg), arg_type):
+        # No type coercion necessary. Pass through the original argument.
+        return arg
+
     if arg_type == IVariableValue:
         for cls in type(arg).__mro__:
             if cls in TYPE_MAPPINGS:
