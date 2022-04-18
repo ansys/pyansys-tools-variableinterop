@@ -16,7 +16,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
     """
     Wrapper around a string value.
 
-    In Python IntegerValue is implemented by extending NumPy's str_ type. This means that
+    In Python StringValue is implemented by extending NumPy's str_ type. This means that
     they will decay naturally into numpy.str_ objects when used with other types
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards. For
