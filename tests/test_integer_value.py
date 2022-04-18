@@ -34,6 +34,8 @@ from ansys.common.variableinterop import (
                      id="from RealValue(4.5) should round to 5"),
         pytest.param(True, numpy.int64(1), None, id="True-to-1"),
         pytest.param(False, numpy.int64(0), None, id="False-to-0"),
+        pytest.param(BooleanValue(True), numpy.int64(1), None, id="True-to-1"),
+        pytest.param(BooleanValue(False), numpy.int64(0), None, id="False-to-0"),
 
         pytest.param('some garbage text', None, ValueError, id="garbage-text"),
         pytest.param('-1', numpy.int64(-1), None, id="negative-one-text"),

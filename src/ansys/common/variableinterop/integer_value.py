@@ -57,6 +57,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
                 # For IVariableValues representing a string, convert to RealValue to use
                 # the alternate rounding strategy.
                 return cls.__new__(cls, real_value.RealValue.from_api_string(arg))
+            elif arg.variable_type == variable_type.VariableType.BOOLEAN:
+                return super().__new__(cls, bool(arg))
             else:
                 # For other IVariableValues, attempt to use the default conversions.
                 return super().__new__(cls, arg)
