@@ -40,11 +40,17 @@ class VariableType(Enum):
         """
         Get the name of the associated IVariableValue type.
         """
-        from ansys.common.variableinterop.scalar_values import (
-            BooleanValue, IntegerValue, RealValue, StringValue
-        )
         from ansys.common.variableinterop.array_values import (
-            BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+            BooleanArrayValue,
+            IntegerArrayValue,
+            RealArrayValue,
+            StringArrayValue,
+        )
+        from ansys.common.variableinterop.scalar_values import (
+            BooleanValue,
+            IntegerValue,
+            RealValue,
+            StringValue,
         )
 
         # TODO: Update with file type names when available.

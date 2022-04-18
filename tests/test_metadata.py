@@ -2,14 +2,18 @@ from typing import Any
 
 import pytest
 
-from ansys.common.variableinterop.boolean_array_metadata import BooleanArrayMetadata  # noqa
-from ansys.common.variableinterop.boolean_metadata import BooleanMetadata  # noqa
-from ansys.common.variableinterop.integer_array_metadata import IntegerArrayMetadata  # noqa
-from ansys.common.variableinterop.integer_metadata import IntegerMetadata
-from ansys.common.variableinterop.real_array_metadata import RealArrayMetadata  # noqa
-from ansys.common.variableinterop.real_metadata import RealMetadata
-from ansys.common.variableinterop.string_array_metadata import StringArrayMetadata  # noqa
-from ansys.common.variableinterop.string_metadata import StringMetadata  # noqa
+from ansys.common.variableinterop.array_metadata import (
+    BooleanArrayMetadata,
+    IntegerArrayMetadata,
+    RealArrayMetadata,
+    StringArrayMetadata,
+)
+from ansys.common.variableinterop.scalar_metadata import (
+    BooleanMetadata,
+    IntegerMetadata,
+    RealMetadata,
+    StringMetadata,
+)
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,

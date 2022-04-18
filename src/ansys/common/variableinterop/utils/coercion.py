@@ -9,8 +9,8 @@ from typing import Any
 
 import numpy as np
 
-import ansys.common.variableinterop.variable_value as variable_value
 import ansys.common.variableinterop.scalar_values as scalar_values
+import ansys.common.variableinterop.variable_value as variable_value
 
 # A dictionary that maps source types to what variableinterop type it should be mapped to
 TYPE_MAPPINGS = {
