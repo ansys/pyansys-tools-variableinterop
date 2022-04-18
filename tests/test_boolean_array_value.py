@@ -1,4 +1,6 @@
 """Tests for BooleanArrayValue."""
+from typing import Dict
+
 import numpy
 import pytest
 
@@ -74,3 +76,23 @@ def test_from_api_string_valid(source: str, expected_result: BooleanArrayValue) 
     # Verify
     assert isinstance(result, BooleanArrayValue)
     assert numpy.array_equal(result, expected_result)
+
+
+def test_hash_as_dict_keys() -> None:
+    """
+    Simple test of hashing by using array value as keys in a dictionary.
+    """
+    # SUT
+    test_value = BooleanArrayValue(values=[True, False])
+    copy_value = test_value.clone()
+    other_value = BooleanArrayValue(values=[True, True])
+    d: Dict[BooleanArrayValue, int] = dict()
+    d[test_value] = 0
+    d[copy_value] = 1
+    d[other_value] = 2
+
+    # Verify
+    # Dict length should be 2, as copy_value should collide (and overwrite) test_value
+    assert len(d) == 2
+    assert d[test_value] == 1
+    assert d[other_value] == 2

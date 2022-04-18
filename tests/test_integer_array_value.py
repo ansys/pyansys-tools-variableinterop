@@ -1,4 +1,6 @@
 """Tests for IntegerArrayValue."""
+from typing import Dict
+
 import numpy
 import pytest
 
@@ -69,3 +71,23 @@ def test_from_api_string_valid(source: str, expected_result: IntegerArrayValue) 
     # Verify
     assert isinstance(result, IntegerArrayValue)
     assert numpy.array_equal(result, expected_result)
+
+
+def test_hash_as_dict_keys() -> None:
+    """
+    Simple test of hashing by using array value as keys in a dictionary.
+    """
+    # SUT
+    test_value = IntegerArrayValue(values=[0, 1])
+    copy_value = test_value.clone()
+    other_value = IntegerArrayValue(values=[1, 1])
+    d: Dict[IntegerArrayValue, int] = dict()
+    d[test_value] = 0
+    d[copy_value] = 1
+    d[other_value] = 2
+
+    # Verify
+    # Dict length should be 2, as copy_value should collide (and overwrite) test_value
+    assert len(d) == 2
+    assert d[test_value] == 1
+    assert d[other_value] == 2
