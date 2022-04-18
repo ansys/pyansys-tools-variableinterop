@@ -19,7 +19,7 @@ from ansys.common.variableinterop.scalar_values import (
 import ansys.common.variableinterop.variable_type as variable_type
 
 
-class ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
+class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
     """Visitor pattern to call conversion methods to BooleanArrayValue."""
 
     @overrides
@@ -67,7 +67,7 @@ class ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArray
         return value.to_boolean_array_value()
 
 
-class ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
+class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
     """Visitor pattern to call conversion methods to IntegerArrayValue."""
 
     @overrides
@@ -115,7 +115,7 @@ class ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArray
         return value.to_integer_array_value()
 
 
-class ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
+class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
     """Visitor pattern to call conversion methods to RealArrayValue."""
 
     @overrides
@@ -155,7 +155,7 @@ class ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]
         return value.to_real_array_value()
 
 
-class ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
+class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
     """Visitor pattern to call conversion methods to StringArrayValue."""
 
     @overrides
@@ -193,3 +193,5 @@ class ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayVa
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> StringArrayValue:
         return np.copy(value).view(StringArrayValue)
+
+# TODO: need to_x_array methods

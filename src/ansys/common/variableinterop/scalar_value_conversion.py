@@ -20,7 +20,7 @@ from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.variable_value import IVariableValue
 
 
-class ToBooleanVisitor(IVariableValueVisitor[bool]):
+class __ToBooleanVisitor(IVariableValueVisitor[bool]):
     """An IVariableValueVisitor which returns a bool equivalent of the \
     object visited."""
 
@@ -74,10 +74,10 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
     The value as a RealValue.
 
     """
-    return other.accept(ToBooleanVisitor())
+    return other.accept(__ToBooleanVisitor())
 
 
-class ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
+class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     """This visitor implementation converts the visited value to a RealValue."""
 
     @overrides
@@ -127,10 +127,10 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
     -------
     The value as a RealValue.
     """
-    return other.accept(ToIntegerVisitor())
+    return other.accept(__ToIntegerVisitor())
 
 
-class ToRealVisitor(IVariableValueVisitor[RealValue]):
+class __ToRealVisitor(IVariableValueVisitor[RealValue]):
     """This visitor implementation converts the visited value to a RealValue."""
 
     @overrides
@@ -183,4 +183,4 @@ def to_real_value(other: IVariableValue) -> RealValue:
     The value as a RealValue.
 
     """
-    return other.accept(ToRealVisitor())
+    return other.accept(__ToRealVisitor())

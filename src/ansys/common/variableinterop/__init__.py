@@ -72,12 +72,6 @@ from .array_metadata import (
     RealArrayMetadata,
     StringArrayMetadata,
 )
-from .array_value_visitors import (
-    ToBooleanArrayVisitor,
-    ToIntegerArrayVisitor,
-    ToRealArrayVisitor,
-    ToStringArrayVisitor,
-)
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
@@ -88,14 +82,7 @@ from .ivariable_visitor import IVariableValueVisitor
 from .ivariablemetadata_visitor import IVariableMetadataVisitor
 from .numeric_metadata import NumericMetadata
 from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
-from .scalar_value_visitors import (
-    ToBooleanVisitor,
-    ToIntegerVisitor,
-    ToRealVisitor,
-    to_boolean_value,
-    to_integer_value,
-    to_real_value,
-)
+from .scalar_value_conversion import to_boolean_value, to_integer_value, to_real_value
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils import convert
 from .value_from_api_string import from_api_string
