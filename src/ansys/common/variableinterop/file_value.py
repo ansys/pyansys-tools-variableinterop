@@ -88,8 +88,7 @@ class FileValue(variable_value.IVariableValue, ABC):
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
-        # TODO: Implement
-        raise NotImplementedError()
+        return str(mimetype).startswith("text/") or str(mimetype).startswith("application/json")
 
     @property
     def is_text_based(self) -> Optional[bool]:
