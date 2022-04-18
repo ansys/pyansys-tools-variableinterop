@@ -2,8 +2,8 @@ from typing import TypeVar
 
 from overrides import overrides
 
-from ansys.common.variableinterop.string_metadata import StringMetadata
 from ansys.common.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
+from ansys.common.variableinterop.string_metadata import StringMetadata
 from ansys.common.variableinterop.variable_type import VariableType
 
 

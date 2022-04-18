@@ -2,9 +2,9 @@ from typing import TypeVar
 
 from overrides import overrides
 
+from ansys.common.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
 from ansys.common.variableinterop.real_metadata import RealMetadata
 from ansys.common.variableinterop.variable_type import VariableType
-from ansys.common.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
 
 
 class RealArrayMetadata(RealMetadata):

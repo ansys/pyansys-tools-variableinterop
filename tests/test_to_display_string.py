@@ -236,7 +236,6 @@ def test_visiting_a_real_array_formats_correctly(value: RealArrayValue,
     assert result == expected
 
 
-@pytest.mark.skip("Converting an array element to a BooleanValue seems to be borked")
 @pytest.mark.parametrize(
     "value,locale,expected",
     [

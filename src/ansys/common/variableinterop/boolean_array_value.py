@@ -13,6 +13,7 @@ import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
+
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
@@ -61,15 +62,29 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def to_string_array_value(self) -> string_array_value.StringArrayValue:
         return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
-    # TODO: full implementation
-
     @overrides
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            lambda elem: boolean_value.BooleanValue(elem.tolist()).to_api_string())
+        return api_string
 
     @staticmethod
-    def from_api_string(value: str) -> None:
-        raise NotImplementedError
+    def from_api_string(value: str) -> BooleanArrayValue:
+        """Convert API formatted string to an BooleanArrayValue value.
+
+        Parameters
+        ----------
+        value : str API string to be parsed.
+
+        Returns
+        -------
+        Result of a parse as BooleanArrayValue object.
+        """
+        return ArrayToFromStringUtil.string_to_value(
+            value,
+            lambda val: BooleanArrayValue(values=val),
+            lambda val: boolean_value.BooleanValue.from_api_string(val))
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:

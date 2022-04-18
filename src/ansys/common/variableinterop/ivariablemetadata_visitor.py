@@ -5,14 +5,14 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    import ansys.common.variableinterop.boolean_metadata as boolean_metadata
-    import ansys.common.variableinterop.integer_metadata as integer_metadata
-    import ansys.common.variableinterop.real_metadata as real_metadata
-    import ansys.common.variableinterop.string_metadata as string_metadata
-    import ansys.common.variableinterop.real_array_metadata as real_array_metadata
-    import ansys.common.variableinterop.integer_array_metadata as integer_array_metadata
     import ansys.common.variableinterop.boolean_array_metadata as boolean_array_metadata
+    import ansys.common.variableinterop.boolean_metadata as boolean_metadata
+    import ansys.common.variableinterop.integer_array_metadata as integer_array_metadata
+    import ansys.common.variableinterop.integer_metadata as integer_metadata
+    import ansys.common.variableinterop.real_array_metadata as real_array_metadata
+    import ansys.common.variableinterop.real_metadata as real_metadata
     import ansys.common.variableinterop.string_array_metadata as string_array_metadata
+    import ansys.common.variableinterop.string_metadata as string_metadata
 
 T = TypeVar("T")
 
