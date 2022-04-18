@@ -7,7 +7,6 @@ from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
-import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -28,7 +27,6 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
@@ -81,5 +79,5 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         raise NotImplementedError
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         raise NotImplementedError
