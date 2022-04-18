@@ -70,5 +70,5 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         raise NotImplementedError
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         raise NotImplementedError
