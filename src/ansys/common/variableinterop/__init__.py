@@ -1,5 +1,6 @@
 """
-Ansys Common VariableInterop
+Ansys Common VariableInterop.
+
 ----------------------------
 
 Optional variable and metadata specifications for interoperability between languages and

@@ -1,3 +1,4 @@
+"""Definitions of array metadata types."""
 from typing import TypeVar
 
 from overrides import overrides

@@ -37,9 +37,7 @@ class VariableType(Enum):
 
     @property
     def associated_type_name(self) -> str:
-        """
-        Get the name of the associated IVariableValue type.
-        """
+        """Get the name of the associated IVariableValue type."""
         from ansys.common.variableinterop.array_values import (
             BooleanArrayValue,
             IntegerArrayValue,

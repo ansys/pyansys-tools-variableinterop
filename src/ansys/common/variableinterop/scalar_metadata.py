@@ -1,7 +1,7 @@
 """Definition of scalar metadata types."""
 from __future__ import annotations
 
-from typing import List, Optional, TypeVar
+from typing import Any, List, Optional, TypeVar
 
 from overrides import overrides
 
@@ -19,8 +19,9 @@ T = TypeVar("T")
 class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
     """Common metadata for VariableType.BOOLEAN and VariableType.BOOLEAN_ARRAY."""
 
+    @overrides
     def __eq__(self, other):
-        return self.are_equal(other)
+        return self.equals(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -31,19 +32,10 @@ class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN
 
-    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
-        """Determine if a given metadata is equal to this metadata.
-
-        Parameters
-        ----------
-        metadata Metadata to compare this object to.
-
-        Returns
-        -------
-        True if metadata objects are equal, false otherwise.
-        """
-        equal: bool = (isinstance(metadata, BooleanMetadata) and
-                       super().are_equal(metadata))
+    @overrides
+    def equals(self, other: Any) -> bool:
+        equal: bool = (isinstance(other, BooleanMetadata) and
+                       super().equals(other))
         return equal
 
 
@@ -58,8 +50,9 @@ class IntegerMetadata(NumericMetadata):
         self._enumerated_values: List[IntegerValue] = []
         self._enumerated_aliases: List[str] = []
 
+    @overrides
     def __eq__(self, other):
-        return self.are_equal(other)
+        return self.equals(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -118,8 +111,6 @@ class IntegerMetadata(NumericMetadata):
         """Set the upper bound."""
         self._upper_bound = value
 
-    # TODO need implicit coerce for arrays
-
     @property
     def enumerated_values(self) -> List[IntegerValue]:
         """
@@ -168,23 +159,14 @@ class IntegerMetadata(NumericMetadata):
         """
         self._enumerated_aliases = value
 
-    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
-        """Determine if a given metadata is equal to this metadata.
-
-        Parameters
-        ----------
-        metadata Metadata to compare this object to.
-
-        Returns
-        -------
-        True if metadata objects are equal, false otherwise.
-        """
-        equal: bool = (isinstance(metadata, IntegerMetadata) and
-                       super().are_equal(metadata) and
-                       self._lower_bound == metadata._lower_bound and
-                       self._upper_bound == metadata._upper_bound and
-                       self._enumerated_values == metadata._enumerated_values and
-                       self._enumerated_aliases == metadata._enumerated_aliases)
+    @overrides
+    def equals(self, other: Any) -> bool:
+        equal: bool = (isinstance(other, IntegerMetadata) and
+                       super().equals(other) and
+                       self._lower_bound == other._lower_bound and
+                       self._upper_bound == other._upper_bound and
+                       self._enumerated_values == other._enumerated_values and
+                       self._enumerated_aliases == other._enumerated_aliases)
         return equal
 
 
@@ -199,8 +181,9 @@ class RealMetadata(NumericMetadata):
         self._enumerated_values: List[RealValue] = []
         self._enumerated_aliases: List[str] = []
 
+    @overrides
     def __eq__(self, other):
-        return self.are_equal(other)
+        return self.equals(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -259,8 +242,6 @@ class RealMetadata(NumericMetadata):
         """Set the upper bound."""
         self._upper_bound = value
 
-    # TODO need implicit coerce for arrays
-
     @property
     def enumerated_values(self) -> List[RealValue]:
         """
@@ -309,23 +290,14 @@ class RealMetadata(NumericMetadata):
         """
         self._enumerated_aliases = value
 
-    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
-        """Determine if a given metadata is equal to this metadata.
-
-        Parameters
-        ----------
-        metadata Metadata to compare this object to.
-
-        Returns
-        -------
-        True if metadata objects are equal, false otherwise.
-        """
-        equal: bool = (isinstance(metadata, RealMetadata) and
-                       super().are_equal(metadata) and
-                       self._lower_bound == metadata._lower_bound and
-                       self._upper_bound == metadata._upper_bound and
-                       self._enumerated_values == metadata._enumerated_values and
-                       self._enumerated_aliases == metadata._enumerated_aliases)
+    @overrides
+    def equals(self, other: Any) -> bool:
+        equal: bool = (isinstance(other, RealMetadata) and
+                       super().equals(other) and
+                       self._lower_bound == other._lower_bound and
+                       self._upper_bound == other._upper_bound and
+                       self._enumerated_values == other._enumerated_values and
+                       self._enumerated_aliases == other._enumerated_aliases)
         return equal
 
 
@@ -338,8 +310,9 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         self._enumerated_values: List[StringValue] = []
         self._enumerated_aliases: List[str] = []
 
+    @overrides
     def __eq__(self, other):
-        return self.are_equal(other)
+        return self.equals(other)
 
     @overrides
     def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
@@ -349,8 +322,6 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.STRING
-
-    # TODO need implicit coerce for arrays
 
     @property
     def enumerated_values(self) -> List[StringValue]:
@@ -400,19 +371,10 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         """
         self._enumerated_aliases = value
 
-    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
-        """Determine if a given metadata is equal to this metadata.
-
-        Parameters
-        ----------
-        metadata Metadata to compare this object to.
-
-        Returns
-        -------
-        True if metadata objects are equal, false otherwise.
-        """
-        equal: bool = (isinstance(metadata, StringMetadata) and
-                       super().are_equal(metadata) and
-                       self._enumerated_values == metadata._enumerated_values and
-                       self._enumerated_aliases == metadata._enumerated_aliases)
+    @overrides
+    def equals(self, other: Any) -> bool:
+        equal: bool = (isinstance(other, StringMetadata) and
+                       super().equals(other) and
+                       self._enumerated_values == other._enumerated_values and
+                       self._enumerated_aliases == other._enumerated_aliases)
         return equal

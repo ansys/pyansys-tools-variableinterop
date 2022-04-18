@@ -1,4 +1,7 @@
 """Definition of scalar value visitors."""
+
+from overrides import overrides
+
 from ansys.common.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
@@ -18,72 +21,39 @@ from ansys.common.variableinterop.variable_value import IVariableValue
 
 
 class ToBooleanVisitor(IVariableValueVisitor[bool]):
-    """
-    An IVariableValueVisitor which returns a bool equivalent of the object visited
-    """
+    """An IVariableValueVisitor which returns a bool equivalent of the \
+    object visited."""
 
+    @overrides
     def visit_boolean(self, value: "BooleanValue") -> bool:
-        """
-        Visit a BooleanValue
-        :param value: The value being visited
-        :return: A bool equivalent
-        """
         return bool(value)
 
+    @overrides
     def visit_integer(self, value: IntegerValue) -> bool:
-        """
-        Visit an IntegerValue
-        :param value: The value being visited
-        :return: A bool equivalent
-        """
         return BooleanValue.int64_to_bool(value)
 
+    @overrides
     def visit_real(self, value: RealValue) -> bool:
-        """
-        Visit a RealValue
-        :param value: The value being visited
-        :return: A bool equivalent
-        """
         return BooleanValue.float_to_bool(value)
 
+    @overrides
     def visit_string(self, value: StringValue) -> bool:
-        """
-        Visit a StringValue
-        :param value: The value being visited
-        :return: A bool equivalent
-        """
         return BooleanValue.str_to_bool(value)
 
+    @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
-        """
-        Visit a BooleanArrayValue
-        :param value: The value being visited
-        :raise IncompatibleTypesException
-        """
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> bool:
-        """
-        Visit an IntegerArrayValue
-        :param value: The value being visited
-        :raise IncompatibleTypesException
-        """
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
+    @overrides
     def visit_real_array(self, value: RealArrayValue) -> bool:
-        """
-        Visit a RealArrayValue
-        :param value: The value being visited
-        :raise IncompatibleTypesException
-        """
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
+    @overrides
     def visit_string_array(self, value: StringArrayValue) -> bool:
-        """
-        Visit a StringArrayValue
-        :param value: The value being visited
-        :raise IncompatibleTypesException
-        """
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
 
@@ -110,27 +80,35 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 class ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     """This visitor implementation converts the visited value to a RealValue."""
 
+    @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerValue:
         return value
 
+    @overrides
     def visit_real(self, value: RealValue) -> IntegerValue:
         return value.to_int_value()
 
+    @overrides
     def visit_boolean(self, value: BooleanValue) -> IntegerValue:
         return value.to_integer_value()
 
+    @overrides
     def visit_string(self, value: StringValue) -> IntegerValue:
         return IntegerValue.from_api_string(value.to_api_string())
 
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.INTEGER_ARRAY, VariableType.INTEGER)
 
+    @overrides
     def visit_real_array(self, value: RealArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.REAL_ARRAY, VariableType.INTEGER)
 
+    @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.BOOLEAN_ARRAY, VariableType.INTEGER)
 
+    @overrides
     def visit_string_array(self, value: StringArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.INTEGER)
 
@@ -155,27 +133,35 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
 class ToRealVisitor(IVariableValueVisitor[RealValue]):
     """This visitor implementation converts the visited value to a RealValue."""
 
+    @overrides
     def visit_integer(self, value: IntegerValue) -> RealValue:
         return value.to_real_value()
 
+    @overrides
     def visit_real(self, value: RealValue) -> RealValue:
         return value
 
+    @overrides
     def visit_boolean(self, value: BooleanValue) -> RealValue:
         return value.to_real_value()
 
+    @overrides
     def visit_string(self, value: StringValue) -> RealValue:
         return RealValue.from_api_string(value.to_api_string())
 
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.INTEGER_ARRAY, VariableType.REAL)
 
+    @overrides
     def visit_real_array(self, value: RealArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.REAL_ARRAY, VariableType.REAL)
 
+    @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.BOOLEAN_ARRAY, VariableType.REAL)
 
+    @overrides
     def visit_string_array(self, value: StringArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.REAL)
 

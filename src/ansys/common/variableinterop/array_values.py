@@ -1,3 +1,4 @@
+"""Definition of all array value implementations of IVariableValue."""
 from __future__ import annotations
 
 import functools
@@ -172,7 +173,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
             self,
             lambda elem: IntegerValue(elem).to_formatted_string(locale_name))
         return api_string
- 
+
 
 class RealArrayValue(CommonArrayValue[np.float64]):
     """Array of real values.

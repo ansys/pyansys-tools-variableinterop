@@ -27,24 +27,20 @@ class BooleanValue(variable_value.IVariableValue):
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
-        """
-        Convert a numpy int64 to a bool value per interchange
-        specifications.
-        """
+        """Convert a numpy int64 to a bool value per interchange \
+        specifications."""
         return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
-        """
-        Convert an int to a bool value per interchange specifications.
-        """
+        """Convert an int to a bool value per interchange \
+        specifications."""
         return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
-        """
-        Convert a float value to a bool per interchange specifications.
-        """
+        """Convert a float value to a bool per interchange \
+        specifications."""
         return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
@@ -62,9 +58,7 @@ class BooleanValue(variable_value.IVariableValue):
 
     @staticmethod
     def str_to_bool(val: str) -> bool:
-        """
-        Convert a str to a bool per interchange specifications.
-        """
+        """Convert a str to a bool per interchange specifications."""
         _value: str = str.lower(str.strip(val))
         if _value in BooleanValue.api_str_to_bool:
             return BooleanValue.api_str_to_bool[_value]
@@ -78,31 +72,33 @@ class BooleanValue(variable_value.IVariableValue):
 
     def __init__(self, source: object = None):
         """
-        Construct a BooleanValue from various source types. Supported
-        types include:
+        Construct a BooleanValue from various source types.
+
+        Supported types include:
         None: Constructs a False BooleanValue
         bool or numpy.bool_: Constructs a BooleanValue with the given
             Boolean value.
         IVariableValue: Constructs a BooleanValue per the specification
         Others: raises an exception
         """
+        self.__value: np.bool_
         if source is None:
-            self.__value: np.bool_ = np.False_
+            self.__value = np.False_
         elif isinstance(source, (bool, np.bool_)):
-            self.__value: np.bool_ = np.bool_(source)
+            self.__value = np.bool_(source)
         elif isinstance(source, variable_value.IVariableValue):
             from ansys.common.variableinterop.scalar_value_visitors import ToBooleanVisitor
-            self.__value: np.bool_ = np.bool_(source.accept(ToBooleanVisitor()))
+            self.__value = np.bool_(source.accept(ToBooleanVisitor()))
         elif isinstance(
                 source,
                 (
                         int, np.byte, np.ubyte, np.short, np.ushort, np.intc,
                         np.uintc, np.int_, np.uint, np.longlong, np.ulonglong
                 )):
-            self.__value: np.bool_ = np.bool_(source != 0)
+            self.__value = np.bool_(source != 0)
         elif isinstance(
                 source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
-            self.__value: np.bool_ = np.bool_(source != 0.0)
+            self.__value = np.bool_(source != 0.0)
         else:
             raise exceptions.IncompatibleTypesException(
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
@@ -122,6 +118,7 @@ class BooleanValue(variable_value.IVariableValue):
     def __bool__(self):
         return self.__value.__bool__()
 
+    @overrides
     def __eq__(self, other):
         if isinstance(other, BooleanValue):
             return self.__value.__eq__(other.__value)
@@ -146,6 +143,7 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return self.__value.__ge__(other)
 
+    @overrides
     def __hash__(self):
         return self.__value.__hash__()
 
@@ -167,6 +165,7 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return self.__value.__mul__(other)
 
+    @overrides
     def __ne__(self, other):
         if isinstance(other, BooleanValue):
             return self.__value.__ne__(other.__value)
@@ -191,6 +190,7 @@ class BooleanValue(variable_value.IVariableValue):
         else:
             return self.__value.__rshift__(other)
 
+    @overrides
     def __str__(self):
         return self.__value.__str__()
 
@@ -307,6 +307,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     and the default Python / NumPy behavior.
     """
 
+    @overrides
     def __new__(cls, arg: Any):
         """
         Create a new instance.
@@ -371,6 +372,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     def from_api_string(value: str) -> IntegerValue:
         """
         Create an integer value from an API string.
+
         Leading and trailing whitespace is ignored.
         Values which can be correctly parsed as floating-point numbers
         are parsed in that manner, then rounded to integers. When rounding,
@@ -451,6 +453,7 @@ class RealValue(np.float64, variable_value.IVariableValue):
     def to_api_string(self) -> str:
         return str(self)
 
+    @overrides
     def __str__(self) -> str:
         if np.isnan(self):
             return RealValue.__CANONICAL_NAN
@@ -544,6 +547,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
     def from_api_string(value: str) -> StringValue:
         """
         Convert an API string back to a string value.
+
         The string is stored exactly as specified; no escaping is performed
         as with from_formatted string.
         Parameters
