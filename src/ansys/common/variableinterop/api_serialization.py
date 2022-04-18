@@ -9,7 +9,7 @@ from ansys.common.variableinterop.file_scope import FileScope
 from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.variable_value import IVariableValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-from typing import Optional
+from typing import Callable, Optional
 
 
 class ToAPIStringVisitor(IVariableValueVisitor[str]):
@@ -36,7 +36,9 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
         if self.__scope is None:
             raise NotImplementedError("This operation does not support file values.")
         else:
-            return value.to_api_string(value, self.__scope.to_api_string_file_store())
+            file_store: Callable[[file_value.FileValue], str] =\
+                lambda target_file_val: self.__scope.to_api_string_file_store(target_file_val)
+            return value.to_api_string(file_store)
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) -> str:
         return value.to_api_string()
@@ -65,7 +67,9 @@ def to_api_string(value: IVariableValue, file_scope: FileScope = None):
     return value.accept(ToAPIStringVisitor(file_scope))
 
 
-def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileScope] = None) -> IVariableValue:
+def from_api_string(var_type: VariableType,
+                    source: str,
+                    fscope: Optional[FileScope] = None) -> IVariableValue:
     """
     Generate a value from an API string.
 

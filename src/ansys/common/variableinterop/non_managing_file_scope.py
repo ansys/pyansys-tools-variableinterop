@@ -52,7 +52,7 @@ class NonManagingFileScope(file_scope.FileScope):
 
     def to_api_string_file_store(self,
                                  file_var: file_value.FileValue) -> str:
-        if not issubclass(file_var, NonManagingFileScope.NonManagingFileValue):
+        if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")
 
         # Just return the file name.

@@ -15,7 +15,6 @@ import ansys.common.variableinterop.real_value as real
 import ansys.common.variableinterop.string_value as string
 import ansys.common.variableinterop.variable_value as var_value
 import json
-from typing import Optional
 
 
 class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
@@ -34,7 +33,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         source the string from which values should be parsed
         """
         self._source: str = source
-        self._scope: fscope
+        self._scope: file_scope.FileScope = fscope
 
     def visit_unknown(self):
         """
@@ -108,8 +107,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         if self._scope is None:
             raise NotImplementedError("Deserializing a file value requires a file scope.")
         else:
-            return self._scope.from_api_object(json.load(self._source))
-
+            return self._scope.from_api_object(json.loads(self._source))
 
     def visit_int_array(self) -> var_value.IVariableValue:
         """
