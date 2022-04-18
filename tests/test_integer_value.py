@@ -3,6 +3,7 @@ from typing import Any
 import numpy
 import pytest
 from test_utils import _create_exception_context
+from typing import Type
 
 from ansys.common.variableinterop import (
     BooleanValue,
@@ -38,7 +39,7 @@ from ansys.common.variableinterop import (
         pytest.param('-1', numpy.int64(-1), None, id="negative-one-text"),
         pytest.param('1', numpy.int64(1), None, id="one-text"),
     ])
-def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: BaseException) -> None:
+def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: Type[BaseException]) -> None:
     """Verify that __init__ for IntegerValue correctly instantiates the superclass data."""
     with _create_exception_context(expect_exception):
         instance = IntegerValue(arg)
@@ -291,7 +292,7 @@ def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue)
         pytest.param(RealValue(float('-Infinity')), OverflowError, id="negative Infinity"),
     ],
 )
-def test_to_integer_value_invalid(source: IVariableValue, expected_exception: BaseException):
+def test_to_integer_value_invalid(source: IVariableValue, expected_exception: Type[BaseException]):
     # Execute
     with _create_exception_context(expected_exception):
         result: IntegerValue = to_integer_value(source)

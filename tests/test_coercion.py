@@ -2,7 +2,7 @@
 Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
-from typing import Any, Optional, Tuple
+from typing import Any, Optional, Tuple, Type
 
 import pytest
 from test_utils import _create_exception_context
@@ -45,7 +45,7 @@ class NotConvertible:
         # TODO: Lots more cases
     ],
 )
-def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException) -> None:
+def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[BaseException]) -> None:
     """
     Tests implicit_coerce decorator
 
@@ -93,7 +93,7 @@ def accept_real_value(value: RealValue) -> RealValue:
     ],
 )
 def test_coerce_real_value(
-    source: Any, expect: IVariableValue, expect_exception: BaseException
+    source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept RealValue
@@ -141,7 +141,7 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
     ],
 )
 def test_coerce_optional_real_value(
-    source: Any, expect: IVariableValue, expect_exception: BaseException
+    source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
