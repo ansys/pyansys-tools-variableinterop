@@ -91,8 +91,8 @@ class BooleanValue(variable_value.IVariableValue):
         elif isinstance(source, (bool, np.bool_)):
             self.__value: np.bool_ = np.bool_(source)
         elif isinstance(source, variable_value.IVariableValue):
-            from ansys.common.variableinterop.to_bool_visitor import ToBoolVisitor
-            self.__value: np.bool_ = np.bool_(source.accept(ToBoolVisitor()))
+            from ansys.common.variableinterop.scalar_value_visitors import ToBooleanVisitor
+            self.__value: np.bool_ = np.bool_(source.accept(ToBooleanVisitor()))
         elif isinstance(
                 source,
                 (

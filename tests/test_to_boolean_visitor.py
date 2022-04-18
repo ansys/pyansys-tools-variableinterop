@@ -11,7 +11,7 @@ from ansys.common.variableinterop import (
     IVariableValue,
     RealValue,
     StringValue,
-    ToBoolVisitor,
+    ToBooleanVisitor,
 )
 
 
@@ -119,7 +119,7 @@ def test_to_boolean_visitor(
     :param expect_exception: Expected exception to be thrown from
             visitor, None if expected to return a value.
     """
-    sut = ToBoolVisitor()
+    sut = ToBooleanVisitor()
     with _create_exception_context(expect_exception):
         result: IVariableValue = source.accept(sut)
         assert type(result) == type(expect)
