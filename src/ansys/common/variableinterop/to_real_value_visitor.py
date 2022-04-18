@@ -1,14 +1,18 @@
 """Provides a visitor implementation that converts the visited value to a RealValue."""
-from ansys.common.variableinterop.boolean_array_value import BooleanArrayValue
-from ansys.common.variableinterop.boolean_value import BooleanValue
+from ansys.common.variableinterop.array_values import (
+    BooleanArrayValue,
+    IntegerArrayValue,
+    RealArrayValue,
+    StringArrayValue,
+)
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
-from ansys.common.variableinterop.integer_array_value import IntegerArrayValue
-from ansys.common.variableinterop.integer_value import IntegerValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-from ansys.common.variableinterop.real_array_value import RealArrayValue
-from ansys.common.variableinterop.real_value import RealValue
-from ansys.common.variableinterop.string_array_value import StringArrayValue
-from ansys.common.variableinterop.string_value import StringValue
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
 from ansys.common.variableinterop.variable_type import VariableType
 from ansys.common.variableinterop.variable_value import IVariableValue
 

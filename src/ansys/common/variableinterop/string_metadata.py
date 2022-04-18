@@ -7,7 +7,7 @@ from overrides import overrides
 
 import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.string_value as string_value
+from ansys.common.variableinterop.scalar_values import StringValue
 import ansys.common.variableinterop.variable_type as variable_type
 
 T = TypeVar("T")
@@ -19,7 +19,7 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
     @overrides
     def __init__(self) -> None:
         super().__init__()
-        self._enumerated_values: List[string_value.StringValue] = []
+        self._enumerated_values: List[StringValue] = []
         self._enumerated_aliases: List[str] = []
 
     def __eq__(self, other):
@@ -37,7 +37,7 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
     # TODO need implicit coerce for arrays
 
     @property
-    def enumerated_values(self) -> List[string_value.StringValue]:
+    def enumerated_values(self) -> List[StringValue]:
         """
         Get the list of enumerated values.
 
@@ -49,7 +49,7 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         return self._enumerated_values
 
     @enumerated_values.setter
-    def enumerated_values(self, value: List[string_value.StringValue]) -> None:
+    def enumerated_values(self, value: List[StringValue]) -> None:
         """
         Set the list of enumerated values.
 

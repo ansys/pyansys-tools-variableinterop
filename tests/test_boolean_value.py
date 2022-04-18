@@ -3,7 +3,6 @@ from typing import Any, Callable, List, Tuple, Type, Union
 import numpy as np
 import pytest
 from test_utils import _create_exception_context
-
 import ansys.common.variableinterop as acvi
 
 # region bool-ness

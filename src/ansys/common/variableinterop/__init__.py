@@ -65,30 +65,24 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 from ansys.common.variableinterop.utils.coercion import implicit_coerce, implicit_coerce_single
 
+from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .boolean_array_metadata import BooleanArrayMetadata
-from .boolean_array_value import BooleanArrayValue
 from .boolean_metadata import BooleanMetadata
-from .boolean_value import BooleanValue
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
 from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
 from .integer_array_metadata import IntegerArrayMetadata
-from .integer_array_value import IntegerArrayValue
 from .integer_metadata import IntegerMetadata
-from .integer_value import IntegerValue
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .ivariable_visitor import IVariableValueVisitor
 from .ivariablemetadata_visitor import IVariableMetadataVisitor
 from .numeric_metadata import NumericMetadata
 from .real_array_metadata import RealArrayMetadata
-from .real_array_value import RealArrayValue
 from .real_metadata import RealMetadata
-from .real_value import RealValue
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .string_array_metadata import StringArrayMetadata
-from .string_array_value import StringArrayValue
 from .string_metadata import StringMetadata
-from .string_value import StringValue
 from .to_bool_visitor import ToBoolVisitor
 from .to_boolean_array_visitor import ToBooleanArrayVisitor
 from .to_integer_array_visitor import ToIntegerArrayVisitor
