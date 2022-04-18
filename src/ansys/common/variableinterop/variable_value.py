@@ -67,7 +67,7 @@ class IVariableValue(ABC):
     @abstractmethod
     def to_display_string(self, locale_name: str) -> str:
         """
-        Convert this value to a formatted string.
+        Convert this value to a string suitable for display to humans.
 
         Parameters
         ----------
