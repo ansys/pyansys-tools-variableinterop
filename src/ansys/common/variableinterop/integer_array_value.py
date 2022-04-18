@@ -61,15 +61,29 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def to_string_array_value(self) -> string_array_value.StringArrayValue:
         return self.astype(np.str_).view(string_array_value.StringArrayValue)
 
-    # TODO: full implementation
-
     @overrides
     def to_api_string(self) -> str:
-        raise NotImplementedError
+        api_string: str = ArrayToFromStringUtil.value_to_string(
+            self,
+            lambda elem: integer_value.IntegerValue(elem).to_api_string())
+        return api_string
 
     @staticmethod
-    def from_api_string(value: str) -> None:
-        raise NotImplementedError
+    def from_api_string(value: str) -> IntegerArrayValue:
+        """Convert API formatted string to an IntegerArrayValue value.
+
+        Parameters
+        ----------
+        value : str API string to be parsed.
+
+        Returns
+        -------
+        Result of a parse as IntegerArrayValue object.
+        """
+        return ArrayToFromStringUtil.string_to_value(
+            value,
+            lambda val: IntegerArrayValue(values=val),
+            lambda val: integer_value.IntegerValue.from_api_string(val))
 
     @overrides
     def to_formatted_string(self, locale_name: str) -> str:
