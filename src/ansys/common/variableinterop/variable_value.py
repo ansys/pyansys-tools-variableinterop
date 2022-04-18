@@ -1,6 +1,8 @@
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
+import copy
+import random
 from abc import ABC, abstractmethod
 import copy
 import random
