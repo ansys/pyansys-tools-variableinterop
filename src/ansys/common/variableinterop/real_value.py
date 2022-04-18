@@ -122,7 +122,7 @@ class RealValue(np.float64, variable_value.IVariableValue):
         return boolean_value.BooleanValue(self != 0)
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%.15G", self))
         return result

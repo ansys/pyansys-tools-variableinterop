@@ -97,10 +97,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
             lambda val: string_value.StringValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
 
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
             lambda elem:
-                "\"" + string_value.StringValue(elem).to_formatted_string(locale_name) + "\"")
+                "\"" + string_value.StringValue(elem).to_display_string(locale_name) + "\"")
         return api_string

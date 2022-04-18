@@ -65,7 +65,7 @@ class IVariableValue(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         """
         Convert this value to a formatted string.
 

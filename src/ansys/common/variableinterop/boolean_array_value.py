@@ -87,9 +87,9 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
             lambda val: boolean_value.BooleanValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: boolean_value.BooleanValue(elem.tolist()).to_formatted_string(locale_name))
+            lambda elem: boolean_value.BooleanValue(elem.tolist()).to_display_string(locale_name))
         return api_string
         pass

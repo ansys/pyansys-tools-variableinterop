@@ -54,5 +54,5 @@ class StringValue(np.str_, variable_value.IVariableValue):
         return StringValue(value)
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         return self
