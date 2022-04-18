@@ -1,4 +1,4 @@
-"""Unit tests of to_formatted_string for all IVariableValues."""
+"""Unit tests of to_display_string for all IVariableValues."""
 
 import numpy as np
 import pytest
@@ -58,7 +58,7 @@ def test_visiting_a_real_formats_correctly(value: RealValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -96,7 +96,7 @@ def test_visiting_a_integer_formats_correctly(value: IntegerValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -126,7 +126,7 @@ def test_visiting_a_boolean_formats_correctly(value: BooleanValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -162,7 +162,7 @@ def test_visiting_a_string_formats_correctly(value: StringValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -194,7 +194,7 @@ def test_visiting_an_integer_array_formats_correctly(value: IntegerArrayValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -230,7 +230,7 @@ def test_visiting_a_real_array_formats_correctly(value: RealArrayValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -269,7 +269,7 @@ def test_visiting_a_boolean_array_formats_correctly(value: BooleanArrayValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected
@@ -305,7 +305,7 @@ def test_visiting_a_string_array_formats_correctly(value: StringArrayValue,
     expected The expected output.
     """
     # SUT
-    result = value.to_formatted_string(locale)
+    result = value.to_display_string(locale)
 
     # Verification
     assert result == expected

@@ -72,9 +72,9 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         raise NotImplementedError
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: boolean_value.BooleanValue(elem).to_formatted_string(locale_name))
+            lambda elem: boolean_value.BooleanValue(elem).to_display_string(locale_name))
         return api_string
         pass

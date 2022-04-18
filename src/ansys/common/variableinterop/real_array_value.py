@@ -81,9 +81,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         raise NotImplementedError
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         def parse_real_element(elem: np.float64) -> str:
-            value: str = real_value.RealValue(elem).to_formatted_string(locale_name)
+            value: str = real_value.RealValue(elem).to_display_string(locale_name)
 
             # Old form arrays (without quotes around each item) do not work for languages where ','
             # is the decimal separator. Use new form for those languages.
