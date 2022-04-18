@@ -91,6 +91,7 @@ from .scalar_value_visitors import (
     ToBooleanVisitor,
     ToIntegerVisitor,
     ToRealVisitor,
+    to_boolean_value,
     to_integer_value,
     to_real_value,
 )

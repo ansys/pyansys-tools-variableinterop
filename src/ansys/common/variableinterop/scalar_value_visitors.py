@@ -87,6 +87,26 @@ class ToBooleanVisitor(IVariableValueVisitor[bool]):
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
 
+def to_boolean_value(other: IVariableValue) -> BooleanValue:
+    """
+    Convert the given value to a BooleanValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a BooleanValue.
+
+    Returns
+    -------
+    The value as a RealValue.
+
+    """
+    return other.accept(ToBooleanVisitor())
+
+
 class ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     """This visitor implementation converts the visited value to a RealValue."""
 
