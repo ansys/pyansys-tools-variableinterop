@@ -8,6 +8,7 @@ from typing import Any, TypeVar
 import numpy as np
 from overrides import overrides
 
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.locale_utils as local_utils
 import ansys.common.variableinterop.real_value as real_value
 import ansys.common.variableinterop.variable_type as variable_type
@@ -66,8 +67,6 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             # For non-IVariableValues, use the superclass behavior.
             return super().__new__(cls, arg)
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
     # hashcode definition here
 
     @overrides
@@ -124,11 +123,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             # Otherwise, parse as an int.
             return IntegerValue(value)
 
+    @overrides
     def to_formatted_string(self, locale_name: str) -> str:
         result: np.str_ = local_utils.LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%G", self))
         return result
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError

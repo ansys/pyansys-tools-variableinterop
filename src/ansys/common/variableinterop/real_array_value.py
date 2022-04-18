@@ -3,18 +3,21 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
+class RealArrayValue(CommonArrayValue[np.float64]):
     """Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -25,13 +28,19 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
-    def __eq__(self, other: object) -> bool:
+    @overrides
+    def __eq__(self, other: RealArrayValue) -> bool:
         return np.array_equal(self, other)
+
+    @overrides
+    def clone(self) -> RealArrayValue:
+        return np.copy(self).view(RealArrayValue)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -45,6 +54,17 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
     def to_boolean_array_value(self):
         return np.vectorize(np.bool_)(self).view(boolean_array_value.BooleanArrayValue)
 
+    def to_integer_array_value(self):
+        def away_from_zero(x: np.float64) -> np.int64:
+            f = np.floor if x < 0 else np.ceil
+            return np.int64(f(x))
+
+        return np.vectorize(away_from_zero)(self).astype(np.int64) \
+            .view(integer_array_value.IntegerArrayValue)
+
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
+
     # TODO: full implementation
 
     @overrides
@@ -56,5 +76,5 @@ class RealArrayValue(NDArray[np.float64], variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

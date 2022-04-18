@@ -3,18 +3,21 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from overrides import overrides
 
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.real_array_value as real_array_value
+import ansys.common.variableinterop.string_array_value as string_array_value
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
+class IntegerArrayValue(CommonArrayValue[np.int64]):
     """Array of integer values.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -25,12 +28,18 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
+    @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.int64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.int64)
+
+    @overrides
+    def __eq__(self, other):
+        return np.array_equal(self, other)
+
+    def clone(self) -> IntegerArrayValue:
+        return np.copy(self).view(IntegerArrayValue)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -47,6 +56,9 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
     def to_real_array_value(self) -> real_array_value.RealArrayValue:
         return self.astype(np.float64).view(real_array_value.RealArrayValue)
 
+    def to_string_array_value(self) -> string_array_value.StringArrayValue:
+        return self.astype(np.str_).view(string_array_value.StringArrayValue)
+
     # TODO: full implementation
 
     @overrides
@@ -58,5 +70,5 @@ class IntegerArrayValue(NDArray[np.int64], variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def get_modelcenter_type(self) -> str:
+    def to_formatted_string(self, locale_name: str) -> str:
         raise NotImplementedError

@@ -1,5 +1,6 @@
 import ansys.common.variableinterop.boolean_array_value as boolean_array_value
 import ansys.common.variableinterop.boolean_value as boolean_value
+import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.integer_array_value as integer_array_value
 import ansys.common.variableinterop.integer_value as integer_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
@@ -52,7 +53,6 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :raise IncompatibleTypesException
         """
-        import ansys.common.variableinterop.exceptions as exceptions
         raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> bool:
@@ -61,7 +61,6 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :raise IncompatibleTypesException
         """
-        import ansys.common.variableinterop.exceptions as exceptions
         raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_real_array(self, value: real_array_value.RealArrayValue) -> bool:
@@ -70,7 +69,6 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :raise IncompatibleTypesException
         """
-        import ansys.common.variableinterop.exceptions as exceptions
         raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
 
     def visit_string_array(self, value: string_array_value.StringArrayValue) -> bool:
@@ -79,5 +77,4 @@ class ToBoolVisitor(ivariable_visitor.IVariableValueVisitor[bool]):
         :param value: The value being visited
         :raise IncompatibleTypesException
         """
-        import ansys.common.variableinterop.exceptions as exceptions
         raise exceptions.IncompatibleTypesException(value.variable_type(), "bool")
