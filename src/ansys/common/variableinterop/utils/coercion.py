@@ -12,7 +12,7 @@ import numpy as np
 import ansys.common.variableinterop.scalar_values as scalar_values
 import ansys.common.variableinterop.variable_value as variable_value
 
-TYPE_MAPPINGS = {
+__TYPE_MAPPINGS = {
     int: scalar_values.IntegerValue,
     np.integer: scalar_values.IntegerValue,
     float: scalar_values.RealValue,
@@ -28,7 +28,7 @@ IVariableValue. The type of the actual runtime argument value is the key in the 
 and the value is the specific IVariableValue implementation that should be used.
 """
 
-_ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
+__ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     scalar_values.IntegerValue: [int, np.integer, bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.RealValue: [float, np.inexact, bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.BooleanValue: [bool, np.bool_],
@@ -98,9 +98,9 @@ def _specific_implicit_coerce_allowed(target_arg_type: type, actual_arg_type: ty
     if issubclass(actual_arg_type, target_arg_type):
         return True
 
-    if target_arg_type in _ALLOWED_SPECIFIC_IMPLICIT_COERCE:
+    if target_arg_type in __ALLOWED_SPECIFIC_IMPLICIT_COERCE:
         return any(issubclass(actual_arg_type, allowed_coerce_type)
-                   for allowed_coerce_type in _ALLOWED_SPECIFIC_IMPLICIT_COERCE[target_arg_type])
+                   for allowed_coerce_type in __ALLOWED_SPECIFIC_IMPLICIT_COERCE[target_arg_type])
     else:
         return False
 
@@ -138,8 +138,8 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
     if arg_type == variable_value.IVariableValue:
         for cls in type(arg).__mro__:
-            if cls in TYPE_MAPPINGS:
-                return TYPE_MAPPINGS[cls](arg)
+            if cls in __TYPE_MAPPINGS:
+                return __TYPE_MAPPINGS[cls](arg)
         # TODO: Consider passing in more context for the exception
         # TODO: types come out to
         #  <class 'ansys.common.variableinterop.variable_value.IVariableValue'>.
