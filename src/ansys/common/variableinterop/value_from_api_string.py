@@ -1,3 +1,4 @@
+"""Definition of from_api_string."""
 from ansys.common.variableinterop.api_string_to_value_visitor import APIStringToValueVisitor
 from ansys.common.variableinterop.ivariable_type_pseudovisitor import vartype_accept
 from ansys.common.variableinterop.variable_type import VariableType

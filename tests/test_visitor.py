@@ -6,6 +6,12 @@ import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
 
 import ansys.common.variableinterop as acvi
+from ansys.common.variableinterop.array_value_conversion import (
+    __ToBooleanArrayVisitor,
+    __ToIntegerArrayVisitor,
+    __ToRealArrayVisitor,
+    __ToStringArrayVisitor,
+)
 
 
 class TestVisitor(acvi.IVariableValueVisitor[str]):
@@ -100,7 +106,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
     raised."""
 
     with _create_exception_context(expected_exception):
-        instance = acvi.ToRealArrayVisitor()
+        instance = __ToRealArrayVisitor()
         try:
             # SUT
             result: acvi.RealArrayValue = value.accept(instance)
@@ -171,7 +177,7 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
     Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
     raised.
     """
-    _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToBooleanArrayVisitor,
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToBooleanArrayVisitor,
                            acvi.BooleanArrayValue)
 # endregion
 
@@ -230,7 +236,7 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
     Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
     raised.
     """
-    _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToIntegerArrayVisitor,
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToIntegerArrayVisitor,
                            acvi.IntegerArrayValue)
 # endregion
 
@@ -280,6 +286,6 @@ def test_to_string_array_visitor(value: acvi.IVariableValue,
     Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
     raised.
     """
-    _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToStringArrayVisitor,
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToStringArrayVisitor,
                            acvi.StringArrayValue)
 # endregion
