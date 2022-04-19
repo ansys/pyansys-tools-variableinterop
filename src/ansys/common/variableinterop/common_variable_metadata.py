@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from typing import Dict
+from typing import Any, Dict
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
@@ -27,23 +27,24 @@ class CommonVariableMetadata(ABC):
         self._custom_metadata: Dict[str, variable_value.IVariableValue] = {}
 
     def __eq__(self, other):
-        return self.are_equal(other)
+        """Determine if a given object is equal to this metadata."""
+        return self.equals(other)
 
-    def are_equal(self, metadata: CommonVariableMetadata) -> bool:
-        """Determine if a given metadata is equal to this metadata.
+    def equals(self, other: Any) -> bool:
+        """Determine if a given object is equal to this metadata.
 
         Parameters
         ----------
-        metadata Metadata to compare this object to.
+        other Object to compare this object to.
 
         Returns
         -------
         True if metadata objects are equal, false otherwise.
         """
-        equal: bool = (isinstance(metadata, CommonVariableMetadata) and
-                       self.variable_type == metadata.variable_type and
-                       self._description == metadata._description and
-                       self._custom_metadata == metadata._custom_metadata)
+        equal: bool = (isinstance(other, CommonVariableMetadata) and
+                       self.variable_type == other.variable_type and
+                       self._description == other._description and
+                       self._custom_metadata == other._custom_metadata)
         return equal
 
     def clone(self) -> CommonVariableMetadata:

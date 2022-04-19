@@ -1,3 +1,4 @@
+"""Definition of FileArrayValue."""
 from __future__ import annotations
 
 from typing import TypeVar

@@ -7,16 +7,25 @@ import locale
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.boolean_value as boolean_value
-import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudo_visitor
-import ansys.common.variableinterop.locale_utils as locale_utils
-import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.string_value as string_value
+from ansys.common.variableinterop.array_values import (
+    BooleanArrayValue,
+    IntegerArrayValue,
+    RealArrayValue,
+    StringArrayValue,
+)
+from ansys.common.variableinterop.ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
+from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
+from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
 import ansys.common.variableinterop.variable_value as variable_value
 
 
-class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
+class FromFormattedStringVisitor(IVariableTypePseudoVisitor[
                                      variable_value.IVariableValue]):
     """Converts a string formatted for a locale to a IVariableValue."""
 
@@ -30,48 +39,60 @@ class FromFormattedStringVisitor(pseudo_visitor.IVariableTypePseudoVisitor[
         raise
 
     @overrides
-    def visit_int(self) -> integer_value.IntegerValue:
+    def visit_int(self) -> IntegerValue:
         # We need to use atof and then convert to int, as atoi does not support scientific notation
-        result: variable_value.IVariableValue = locale_utils.LocaleUtils.perform_safe_locale_action(
+        result: IntegerValue = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: np.int64(locale.atof(self._value)))
         return result
 
     @overrides
-    def visit_real(self) -> real_value.RealValue:
-        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
+    def visit_real(self) -> RealValue:
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: locale.atof(self._value))
         return result
 
     @overrides
-    def visit_boolean(self) -> boolean_value.BooleanValue:
-        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
+    def visit_boolean(self) -> BooleanValue:
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: bool(distutils.util.strtobool(self._value)))
         return result
 
     @overrides
-    def visit_string(self) -> string_value.StringValue:
+    def visit_string(self) -> StringValue:
         return self._value
 
     @overrides
     def visit_file(self) -> variable_value.IVariableValue:
-        raise
+        raise NotImplementedError
 
     @overrides
     def visit_int_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda val: IntegerArrayValue(values=val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_int())
 
     @overrides
     def visit_real_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda val: RealArrayValue(values=val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_real())
 
     @overrides
     def visit_bool_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda val: BooleanArrayValue(values=val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_boolean())
 
     @overrides
     def visit_string_array(self) -> variable_value.IVariableValue:
-        raise
+        return ArrayToFromStringUtil.string_to_value(
+            self._value,
+            lambda val: StringArrayValue(values=val),
+            lambda val: FromFormattedStringVisitor(val, self._locale_name).visit_string())
 
     @overrides
     def visit_file_array(self) -> variable_value.IVariableValue:
-        raise
+        raise NotImplementedError

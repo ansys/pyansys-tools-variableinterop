@@ -2,13 +2,20 @@
 Tests for the type coercion module
 """
 from abc import ABC, abstractmethod
+from typing import Any, Optional, Tuple, Type
+
 import numpy
 import pytest
-from typing import Any, Optional, Tuple
 from test_utils import _create_exception_context
 
 from ansys.common.variableinterop import (
-    BooleanValue, IntegerValue, implicit_coerce, IVariableValue, RealValue, StringValue)
+    BooleanValue,
+    IntegerValue,
+    IVariableValue,
+    RealValue,
+    StringValue,
+    implicit_coerce,
+)
 
 
 class IDummy(ABC):
@@ -84,7 +91,7 @@ class NotConvertible:
         pytest.param(None, None, TypeError)
     ],
 )
-def test_coerce(source: Any, expect: IVariableValue, expect_exception: BaseException) -> None:
+def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[BaseException]) -> None:
     """
     Tests implicit_coerce decorator
 
@@ -191,7 +198,7 @@ def accept_string_value(value: StringValue) -> StringValue:
     ],
 )
 def test_coerce_real_value(
-    source: Any, expect: IVariableValue, expect_exception: BaseException
+    source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept RealValue
@@ -240,7 +247,7 @@ def test_coerce_real_value(
     ],
 )
 def test_coerce_integer_value(
-        source: Any, expect: IVariableValue, expect_exception: BaseException
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept IntegerValue
@@ -287,7 +294,7 @@ def test_coerce_integer_value(
     ],
 )
 def test_coerce_string_value(
-        source: Any, expect: IVariableValue, expect_exception: BaseException
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept StringValue
@@ -357,7 +364,7 @@ def test_coerce_string_value(
     ],
 )
 def test_coerce_boolean_value(
-        source: Any, expect: IVariableValue, expect_exception: BaseException
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept BooleanValue
@@ -415,7 +422,7 @@ def accept_optional_real_value(value: Optional[RealValue]) -> RealValue:
     ],
 )
 def test_coerce_optional_real_value(
-    source: Any, expect: IVariableValue, expect_exception: BaseException
+    source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]

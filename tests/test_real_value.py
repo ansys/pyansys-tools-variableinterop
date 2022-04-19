@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import numpy
 import pytest
@@ -57,7 +57,7 @@ from ansys.common.variableinterop import (
     ]
 )
 def test_construct(
-        arg: Any, expect_equality: numpy.float64, expect_exception: BaseException) -> None:
+        arg: Any, expect_equality: numpy.float64, expect_exception: Type[BaseException]) -> None:
     """Verify that __init__ for RealValue correctly instantiates the superclass data."""
     with _create_exception_context(expect_exception):
         instance = RealValue(arg)
@@ -128,7 +128,7 @@ def test_intvalue_conversion_valid(
     ],
 )
 def test_intvalue_conversion_invalid(
-        orig_real: RealValue, expected_exception: BaseException):
+        orig_real: RealValue, expected_exception: Type[BaseException]):
     with _create_exception_context(expected_exception):
         result: IntegerValue = orig_real.to_int_value()
 
@@ -240,7 +240,7 @@ def test_from_api_string_valid(
     ],
 )
 def test_from_api_string_invalid(
-        source: str, expected_exception: BaseException) -> None:
+        source: str, expected_exception: Type[BaseException]) -> None:
     """
     Verify that invalid cases correctly raise on from_api_string.
 
@@ -367,7 +367,7 @@ def test_to_real_value_valid(
     ],
 )
 def test_to_real_value_invalid(
-        source: IVariableValue, expected_exception: BaseException) -> None:
+        source: IVariableValue, expected_exception: Type[BaseException]) -> None:
     """
     Verify that the runtime_convert method works on invalid cases.
 

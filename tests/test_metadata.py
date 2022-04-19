@@ -2,32 +2,38 @@ from typing import Any
 
 import pytest
 
-from ansys.common.variableinterop.boolean_array_metadata import BooleanArrayMetadata  # noqa
-from ansys.common.variableinterop.boolean_metadata import BooleanMetadata  # noqa
-from ansys.common.variableinterop.boolean_value import BooleanValue
-from ansys.common.variableinterop.integer_array_metadata import IntegerArrayMetadata  # noqa
-from ansys.common.variableinterop.integer_metadata import IntegerMetadata
-from ansys.common.variableinterop.integer_value import IntegerValue
-from ansys.common.variableinterop.real_array_metadata import RealArrayMetadata  # noqa
-from ansys.common.variableinterop.real_metadata import RealMetadata
-from ansys.common.variableinterop.real_value import RealValue
-from ansys.common.variableinterop.string_array_metadata import StringArrayMetadata  # noqa
-from ansys.common.variableinterop.string_metadata import StringMetadata  # noqa
-from ansys.common.variableinterop.string_value import StringValue  # noqa
+from ansys.common.variableinterop.array_metadata import (
+    BooleanArrayMetadata,
+    IntegerArrayMetadata,
+    RealArrayMetadata,
+    StringArrayMetadata,
+)
+from ansys.common.variableinterop.scalar_metadata import (
+    BooleanMetadata,
+    IntegerMetadata,
+    RealMetadata,
+    StringMetadata,
+)
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
 
 all_metadata_types = [
-    "IntegerMetadata",
-    "IntegerArrayMetadata",
-    "RealMetadata",
-    "RealArrayMetadata",
-    "BooleanMetadata",
-    "BooleanArrayMetadata",
-    "StringMetadata",
-    "StringArrayMetadata"
+    IntegerMetadata.__name__,
+    IntegerArrayMetadata.__name__,
+    RealMetadata.__name__,
+    RealArrayMetadata.__name__,
+    BooleanMetadata.__name__,
+    BooleanArrayMetadata.__name__,
+    StringMetadata.__name__,
+    StringArrayMetadata.__name__
     ]
 
 
-def assert_are_equal(metadata1, metadata2) -> None:
+def assert_equals(metadata1, metadata2) -> None:
     """
     Tests whether passed metadata objects are equal using __eq__
     and __ne__ operators and specifying each object both, as lhs and rhs
@@ -43,8 +49,8 @@ def assert_are_equal(metadata1, metadata2) -> None:
     nothing
     """
     assert metadata1 is not metadata2
-    assert metadata1.are_equal(metadata2)
-    assert metadata2.are_equal(metadata1)
+    assert metadata1.equals(metadata2)
+    assert metadata2.equals(metadata1)
     assert metadata1 == metadata2
     assert metadata2 == metadata1
     assert not metadata1 != metadata2
@@ -67,8 +73,8 @@ def assert_are_not_equal(metadata1, metadata2) -> None:
     nothing
     """
     assert metadata1 is not metadata2
-    assert not metadata1.are_equal(metadata2)
-    assert not metadata2.are_equal(metadata1)
+    assert not metadata1.equals(metadata2)
+    assert not metadata2.equals(metadata1)
     assert not metadata1 == metadata2
     assert not metadata2 == metadata1
     assert metadata1 != metadata2
@@ -76,7 +82,7 @@ def assert_are_not_equal(metadata1, metadata2) -> None:
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_are_equal_empty(type_name: str) -> None:
+def test_equals_empty(type_name: str) -> None:
     """Tests whether empty metadata objects of the same type are equal.
 
     Parameters
@@ -90,7 +96,7 @@ def test_are_equal_empty(type_name: str) -> None:
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
     metadata2 = metadata_type()
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 def test_different_metadata_types_are_not_equal() -> None:
@@ -108,7 +114,7 @@ def test_different_metadata_types_are_not_equal() -> None:
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_are_equal_same_description(type_name: str) -> None:
+def test_equals_same_description(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same description are equal.
@@ -126,11 +132,11 @@ def test_are_equal_same_description(type_name: str) -> None:
     metadata1.description = "Some description: ćma na łące patrzy na słońce."
     metadata2 = metadata_type()
     metadata2.description = "Some description: ćma na łące patrzy na słońce."
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_are_equal_different_description(type_name: str) -> None:
+def test_equals_different_description(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different descriptions are not equal.
@@ -153,7 +159,7 @@ def test_are_equal_different_description(type_name: str) -> None:
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_are_equal_same_custom_metadata(type_name: str) -> None:
+def test_equals_same_custom_metadata(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same custom_metadata are equal.
@@ -173,11 +179,11 @@ def test_are_equal_same_custom_metadata(type_name: str) -> None:
     metadata2 = metadata_type()
     metadata2.custom_metadata["key2"] = BooleanValue(0)
     metadata2.custom_metadata["key1"] = BooleanValue(1)
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
-def test_are_equal_different_custom_metadata(type_name: str) -> None:
+def test_equals_different_custom_metadata(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different custom_metadata are not equal.
@@ -211,7 +217,7 @@ numeric_metadata_types = [
 
 
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
-def test_are_equal_same_units(type_name: str) -> None:
+def test_equals_same_units(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same units are equal.
@@ -231,11 +237,11 @@ def test_are_equal_same_units(type_name: str) -> None:
     metadata2 = metadata_type()
     metadata2.units = "km per hr"
     metadata2.description = "Some description."
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
-def test_are_equal_different_units(type_name: str) -> None:
+def test_equals_different_units(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different units are not equal.
@@ -259,7 +265,7 @@ def test_are_equal_different_units(type_name: str) -> None:
 
 
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
-def test_are_equal_same_display_format(type_name: str) -> None:
+def test_equals_same_display_format(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same display format are equal.
@@ -281,11 +287,11 @@ def test_are_equal_same_display_format(type_name: str) -> None:
     metadata2.units = "seconds"
     metadata2.description = "Some description."
     metadata2.display_format = "hh:mm:ss"
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
-def test_are_equal_different_display_format(type_name: str) -> None:
+def test_equals_different_display_format(type_name: str) -> None:
     """
     Tests whether metadata objects of the same type and having
     different display format are not equal.
@@ -336,7 +342,7 @@ def test_are_equal_different_display_format(type_name: str) -> None:
         ("RealArrayMetadata", "upper_bound", 1.1, 1.1),
     ],
 )
-def test_are_equal_same_bound(
+def test_equals_same_bound(
         type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -358,7 +364,7 @@ def test_are_equal_same_bound(
     setattr(metadata1, bound, value1)
     metadata2 = metadata_type()
     setattr(metadata2, bound, value2)
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize(
@@ -384,7 +390,7 @@ def test_are_equal_same_bound(
         ("RealArrayMetadata", "upper_bound", 1.1, 20.0),
     ],
 )
-def test_are_equal_different_bound(
+def test_equals_different_bound(
         type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -428,7 +434,7 @@ def test_are_equal_different_bound(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "dos", "tres"]),
     ],
 )
-def test_are_equal_same_enumerated_values(
+def test_equals_same_enumerated_values(
         type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -449,7 +455,7 @@ def test_are_equal_same_enumerated_values(
     metadata1.enumerated_values = value1
     metadata2 = metadata_type()
     metadata2.enumerated_values = value2
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize(
@@ -472,7 +478,7 @@ def test_are_equal_same_enumerated_values(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "tres", "dos"]),
     ],
 )
-def test_are_equal_different_enumerated_values(
+def test_equals_different_enumerated_values(
         type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -515,7 +521,7 @@ def test_are_equal_different_enumerated_values(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "dos", "tres"]),
     ],
 )
-def test_are_equal_same_enumerated_aliases(
+def test_equals_same_enumerated_aliases(
         type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -536,7 +542,7 @@ def test_are_equal_same_enumerated_aliases(
     metadata1.enumerated_aliases = value1
     metadata2 = metadata_type()
     metadata2.enumerated_aliases = value2
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
 
 
 @pytest.mark.parametrize(
@@ -545,8 +551,8 @@ def test_are_equal_same_enumerated_aliases(
         ("IntegerMetadata", None, []),
         ("IntegerMetadata", [], ""),
         ("IntegerMetadata", [""], []),
-        ("IntegerMetadata", ["one", "two", "three"], ["one", "two", "thre"]),
-        ("IntegerArrayMetadata", ["one", "two", "three"], ["one", "two", "thre"]),
+        ("IntegerMetadata", ["one", "two", "three"], ["one", "two", "four"]),
+        ("IntegerArrayMetadata", ["one", "two", "three"], ["one", "two", "four"]),
         ("RealMetadata", None, []),
         ("RealMetadata", [], [""]),
         ("RealMetadata", ["pi", "e", "sigma"], ["pi", "e", "delta"]),
@@ -557,7 +563,7 @@ def test_are_equal_same_enumerated_aliases(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "tres", "dos"]),
     ],
 )
-def test_are_equal_different_enumerated_aliases(
+def test_equals_different_enumerated_aliases(
         type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
@@ -599,6 +605,6 @@ def test_clone_custom_metadata(type_name: str) -> None:
     metadata1.custom_metadata["key1"] = IntegerValue(1)
     metadata1.custom_metadata["key2"] = IntegerValue(0)
     metadata2 = metadata1.clone()
-    assert_are_equal(metadata1, metadata2)
+    assert_equals(metadata1, metadata2)
     assert metadata1.custom_metadata["key1"] is not metadata2.custom_metadata["key1"]
     assert metadata1.custom_metadata["key2"] is not metadata2.custom_metadata["key2"]
