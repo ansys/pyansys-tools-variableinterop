@@ -93,10 +93,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
             lambda val: BooleanValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: BooleanValue(elem.tolist()).to_formatted_string(locale_name))
+            lambda elem: BooleanValue(elem.tolist()).to_display_string(locale_name))
         return api_string
         pass
 
@@ -168,10 +168,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
             lambda val: IntegerValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: IntegerValue(elem).to_formatted_string(locale_name))
+            lambda elem: IntegerValue(elem).to_display_string(locale_name))
         return api_string
 
 
@@ -248,9 +248,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
             lambda val: RealValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         def parse_real_element(elem: np.float64) -> str:
-            value: str = RealValue(elem).to_formatted_string(locale_name)
+            value: str = RealValue(elem).to_display_string(locale_name)
 
             # Old form arrays (without quotes around each item) do not work for languages where ','
             # is the decimal separator. Use new form for those languages.
@@ -348,10 +348,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
             lambda val: StringValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
 
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
             lambda elem:
-            "\"" + StringValue(elem).to_formatted_string(locale_name) + "\"")
+            "\"" + StringValue(elem).to_display_string(locale_name) + "\"")
         return api_string
