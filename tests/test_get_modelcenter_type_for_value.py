@@ -33,7 +33,7 @@ class TestUnknownValue(IVariableValue):
     def from_api_string(self, value: str) -> None:
         pass
 
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         pass
 
     def get_modelcenter_type(self) -> str:
