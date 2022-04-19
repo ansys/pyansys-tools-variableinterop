@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import TypeVar
+from typing import Any, TypeVar
 
 from overrides import overrides
 
@@ -21,10 +21,12 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
         self._units: str = ""
         self._display_format: str = ""
 
+    @overrides
     def __eq__(self, other):
         return self.are_equal(other)
 
-    def are_equal(self, metadata: common_variable_metadata.CommonVariableMetadata) -> bool:
+    @overrides
+    def equals(self, other: Any) -> bool:
         """Determine if a given metadata is equal to this metadata.
 
         Parameters
@@ -35,10 +37,10 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
         -------
         True if metadata objects are equal, false otherwise.
         """
-        equal: bool = (isinstance(metadata, NumericMetadata) and
-                       super().are_equal(metadata) and
-                       self._units == metadata._units and
-                       self._display_format == metadata._display_format)
+        equal: bool = (isinstance(other, NumericMetadata) and
+                       super().equals(other) and
+                       self._units == other._units and
+                       self._display_format == other._display_format)
         return equal
 
     @overrides

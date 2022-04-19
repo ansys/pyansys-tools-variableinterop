@@ -60,6 +60,7 @@ class ArrayToFromStringUtil:
                         valueify_action: Callable[[str], IVariableValue]) -> CommonArrayValue:
         """
         Convert a string into a CommonValueArray object.
+
         valueify_action allows converting the value arbitrarily, so
         both API and display strings can use this method.
 
@@ -74,7 +75,6 @@ class ArrayToFromStringUtil:
         -------
         A new array object with the parsed values.
         """
-
         array: CommonArrayValue
         value_str: str
 
@@ -128,7 +128,8 @@ class ArrayToFromStringUtil:
     @staticmethod
     def _value_regex_match(value_str: str) -> Optional[Match[str]]:
         """
-        Parses a single value, that may be quoted.
+        Parse a single value, that may be quoted.
+
         Parameters
         ----------
         value_str The string to parse.
