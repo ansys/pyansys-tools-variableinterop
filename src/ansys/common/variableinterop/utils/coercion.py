@@ -12,7 +12,6 @@ import numpy as np
 import ansys.common.variableinterop.scalar_values as scalar_values
 import ansys.common.variableinterop.variable_value as variable_value
 
-# A dictionary that maps source types to what variableinterop type it should be mapped to
 TYPE_MAPPINGS = {
     int: scalar_values.IntegerValue,
     np.integer: scalar_values.IntegerValue,
@@ -23,6 +22,12 @@ TYPE_MAPPINGS = {
     str: scalar_values.StringValue,
     np.str_: scalar_values.StringValue
 }
+"""
+This map applies when coercing a non-IVariableValue type to a method argument that converts an
+IVariableValue. The type of the actual runtime argument value is the key in the dictionary,
+and the value is the specific IVariableValue implementation that should be used.
+"""
+
 _ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     scalar_values.IntegerValue: [int, np.integer, bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.RealValue: [float, np.inexact, bool, np.bool_, scalar_values.BooleanValue],
@@ -32,6 +37,11 @@ _ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
                                 float, np.inexact, scalar_values.RealValue,
                                 str, np.str_, scalar_values.StringValue],
     }
+"""
+This map applies when coercing any value to a specific IVariableValue implementation.
+The type declared in the method definition is the key in the dictionary,
+and the values are the allowable runtime types that may be converted implicitly to that type.
+"""
 
 
 def _is_optional(arg_type: type) -> bool:
