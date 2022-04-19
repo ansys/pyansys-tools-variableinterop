@@ -4,6 +4,7 @@ import sys
 import numpy
 import pytest
 from test_utils import _create_exception_context
+from typing import Type
 
 from ansys.common.variableinterop import (
     BooleanValue,
@@ -109,7 +110,7 @@ from ansys.common.variableinterop import (
 def test_to_boolean_value(
         source: IVariableValue,
         expect: bool,
-        expect_exception: BaseException
+        expect_exception: Type[BaseException]
 ) -> None:
     """
     Tests to_boolean_values's handling of various input IVariableValues

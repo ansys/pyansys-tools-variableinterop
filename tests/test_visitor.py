@@ -4,6 +4,7 @@ from typing import Any
 
 import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
+from typing import Type
 
 import ansys.common.variableinterop as acvi
 from ansys.common.variableinterop.array_value_conversion import (
@@ -101,7 +102,7 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
     ])
 def test_to_real_array_visitor(value: acvi.IVariableValue,
                                expected_result: acvi.RealArrayValue,
-                               expected_exception: BaseException):
+                               expected_exception: Type[BaseException]):
     """Verify that ToRealArrayVisitor gets the expected result, or that the expected exception is
     raised."""
 
@@ -172,7 +173,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.BooleanArrayValue,
-                                  expected_exception: BaseException):
+                                  expected_exception: Type[BaseException]):
     """
     Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
     raised.
@@ -231,7 +232,7 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_integer_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.IntegerArrayValue,
-                                  expected_exception: BaseException):
+                                  expected_exception: Type[BaseException]):
     """
     Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
     raised.
@@ -281,7 +282,7 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_string_array_visitor(value: acvi.IVariableValue,
                                  expected_result: acvi.StringArrayValue,
-                                 expected_exception: BaseException):
+                                 expected_exception: Type[BaseException]):
     """
     Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
     raised.
