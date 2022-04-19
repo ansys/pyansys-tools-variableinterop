@@ -8,16 +8,20 @@ definition for more information as to why this pattern is beneficial
 compared to bare switch statements.
 """
 import ansys.common.variableinterop.boolean_value as boolean
+import ansys.common.variableinterop.boolean_array_value as boolean_array
 import ansys.common.variableinterop.integer_value as integer
+import ansys.common.variableinterop.integer_array_value as integer_array
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
 import ansys.common.variableinterop.real_value as real
+import ansys.common.variableinterop.real_array_value as real_array
 import ansys.common.variableinterop.string_value as string
+import ansys.common.variableinterop.string_array_value as string_array
 import ansys.common.variableinterop.variable_value as var_value
 
 
 class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     """
-    A pseudovisitor for the variable type enum that produces variable values from strings.
+    A pseudo-visitor for the variable type enum that produces variable values from strings.
 
     The actual type generated is determined by the type that accepts this visitor.
     """
@@ -103,7 +107,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         # class to take a file store (see C# implementation for details).
         raise NotImplementedError
 
-    def visit_int_array(self) -> var_value.IVariableValue:
+    def visit_int_array(self) -> integer_array.IntegerArrayValue:
         """
         Produce an IntegerArrayValue from the API string format.
 
@@ -111,10 +115,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         An IntegerArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return integer_array.IntegerArrayValue.from_api_string(self._source)
 
-    def visit_real_array(self) -> var_value.IVariableValue:
+    def visit_real_array(self) -> real_array.RealArrayValue:
         """
         Produce a RealArrayValue from the API string format.
 
@@ -122,38 +125,35 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A RealArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return real_array.RealArrayValue.from_api_string(self._source)
 
-    def visit_bool_array(self) -> var_value.IVariableValue:
+    def visit_bool_array(self) -> boolean_array.BooleanArrayValue:
         """
         Produce a BooleanArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A BooleanArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return boolean_array.BooleanArrayValue.from_api_string(self._source)
 
-    def visit_string_array(self) -> var_value.IVariableValue:
+    def visit_string_array(self) -> string_array.StringArrayValue:
         """
-        Produce a BooleanArrayValue from the API string format.
+        Produce a StringArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A StringArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return string_array.StringArrayValue.from_api_string(self._source)
 
     def visit_file_array(self) -> var_value.IVariableValue:
         """
-        Produce a BooleanArrayValue from the API string format.
+        Produce a FileArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A FileArrayValue with a value determined by the specified string.
         """
         # TODO: implement this as part of array support PBI.
         raise NotImplementedError
