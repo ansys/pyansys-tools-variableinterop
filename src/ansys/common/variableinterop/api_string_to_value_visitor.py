@@ -7,15 +7,17 @@ the string into the visited type. See the pseudovisitor interface
 definition for more information as to why this pattern is beneficial
 compared to bare switch statements.
 """
+import json
+from typing import Optional
+
 import ansys.common.variableinterop.boolean_value as boolean
 import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.integer_value as integer
+import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
 import ansys.common.variableinterop.real_value as real
 import ansys.common.variableinterop.string_value as string
 import ansys.common.variableinterop.variable_value as var_value
-import json
-from typing import Optional
 
 
 class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
@@ -25,7 +27,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     The actual type generated is determined by the type that accepts this visitor.
     """
 
-    def __init__(self, source: str, fscope: file_scope.FileScope):
+    def __init__(self, source: str, fscope: Optional[file_scope.FileScope],
+                 save_context: Optional[isave_context.ISaveContext]):
         """
         Create a new instance of this class.
 
@@ -34,7 +37,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         source the string from which values should be parsed
         """
         self._source: str = source
-        self._scope: fscope
+        self._scope = fscope
+        self._save_context = save_context
 
     def visit_unknown(self):
         """
@@ -105,10 +109,11 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         # TODO: implement this as part of file support PBI.
         # Note that doing so will also require extending this
         # class to take a file store (see C# implementation for details).
-        if self._scope is None:
-            raise NotImplementedError("Deserializing a file value requires a file scope.")
+        if self._scope is None or self._save_context is None:
+            raise NotImplementedError(
+                "Deserializing a file value requires a file scope and save context.")
         else:
-            return self._scope.from_api_object(json.load(self._source))
+            return self._scope.from_api_object(json.load(self._source), self._save_context)
 
 
     def visit_int_array(self) -> var_value.IVariableValue:

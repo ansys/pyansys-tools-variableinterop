@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from os import PathLike
-from overrides import overrides
 from typing import Any, Dict, Optional
 from uuid import uuid4
+
+from overrides import overrides
 
 import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.file_value as file_value
@@ -59,7 +60,9 @@ class NonManagingFileScope(file_scope.FileScope):
         return file_var.actual_content_file_name
 
     @overrides
-    def from_api_object(self, api_object: Dict[str, Optional[str]]) -> file_value.FileValue:
+    def from_api_object(self,
+                        api_object: Dict[str, Optional[str]],
+                        load_context: Optional[isave_context.ILoadContext]) -> file_value.FileValue:
         if file_value.FileValue.CONTENTS_KEY in api_object:
             return NonManagingFileScope.NonManagingFileValue(
                 api_object.get(file_value.FileValue.CONTENTS_KEY),
