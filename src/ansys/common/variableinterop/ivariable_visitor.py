@@ -5,15 +5,18 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    import ansys.common.variableinterop.boolean_array_value as boolean_array_value
-    import ansys.common.variableinterop.boolean_value as boolean_value
-    import ansys.common.variableinterop.integer_array_value as integer_array_value
-    import ansys.common.variableinterop.integer_value as integer_value
-    import ansys.common.variableinterop.file_value as file_value
-    import ansys.common.variableinterop.real_array_value as real_array_value
-    import ansys.common.variableinterop.real_value as real_value
-    import ansys.common.variableinterop.string_array_value as string_array_value
-    import ansys.common.variableinterop.string_value as string_value
+    from ansys.common.variableinterop.array_values import (
+        BooleanArrayValue,
+        IntegerArrayValue,
+        RealArrayValue,
+        StringArrayValue,
+    )
+    from ansys.common.variableinterop.scalar_values import (
+        BooleanValue,
+        IntegerValue,
+        RealValue,
+        StringValue,
+    )
 
 T = TypeVar("T")
 
@@ -30,7 +33,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
     #  https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
-    def visit_integer(self, value: integer_value.IntegerValue) -> T:
+    def visit_integer(self, value: IntegerValue) -> T:
         """
         Will be called if accept is called on an IntegerValue.
 
@@ -45,7 +48,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_real(self, value: real_value.RealValue) -> T:
+    def visit_real(self, value: RealValue) -> T:
         """
         Will be called if accept is called on a RealValue.
 
@@ -60,7 +63,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_boolean(self, value: boolean_value.BooleanValue) -> T:
+    def visit_boolean(self, value: BooleanValue) -> T:
         """
         Will be called if accept is called on a BooleanValue.
 
@@ -75,7 +78,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_string(self, value: string_value.StringValue) -> T:
+    def visit_string(self, value: StringValue) -> T:
         """
         Will be called if accept is called on a StringValue.
 
@@ -90,7 +93,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_integer_array(self, value: integer_array_value.IntegerArrayValue) -> T:
+    def visit_integer_array(self, value: IntegerArrayValue) -> T:
         """
         Will be called if accept is called on an IntegerArrayValue.
 
@@ -120,7 +123,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_real_array(self, value: real_array_value.RealArrayValue) -> T:
+    def visit_real_array(self, value: RealArrayValue) -> T:
         """
         Will be called if accept is called on a RealArrayValue.
 
@@ -135,7 +138,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_boolean_array(self, value: boolean_array_value.BooleanArrayValue) -> T:
+    def visit_boolean_array(self, value: BooleanArrayValue) -> T:
         """
         Will be called if accept is called on a BooleanArrayValue.
 
@@ -150,7 +153,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_string_array(self, value: string_array_value.StringArrayValue) -> T:
+    def visit_string_array(self, value: StringArrayValue) -> T:
         """
         Will be called if accept is called on a StringArrayValue.
 

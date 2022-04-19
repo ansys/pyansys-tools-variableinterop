@@ -1,25 +1,34 @@
 """
-Provides a variable type pseudovisitor that parses values from strings.
+Provides a variable type pseudo-visitor that parses values from strings.
 
-The pseudovisitor is constructed with the string to parse, then accepted
+The pseudo-visitor is constructed with the string to parse, then accepted
 by the appropriate variable type. When visiting, it attempts to parse
-the string into the visited type. See the pseudovisitor interface
+the string into the visited type. See the pseudo-visitor interface
 definition for more information as to why this pattern is beneficial
 compared to bare switch statements.
 """
-import ansys.common.variableinterop.boolean_value as boolean
-import ansys.common.variableinterop.file_scope as file_scope
-import ansys.common.variableinterop.integer_value as integer
-import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
-import ansys.common.variableinterop.real_value as real
-import ansys.common.variableinterop.string_value as string
-import ansys.common.variableinterop.variable_value as var_value
 import json
+
+from ansys.common.variableinterop.array_values import (
+    BooleanArrayValue,
+    IntegerArrayValue,
+    RealArrayValue,
+    StringArrayValue,
+)
+import ansys.common.variableinterop.file_scope as file_scope
+import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
+import ansys.common.variableinterop.variable_value as var_value
 
 
 class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     """
-    A pseudovisitor for the variable type enum that produces variable values from strings.
+    A pseudo-visitor for the variable type enum that produces variable values from strings.
 
     The actual type generated is determined by the type that accepts this visitor.
     """
@@ -53,7 +62,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         """
         raise NotImplementedError("Cannot create values with unknown type.")
 
-    def visit_int(self) -> integer.IntegerValue:
+    def visit_int(self) -> IntegerValue:
         """
         Produce an IntegerValue from the API string format.
 
@@ -61,9 +70,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         An IntegerValue with a value determined by the specified string.
         """
-        return integer.IntegerValue.from_api_string(self._source)
+        return IntegerValue.from_api_string(self._source)
 
-    def visit_real(self) -> real.RealValue:
+    def visit_real(self) -> RealValue:
         """
         Produce a RealValue from the API string format.
 
@@ -71,9 +80,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A RealValue with a value determined by the specified string.
         """
-        return real.RealValue.from_api_string(self._source)
+        return RealValue.from_api_string(self._source)
 
-    def visit_boolean(self) -> boolean.BooleanValue:
+    def visit_boolean(self) -> BooleanValue:
         """
         Produce a BooleanValue from the API string format.
 
@@ -81,9 +90,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A BooleanValue with a value determined by the specified string.
         """
-        return boolean.BooleanValue.from_api_string(self._source)
+        return BooleanValue.from_api_string(self._source)
 
-    def visit_string(self) -> string.StringValue:
+    def visit_string(self) -> StringValue:
         """
         Produce a StringValue from the API string format.
 
@@ -91,7 +100,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A StringValue with a value determined by the specified string.
         """
-        return string.StringValue.from_api_string(self._source)
+        return StringValue.from_api_string(self._source)
 
     def visit_file(self) -> var_value.IVariableValue:
         """
@@ -109,7 +118,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         else:
             return self._scope.from_api_object(json.loads(self._source))
 
-    def visit_int_array(self) -> var_value.IVariableValue:
+    def visit_int_array(self) -> IntegerArrayValue:
         """
         Produce an IntegerArrayValue from the API string format.
 
@@ -117,10 +126,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         An IntegerArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return IntegerArrayValue.from_api_string(self._source)
 
-    def visit_real_array(self) -> var_value.IVariableValue:
+    def visit_real_array(self) -> RealArrayValue:
         """
         Produce a RealArrayValue from the API string format.
 
@@ -128,38 +136,35 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A RealArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return RealArrayValue.from_api_string(self._source)
 
-    def visit_bool_array(self) -> var_value.IVariableValue:
+    def visit_bool_array(self) -> BooleanArrayValue:
         """
         Produce a BooleanArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A BooleanArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return BooleanArrayValue.from_api_string(self._source)
 
-    def visit_string_array(self) -> var_value.IVariableValue:
+    def visit_string_array(self) -> StringArrayValue:
         """
-        Produce a BooleanArrayValue from the API string format.
+        Produce a StringArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A StringArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        return StringArrayValue.from_api_string(self._source)
 
     def visit_file_array(self) -> var_value.IVariableValue:
         """
-        Produce a BooleanArrayValue from the API string format.
+        Produce a FileArrayValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        A FileArrayValue with a value determined by the specified string.
         """
         # TODO: implement this as part of array support PBI.
         raise NotImplementedError

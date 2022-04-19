@@ -8,35 +8,37 @@ numpy types, so these tests are just verifying that is working correctly.
 import numpy as np
 import pytest
 
-import ansys.common.variableinterop.boolean_value as boolean_value
-import ansys.common.variableinterop.integer_value as integer_value
-import ansys.common.variableinterop.real_value as real_value
-import ansys.common.variableinterop.string_value as string_value
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
 import ansys.common.variableinterop.variable_value as variable_value
 
 
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(real_value.RealValue(222.1), real_value.RealValue(222.1), True,
+        pytest.param(RealValue(222.1), RealValue(222.1), True,
                      id="Matching Reals"),
-        pytest.param(real_value.RealValue(222.323), real_value.RealValue(223.32), False,
+        pytest.param(RealValue(222.323), RealValue(223.32), False,
                      id="Different Reals"),
         # Correct operation is not defined, these are given for characterization testing.
-        pytest.param(real_value.RealValue(np.nan), real_value.RealValue(np.nan), False,
+        pytest.param(RealValue(np.nan), RealValue(np.nan), False,
                      id="NaN to NaN"),
-        pytest.param(real_value.RealValue(0), real_value.RealValue(np.nan), False,
+        pytest.param(RealValue(0), RealValue(np.nan), False,
                      id="Real to NaN"),
-        pytest.param(real_value.RealValue(np.nan), real_value.RealValue(0), False,
+        pytest.param(RealValue(np.nan), RealValue(0), False,
                      id="NaN to Real"),
-        pytest.param(real_value.RealValue(np.NINF), real_value.RealValue(np.inf), False,
+        pytest.param(RealValue(np.NINF), RealValue(np.inf), False,
                      id="-INF to INF"),
-        pytest.param(real_value.RealValue(np.NINF), real_value.RealValue(np.NINF), True,
+        pytest.param(RealValue(np.NINF), RealValue(np.NINF), True,
                      id="-INF to -INF"),
-        pytest.param(real_value.RealValue(np.inf), real_value.RealValue(np.inf), True,
+        pytest.param(RealValue(np.inf), RealValue(np.inf), True,
                      id="INF to INF"),
-        pytest.param(real_value.RealValue(1.0),
-                     real_value.RealValue(1.0 + np.finfo(np.float64).eps),
+        pytest.param(RealValue(1.0),
+                     RealValue(1.0 + np.finfo(np.float64).eps),
                      False,
                      id="Real to Real plus Epsilon")
     ]
@@ -64,9 +66,9 @@ def test_equality_of_real_values(
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(integer_value.IntegerValue(222), integer_value.IntegerValue(222), True,
+        pytest.param(IntegerValue(222), IntegerValue(222), True,
                      id="Matching Ints"),
-        pytest.param(integer_value.IntegerValue(222), integer_value.IntegerValue(223), False,
+        pytest.param(IntegerValue(222), IntegerValue(223), False,
                      id="Different Ints"),
     ]
 )
@@ -93,11 +95,11 @@ def test_equality_of_integer_values(
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(string_value.StringValue("asdf"), string_value.StringValue("asdf"), True,
+        pytest.param(StringValue("asdf"), StringValue("asdf"), True,
                      id="Matching Strings"),
-        pytest.param(string_value.StringValue("asdf"), string_value.StringValue("qwerty"), False,
+        pytest.param(StringValue("asdf"), StringValue("qwerty"), False,
                      id="Different Strings"),
-        pytest.param(string_value.StringValue("asdf"), string_value.StringValue("ASDF"), False,
+        pytest.param(StringValue("asdf"), StringValue("ASDF"), False,
                      id="Different Case"),
     ]
 )
@@ -124,13 +126,13 @@ def test_equality_of_string_values(
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(boolean_value.BooleanValue(True), boolean_value.BooleanValue(True), True,
+        pytest.param(BooleanValue(True), BooleanValue(True), True,
                      id="True with True"),
-        pytest.param(boolean_value.BooleanValue(False), boolean_value.BooleanValue(False), True,
+        pytest.param(BooleanValue(False), BooleanValue(False), True,
                      id="False with False"),
-        pytest.param(boolean_value.BooleanValue(True), boolean_value.BooleanValue(False), False,
+        pytest.param(BooleanValue(True), BooleanValue(False), False,
                      id="True with False"),
-        pytest.param(boolean_value.BooleanValue(False), boolean_value.BooleanValue(True), False,
+        pytest.param(BooleanValue(False), BooleanValue(True), False,
                      id="False with True"),
     ]
 )

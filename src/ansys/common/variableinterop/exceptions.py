@@ -39,17 +39,30 @@ class IncompatibleTypesException(BaseException):
         :param from_type a VariableType or a string identifying the type converting from.
         :param to_type a VariableType or a string identifying the type converting to.
         """
+        self.from_type: variable_type.VariableType
+        self.from_type_str: str
+
         if isinstance(from_type, variable_type.VariableType):
-            self.from_type: variable_type.VariableType = from_type
-            self.from_type_str: str = from_type.associated_type_name
+            self.from_type = from_type
+            self.from_type_str = from_type.associated_type_name
         else:
             self.from_type = None
-            self.from_type_str: str = from_type
+            self.from_type_str = from_type
         if isinstance(to_type, variable_type.VariableType):
-            self.to_type: variable_type.VariableType = to_type
-            self.to_type_str: str = to_type.associated_type_name
+            self.to_type = to_type
+            self.to_type_str = to_type.associated_type_name
         else:
             self.to_type = None
-            self.to_type_str: str = to_type
+            self.to_type_str = to_type
         self.message = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
+        super().__init__(self.message)
+
+
+class FormatException(BaseException):
+    """Exception raised when attempting to create an IVariableValue \
+    from a string that is incorrectly formatted."""
+
+    def __init__(self):
+        """Construct exception."""
+        self.message = _error("ERROR_FORMAT")
         super().__init__(self.message)

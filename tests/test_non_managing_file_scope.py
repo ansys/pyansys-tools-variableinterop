@@ -1,10 +1,11 @@
 import json
-
-import ansys.common.variableinterop as acvi
 from os import PathLike
-import pytest
 from typing import Any, Dict, Optional
 from uuid import UUID
+
+import pytest
+
+import ansys.common.variableinterop as acvi
 
 __EMPTY_UUID = UUID(int = 0)
 """Convenience variable for an empty UUID."""

@@ -465,6 +465,20 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
 
 [[package]]
+name = "pytest-mock"
+version = "3.7.0"
+description = "Thin-wrapper around the mock package for easier use with pytest"
+category = "main"
+optional = true
+python-versions = ">=3.7"
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[package.extras]
+dev = ["pre-commit", "tox", "pytest-asyncio"]
+
+[[package]]
 name = "pytz"
 version = "2022.1"
 description = "World timezone definitions, modern and historical"
@@ -719,15 +733,15 @@ docs = ["sphinx", "jaraco.packaging (>=9)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
 
 [extras]
-dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pre-commit", "mypy"]
+dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
 docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["overrides", "pytest", "pytest-cov"]
+test = ["overrides", "pytest", "pytest-cov", "pytest-mock"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "7f77ef37f4919397ca0ec50e66d3a3fc6cb6195527ad9abcc441a222f9d419bb"
+content-hash = "64b977643dfd84c349153f05b86aa2ba15a861d1fed700fdd5f6a848080011cd"
 
 [metadata.files]
 alabaster = [
@@ -1012,6 +1026,10 @@ pytest = [
 pytest-cov = [
     {file = "pytest-cov-3.0.0.tar.gz", hash = "sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470"},
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},
+]
+pytest-mock = [
+    {file = "pytest-mock-3.7.0.tar.gz", hash = "sha256:5112bd92cc9f186ee96e1a92efc84969ea494939c3aead39c50f421c4cc69534"},
+    {file = "pytest_mock-3.7.0-py3-none-any.whl", hash = "sha256:6cff27cec936bf81dc5ee87f07132b807bcda51106b5ec4b90a04331cba76231"},
 ]
 pytz = [
     {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},

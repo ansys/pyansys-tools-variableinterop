@@ -1,5 +1,6 @@
 """
-Ansys Common VariableInterop
+Ansys Common VariableInterop.
+
 ----------------------------
 
 Optional variable and metadata specifications for interoperability between languages and
@@ -63,42 +64,33 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from .api_serialization import from_api_string
-from .api_serialization import to_api_string
-from .boolean_array_metadata import BooleanArrayMetadata
-from .boolean_array_value import BooleanArrayValue
-from .boolean_metadata import BooleanMetadata
-from .boolean_value import BooleanValue
-from .coercion import implicit_coerce, implicit_coerce_single
+from ansys.common.variableinterop.utils.coercion import implicit_coerce, implicit_coerce_single
+
+from .api_serialization import from_api_string, to_api_string
+from .array_metadata import (
+    BooleanArrayMetadata,
+    IntegerArrayMetadata,
+    RealArrayMetadata,
+    StringArrayMetadata,
+)
+from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
 from .file_metadata import FileMetadata
 from .file_scope import FileScope
 from .file_value import EMPTY_FILE, FileValue
-from .integer_array_metadata import IntegerArrayMetadata
-from .integer_array_value import IntegerArrayValue
-from .integer_value import IntegerValue
+from .from_formatted_string_visitor import FromFormattedStringVisitor
+from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .ivariable_visitor import IVariableValueVisitor
 from .ivariablemetadata_visitor import IVariableMetadataVisitor
 from .non_managing_file_scope import NonManagingFileScope
 from .numeric_metadata import NumericMetadata
-from .real_array_metadata import RealArrayMetadata
-from .real_array_value import RealArrayValue
-from .real_metadata import RealMetadata
-from .real_value import RealValue
-from .string_array_metadata import StringArrayMetadata
-from .string_array_value import StringArrayValue
-from .string_metadata import StringMetadata
-from .string_value import StringValue
-from .to_real_value_visitor import to_real_value
-from .to_bool_visitor import ToBoolVisitor
-from .to_boolean_array_visitor import ToBooleanArrayVisitor
-from .to_integer_visitor import to_integer_value
-from .to_real_array_visitor import ToRealArrayVisitor
+from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
+from .scalar_value_conversion import to_boolean_value, to_integer_value, to_real_value
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .utils import convert
+from .var_type_array_check import var_type_is_array
 from .variable_type import VariableType
 from .variable_value import IVariableValue
-from .vartype_arrays_and_elements import to_array_type
-from .vartype_arrays_and_elements import get_element_type
-
-# TODO: Get rid of star
+from .vartype_arrays_and_elements import get_element_type, to_array_type

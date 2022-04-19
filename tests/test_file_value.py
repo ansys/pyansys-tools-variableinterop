@@ -1,10 +1,11 @@
 import json
-
-import ansys.common.variableinterop as acvi
 from os import PathLike
-import pytest
 from typing import Any, Optional
 from uuid import UUID
+
+import pytest
+
+import ansys.common.variableinterop as acvi
 
 
 class __TestFileValue(acvi.FileValue):

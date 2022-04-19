@@ -1,11 +1,17 @@
 """Unit tests of IVariableVisitor, and accept methods of value types."""
 
-from typing import Any
+from typing import Any, Type
 
 import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
 
 import ansys.common.variableinterop as acvi
+from ansys.common.variableinterop.array_value_conversion import (
+    __ToBooleanArrayVisitor,
+    __ToIntegerArrayVisitor,
+    __ToRealArrayVisitor,
+    __ToStringArrayVisitor,
+)
 
 
 class TestVisitor(acvi.IVariableValueVisitor[str]):
@@ -98,12 +104,12 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
     ])
 def test_to_real_array_visitor(value: acvi.IVariableValue,
                                expected_result: acvi.RealArrayValue,
-                               expected_exception: BaseException):
+                               expected_exception: Type[BaseException]):
     """Verify that ToRealArrayVisitor gets the expected result, or that the expected exception is
     raised."""
 
     with _create_exception_context(expected_exception):
-        instance = acvi.ToRealArrayVisitor()
+        instance = __ToRealArrayVisitor()
         try:
             # SUT
             result: acvi.RealArrayValue = value.accept(instance)
@@ -169,11 +175,120 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.BooleanArrayValue,
-                                  expected_exception: BaseException):
+                                  expected_exception: Type[BaseException]):
     """
     Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
     raised.
     """
-    _test_to_value_visitor(value, expected_result, expected_exception, acvi.ToBooleanArrayVisitor,
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToBooleanArrayVisitor,
                            acvi.BooleanArrayValue)
+# endregion
+
+
+# region ToIntegerArrayVisitor
+@pytest.mark.parametrize(
+    "value,expected_result,expected_exception",
+    [
+        pytest.param(acvi.IntegerValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="IntegerValue"),
+        pytest.param(acvi.RealValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="RealValue"),
+
+        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
+        #       inherit np.bool_
+        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+
+        pytest.param(acvi.StringValue(""),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="StringValue"),
+        pytest.param(acvi.IntegerArrayValue(values=[-1, 0, 1]),
+                     acvi.IntegerArrayValue(values=[-1, 0, 1]),
+                     None,
+                     id="IntegerArrayValue"),
+        # TODO: expected results to be updated after merging utils.convert
+        # Reals should round away from zero, i.e. 0.1 rounds to 1 and -0.1 to -1
+        #   ^ this is not correct
+        pytest.param(acvi.RealArrayValue(values=[-0.9, -0.5, -0.1, 0.0, 0.1, 0.5, 0.9]),
+                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1]),
+                     None,
+                     id="RealArrayValue"),
+        pytest.param(acvi.BooleanArrayValue(values=[True, False]),
+                     acvi.IntegerArrayValue(values=[1, 0]),
+                     None,
+                     id="BooleanArrayValue"),
+        # Test rounding from string arrays as well
+        pytest.param(acvi.StringArrayValue(
+                        values=["-0.9", "-0.5", "-0.1", "0", "0.1", "0.5", "0.9", "50"]),
+                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1, 50]),
+                     None,
+                     id="StringArrayValue_valid"),
+        pytest.param(acvi.StringArrayValue(values=["1", "2", "this raises ValueError"]),
+                     None,
+                     ValueError,
+                     id="StringArrayValue_expect_ValueError")
+    ])
+def test_to_integer_array_visitor(value: acvi.IVariableValue,
+                                  expected_result: acvi.IntegerArrayValue,
+                                  expected_exception: Type[BaseException]):
+    """
+    Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
+    raised.
+    """
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToIntegerArrayVisitor,
+                           acvi.IntegerArrayValue)
+# endregion
+
+
+# region ToStringArrayVisitor
+@pytest.mark.parametrize(
+    "value,expected_result,expected_exception",
+    [
+        pytest.param(acvi.IntegerValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="IntegerValue"),
+        pytest.param(acvi.RealValue(0),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="RealValue"),
+
+        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
+        #       inherit np.bool_
+        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+
+        pytest.param(acvi.StringValue(""),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="StringValue"),
+        pytest.param(acvi.IntegerArrayValue(values=[-1, 0, 1]),
+                     acvi.StringArrayValue(values=["-1", "0", "1"]),
+                     None,
+                     id="IntegerArrayValue"),
+        pytest.param(acvi.RealArrayValue(values=[-1.5, 0.5, 1.5]),
+                     acvi.StringArrayValue(values=["-1.5", "0.5", "1.5"]),
+                     None,
+                     id="RealArrayValue"),
+        pytest.param(acvi.BooleanArrayValue(values=[True, False]),
+                     acvi.StringArrayValue(values=["True", "False"]),
+                     None,
+                     id="BooleanArrayValue"),
+        pytest.param(acvi.StringArrayValue(values=["1.0", "string cheese"]),
+                     acvi.StringArrayValue(values=["1.0", "string cheese"]),
+                     None,
+                     id="StringArrayValue")
+    ])
+def test_to_string_array_visitor(value: acvi.IVariableValue,
+                                 expected_result: acvi.StringArrayValue,
+                                 expected_exception: Type[BaseException]):
+    """
+    Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
+    raised.
+    """
+    _test_to_value_visitor(value, expected_result, expected_exception, __ToStringArrayVisitor,
+                           acvi.StringArrayValue)
 # endregion

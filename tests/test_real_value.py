@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import numpy
 import pytest
@@ -30,30 +30,34 @@ from ansys.common.variableinterop import (
         pytest.param(float('-inf'), numpy.float64('-inf'), None, id="neg-inf"),
         pytest.param(float('NaN'), numpy.float64('NaN'), None, id="NaN"),
 
-        # TODO: Should we override the numpy behavior here?
         pytest.param(None, numpy.float64('NaN'), None, id="None"),
-
-        # TODO: Should we support subnormal floats? Numpy allows it
-        # (with loss of precision, see below)
         pytest.param(2.2250738585072014e-309, numpy.float64(2.225073858507203e-309), None,
                      id="subnormal"),
-
-        # TODO: Should we support string representations of numbers over/under max/min?
-        # (Numpy converts to inf):
         pytest.param('1.7976931348623157e+308', numpy.float64(1.7976931348623157e+308), None,
-                     id="abs-max"),
+                     id="string abs-max"),
         pytest.param('-1.7976931348623157e+308', numpy.float64(-1.7976931348623157e+308), None,
-                     id="abs-min"),
-
-        # TODO: Should we support string representations at all?
-        # Should we pass-through to numpy, mimic fromAPIString, mimic fromFormattedString?
+                     id="string abs-min"),
+        pytest.param(StringValue('1.7976931348623157e+308'), numpy.float64(1.7976931348623157e+308),
+                     None, id="from StringValue abs-max"),
+        pytest.param(StringValue('-1.7976931348623157e+308'),
+                     numpy.float64(-1.7976931348623157e+308), None, id="from StringValue abs-min"),
         pytest.param('some garbage text', numpy.float64('NaN'), ValueError, id="garbage-text"),
+        pytest.param(StringValue('some garbage text'), numpy.float64('NaN'), ValueError,
+                     id="from StringValue garbage text"),
         pytest.param('0', numpy.float64(0), None, id="zero-text"),
         pytest.param('-1.0', numpy.float64(-1.0), None, id="negative-one-text"),
-        pytest.param('1.0', numpy.float64(1.0), None, id="one-text"),
-    ])
+        pytest.param(IntegerValue(0), RealValue(0.0), None, id='from IntegerValule zero'),
+        pytest.param(IntegerValue(8675309), RealValue(8675309.0), None, id='from IntegerValue'),
+        pytest.param(IntegerValue(-8675309), RealValue(-8675309.0), None,
+                     id='from IntegerValue negative'),
+        pytest.param(IntegerValue(9223372036854775807), RealValue(9.223372036854776e+18),
+                     None, id='from IntegerValue max 64 bit'),
+        pytest.param(IntegerValue(-9223372036854775808), RealValue(-9.223372036854776e+18),
+                     None, id='from IntegerValue min 64 bit'),
+    ]
+)
 def test_construct(
-        arg: Any, expect_equality: numpy.float64, expect_exception: BaseException) -> None:
+        arg: Any, expect_equality: numpy.float64, expect_exception: Type[BaseException]) -> None:
     """Verify that __init__ for RealValue correctly instantiates the superclass data."""
     with _create_exception_context(expect_exception):
         instance = RealValue(arg)
@@ -124,7 +128,7 @@ def test_intvalue_conversion_valid(
     ],
 )
 def test_intvalue_conversion_invalid(
-        orig_real: RealValue, expected_exception: BaseException):
+        orig_real: RealValue, expected_exception: Type[BaseException]):
     with _create_exception_context(expected_exception):
         result: IntegerValue = orig_real.to_int_value()
 
@@ -236,7 +240,7 @@ def test_from_api_string_valid(
     ],
 )
 def test_from_api_string_invalid(
-        source: str, expected_exception: BaseException) -> None:
+        source: str, expected_exception: Type[BaseException]) -> None:
     """
     Verify that invalid cases correctly raise on from_api_string.
 
@@ -363,7 +367,7 @@ def test_to_real_value_valid(
     ],
 )
 def test_to_real_value_invalid(
-        source: IVariableValue, expected_exception: BaseException) -> None:
+        source: IVariableValue, expected_exception: Type[BaseException]) -> None:
     """
     Verify that the runtime_convert method works on invalid cases.
 

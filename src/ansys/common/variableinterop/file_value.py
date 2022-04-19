@@ -1,14 +1,16 @@
 from __future__ import annotations
 
-import json
 from abc import ABC, abstractmethod
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
-import ansys.common.variableinterop.variable_type as variable_type
+import json
 from os import PathLike
-from overrides import overrides
 from typing import Any, Callable, Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
+
+from overrides import overrides
+
+import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
+import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar('T')
 
@@ -30,12 +32,20 @@ class FileValue(variable_value.IVariableValue, ABC):
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
-        # inheritdoc (What is the correct way to do this?)
         return visitor.visit_file(self)
 
-    @property
+    @property # type: ignore
+    @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.FILE
+
+    @overrides
+    def to_api_string(self) -> str:
+        raise NotImplementedError
+
+    @overrides
+    def to_display_string(self, locale_name: str) -> str:
+        raise NotImplementedError
 
     BINARY_MIMETYPE: Final[str] = "application/octet-stream"
 
@@ -100,10 +110,6 @@ class FileValue(variable_value.IVariableValue, ABC):
     @abstractmethod
     def get_contents(self, encoding: Optional[Any]) -> str:
         raise NotImplementedError()
-
-    @overrides
-    def get_modelcenter_type(self) -> str:
-        raise NotImplementedError
 
     @abstractmethod
     def _has_content(self) -> bool:

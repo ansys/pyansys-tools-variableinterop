@@ -1,9 +1,10 @@
 """Defines functions for determining the correct array type for a scalar type and vice-versa."""
 
+from typing import Optional
+
+import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudovisitor
 import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.exceptions as exceptions
-from typing import Optional
 
 
 class __ScalarToArrayPseudoVisitor(
