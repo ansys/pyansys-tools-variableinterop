@@ -317,8 +317,19 @@ def test_boolean_binary_operators_same_types(
             None,
             acvi.IncompatibleTypesException,
             id="non-empty-string-says-false"),
+
+        pytest.param(acvi.IntegerValue(0), False, None, id="from IntegerValue zero"),
+        pytest.param(acvi.IntegerValue(-1), True, None, id="from IntegerValue -1"),
+        pytest.param(acvi.IntegerValue(1), True, None, id="from IntegerValue 1"),
+        pytest.param(acvi.RealValue(0.0), False, None, id="from RealValue zero"),
+        pytest.param(acvi.RealValue(-1.0), True, None, id="from RealValue -1"),
+        pytest.param(acvi.RealValue(1.0), True, None, id="from RealValue 1"),
+        pytest.param(acvi.StringValue('false'), False, None, id="from StringValue 'false'"),
+        pytest.param(acvi.StringValue('Y'), True, None, id="from StringValue 'y'"),
+        pytest.param(acvi.BooleanValue(False), False, None, id="from BooleanValue False"),
+        pytest.param(acvi.BooleanValue(True), True, None, id="from BooleanValue True"),
     ])
-def test_construct(arg: Any, expect_equality: bool, expect_exception: BaseException) -> None:
+def test_construct(arg: Any, expect_equality: bool, expect_exception: Type[BaseException]) -> None:
     """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
     with _create_exception_context(expect_exception):
         instance: acvi.BooleanValue = acvi.BooleanValue(arg)
@@ -380,7 +391,7 @@ def test_from_api_string_valid(arg: str, expected_result: acvi.BooleanValue) -> 
         pytest.param(None, TypeError, id='None')
     ]
 )
-def test_from_api_string_invalid(arg: str, expected_exception: BaseException) -> None:
+def test_from_api_string_invalid(arg: str, expected_exception: Type[BaseException]) -> None:
     with _create_exception_context(expected_exception):
         _: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
 

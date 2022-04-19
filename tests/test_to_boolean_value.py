@@ -4,6 +4,7 @@ import sys
 import numpy
 import pytest
 from test_utils import _create_exception_context
+from typing import Type
 
 from ansys.common.variableinterop import (
     BooleanValue,
@@ -11,7 +12,7 @@ from ansys.common.variableinterop import (
     IVariableValue,
     RealValue,
     StringValue,
-    ToBoolVisitor,
+    to_boolean_value,
 )
 
 
@@ -106,21 +107,20 @@ from ansys.common.variableinterop import (
         #  TODO: StringArray
     ]
 )
-def test_to_boolean_visitor(
+def test_to_boolean_value(
         source: IVariableValue,
         expect: bool,
-        expect_exception: BaseException
+        expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests ToBoolVisitor handling of various input IVariableValues
+    Tests to_boolean_values's handling of various input IVariableValues
     :param source: Source value to test visitor against
     :param expect: Expected return value from visitor, None if
         expected to throw.
     :param expect_exception: Expected exception to be thrown from
             visitor, None if expected to return a value.
     """
-    sut = ToBoolVisitor()
     with _create_exception_context(expect_exception):
-        result: IVariableValue = source.accept(sut)
+        result: IVariableValue = to_boolean_value(source)
         assert type(result) == type(expect)
         assert result == expect

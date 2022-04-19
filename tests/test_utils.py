@@ -17,7 +17,7 @@ def _dummy_context():
     yield None
 
 
-def _create_exception_context(expect_exception: BaseException):
+def _create_exception_context(expect_exception: Type[BaseException]):
     """
     Creates an object to use in a with block that will test for expect_exception
     to be thrown, or does nothing if expect_exception is None
@@ -38,7 +38,7 @@ def _create_exception_context(expect_exception: BaseException):
 
 def _test_to_value_visitor(value: acvi.IVariableValue,
                            expected_result: acvi.IVariableValue,
-                           expected_exception_type: BaseException,
+                           expected_exception_type: Type[BaseException],
                            visitor_type: Type[acvi.IVariableValueVisitor],
                            result_type: Type[acvi.IVariableValue] = None) -> None:
     """
@@ -50,7 +50,7 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         The value to be converted.
     expected_result : acvi.IVariableValue
         The expected result of calling 'accept()' (can be None).
-    expected_exception_type : BaseException.
+    expected_exception_type : Type[BaseException].
         The type of exception that is expected (can be None).
     visitor_type : Type[acvi.IVariableValueVisitor]
         The type of visitor to use.

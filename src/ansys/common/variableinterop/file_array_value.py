@@ -1,3 +1,4 @@
+"""Definition of FileArrayValue."""
 from __future__ import annotations
 
 from typing import TypeVar
@@ -47,5 +48,5 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
         raise NotImplementedError
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         raise NotImplementedError

@@ -3,6 +3,7 @@ Unit tests for utils.convert
 """
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
+from typing import Type
 
 import ansys.common.variableinterop as acvi
 import ansys.common.variableinterop.utils.convert as convert
@@ -92,7 +93,7 @@ def test_to_string_value(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_real_value_raises(source: acvi.IVariableValue,
-                              expected_exception: BaseException):
+                              expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_real_value() when it is expected to raise an exception
 
@@ -118,7 +119,7 @@ def test_to_real_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_integer_value_raises(source: acvi.IVariableValue,
-                                 expected_exception: BaseException):
+                                 expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_integer_value() when it is expected to raise an exception
 
@@ -144,7 +145,7 @@ def test_to_integer_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_boolean_value_raises(source: acvi.IVariableValue,
-                                 expected_exception: BaseException):
+                                 expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_boolean_value() when it is expected to raise an exception
 
@@ -170,7 +171,7 @@ def test_to_boolean_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_string_value_raises(source: acvi.IVariableValue,
-                                expected_exception: BaseException):
+                                expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_string_value() when it is expected to raise an exception
 
@@ -284,7 +285,7 @@ def test_to_string_array_value(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_real_array_value_raises(source: acvi.IVariableValue,
-                                    expected_exception: BaseException):
+                                    expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_real_array_value() when it is expected to raise an exception
 
@@ -310,7 +311,7 @@ def test_to_real_array_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_integer_array_value_raises(source: acvi.IVariableValue,
-                                       expected_exception: BaseException):
+                                       expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_integer_array_value() when it is expected to raise an exception
 
@@ -336,7 +337,7 @@ def test_to_integer_array_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_boolean_array_value_raises(source: acvi.IVariableValue,
-                                       expected_exception: BaseException):
+                                       expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_boolean_array_value() when it is expected to raise an exception
 
@@ -362,7 +363,7 @@ def test_to_boolean_array_value_raises(source: acvi.IVariableValue,
 
 @pytest.mark.skip(reason="Not implemented")
 def test_to_string_array_value_raises(source: acvi.IVariableValue,
-                                      expected_exception: BaseException):
+                                      expected_exception: Type[BaseException]):
     """
     Test behavior of convert.to_string_array_value() when it is expected to raise an exception
 

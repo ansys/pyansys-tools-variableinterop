@@ -7,15 +7,17 @@ the string into the visited type. See the pseudovisitor interface
 definition for more information as to why this pattern is beneficial
 compared to bare switch statements.
 """
-import ansys.common.variableinterop.boolean_value as boolean
-import ansys.common.variableinterop.boolean_array_value as boolean_array
-import ansys.common.variableinterop.integer_value as integer
-import ansys.common.variableinterop.integer_array_value as integer_array
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
-import ansys.common.variableinterop.real_value as real
-import ansys.common.variableinterop.real_array_value as real_array
-import ansys.common.variableinterop.string_value as string
-import ansys.common.variableinterop.string_array_value as string_array
+from ansys.common.variableinterop.scalar_values import (
+    BooleanValue,
+    BooleanArrayValue,
+    IntegerValue,
+    IntegerArrayValue,
+    RealValue,
+    RealArrayValue,
+    StringValue,
+    StringArrayValue,
+)
 import ansys.common.variableinterop.variable_value as var_value
 
 
@@ -54,7 +56,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         """
         raise NotImplementedError("Cannot create values with unknown type.")
 
-    def visit_int(self) -> integer.IntegerValue:
+    def visit_int(self) -> IntegerValue:
         """
         Produce an IntegerValue from the API string format.
 
@@ -62,9 +64,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         An IntegerValue with a value determined by the specified string.
         """
-        return integer.IntegerValue.from_api_string(self._source)
+        return IntegerValue.from_api_string(self._source)
 
-    def visit_real(self) -> real.RealValue:
+    def visit_real(self) -> RealValue:
         """
         Produce a RealValue from the API string format.
 
@@ -72,9 +74,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A RealValue with a value determined by the specified string.
         """
-        return real.RealValue.from_api_string(self._source)
+        return RealValue.from_api_string(self._source)
 
-    def visit_boolean(self) -> boolean.BooleanValue:
+    def visit_boolean(self) -> BooleanValue:
         """
         Produce a BooleanValue from the API string format.
 
@@ -82,9 +84,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A BooleanValue with a value determined by the specified string.
         """
-        return boolean.BooleanValue.from_api_string(self._source)
+        return BooleanValue.from_api_string(self._source)
 
-    def visit_string(self) -> string.StringValue:
+    def visit_string(self) -> StringValue:
         """
         Produce a StringValue from the API string format.
 
@@ -92,7 +94,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A StringValue with a value determined by the specified string.
         """
-        return string.StringValue.from_api_string(self._source)
+        return StringValue.from_api_string(self._source)
 
     def visit_file(self) -> var_value.IVariableValue:
         """
@@ -115,7 +117,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         An IntegerArrayValue with a value determined by the specified string.
         """
-        return integer_array.IntegerArrayValue.from_api_string(self._source)
+        return IntegerArrayValue.from_api_string(self._source)
 
     def visit_real_array(self) -> real_array.RealArrayValue:
         """
@@ -125,7 +127,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A RealArrayValue with a value determined by the specified string.
         """
-        return real_array.RealArrayValue.from_api_string(self._source)
+        return RealArrayValue.from_api_string(self._source)
 
     def visit_bool_array(self) -> boolean_array.BooleanArrayValue:
         """
@@ -135,7 +137,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A BooleanArrayValue with a value determined by the specified string.
         """
-        return boolean_array.BooleanArrayValue.from_api_string(self._source)
+        return BooleanArrayValue.from_api_string(self._source)
 
     def visit_string_array(self) -> string_array.StringArrayValue:
         """
@@ -145,7 +147,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A StringArrayValue with a value determined by the specified string.
         """
-        return string_array.StringArrayValue.from_api_string(self._source)
+        return StringArrayValue.from_api_string(self._source)
 
     def visit_file_array(self) -> var_value.IVariableValue:
         """
