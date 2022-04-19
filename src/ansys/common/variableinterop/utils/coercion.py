@@ -26,14 +26,12 @@ TYPE_MAPPINGS = {
 _ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     scalar_values.IntegerValue: [int, np.integer, bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.RealValue: [float, np.inexact, bool, np.bool_, scalar_values.BooleanValue],
-    scalar_values.BooleanValue: [bool, np.bool_,
-                   float, np.inexact, scalar_values.RealValue,
-                   int, np.integer, scalar_values.IntegerValue],
+    scalar_values.BooleanValue: [bool, np.bool_],
     scalar_values.StringValue: [int, np.integer, scalar_values.IntegerValue,
-                  bool, np.bool_, scalar_values.BooleanValue,
-                  float, np.inexact, scalar_values.RealValue,
-                  str, np.str_, scalar_values.StringValue],
-}
+                                bool, np.bool_, scalar_values.BooleanValue,
+                                float, np.inexact, scalar_values.RealValue,
+                                str, np.str_, scalar_values.StringValue],
+    }
 
 
 def _is_optional(arg_type: type) -> bool:
