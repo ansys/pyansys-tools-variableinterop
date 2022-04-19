@@ -99,7 +99,7 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
         if length <= 16:
             indices = range(length)
         else:
-            num_samples = min(16, length)
+            num_samples = 16
             rand_generator = random.Random(42)
             indices = set()
             while len(indices) < num_samples:
