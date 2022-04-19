@@ -76,6 +76,7 @@ from .array_metadata import (
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import IncompatibleTypesException
+from .file_array_metadata import FileArrayMetadata
 from .file_metadata import FileMetadata
 from .file_scope import FileScope
 from .file_value import EMPTY_FILE, FileValue

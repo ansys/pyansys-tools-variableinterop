@@ -54,8 +54,6 @@ class FileValue(variable_value.IVariableValue, ABC):
     ORIGINAL_FILENAME_KEY: Final[str] = "originalFilename"
     """JSON key for API serialization representing the original file name."""
 
-    ORIGINAL_FILENAME_KEY: Final[str] = "originalFilename"
-
     MIMETYPE_KEY: Final[str] = "mimeType"
 
     ENCODING_KEY: Final[str] = "encoding"
@@ -166,7 +164,7 @@ class EmptyFileValue(FileValue):
     def _has_content(self) -> bool:
         return False
 
-    @property
+    @property  # type: ignore
     @overrides
     def actual_content_file_name(self) -> Optional[PathLike]:
         return None
