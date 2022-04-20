@@ -5,7 +5,7 @@ from __future__ import annotations
 import functools
 import inspect
 import typing
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 
@@ -61,6 +61,13 @@ The type declared in the method definition is the key in the dictionary,
 and the values are the allowable runtime types that may be converted implicitly to that type.
 """
 
+__ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
+    array_values.IntegerArrayValue: [np.integer, np.bool_],
+    array_values.RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
+    array_values.BooleanArrayValue: [np.bool_],
+    array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_]
+}
+
 
 def _is_optional(arg_type: type) -> bool:
     """
@@ -99,7 +106,9 @@ def _get_optional_type(arg_type: type) -> type:
     return arg_type.__args__[0]  # type: ignore
 
 
-def _specific_implicit_coerce_allowed(target_arg_type: type, actual_arg_type: type) -> bool:
+def _specific_implicit_coerce_allowed(target_arg_type: type,
+                                      actual_arg_type: type,
+                                      ruleset: Dict[type, List[type]]) -> bool:
     """
     Check whether implicit coercion from a given type to a given type is allowed or not.
 
@@ -116,9 +125,9 @@ def _specific_implicit_coerce_allowed(target_arg_type: type, actual_arg_type: ty
     if issubclass(actual_arg_type, target_arg_type):
         return True
 
-    if target_arg_type in __ALLOWED_SPECIFIC_IMPLICIT_COERCE:
+    if target_arg_type in ruleset:
         return any(issubclass(actual_arg_type, allowed_coerce_type)
-                   for allowed_coerce_type in __ALLOWED_SPECIFIC_IMPLICIT_COERCE[target_arg_type])
+                   for allowed_coerce_type in ruleset[target_arg_type])
     else:
         return False
 
@@ -147,6 +156,21 @@ def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> variable_va
             return __ARR_TYPE_MAPPINGS[cls](values=arg)
     raise TypeError(f"Type {type(arg)} cannot be converted to {variable_value.IVariableValue}")
 
+
+def __implicit_coerce_single_array_specific(arg: Any, target_type: type):
+    maybe_arr_type: Optional[type] = __numpy_array_dtype(arg)
+    if maybe_arr_type is not None:
+        if _specific_implicit_coerce_allowed(target_type, maybe_arr_type,
+                                             __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR):
+            return target_type(values=arg)
+    raise TypeError(f"Type {type(arg)} cannot be converted to {target_type}")
+
+
+def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
+    if _specific_implicit_coerce_allowed(target_type, type(arg),
+                                         __ALLOWED_SPECIFIC_IMPLICIT_COERCE):
+        return target_type(arg)
+    raise TypeError(f"Type {type(arg)} cannot be converted to {target_type}")
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     """
@@ -179,9 +203,8 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # No type coercion necessary. Pass through the original argument.
         return arg
 
-    maybe_np_array_type: Optional[type] = __numpy_array_dtype(arg)
-
     if arg_type == variable_value.IVariableValue:
+        maybe_np_array_type: Optional[type] = __numpy_array_dtype(arg)
         if maybe_np_array_type is None:
             return __implicit_coerce_single_scalar_free(arg)
         else:
@@ -193,10 +216,10 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         if arg is None:
             raise TypeError(f"Type {type(arg)} cannot be converted to {arg_type}")
         # Check if the proposed conversion is even allowed:
-        if _specific_implicit_coerce_allowed(arg_type, type(arg)):
-            return arg_type(arg)
+        if issubclass(arg_type, variable_value.CommonArrayValue):
+            return __implicit_coerce_single_array_specific(arg, arg_type)
         else:
-            raise TypeError(f"Type {type(arg)} cannot be implicitly converted to {arg_type}.")
+            return __implicit_coerce_single_scalar_specific(arg, arg_type)
 
     # TODO: More types and other error conditions
 

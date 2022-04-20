@@ -153,9 +153,41 @@ def accept_real_value(value: RealValue) -> RealValue:
 
 
 @implicit_coerce
+def accept_real_array_value(value: RealArrayValue) -> RealArrayValue:
+    """
+    Test function that accepts a RealValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
 def accept_integer_value(value: IntegerValue) -> IntegerValue:
     """
     Test function that accepts an IntegerValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
+def accept_integer_array_value(value: IntegerArrayValue) -> IntegerArrayValue:
+    """
+    Test function that accepts an IntegerArrayValue
 
     Parameters
     ----------
@@ -185,9 +217,41 @@ def accept_boolean_value(value: BooleanValue) -> BooleanValue:
 
 
 @implicit_coerce
+def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
+    """
+    Test function that accepts a BooleanArrayValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
 def accept_string_value(value: StringValue) -> StringValue:
     """
     Test function that accepts a StringValue
+
+    Parameters
+    ----------
+    value - The input value
+
+    Returns
+    -------
+    The value passed to it
+    """
+    return value
+
+
+@implicit_coerce
+def accept_string_array_value(value: StringArrayValue) -> StringArrayValue:
+    """
+    Test function that accepts a StringArrayValue
 
     Parameters
     ----------
@@ -226,7 +290,15 @@ def accept_string_value(value: StringValue) -> StringValue:
                      id="StringValue containing float representation fails"),
         pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
         pytest.param(numpy.float64(-867.5309), RealValue(-867.5309), None, id="numpy.float64"),
-        pytest.param(None, None, TypeError, id="NoneType fails.")
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(RealArrayValue(values=[1.0]),
+                     None, TypeError, id="RealArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True]),
+                     None, TypeError, id="BooleanArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
     ],
 )
 def test_coerce_real_value(
@@ -247,6 +319,62 @@ def test_coerce_real_value(
     """
     with _create_exception_context(expect_exception):
         result = accept_real_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        pytest.param(numpy.array([-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                  1.7976931348623157e+308], dtype=numpy.float64),
+                     RealArrayValue(values=[-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                            1.7976931348623157e+308]),
+                     None, id="np.ndarray[float64]"),
+        pytest.param(RealArrayValue(values=[-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                    1.7976931348623157e+308]),
+                     RealArrayValue(values=[-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                    1.7976931348623157e+308]),
+                     None, id="RealArrayValue loopback"),
+        pytest.param(numpy.array([True, False, True], dtype=numpy.bool_),
+                     RealArrayValue(values=[1.0, 0.0, 1.0]),
+                     None, id="np.ndarray[bool_]"),
+        pytest.param(BooleanArrayValue(values=[True, False, True]),
+                     RealArrayValue(values=[1.0, 0.0, 1.0]),
+                     None, id="BooleanArrayValue"),
+        pytest.param(numpy.array([1.0], dtype=numpy.longdouble),
+                     None, TypeError, id="np.ndarray[longdouble]"),
+        pytest.param(numpy.array(["mixed", True, 4.57, None], dtype=object),
+                     None, TypeError,
+                     id="numpy.ndarray[object]"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(1, None, TypeError, id="Scalar int fails"),
+        pytest.param(True, None, TypeError, id="Scalar bool fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
+    ],
+)
+def test_coerce_real_array_value(
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept RealValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_real_array_value(source)
         assert type(expect) == type(result)
         assert expect == result
 
@@ -275,7 +403,15 @@ def test_coerce_real_value(
         pytest.param(numpy.str_("1"), None, TypeError,
                      id="numpy.str_ fails even if it contains an int"),
         pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
-        pytest.param(None, None, TypeError, id="NoneType fails.")
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(RealArrayValue(values=[1.0]),
+                     None, TypeError, id="RealArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True]),
+                     None, TypeError, id="BooleanArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
     ],
 )
 def test_coerce_integer_value(
@@ -303,6 +439,60 @@ def test_coerce_integer_value(
 @pytest.mark.parametrize(
     "source,expect,expect_exception",
     [
+        pytest.param(numpy.array([9223372036854775807, 0, -9223372036854775808], dtype=numpy.int64),
+                     IntegerArrayValue(values=[9223372036854775807, 0, -9223372036854775808]),
+                     None, id="np.ndarray[int64]"),
+        pytest.param(numpy.array([True, False, True], dtype=numpy.bool_),
+                     IntegerArrayValue(values=[1, 0, 1]),
+                     None, id="np.ndarray[bool_]"),
+        pytest.param(IntegerArrayValue(values=[9223372036854775807, 0, -9223372036854775808]),
+                     IntegerArrayValue(values=[9223372036854775807, 0, -9223372036854775808]),
+                     None, id="IntegerArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True, False, True]),
+                     IntegerArrayValue(values=[1, 0, 1]),
+                     None, id="BooleanArrayValue"),
+        pytest.param(numpy.array([1.0, 2.7], dtype=numpy.float64),
+                     None, TypeError, id="float64 array fails"),
+        pytest.param(numpy.array(["1", "2"], dtype=numpy.str_),
+                     None, TypeError, id="str array fails"),
+        pytest.param(numpy.array(["mixed", True, 4.57, None], dtype=object),
+                     None, TypeError,
+                     id="numpy.ndarray[object]"),
+        pytest.param(0, None, TypeError, id="scalar int fails"),
+        pytest.param(numpy.int64(0), None, TypeError, id="scalar np.int64 fails"),
+        pytest.param(IntegerValue(0), None, TypeError, id="scalar IntegerValue fails"),
+        pytest.param(True, None, TypeError, id="scalar bool fails"),
+        pytest.param(numpy.bool_(True), None, TypeError, id="scalar np.bool_ fails"),
+        pytest.param(BooleanValue(True), None, TypeError, id="scalar BooleanValue fails"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails.")
+    ],
+)
+def test_coerce_integer_array_value(
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept IntegerArrayValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_integer_array_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
         pytest.param(9999, StringValue("9999"), None, id="builtins.int"),
         pytest.param(numpy.int64(8675309), StringValue("8675309"), None, id="numpy.int64"),
         pytest.param(IntegerValue(-4747), StringValue("-4747"), None, id="IntegerValue"),
@@ -322,7 +512,15 @@ def test_coerce_integer_value(
                      id="numpy.str_"),
         pytest.param(StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"), StringValue("(ノ-_-)ノ ミᴉᴉɔsɐ-uou"),
                      None, id="StringValue"),
-        pytest.param(None, None, TypeError, id="NoneType fails.")
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(RealArrayValue(values=[1.0]),
+                     None, TypeError, id="RealArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True]),
+                     None, TypeError, id="BooleanArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
     ],
 )
 def test_coerce_string_value(
@@ -350,6 +548,68 @@ def test_coerce_string_value(
 @pytest.mark.parametrize(
     "source,expect,expect_exception",
     [
+        pytest.param(numpy.array([9223372036854775807, 0, -9223372036854775808], dtype=numpy.int64),
+                     StringArrayValue(values=['9223372036854775807', '0', '-9223372036854775808']),
+                     None, id="np.ndarray[int64]"),
+        pytest.param(numpy.array([True, False, True], dtype=numpy.bool_),
+                     StringArrayValue(values=['True', 'False', 'True']),
+                     None, id="np.ndarray[bool_]"),
+        pytest.param(IntegerArrayValue(values=['9223372036854775807', '0', '-9223372036854775808']),
+                     StringArrayValue(values=['9223372036854775807', '0', '-9223372036854775808']),
+                     None, id="IntegerArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True, False, True]),
+                     StringArrayValue(values=['True', 'False', 'True']),
+                     None, id="BooleanArrayValue"),
+        pytest.param(numpy.array([-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                  1.7976931348623157e+308], dtype=numpy.float64),
+                     StringArrayValue(values=['-1.7976931348623157e+308',
+                                              '0.0', '2.2250738585072014e-308',
+                                              '1.7976931348623157e+308']),
+                     None, id="np.ndarray[float64]"),
+        pytest.param(RealArrayValue(values=[-1.7976931348623157e+308, 0.0, 2.2250738585072014e-308,
+                                            1.7976931348623157e+308]),
+                     StringArrayValue(values=['-1.7976931348623157e+308',
+                                              '0.0', '2.2250738585072014e-308',
+                                              '1.7976931348623157e+308']),
+                     None, id="RealArrayValue"),
+        pytest.param(numpy.array(['strings', 'are', 'fun'], dtype=numpy.str_),
+                     StringArrayValue(values=['strings', 'are', 'fun']),
+                     None, id="np.ndarray[str_]"),
+        pytest.param(StringArrayValue(values=['strings', 'are', 'fun']),
+                     StringArrayValue(values=['strings', 'are', 'fun']),
+                     None, id="StringArrayValue"),
+        pytest.param(numpy.array(["mixed", True, 4.57, None], dtype=object),
+                     None, TypeError,
+                     id="numpy.ndarray[object]"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+    ],
+)
+def test_coerce_string_array_value(
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept StringValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_string_array_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
         pytest.param(numpy.int64(0),
                      None, TypeError, id="np.int64 zero"),
         pytest.param(0, None, TypeError, id="builtins.int zero"),
@@ -370,7 +630,15 @@ def test_coerce_string_value(
         pytest.param(StringValue("true"), None, TypeError,
                      id="StringValue fails even if it contains 'true'"),
         pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
-        pytest.param(None, None, TypeError, id="NoneType fails.")
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(RealArrayValue(values=[1.0]),
+                     None, TypeError, id="RealArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True]),
+                     None, TypeError, id="BooleanArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
     ],
 )
 def test_coerce_boolean_value(
@@ -391,6 +659,50 @@ def test_coerce_boolean_value(
     """
     with _create_exception_context(expect_exception):
         result = accept_boolean_value(source)
+        assert type(expect) == type(result)
+        assert expect == result
+
+
+@pytest.mark.parametrize(
+    "source,expect,expect_exception",
+    [
+        pytest.param(numpy.array([True, False, True, False], dtype=numpy.bool_),
+                     BooleanArrayValue(values=[True, False, True, False]),
+                     None, id="numpy.ndarray[bool]"),
+        pytest.param(BooleanArrayValue(values=[True, False, True, False]),
+                     BooleanArrayValue(values=[True, False, True, False]),
+                     None, id="BooleanArrayValue loopback"),
+        pytest.param(numpy.array(["mixed", True, 4.57, None], dtype=object),
+                     None, TypeError,
+                     id="numpy.ndarray[object]"),
+        pytest.param(NotConvertible(), None, TypeError, id="random other type fails"),
+        pytest.param(None, None, TypeError, id="NoneType fails."),
+        pytest.param(IntegerArrayValue(values=[1]),
+                     None, TypeError, id="IntegerArrayValue"),
+        pytest.param(RealArrayValue(values=[1.0]),
+                     None, TypeError, id="RealArrayValue"),
+        pytest.param(StringArrayValue(values=["1"]),
+                     None, TypeError, id="StringArrayValue"),
+    ],
+)
+def test_coerce_boolean_array_value(
+        source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
+) -> None:
+    """
+    Tests implicit_coerce decorator when calling a function declared to accept BooleanValue
+
+    Parameters
+    ----------
+    source The source to pass to the decorated function
+    expect The expected result
+    expect_exception The exception to expect, or None
+
+    Returns
+    -------
+    nothing
+    """
+    with _create_exception_context(expect_exception):
+        result = accept_boolean_array_value(source)
         assert type(expect) == type(result)
         assert expect == result
 
