@@ -829,3 +829,64 @@ def test_no_coerce_no_copy(arg: IVariableValue) -> None:
 
     # Verify
     assert result is arg, "No copy should have been made"
+
+
+def test_coerce_failure_message_scalar_free() -> None:
+    sut = Impl()
+
+    try:
+        result = sut.variable_argument(NotConvertible())
+        assert False, "Should have failed by now"
+    except TypeError as thrown:
+        print(thrown)
+        assert str(thrown) == f"Implicit coercion from {NotConvertible} to "\
+                              f"{IVariableValue} is not allowed. "\
+                              "An explicit conversion may exist."
+
+
+def test_coerce_failure_message_array_free() -> None:
+    sut = Impl()
+
+    try:
+        result = sut.variable_argument(numpy.array([], dtype=object))
+        assert False, "Should have failed by now"
+    except TypeError as thrown:
+        print(thrown)
+        assert str(thrown) == f"Implicit coercion from {numpy.ndarray} " \
+                              f"with dtype {numpy.object_} to " \
+                              f"{IVariableValue} is not allowed. " \
+                              "An explicit conversion may exist."
+
+
+def test_coerce_failure_message_scalar_specific() -> None:
+    try:
+        result = accept_real_value("string")
+        assert False, "Should have failed by now"
+    except TypeError as thrown:
+        print(thrown)
+        assert str(thrown) == f"Implicit coercion from {str} to " \
+                              f"{RealValue} is not allowed. " \
+                              "An explicit conversion may exist."
+
+
+def test_coerce_failure_message_array_specific() -> None:
+    try:
+        result = accept_real_array_value("string")
+        assert False, "Should have failed by now"
+    except TypeError as thrown:
+        print(thrown)
+        assert str(thrown) == f"Implicit coercion from {str} to " \
+                              f"{RealArrayValue} is not allowed. " \
+                              "An explicit conversion may exist."
+
+
+def test_coerce_failure_message_array_free_source_array() -> None:
+    try:
+        result = accept_real_array_value(numpy.array([], dtype=object))
+        assert False, "Should have failed by now"
+    except TypeError as thrown:
+        print(thrown)
+        assert str(thrown) == f"Implicit coercion from {numpy.ndarray} " \
+                              f"with dtype {numpy.object_} to " \
+                              f"{RealArrayValue} is not allowed. " \
+                              "An explicit conversion may exist."
