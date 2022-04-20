@@ -16,7 +16,7 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
-from ansys.common.variableinterop.string_escaping import escape_string, unescape_string
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
 import ansys.common.variableinterop.variable_type as variable_type

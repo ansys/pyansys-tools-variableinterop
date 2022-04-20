@@ -65,6 +65,7 @@ except ModuleNotFoundError:
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 from ansys.common.variableinterop.utils.coercion import implicit_coerce, implicit_coerce_single
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 
 from .array_metadata import (
     BooleanArrayMetadata,
@@ -84,7 +85,6 @@ from .numeric_metadata import NumericMetadata
 from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 from .scalar_value_conversion import to_boolean_value, to_integer_value, to_real_value
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
-from .string_escaping import escape_string, unescape_string
 from .utils import convert
 from .value_from_api_string import from_api_string
 from .var_type_array_check import var_type_is_array
