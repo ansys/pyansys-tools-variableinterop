@@ -22,8 +22,9 @@ from ansys.common.variableinterop import StringArrayValue
             id='Three dims'),
         pytest.param(StringArrayValue(values=[
             'doublequote>"<', 'backslash>\\<',
-            'whitespace>\r\n\t<', 'null>\0<'
-            ]), r'"doublequote>\"<","backslash>\\<","whitespace>\r\n\t<","null>\0<"',
+            'whitespace>\r\n\t<', 'null>\0<', 'contains, commas'
+            ]),
+            r'"doublequote>\"<","backslash>\\<","whitespace>\r\n\t<","null>\0<","contains, commas"',
             id='escapes')
     ]
 )
@@ -63,12 +64,13 @@ def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
                          [["き", "く", "け"], ["こ", "が", "ぎ"]]]),
                      id='Three dims'),
         pytest.param(r'"doublequote>\"<","backslash>\\<","whitespace>\r\n\t<","null>\0<"'
-                     r'unr\e\cogniz\ed',
+                     r',"unr\e\cogniz\ed","contains, commas"',
                      StringArrayValue(values=['doublequote>"<',
                                               'backslash>\\<',
                                               'whitespace>\r\n\t<',
                                               'null>\0<',
-                                              'unrecognized']),
+                                              'unrecognized',
+                                              'contains, commas']),
                      id='escapes')
     ]
 )
