@@ -462,7 +462,6 @@ def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
     assert result == expected_result
 
 
-@pytest.mark.skip("Enable when bool type fixed")
 def test_clone() -> None:
     """Verifies that clone returns a new BooleanValue with the same value."""
     # Setup
@@ -473,4 +472,4 @@ def test_clone() -> None:
 
     # Verification
     assert result is not sut
-    assert result is True
+    assert np.equal(result, True)
