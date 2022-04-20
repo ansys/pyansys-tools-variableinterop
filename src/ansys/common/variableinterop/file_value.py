@@ -23,11 +23,11 @@ class FileValue(variable_value.IVariableValue, ABC):
     def __init__(self,
                  original_path: Optional[PathLike],
                  mime_type: Optional[str],
-                 encoding: Optional[Any],
+                 encoding: Optional[str],
                  value_id: Optional[UUID]):
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
-        self._file_encoding: Any = encoding
+        self._file_encoding: str = encoding
         self._original_path: Optional[PathLike] = original_path
 
     @overrides
@@ -81,7 +81,7 @@ class FileValue(variable_value.IVariableValue, ABC):
     # TODO: Figure out how Python handles encodings and make a proper return type.
     #  Maybe codecs.CodecInfo
     @property
-    def file_encoding(self) -> Any:
+    def file_encoding(self) -> str:
         return self._file_encoding
 
     @property
@@ -104,9 +104,8 @@ class FileValue(variable_value.IVariableValue, ABC):
 
     # TODO: How does Python handle BOM? implement static and non-static ReadBOM()
 
-    # TODO: Replace Any with correct type for encoding
     @abstractmethod
-    def get_contents(self, encoding: Optional[Any]) -> str:
+    def get_contents(self, encoding: Optional[str]) -> str:
         raise NotImplementedError()
 
     @abstractmethod
@@ -173,7 +172,7 @@ class EmptyFileValue(FileValue):
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 
-    def get_contents(self, encoding: Optional[Any]) -> str:
+    def get_contents(self, encoding: Optional[str]) -> str:
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 

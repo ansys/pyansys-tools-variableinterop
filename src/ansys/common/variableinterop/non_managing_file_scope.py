@@ -30,7 +30,7 @@ class NonManagingFileScope(file_scope.FileScope):
         # TODO: Make consistent for mime_type and encoding w/r/t Optional
 
         def __init__(
-            self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[Any]
+            self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
         ) -> None:
             super().__init__(to_read, mime_type, encoding, uuid4())
 
@@ -42,12 +42,12 @@ class NonManagingFileScope(file_scope.FileScope):
             # TODO: Implement
             raise NotImplementedError()
 
-        def get_contents(self, encoding: Optional[Any]) -> str:
+        def get_contents(self, encoding: Optional[str]) -> str:
             # TODO: Implement
             raise NotImplementedError()
 
     def read_from_file(
-        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[Any]
+        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
     ) -> file_value.FileValue:
         return NonManagingFileScope.NonManagingFileValue(to_read, mime_type, encoding)
 

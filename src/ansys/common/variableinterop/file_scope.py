@@ -38,7 +38,7 @@ class FileScope(AbstractContextManager, ABC):
     # TODO: Proper type for encoding
     @abstractmethod
     def read_from_file(
-        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[Any]
+        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
     ) -> file_value.FileValue:
         ...
 
