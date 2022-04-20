@@ -199,7 +199,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         elif shape_:
             return super().__new__(cls, shape=shape_, dtype=np.float64)
         else:
-            return np.zeros(shape=(), dtype=np.bool_)
+            return np.zeros(shape=(), dtype=np.float64)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -297,7 +297,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         elif shape_:
             return super().__new__(cls, shape=shape_, dtype=np.str_)
         else:
-            return np.zeros(shape=(), dtype=np.bool_)
+            return np.zeros(shape=(), dtype=np.str_)
 
     def __eq__(self, other):
         return np.array_equal(self, other)
