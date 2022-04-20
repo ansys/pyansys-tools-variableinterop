@@ -494,7 +494,11 @@ def test_coerce_multiple_args() -> None:
         pytest.param(RealValue(42), id="RealValue"),
         pytest.param(IntegerValue(9001), id="IntegerValue"),
         pytest.param(BooleanValue(True), id="BooleanValue"),
-        pytest.param(StringValue("string data"), id="StringValue")
+        pytest.param(StringValue("string data"), id="StringValue"),
+        pytest.param(RealArrayValue(values=[42.4, 48.5, 900.2]), id="RealArrayValue"),
+        pytest.param(IntegerArrayValue(values=[9001, 0, 1, 2]), id="IntegerArrayValue"),
+        pytest.param(BooleanArrayValue(values=[True, False, True]), id="BooleanArrayValue"),
+        pytest.param(StringArrayValue(values=["lorem", "ipsum", "dolor"]), id="StringArrayValue"),
     ])
 def test_no_coerce_no_copy(arg: IVariableValue) -> None:
     """
