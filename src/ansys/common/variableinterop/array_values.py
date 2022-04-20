@@ -16,6 +16,7 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
+from ansys.common.variableinterop.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
 import ansys.common.variableinterop.variable_type as variable_type
@@ -327,7 +328,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: "\"" + StringValue(elem).to_api_string() + "\"")
+            lambda elem: "\"" + escape_string(StringValue(elem).to_api_string()) + "\"")
         return api_string
 
     @staticmethod
@@ -345,7 +346,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: StringArrayValue(values=val),
-            lambda val: StringValue.from_api_string(val))
+            lambda val: StringValue.from_api_string(unescape_string(val)))
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:

@@ -20,6 +20,11 @@ from ansys.common.variableinterop import StringArrayValue
             'bounds[2,2,3]{\"あ\",\"い\",\"う\",\"え\",\"お\",\"か\",' +
             '\"き\",\"く\",\"け\",\"こ\",\"が\",\"ぎ\"}',
             id='Three dims'),
+        pytest.param(StringArrayValue(values=[
+            'doublequote>"<', 'backslash>\\<',
+            'whitespace>\r\n\t<', 'null>\0<'
+            ]), r'"doublequote>\"<","backslash>\\<","whitespace>\r\n\t<","null>\0<"',
+            id='escapes')
     ]
 )
 def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
@@ -57,6 +62,14 @@ def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
                          [["あ", "い", "う"], ["え", "お", "か"]],
                          [["き", "く", "け"], ["こ", "が", "ぎ"]]]),
                      id='Three dims'),
+        pytest.param(r'"doublequote>\"<","backslash>\\<","whitespace>\r\n\t<","null>\0<"'
+                     r'unr\e\cogniz\ed',
+                     StringArrayValue(values=['doublequote>"<',
+                                              'backslash>\\<',
+                                              'whitespace>\r\n\t<',
+                                              'null>\0<',
+                                              'unrecognized']),
+                     id='escapes')
     ]
 )
 def test_from_api_string_valid(source: str, expected_result: StringArrayValue) -> None:
