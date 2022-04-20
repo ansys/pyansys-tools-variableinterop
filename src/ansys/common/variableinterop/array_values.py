@@ -5,6 +5,7 @@ import functools
 import locale
 from typing import TypeVar
 
+from decimal import ROUND_HALF_UP, Decimal
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
@@ -227,8 +228,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_integer_array_value(self):
         def away_from_zero(x: np.float64) -> np.int64:
-            f = np.floor if x < 0 else np.ceil
-            return np.int64(f(x))
+            return np.int64(Decimal(x).to_integral(ROUND_HALF_UP))
 
         return np.vectorize(away_from_zero)(self).astype(np.int64) \
             .view(IntegerArrayValue)
