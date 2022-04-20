@@ -35,6 +35,10 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
         return super().__new__(cls, shape=shape_, dtype=file_value.FileValue)
 
     @overrides
+    def __eq__(self, other):
+        return np.array_equal(self, other)
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_file_array(self)
 

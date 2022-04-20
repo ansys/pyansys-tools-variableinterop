@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import json
 from abc import ABC, abstractmethod
+import json
 from os import PathLike
 from typing import Callable, Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
@@ -30,6 +30,14 @@ class FileValue(variable_value.IVariableValue, ABC):
         self._file_encoding: Optional[str] = encoding
         self._original_path: Optional[PathLike] = original_path
         self._bom: str = ""
+
+    @overrides
+    def __eq__(self, other):
+        return isinstance(other, FileValue) and self._id == other._id
+
+    @overrides
+    def __hash__(self):
+        return hash(self._id)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
