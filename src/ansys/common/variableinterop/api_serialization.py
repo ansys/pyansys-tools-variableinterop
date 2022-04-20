@@ -42,12 +42,13 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
         return value.to_api_string()
 
     def visit_file(self, value: file_value.FileValue) -> str:
-        if self.__scope is None:
-            raise NotImplementedError("This operation does not support file values.")
-        else:
+        if isinstance(self.__scope, FileScope):
             file_store: Callable[[file_value.FileValue], str] =\
-                lambda target_file_val: self.__scope.to_api_string_file_store(target_file_val)
+                lambda target_file_val: self.__scope.to_api_string_file_store(  # type: ignore
+                    target_file_val)
             return value.to_api_string(file_store)
+        else:
+            raise NotImplementedError("This operation does not support file values.")
 
     def visit_real_array(self, value: RealArrayValue) -> str:
         return value.to_api_string()

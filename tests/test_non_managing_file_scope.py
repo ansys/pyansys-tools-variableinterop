@@ -1,5 +1,6 @@
 import json
 from os import PathLike
+from pathlib import Path
 from typing import Any, Dict, Optional
 from uuid import UUID
 
@@ -14,11 +15,11 @@ __EMPTY_UUID = UUID(int = 0)
 @pytest.mark.parametrize(
     'to_read,mime_type,encoding,expected_mime_type',
     [
-        pytest.param('file/to/read', 'text/testfile', 'Shift-JIS', 'text/testfile',
+        pytest.param(Path('file/to/read'), 'text/testfile', 'Shift-JIS', 'text/testfile',
                      id="All"),
-        pytest.param('file/to/read', None, 'Shift-JIS', '',
+        pytest.param(Path('file/to/read'), None, 'Shift-JIS', '',
                      id="No mimetype"),
-        pytest.param('file/to/read', 'application/bytestream', None, 'application/bytestream',
+        pytest.param(Path('file/to/read'), 'application/bytestream', None, 'application/bytestream',
                      id="No encoding")
     ]
 )
@@ -83,13 +84,13 @@ def test_to_api_str(to_read: str, mime_type: Optional[str], encoding: Optional[A
     [
         pytest.param('{"contents":"/file/to/read","originalFileName":"/file/to/read",'
                      '"mimeType":"text/testfile","encoding":"Shift-JIS"}',
-                     '/file/to/read', 'text/testfile', 'Shift-JIS', id="All present"),
+                     Path('/file/to/read'), 'text/testfile', 'Shift-JIS', id="All present"),
         pytest.param('{"originalFileName":"/file/to/read","contents":"/file/to/read",'
                      '"encoding":"Shift-JIS"}',
-                     '/file/to/read', '', 'Shift-JIS', id="Missing mimetype"),
+                     Path('/file/to/read'), '', 'Shift-JIS', id="Missing mimetype"),
         pytest.param('{"contents":"/file/to/read","originalFileName":"/file/to/read",'
                      '"mimeType":"application/bytestream"}',
-                     '/file/to/read', 'application/bytestream', None, id="No encoding"),
+                     Path('/file/to/read'), 'application/bytestream', None, id="No encoding"),
     ]
 )
 def test_from_api_str_valid(source: str,

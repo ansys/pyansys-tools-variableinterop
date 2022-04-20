@@ -27,7 +27,7 @@ class FileValue(variable_value.IVariableValue, ABC):
                  value_id: Optional[UUID]):
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
-        self._file_encoding: str = encoding
+        self._file_encoding: Optional[str] = encoding
         self._original_path: Optional[PathLike] = original_path
         self._bom: str = ""
 
@@ -78,7 +78,7 @@ class FileValue(variable_value.IVariableValue, ABC):
     # TODO: Figure out how Python handles encodings and make a proper return type.
     #  Maybe codecs.CodecInfo
     @property
-    def file_encoding(self) -> str:
+    def file_encoding(self) -> Optional[str]:
         return self._file_encoding
 
     @property
@@ -160,7 +160,7 @@ class FileValue(variable_value.IVariableValue, ABC):
             obj[FileValue.CONTENTS_KEY] = content_marker
 
         if self._original_path:
-            obj[FileValue.ORIGINAL_FILENAME_KEY] = self._original_path
+            obj[FileValue.ORIGINAL_FILENAME_KEY] = str(self._original_path)
         if self._mime_type:
             obj[FileValue.MIMETYPE_KEY] = self._mime_type
         if self._file_encoding:

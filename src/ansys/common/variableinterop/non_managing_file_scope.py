@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from os import PathLike
-from typing import Any, Dict, Optional
+from pathlib import Path
+from typing import Dict, Optional
 from uuid import uuid4
 
 from overrides import overrides
@@ -62,9 +63,13 @@ class NonManagingFileScope(file_scope.FileScope):
     @overrides
     def from_api_object(self, api_object: Dict[str, Optional[str]]) -> file_value.FileValue:
         if file_value.FileValue.CONTENTS_KEY in api_object:
-            return NonManagingFileScope.NonManagingFileValue(
-                api_object.get(file_value.FileValue.CONTENTS_KEY),
-                api_object.get(file_value.FileValue.MIMETYPE_KEY),
-                api_object.get(file_value.FileValue.ENCODING_KEY))
+            content: Optional[str] = api_object.get(file_value.FileValue.CONTENTS_KEY)
+            if isinstance(content, str):
+                return NonManagingFileScope.NonManagingFileValue(
+                    Path(content),
+                    api_object.get(file_value.FileValue.MIMETYPE_KEY),
+                    api_object.get(file_value.FileValue.ENCODING_KEY))
+            else:
+                return file_value.EMPTY_FILE_VALUE
         else:
             return file_value.EMPTY_FILE_VALUE
