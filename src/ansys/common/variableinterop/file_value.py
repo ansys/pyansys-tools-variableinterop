@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import json
+from abc import ABC, abstractmethod
 from os import PathLike
-from typing import Any, Callable, Dict, Final, Optional, TypeVar
+from typing import Callable, Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
 from overrides import overrides
@@ -29,6 +29,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         self._mime_type: str = "" if (mime_type is None) else mime_type
         self._file_encoding: str = encoding
         self._original_path: Optional[PathLike] = original_path
+        self._bom: str = ""
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -87,6 +88,37 @@ class FileValue(variable_value.IVariableValue, ABC):
     @property
     def id(self) -> UUID:
         return self._id
+
+    @staticmethod
+    def read_bom(filename: str) -> str:
+        """
+        Opens a file for reading and detects a byte order mark at the beginning.
+
+        Parameters
+        ----------
+        filename : str
+            The file to read.
+
+        Returns
+        -------
+        str
+            If the file contains a BOM, an appropriate encoding will be returned. If the file does
+            not contain a BOM, 'None' is returned. 
+        """
+        with open(filename, 'rb') as f:
+            bom = f.read(4)
+            if bom == b'\x00\x00\xfe\xff':
+                return "UTF-32 BE"
+            elif bom == b'\xff\xfe\x00\x00':
+                return "UTF-32 LE"
+            elif bom[0:3] == b'\xef\xbb\xbf':
+                return "UTF-8"
+            elif bom[0:2] == b'\xff\xfe':
+                return "UTF-16 LE"
+            elif bom[0:2] == b'\xfe\xff':
+                return "UTF-16 BE"
+            else:
+                return "None"
 
     @abstractmethod
     def write_file(self, file_name: PathLike) -> None:
