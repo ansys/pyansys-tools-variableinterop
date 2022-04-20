@@ -5,10 +5,11 @@ from __future__ import annotations
 import functools
 import inspect
 import typing
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 
+import ansys.common.variableinterop.array_values as array_values
 import ansys.common.variableinterop.scalar_values as scalar_values
 import ansys.common.variableinterop.variable_value as variable_value
 
@@ -23,6 +24,20 @@ __TYPE_MAPPINGS = {
     np.bool_: scalar_values.BooleanValue,
     str: scalar_values.StringValue,
     np.str_: scalar_values.StringValue
+}
+"""
+This map applies when coercing a non-IVariableValue type to a method argument that converts an
+IVariableValue. The type of the actual runtime argument value is the key in the dictionary,
+and the value is the specific IVariableValue implementation that should be used.
+"""
+
+__ARR_TYPE_MAPPINGS = {
+    np.integer: array_values.IntegerArrayValue,
+    np.float16: array_values.RealArrayValue,
+    np.float32: array_values.RealArrayValue,
+    np.float64: array_values.RealArrayValue,
+    np.bool_: array_values.BooleanArrayValue,
+    np.str_: array_values.StringArrayValue
 }
 """
 This map applies when coercing a non-IVariableValue type to a method argument that converts an
@@ -108,6 +123,31 @@ def _specific_implicit_coerce_allowed(target_arg_type: type, actual_arg_type: ty
         return False
 
 
+def __numpy_array_dtype(arg: Any) -> Optional[type]:
+    if isinstance(arg, np.ndarray):
+        return arg.dtype.type
+    else:
+        return None
+
+
+def __implicit_coerce_single_scalar_free(arg: Any):
+    for cls in type(arg).__mro__:
+        if cls in __TYPE_MAPPINGS:
+            return __TYPE_MAPPINGS[cls](arg)
+    # TODO: Consider passing in more context for the exception
+    # TODO: types come out to
+    #  <class 'ansys.common.variableinterop.variable_value.IVariableValue'>.
+    #  Can that be simplified?
+    raise TypeError(f"Type {type(arg)} cannot be converted to {variable_value.IVariableValue}")
+
+
+def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> variable_value.IVariableValue:
+    for cls in arr_type.__mro__:
+        if cls in __ARR_TYPE_MAPPINGS:
+            return __ARR_TYPE_MAPPINGS[cls](values=arg)
+    raise TypeError(f"Type {type(arg)} cannot be converted to {variable_value.IVariableValue}")
+
+
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     """
     Attempt to coerce the argument into the given type.
@@ -139,15 +179,13 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # No type coercion necessary. Pass through the original argument.
         return arg
 
+    maybe_np_array_type: Optional[type] = __numpy_array_dtype(arg)
+
     if arg_type == variable_value.IVariableValue:
-        for cls in type(arg).__mro__:
-            if cls in __TYPE_MAPPINGS:
-                return __TYPE_MAPPINGS[cls](arg)
-        # TODO: Consider passing in more context for the exception
-        # TODO: types come out to
-        #  <class 'ansys.common.variableinterop.variable_value.IVariableValue'>.
-        #  Can that be simplified?
-        raise TypeError(f"Type {type(arg)} cannot be converted to {variable_value.IVariableValue}")
+        if maybe_np_array_type is None:
+            return __implicit_coerce_single_scalar_free(arg)
+        else:
+            return __implicit_coerce_single_array_free(arg, maybe_np_array_type)
 
     # TODO: This probably doesn't have all the right semantics for our set of implicit
     #  type conversions

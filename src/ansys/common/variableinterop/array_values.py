@@ -38,7 +38,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.bool_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.bool_)
 
@@ -114,7 +114,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.int64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.int64)
 
@@ -188,7 +188,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
 
@@ -283,7 +283,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
 
