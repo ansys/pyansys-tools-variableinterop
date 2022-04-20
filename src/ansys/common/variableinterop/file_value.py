@@ -40,10 +40,6 @@ class FileValue(variable_value.IVariableValue, ABC):
         return variable_type.VariableType.FILE
 
     @overrides
-    def to_api_string(self) -> str:
-        raise NotImplementedError
-
-    @overrides
     def to_display_string(self, locale_name: str) -> str:
         raise NotImplementedError
 
