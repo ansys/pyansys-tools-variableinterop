@@ -16,7 +16,9 @@ __TYPE_MAPPINGS = {
     int: scalar_values.IntegerValue,
     np.integer: scalar_values.IntegerValue,
     float: scalar_values.RealValue,
-    np.inexact: scalar_values.RealValue,
+    np.float16: scalar_values.RealValue,
+    np.float32: scalar_values.RealValue,
+    np.float64: scalar_values.RealValue,
     bool: scalar_values.BooleanValue,
     np.bool_: scalar_values.BooleanValue,
     str: scalar_values.StringValue,
@@ -30,7 +32,8 @@ and the value is the specific IVariableValue implementation that should be used.
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     scalar_values.IntegerValue: [int, np.integer, bool, np.bool_, scalar_values.BooleanValue],
-    scalar_values.RealValue: [float, np.inexact, bool, np.bool_, scalar_values.BooleanValue],
+    scalar_values.RealValue: [float, np.float16, np.float32, np.float64,
+                              bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.BooleanValue: [bool, np.bool_],
     scalar_values.StringValue: [int, np.integer, scalar_values.IntegerValue,
                                 bool, np.bool_, scalar_values.BooleanValue,
