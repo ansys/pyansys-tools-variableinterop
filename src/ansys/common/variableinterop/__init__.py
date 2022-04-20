@@ -88,5 +88,5 @@ from .utils import convert
 from .value_from_api_string import from_api_string
 from .var_type_array_check import var_type_is_array
 from .variable_type import VariableType
-from .variable_value import IVariableValue
+from .variable_value import IVariableValue, CommonArrayValue
 from .vartype_arrays_and_elements import get_element_type, to_array_type
