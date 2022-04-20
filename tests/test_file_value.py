@@ -8,7 +8,7 @@ import pytest
 import ansys.common.variableinterop as acvi
 
 
-class __TestFileValue(acvi.FileValue):
+class _TestFileValue(acvi.FileValue):
     """A concrete implementation of FileValue used to test its constructor."""
 
     def actual_content_file_name(self) -> Optional[PathLike]:
@@ -92,7 +92,7 @@ def test_constructor(
     # Setup
 
     # Execute
-    sut: __TestFileValue = __TestFileValue(
+    sut: _TestFileValue = _TestFileValue(
         specified_orig_path,
         specified_mime_type,
         specified_encoding,
@@ -114,7 +114,7 @@ def test_constructor(
 def test_base_serialization():
     """Verify that the base serialization routine works."""
     # Setup
-    sut: __TestFileValue = __TestFileValue('/path/to/orig/file',
+    sut: _TestFileValue = _TestFileValue('/path/to/orig/file',
                                            'text/testfile',
                                            'Shift-JIS',
                                            __TEST_UUID)
