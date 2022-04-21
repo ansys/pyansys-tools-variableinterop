@@ -6,7 +6,6 @@ from abc import ABC, abstractmethod
 from typing import Generic, Tuple, TypeVar
 
 from numpy.typing import NDArray
-from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
