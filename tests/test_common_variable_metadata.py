@@ -5,7 +5,6 @@ common_variable_metadata.CommonVariableMetadata.
 from typing import List, Tuple, TypeVar, Type
 
 import pytest
-from numpy.typing import ArrayLike
 
 import ansys.common.variableinterop as acvi
 from ansys.common.variableinterop.variable_value import CommonArrayValue

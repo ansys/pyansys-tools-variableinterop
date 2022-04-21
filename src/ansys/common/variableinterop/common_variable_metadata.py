@@ -102,7 +102,7 @@ class CommonVariableMetadata(ABC):
             array_values
 
         class __DefaultValueVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
+                ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
             """Metadata visitor to implement getting the default value."""
 
             @staticmethod
