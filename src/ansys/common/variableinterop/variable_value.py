@@ -25,6 +25,10 @@ class IVariableValue(ABC):
         """Get a deep copy of this value."""
         return copy.deepcopy(self)
 
+    @overrides
+    def __repr__(self) -> str:
+        return self.to_api_string()
+
     @abstractmethod
     def accept(
             self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
