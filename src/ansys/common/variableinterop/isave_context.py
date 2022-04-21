@@ -70,7 +70,7 @@ class ILoadContext(AbstractContextManager, ABC):
         return None
 
     @abstractmethod
-    def load_file(self, source: Union[PathLike, str], id: Optional[str]) -> str:
+    def load_file(self, content_id: Optional[str]) -> Optional[PathLike]:
         ...
 
 # TODO: Uncomment once we know what stream API to use

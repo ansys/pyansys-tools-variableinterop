@@ -46,7 +46,7 @@ class FileScope(AbstractContextManager, ABC):
     @abstractmethod
     def from_api_object(self,
                         api_object: Dict[str, Optional[str]],
-                        load_context: Optional[isave_context.ILoadContext]) -> file_value.FileValue:
+                        load_context: isave_context.ILoadContext) -> file_value.FileValue:
         ...
 
     # TODO: All the many static construction methods

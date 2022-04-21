@@ -12,7 +12,8 @@ import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.isave_context as isave_context
 
 
-class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext):
+class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
+                           isave_context.ILoadContext):
     """
     A simple file scope implementation that performs no management.
 
@@ -72,12 +73,13 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext):
     @overrides
     def from_api_object(self,
                         api_object: Dict[str, Optional[str]],
-                        load_context: Optional[isave_context.ILoadContext]) -> file_value.FileValue:
+                        load_context: isave_context.ILoadContext) -> file_value.FileValue:
         if file_value.FileValue.CONTENTS_KEY in api_object:
-            content: Optional[str] = api_object.get(file_value.FileValue.CONTENTS_KEY)
-            if isinstance(content, str):
+            content: Optional[PathLike] = load_context.load_file(
+                api_object.get(file_value.FileValue.CONTENTS_KEY))
+            if content is not None:
                 return NonManagingFileScope.NonManagingFileValue(
-                    Path(content),
+                    content,
                     api_object.get(file_value.FileValue.MIMETYPE_KEY),
                     api_object.get(file_value.FileValue.ENCODING_KEY))
             else:
@@ -92,6 +94,13 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext):
 
         else:
             return str(source)
+
+    @overrides
+    def load_file(self, content_id: Optional[str]) -> Optional[PathLike]:
+        if content_id:
+            return Path(content_id)
+        else:
+            return None
 
     @overrides
     def flush(self) -> None:

@@ -36,7 +36,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     """
 
     def __init__(self, source: str, fscope: Optional[file_scope.FileScope],
-                 save_context: Optional[isave_context.ISaveContext]):
+                 save_context: Optional[isave_context.ILoadContext]):
         """
         Create a new instance of this class.
 
@@ -45,8 +45,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         source the string from which values should be parsed
         """
         self._source: str = source
-        self._scope = fscope
-        self._save_context = save_context
+        self._scope: Optional[file_scope.FileScope] = fscope
+        self._save_context: Optional[isave_context.ILoadContext] = save_context
 
     def visit_unknown(self):
         """

@@ -103,7 +103,7 @@ def test_from_api_str_valid(source: str,
 
         # Execute
         sut_file_inst: acvi.FileValue = acvi.from_api_string(
-            acvi.VariableType.FILE, source, sut_scope)  # type:ignore
+            acvi.VariableType.FILE, source, sut_scope, sut_scope)
 
         # Verify
         assert isinstance(sut_file_inst, acvi.FileValue)
