@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from typing import Any, Dict
+from overrides import overrides
+from typing import Any, Dict, Type, TypeVar
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
@@ -90,6 +91,159 @@ class CommonVariableMetadata(ABC):
     def custom_metadata(self) -> Dict[str, variable_value.IVariableValue]:
         """Additional, custom metadata may be stored in this dictionary."""
         return self._custom_metadata
+
+    def get_default_value(self) -> variable_value.IVariableValue:
+        """
+        Gets the default value that should be used for the variable
+        described by this metadata.
+        """
+
+        from ansys.common.variableinterop import scalar_metadata, scalar_values, array_metadata, \
+            array_values
+
+        class __DefaultValueVisitor(
+            ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
+            """Metadata visitor to implement getting the default value."""
+
+            @staticmethod
+            def __get_str_enumerated_default(
+                    metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
+                """
+                For given StringMetadata, use enumerated values to
+                get the default value to use for the associated
+                variable.
+
+                Parameters
+                ----------
+                metadata : StringMetadata
+                    Metadata to use to generate default value.
+                Returns
+                -------
+                StringValue default value to use for associated
+                variable.
+                """
+                default_value = scalar_values.StringValue()
+                if metadata.enumerated_values is not None and len(metadata.enumerated_values):
+                    if default_value not in metadata.enumerated_values:
+                        default_value: scalar_values.StringValue = metadata.enumerated_values[0]
+                return default_value
+
+            M = TypeVar('M', scalar_metadata.IntegerMetadata, scalar_metadata.RealMetadata)
+            T = TypeVar('T', scalar_values.IntegerValue, scalar_values.RealValue)
+
+            @staticmethod
+            def __get_numeric_default(metadata: M, type_: Type = T) -> T:
+                """
+                For a numeric metadata (i.e. IntegerMetadata or
+                RealMetadata) get the default value to use.
+
+                Parameters
+                ----------
+                metadata : IntegerMetadata or RealMetadata.
+                    Metadata to use to generate default value.
+                type_ : IntegerValue or RealValue
+                    Type of the default value to generate.
+                Returns
+                -------
+                Default value to use for associated variable
+                """
+                default_value = type_()
+                if metadata.enumerated_values is not None and len(metadata.enumerated_values):
+                    # enumerated values are defined
+                    # if default value is not valid
+                    if default_value not in metadata.enumerated_values \
+                            or (metadata.lower_bound is not None
+                                and default_value < metadata.lower_bound) \
+                            or (metadata.upper_bound is not None
+                                and metadata.upper_bound < default_value):
+                        # find the first enumerated value that is valid
+                        # if one does not exist, use default value anyway
+                        default_value = next(
+                            (e for e in metadata.enumerated_values
+                             if (metadata.lower_bound is None or metadata.lower_bound <= e)
+                             and (metadata.upper_bound is None or e <= metadata.upper_bound)),
+                            default_value)
+                else:
+                    # no enumerated values are defined
+                    # if default value is not valid
+                    if (metadata.lower_bound is not None
+                        and default_value < metadata.lower_bound) \
+                       or (metadata.upper_bound is not None
+                           and metadata.upper_bound < default_value):
+                        # default is not valid.
+                        # if have a lower_bound
+                        if metadata.lower_bound is not None:
+                            # if lower_bound is valid, use it
+                            if metadata.upper_bound is None \
+                                    or metadata.lower_bound <= metadata.upper_bound:
+                                default_value = metadata.lower_bound
+                        # else if have an upper_bound, use it
+                        elif metadata.upper_bound is not None:
+                            default_value = metadata.upper_bound
+                        # else nothing is valid, just use default value
+                    # else default_value is valid, use it
+
+                return default_value
+
+            @overrides
+            def visit_integer(
+                    self, metadata: scalar_metadata.IntegerMetadata) -> scalar_values.IntegerValue:
+                return self.__get_numeric_default(metadata, scalar_values.IntegerValue)
+
+            @overrides
+            def visit_real(
+                    self, metadata: scalar_metadata.RealMetadata) -> scalar_values.RealValue:
+                return self.__get_numeric_default(metadata, scalar_values.RealValue)
+
+            @overrides
+            def visit_boolean(
+                    self, metadata: scalar_metadata.BooleanMetadata) -> scalar_values.BooleanValue:
+                return scalar_values.BooleanValue()
+
+            @overrides
+            def visit_string(
+                    self, metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
+                return self.__get_str_enumerated_default(metadata)
+
+            # @overrides
+            # def visit_file_array(
+            #         self, metadata: file_metadata.FileMetadata): -> file_value.FileArrayValue:
+            #     return file_value.FileValue.Empty
+
+            @overrides
+            def visit_integer_array(
+                    self,
+                    metadata: array_metadata.IntegerArrayMetadata
+            ) -> array_values.IntegerArrayValue:
+                return array_values.IntegerArrayValue()
+
+            @overrides
+            def visit_real_array(
+                    self,
+                    metadata: array_metadata.RealArrayMetadata) -> array_values.RealArrayValue:
+                return array_values.RealArrayValue()
+
+            @overrides
+            def visit_boolean_array(
+                    self,
+                    metadata: array_metadata.BooleanArrayMetadata
+            ) -> array_values.BooleanArrayValue:
+                return array_values.BooleanArrayValue()
+
+            @overrides
+            def visit_string_array(
+                    self,
+                    metadata: array_metadata.StringArrayMetadata) -> array_values.StringArrayValue:
+                return array_values.StringArrayValue()
+
+            # @overrides
+            # def visit_file_array(
+            #       self,
+            #       metadata: file_array_metadata.FileArrayMetadata): -> array_values.FileArrayValue
+            #   return array_values.FileArrayValue()
+
+        visitor = __DefaultValueVisitor()
+        return self.accept(visitor)
 
     @property
     @abstractmethod
