@@ -41,7 +41,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.bool_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        else:
+            return np.zeros(shape=(), dtype=np.bool_)
 
     @overrides
     def __eq__(self, other) -> bool:
@@ -117,7 +120,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.int64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.int64)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.int64)
+        else:
+            return np.zeros(shape=(), dtype=np.int64)
 
     @overrides
     def __eq__(self, other):
@@ -191,7 +197,10 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.float64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.float64)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.float64)
+        else:
+            return np.zeros(shape=(), dtype=np.float64)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -286,7 +295,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.str_)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.str_)
+        else:
+            return np.zeros(shape=(), dtype=np.str_)
 
     def __eq__(self, other):
         return np.array_equal(self, other)
