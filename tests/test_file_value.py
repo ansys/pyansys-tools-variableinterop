@@ -190,3 +190,26 @@ def test_to_display_string(sut: acvi.FileValue, expected_result: str):
 
     # Verify
     assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'orig_path,expected_result',
+    [
+        pytest.param(None, '.tmp', id="None"),
+        pytest.param(Path(''), '.tmp', id="empty"),
+        pytest.param(Path('no/ext'), '.tmp', id="no extension"),
+        pytest.param(Path('has/tmp/extension.tmp'), '.tmp', id="actually .tmp"),
+        pytest.param(Path('a/word/document.doc'), '.doc', id=".doc"),
+        pytest.param(Path('longer/extension.longerthanthefilename'), '.longerthanthefilename',
+                     id="long extension"),
+    ]
+)
+def test_get_extension(orig_path: Optional[Path], expected_result: str):
+    # Setup
+    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None)
+
+    # Execute
+    result: str = sut.get_extension()
+
+    # Verify
+    assert result == expected_result
