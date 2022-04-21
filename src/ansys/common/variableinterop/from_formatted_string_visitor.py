@@ -13,6 +13,7 @@ from ansys.common.variableinterop.array_values import (
     RealArrayValue,
     StringArrayValue,
 )
+import ansys.common.variableinterop.exceptions as exceptions
 from ansys.common.variableinterop.ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
@@ -63,7 +64,9 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[
 
     @overrides
     def visit_file(self) -> variable_value.IVariableValue:
-        raise NotImplementedError
+        raise exceptions.ValueDeserializationUnsupportedException(exceptions._error(
+            "ERROR_FILE_FROM_DISPLAY_STR"
+        ))
 
     @overrides
     def visit_int_array(self) -> variable_value.IVariableValue:
@@ -95,4 +98,6 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[
 
     @overrides
     def visit_file_array(self) -> variable_value.IVariableValue:
-        raise NotImplementedError
+        raise exceptions.ValueDeserializationUnsupportedException(exceptions._error(
+            "ERROR_FILE_FROM_DISPLAY_STR"
+        ))
