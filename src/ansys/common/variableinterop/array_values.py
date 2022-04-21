@@ -16,6 +16,7 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
 import ansys.common.variableinterop.variable_type as variable_type
@@ -37,7 +38,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.bool_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        else:
+            return np.zeros(shape=(), dtype=np.bool_)
 
     @overrides
     def __eq__(self, other) -> bool:
@@ -90,10 +94,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
             lambda val: BooleanValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: BooleanValue(elem.tolist()).to_formatted_string(locale_name))
+            lambda elem: BooleanValue(elem.tolist()).to_display_string(locale_name))
         return api_string
         pass
 
@@ -116,7 +120,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.int64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.int64)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.int64)
+        else:
+            return np.zeros(shape=(), dtype=np.int64)
 
     @overrides
     def __eq__(self, other):
@@ -168,10 +175,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
             lambda val: IntegerValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: IntegerValue(elem).to_formatted_string(locale_name))
+            lambda elem: IntegerValue(elem).to_display_string(locale_name))
         return api_string
 
 
@@ -193,7 +200,10 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.float64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.float64)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.float64)
+        else:
+            return np.zeros(shape=(), dtype=np.float64)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -251,9 +261,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
             lambda val: RealValue.from_api_string(val))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
         def parse_real_element(elem: np.float64) -> str:
-            value: str = RealValue(elem).to_formatted_string(locale_name)
+            value: str = RealValue(elem).to_display_string(locale_name)
 
             # Old form arrays (without quotes around each item) do not work for languages where ','
             # is the decimal separator. Use new form for those languages.
@@ -285,7 +295,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.str_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.str_)
+        elif shape_:
+            return super().__new__(cls, shape=shape_, dtype=np.str_)
+        else:
+            return np.zeros(shape=(), dtype=np.str_)
 
     def __eq__(self, other):
         return np.array_equal(self, other)
@@ -327,7 +340,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: "\"" + StringValue(elem).to_api_string() + "\"")
+            lambda elem: "\"" + escape_string(StringValue(elem).to_api_string()) + "\"")
         return api_string
 
     @staticmethod
@@ -345,13 +358,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: StringArrayValue(values=val),
-            lambda val: StringValue.from_api_string(val))
+            lambda val: StringValue.from_api_string(unescape_string(val)))
 
     @overrides
-    def to_formatted_string(self, locale_name: str) -> str:
+    def to_display_string(self, locale_name: str) -> str:
 
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
             lambda elem:
-            "\"" + StringValue(elem).to_formatted_string(locale_name) + "\"")
+            "\"" + StringValue(elem).to_display_string(locale_name) + "\"")
         return api_string
