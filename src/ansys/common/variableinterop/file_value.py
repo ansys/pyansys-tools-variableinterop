@@ -117,7 +117,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         -------
         str
             If the file contains a BOM, an appropriate encoding will be returned. If the file does
-            not contain a BOM, 'None' is returned. 
+            not contain a BOM, 'None' is returned.
         """
         with open(filename, 'rb') as f:
             bom = f.read(4)
