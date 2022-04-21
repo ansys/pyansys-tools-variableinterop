@@ -4,11 +4,12 @@ from abc import ABC, abstractmethod
 from configparser import ConfigParser
 import json
 from os import PathLike, path
-from typing import Callable, Dict, Final, Optional, TypeVar
+from typing import Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
 from overrides import overrides
 
+import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
@@ -167,14 +168,17 @@ class FileValue(variable_value.IVariableValue, ABC):
         True if there is content, false otherwise.
         """
 
-    def to_api_string(self, file_store: Callable[[FileValue], str]) -> str:
-        api_obj: Dict[str, Optional[str]] = self.to_api_object(file_store)
+    def to_api_string(self, save_context: isave_context.ISaveContext) -> str:
+        api_obj: Dict[str, Optional[str]] = self.to_api_object(save_context)
         return json.dumps(api_obj)
 
-    def to_api_object(self, file_store: Callable[[FileValue], str]) -> Dict[str, Optional[str]]:
+    def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
+        return save_context.save_file(self.actual_content_file_name, str(self.id))
+
+    def to_api_object(self, save_context: isave_context.ISaveContext) -> Dict[str, Optional[str]]:
         obj: Dict[str, Optional[str]] = {}
         if self._has_content():
-            content_marker: str = file_store(self)
+            content_marker: str = self._send_actual_file(save_context)
             obj[FileValue.CONTENTS_KEY] = content_marker
 
         if self._original_path:

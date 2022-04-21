@@ -1,7 +1,7 @@
 import json
 from os import PathLike
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, Union
 from uuid import UUID
 
 import pytest
@@ -41,8 +41,22 @@ class _TestFileValue(acvi.FileValue):
         return self._has_content_override or bool(self._original_path)
 
 
-def __test_file_store(file_var: acvi.FileValue) -> str:
-    return "file:///" + str(file_var.original_file_name).lstrip('/')
+class __TestSaveContext(acvi.ISaveContext):
+    def save_file(self, source: Union[PathLike, str], id: Optional[str]) -> str:
+        if not id:
+            return "file:///" + str(source).lstrip('/')
+        else:
+            return id
+
+#    def save_file_stream(self, source: Union[PathLike, str], id: Optional[str]) -> Tuple[
+#        Stream, str]:
+#        raise NotImplementedError()
+
+    def flush(self) -> None:
+        pass
+
+    def close(self) -> None:
+        pass
 
 
 __TEST_UUID = UUID("EC6F3C91-ECBD-4D3D-88F3-05062E41CE9F")
@@ -137,11 +151,11 @@ def test_base_serialization():
                                            __TEST_UUID)
 
     # Execute
-    serialized: str = sut.to_api_string(__test_file_store)
+    serialized: str = sut.to_api_string(__TestSaveContext())
 
     # Verify
     loaded: Any = json.loads(serialized)
-    assert loaded.get(acvi.FileValue.CONTENTS_KEY) == 'file:///path/to/orig/file'
+    assert loaded.get(acvi.FileValue.CONTENTS_KEY) == str(__TEST_UUID)
     assert loaded.get(acvi.FileValue.ORIGINAL_FILENAME_KEY) == '/path/to/orig/file'
     assert loaded.get(acvi.FileValue.MIMETYPE_KEY) == 'text/testfile'
     assert loaded.get(acvi.FileValue.ENCODING_KEY) == 'Shift-JIS'

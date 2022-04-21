@@ -3,9 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 
 import ansys.common.variableinterop.file_value as file_value
+import ansys.common.variableinterop.isave_context as isave_context
 
 # TODO: What formatting does pydoc use? I'm using back tick for code below.
 #  Who knows if that is correct
@@ -44,11 +45,8 @@ class FileScope(AbstractContextManager, ABC):
 
     @abstractmethod
     def from_api_object(self,
-                        api_object: Dict[str, Optional[str]]) -> file_value.FileValue:
-        ...
-
-    def to_api_string_file_store(self,
-                                 file_var: file_value.FileValue) -> str:
+                        api_object: Dict[str, Optional[str]],
+                        load_context: Optional[isave_context.ILoadContext]) -> file_value.FileValue:
         ...
 
     # TODO: All the many static construction methods

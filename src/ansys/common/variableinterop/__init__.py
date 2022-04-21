@@ -83,6 +83,7 @@ from .file_scope import FileScope
 from .file_value import EMPTY_FILE, FileValue
 from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
+from .isave_context import ILoadContext, ISaveContext
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .ivariable_visitor import IVariableValueVisitor
 from .ivariablemetadata_visitor import IVariableMetadataVisitor
