@@ -7,7 +7,15 @@ numpy types, so these tests are just verifying that is working correctly.
 
 import numpy as np
 import pytest
+from test_file_value import _TestFileValue
 
+from ansys.common.variableinterop.array_values import (
+    BooleanArrayValue,
+    IntegerArrayValue,
+    RealArrayValue,
+    StringArrayValue,
+)
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
@@ -142,6 +150,198 @@ def test_equality_of_boolean_values(
         expected: bool) -> None:
     """
     Equality tests for BooleanValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 1),
+                     True, id="Same id"),
+        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 2),
+                     False, id="Different ids"),
+    ]
+)
+def test_equality_of_file_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for FileValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(RealArrayValue(values=[1.1, 2.2, 3.3]), RealArrayValue(values=[1.1, 2.2, 3.3]),
+                     True, id="Matching Reals"),
+        pytest.param(RealArrayValue(values=[1.1, 2.2, 3.3]), RealArrayValue(values=[1.1, 9.9, 3.3]),
+                     False, id="Different Reals"),
+    ]
+)
+def test_equality_of_real_array_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for RealArrayValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(IntegerArrayValue(values=[1, 2, 3]), IntegerArrayValue(values=[1, 2, 3]),
+                     True, id="Matching Ints"),
+        pytest.param(IntegerArrayValue(values=[1, 2, 3]), IntegerArrayValue(values=[1, 2, 4]),
+                     False, id="Different Ints"),
+    ]
+)
+def test_equality_of_integer_array_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for IntegerArrayValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(StringArrayValue(values=['a', 'b', 'c']),
+                     StringArrayValue(values=['a', 'b', 'c']),
+                     True, id="Matching Strings"),
+        pytest.param(StringArrayValue(values=['a', 'b', 'c']),
+                     StringArrayValue(values=['a', 'b', 'd']),
+                     False, id="Different Strings"),
+    ]
+)
+def test_equality_of_string_array_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for StringArrayValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(BooleanArrayValue(values=[True, False, True]),
+                     BooleanArrayValue(values=[True, False, True]),
+                     True, id="Matching Bools"),
+        pytest.param(BooleanArrayValue(values=[True, False, True]),
+                     BooleanArrayValue(values=[False, False, True]),
+                     False, id="Different Bools"),
+    ]
+)
+def test_equality_of_boolean_array_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for BooleanArrayValue.
+
+    Parameters
+    ----------
+    lhs Left-hand of the equality operation.
+    rhs Right-hand of the equality operation.
+    expected The expected result of equality check.
+    """
+    # SUT
+    result: bool = lhs == rhs
+
+    # Verification
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "lhs,rhs,expected",
+    [
+        pytest.param(FileArrayValue(values=[
+                        _TestFileValue("a", "b", "c", 1),
+                        _TestFileValue("a", "b", "c", 1)
+                     ]),
+                     FileArrayValue(values=[
+                         _TestFileValue("a", "b", "c", 1),
+                         _TestFileValue("a", "b", "c", 1)
+                     ]),
+                     True, id="Same Files"),
+        pytest.param(FileArrayValue(values=[
+                        _TestFileValue("a", "b", "c", 1),
+                        _TestFileValue("a", "b", "c", 1)
+                    ]),
+                    FileArrayValue(values=[
+                        _TestFileValue("a", "b", "c", 1),
+                        _TestFileValue("a", "b", "c", 2)
+                    ]),
+                    False, id="Different Different"),
+    ]
+)
+def test_equality_of_file_array_values(
+        lhs: variable_value.IVariableValue,
+        rhs: variable_value.IVariableValue,
+        expected: bool) -> None:
+    """
+    Equality tests for FileArrayValue.
 
     Parameters
     ----------

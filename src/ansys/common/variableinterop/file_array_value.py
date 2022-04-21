@@ -4,18 +4,20 @@ from __future__ import annotations
 from typing import TypeVar
 
 import numpy as np
+from numpy.typing import ArrayLike
 from overrides import overrides
 
+import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_value as variable_value
 
+from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .variable_type import VariableType
 
 T = TypeVar("T")
 
 
-# TODO: fix inheritance typing once we have the file type defined.
-class FileArrayValue(np.ndarray, variable_value.IVariableValue):
+class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     """Array of file values.
 
     In Python FileArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -26,7 +28,15 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
     of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
     """
 
-    # TODO: __new__() implementation (what will the data type be?)
+    @overrides
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values:
+            return np.array(values, dtype=file_value.FileValue).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=file_value.FileValue)
+
+    @overrides
+    def __eq__(self, other):
+        return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
@@ -39,7 +49,6 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
 
     # TODO: full implementation
 
-    @overrides
     def to_api_string(self) -> str:
         raise NotImplementedError
 
@@ -49,4 +58,6 @@ class FileArrayValue(np.ndarray, variable_value.IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        raise NotImplementedError
+        disp_str: str = ArrayToFromStringUtil.value_to_string(
+            self, lambda elem: np.asscalar(elem).to_display_string(locale_name))
+        return disp_str

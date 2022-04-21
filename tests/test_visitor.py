@@ -33,6 +33,9 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
     def visit_string(self, value: acvi.StringValue) -> str:
         return value + ""
 
+    def visit_file(self, value: acvi.FileValue) -> str:
+        return str(value.original_file_name)
+
     def visit_integer_array(self, value: acvi.IntegerArrayValue) -> str:
         return value
 

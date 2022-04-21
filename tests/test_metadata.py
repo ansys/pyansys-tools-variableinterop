@@ -8,6 +8,8 @@ from ansys.common.variableinterop.array_metadata import (
     RealArrayMetadata,
     StringArrayMetadata,
 )
+from ansys.common.variableinterop.file_array_metadata import FileArrayMetadata
+from ansys.common.variableinterop.file_metadata import FileMetadata
 from ansys.common.variableinterop.scalar_metadata import (
     BooleanMetadata,
     IntegerMetadata,
@@ -29,7 +31,9 @@ all_metadata_types = [
     BooleanMetadata.__name__,
     BooleanArrayMetadata.__name__,
     StringMetadata.__name__,
-    StringArrayMetadata.__name__
+    StringArrayMetadata.__name__,
+    FileMetadata.__name__,
+    FileArrayMetadata.__name__
     ]
 
 
