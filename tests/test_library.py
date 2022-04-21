@@ -46,12 +46,11 @@ With coverage.
 
 
 """
-from typing import Any
+from typing import Any, Type
 
 import numpy as np
 import pytest
 from test_utils import _create_exception_context
-from typing import Type
 
 from ansys.common import variableinterop as ansysvars
 

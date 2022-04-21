@@ -333,6 +333,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
                 # For IVariableValues representing a string, convert to RealValue to use
                 # the alternate rounding strategy.
                 return cls.__new__(cls, RealValue.from_api_string(arg))
+            elif arg.variable_type == variable_type.VariableType.BOOLEAN:
+                return super().__new__(cls, bool(arg))
             else:
                 # For other IVariableValues, attempt to use the default conversions.
                 return super().__new__(cls, arg)
@@ -415,6 +417,20 @@ class RealValue(np.float64, variable_value.IVariableValue):
     an IntegerValue with variable interop standard rounding (away from zero). IntegerValue
     decomposes naturally to numpy.int64.
     """
+
+    def __new__(cls, arg: Any = 0.0):
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        arg the argument from which to construct this instance
+        """
+
+        if isinstance(arg, BooleanValue):
+            return super().__new__(cls, bool(arg))
+        else:
+            return super().__new__(cls, arg)
 
     __CANONICAL_INF = "Infinity"
     """
