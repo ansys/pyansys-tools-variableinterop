@@ -1,10 +1,9 @@
 """Unit tests of IVariableVisitor, and accept methods of value types."""
 
-from typing import Any
+from typing import Any, Type
 
 import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
-from typing import Type
 
 import ansys.common.variableinterop as acvi
 from ansys.common.variableinterop.array_value_conversion import (

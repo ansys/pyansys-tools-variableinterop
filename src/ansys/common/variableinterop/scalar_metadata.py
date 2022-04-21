@@ -11,7 +11,7 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 from .numeric_metadata import NumericMetadata
 from .scalar_values import IntegerValue, RealValue, StringValue
-from .utils.coercion import implicit_coerce
+from .utils.implicit_coercion import implicit_coerce
 
 T = TypeVar("T")
 

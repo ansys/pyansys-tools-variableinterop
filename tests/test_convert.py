@@ -1,9 +1,10 @@
 """
 Unit tests for utils.convert
 """
+from typing import Type
+
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
-from typing import Type
 
 import ansys.common.variableinterop as acvi
 import ansys.common.variableinterop.utils.convert as convert

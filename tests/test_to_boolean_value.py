@@ -1,10 +1,10 @@
 """Unit tests of ToBooleanValueVisitor"""
 import sys
+from typing import Type
 
 import numpy
 import pytest
 from test_utils import _create_exception_context
-from typing import Type
 
 from ansys.common.variableinterop import (
     BooleanValue,
