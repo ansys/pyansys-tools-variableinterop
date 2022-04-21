@@ -39,8 +39,8 @@ class FileValue(variable_value.IVariableValue, ABC):
         ----------
         original_path Path to the file to wrap.
         mime_type Mime type of the file.
-        encoding Encoding of the file.
-        value_id Id that uniquely identifies this file. Auto-generated\
+        encoding The encoding of the file.
+        value_id The id that uniquely identifies this file. Auto-generated\
             if not supplied.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id

@@ -92,9 +92,8 @@ class __ElementTypePseudoVisitor(
 
 
 def to_array_type(vartype: variable_type.VariableType) -> variable_type.VariableType:
-    """
-    Given a VariableType, find the corresponding array type, if one exists.
-    Otherwise, ValueError is raised.
+    """Given a VariableType, find the corresponding array type, if one \
+    exists. Otherwise, ValueError is raised.
 
     Parameters
     ----------

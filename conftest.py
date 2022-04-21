@@ -5,7 +5,7 @@ import pytest
 @pytest.fixture
 def anyio_backend():
     """
-    Defines the backends async tests are run on.
+    Define the backends async tests are run on.
 
     Returns
     -------

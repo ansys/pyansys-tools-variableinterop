@@ -1,3 +1,4 @@
+"""Definition of NonManagingFileScope."""
 from __future__ import annotations
 
 from os import PathLike
@@ -30,6 +31,7 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
     """
 
     class NonManagingFileValue(file_value.FileValue):
+        """Implementation of FileValue used by this scope."""
 
         @overrides
         def _has_content(self) -> bool:
@@ -38,6 +40,17 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
         def __init__(
             self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
         ) -> None:
+            """
+            Construct a new NonManagingFileValue.
+
+            Parameters
+            ----------
+            original_path Path to the file to wrap.
+            mime_type Mime type of the file.
+            encoding The encoding of the file.
+            value_id The id that uniquely identifies this file. Auto-generated\
+                if not supplied.
+            """
             super().__init__(to_read, mime_type, encoding, uuid4())
 
         @overrides
@@ -57,6 +70,17 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
 
     def to_api_string_file_store(self,
                                  file_var: file_value.FileValue) -> str:
+        """
+        TODO.
+
+        Parameters
+        ----------
+        file_var TODO
+
+        Returns
+        -------
+        TODO
+        """
         if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")
 
