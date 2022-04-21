@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from test_file_value import _TestFileValue
 
 import ansys.common.variableinterop as acvi
@@ -22,3 +24,20 @@ def test_construct_1d():
     test_html_file: acvi.FileValue = sut[2]
     assert test_html_file.original_file_name == '/test/file.htm'
     assert test_html_file.mime_type == 'text/html'
+
+
+def test_to_display_string():
+    # Setup
+    sut: acvi.FileArrayValue = acvi.FileArrayValue(
+        values=[acvi.EMPTY_FILE,
+                _TestFileValue(None, "application/bytestream",
+                               None, None).set_content_override(),
+                _TestFileValue(Path('file_path_here'), "application/bytestream",
+                            None, None).set_content_override()])
+
+    # Execute
+    result: str = sut.to_display_string("locale ignored")
+
+    # Verify
+    assert result == '<empty file>,<file read from unknown location>,'\
+                     '<file read from file_path_here>'

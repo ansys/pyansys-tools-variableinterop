@@ -1,7 +1,7 @@
 """Definition of FileArrayValue."""
 from __future__ import annotations
 
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -58,4 +58,6 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        raise NotImplementedError
+        disp_str: str = ArrayToFromStringUtil.value_to_string(
+            self, lambda elem: np.asscalar(elem).to_display_string(locale_name))
+        return disp_str
