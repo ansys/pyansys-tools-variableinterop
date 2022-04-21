@@ -16,7 +16,10 @@ import ansys.common.variableinterop.variable_value as variable_value
 
 __TYPE_MAPPINGS = {
     int: scalar_values.IntegerValue,
-    np.integer: scalar_values.IntegerValue,
+    np.int8: scalar_values.IntegerValue,
+    np.int16: scalar_values.IntegerValue,
+    np.int32: scalar_values.IntegerValue,
+    np.int64: scalar_values.IntegerValue,
     float: scalar_values.RealValue,
     np.float16: scalar_values.RealValue,
     np.float32: scalar_values.RealValue,
@@ -33,7 +36,10 @@ and the value is the specific IVariableValue implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
-    np.integer: array_values.IntegerArrayValue,
+    np.int8: array_values.IntegerArrayValue,
+    np.int16: array_values.IntegerArrayValue,
+    np.int32: array_values.IntegerArrayValue,
+    np.int64: array_values.IntegerArrayValue,
     np.float16: array_values.RealArrayValue,
     np.float32: array_values.RealArrayValue,
     np.float64: array_values.RealArrayValue,
@@ -47,7 +53,8 @@ and the value is the specific IVariableValue implementation that should be used.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
-    scalar_values.IntegerValue: [int, np.integer, bool, np.bool_, scalar_values.BooleanValue],
+    scalar_values.IntegerValue: [int, np.int8, np.int16, np.int32, np.int64,
+                                 bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.RealValue: [float, np.float16, np.float32, np.float64,
                               bool, np.bool_, scalar_values.BooleanValue],
     scalar_values.BooleanValue: [bool, np.bool_],
@@ -63,7 +70,7 @@ and the values are the allowable runtime types that may be converted implicitly 
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
-    array_values.IntegerArrayValue: [np.integer, np.bool_],
+    array_values.IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
     array_values.RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
     array_values.BooleanArrayValue: [np.bool_],
     array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_]
