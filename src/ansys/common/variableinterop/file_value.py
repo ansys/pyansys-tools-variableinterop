@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from configparser import ConfigParser
 import json
-from os import PathLike
+from os import PathLike, path
 from typing import Callable, Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
@@ -13,6 +14,9 @@ import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
 T = TypeVar('T')
+
+RESOURCE_PARSER = ConfigParser()
+RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 
 class FileValue(variable_value.IVariableValue, ABC):
@@ -50,7 +54,13 @@ class FileValue(variable_value.IVariableValue, ABC):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        raise NotImplementedError
+        if self._has_content():
+            return RESOURCE_PARSER.get("DisplayFormats", "FILE_CONTENTS_FORMAT").format(
+                self._original_path if self._original_path\
+                                    else RESOURCE_PARSER.get("DisplayFormats",
+                                                             "FILE_LOCATION_UNKNOWN"))
+        else:
+            return RESOURCE_PARSER.get("DisplayFormats", "FILE_EMPTY")
 
     BINARY_MIMETYPE: Final[str] = "application/octet-stream"
 

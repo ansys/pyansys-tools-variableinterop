@@ -1,5 +1,6 @@
 import json
 from os import PathLike
+from pathlib import Path
 from typing import Any, Optional
 from uuid import UUID
 
@@ -11,6 +12,14 @@ import ansys.common.variableinterop as acvi
 class _TestFileValue(acvi.FileValue):
     """A concrete implementation of FileValue used to test its constructor."""
 
+    def __init__(self,
+                 original_path: Optional[PathLike],
+                 mime_type: Optional[str],
+                 encoding: Optional[str],
+                 value_id: Optional[UUID]):
+        super().__init__(original_path, mime_type, encoding, value_id)
+        self._has_content_override: bool = False
+
     def actual_content_file_name(self) -> Optional[PathLike]:
         return None
 
@@ -20,8 +29,16 @@ class _TestFileValue(acvi.FileValue):
     def write_file(self, file_name: PathLike) -> None:
         raise NotImplementedError()
 
+    def set_content_override(self) -> '_TestFileValue':
+        """
+        Causes this instance to report it has content regardless
+        of how it was constructed.
+        """
+        self._has_content_override = True
+        return self
+
     def _has_content(self) -> bool:
-        return bool(self._original_path)
+        return self._has_content_override or bool(self._original_path)
 
 
 def __test_file_store(file_var: acvi.FileValue) -> str:
@@ -139,3 +156,23 @@ def test_empty_file_value():
     assert acvi.EMPTY_FILE.original_file_name is None
     assert acvi.EMPTY_FILE.file_encoding is None
     assert acvi.EMPTY_FILE.id == __EMPTY_UUID
+
+
+@pytest.mark.parametrize(
+    'sut,expected_result',
+    [
+        pytest.param(acvi.EMPTY_FILE, '<empty file>', id="empty"),
+        pytest.param(_TestFileValue(None, "application/bytestream",
+                                    None, None).set_content_override(),
+                     '<file read from unknown location>', id='nonempty, no original path'),
+        pytest.param(_TestFileValue(Path('file_path_here'), "application/bytestream",
+                                    None, None).set_content_override(),
+                     '<file read from file_path_here>', id='has content and original path')
+    ]
+)
+def test_to_display_string(sut: acvi.FileValue, expected_result: str):
+    # Execute
+    result: str = sut.to_display_string('locale ignored')
+
+    # Verify
+    assert result == expected_result
