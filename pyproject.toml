@@ -28,6 +28,7 @@ packages = [
 python = ">=3.8,<4.0"
 numpy = "^1.22.3"
 overrides = {version="^6.1", optional=true}
+anyio = "^3.5.0"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
@@ -45,7 +46,7 @@ mypy = {version="^0.940", optional=true}
 
 
 [tool.poetry.extras]
-dev = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
-docs = ["Sphinx", "numpydoc", "overrides", "pyansys_sphinx_theme", "sphinx-copybutton"]
+dev = ["Sphinx", "numpydoc", "overrides", "anyio", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
+docs = ["Sphinx", "numpydoc", "overrides", "anyio", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["overrides", "pytest", "pytest-cov", "pytest-mock"]
+test = ["overrides", "anyio", "pytest", "pytest-cov", "pytest-mock"]

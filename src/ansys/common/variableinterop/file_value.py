@@ -7,6 +7,8 @@ from os import PathLike, path
 from typing import Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
+from anyio import Path, open_file
+from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
 import ansys.common.variableinterop.isave_context as isave_context
@@ -48,7 +50,7 @@ class FileValue(variable_value.IVariableValue, ABC):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_file(self)
 
-    @property # type: ignore
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.FILE
@@ -135,11 +137,16 @@ class FileValue(variable_value.IVariableValue, ABC):
             else:
                 return "None"
 
-    @abstractmethod
-    def write_file(self, file_name: PathLike) -> None:
-        raise NotImplementedError()
+    async def write_file(self, file_name: PathLike) -> None:
+        # make the file
+        Path(file_name).open('w').close()
 
-    # TODO: Async version?
+        # copy the contents from the actual content file
+        file: Optional[PathLike] = self.actual_content_file_name()
+        async with await FileReadStream.from_path(file) as in_stream:
+            async with await FileWriteStream.from_path(file_name) as out_stream:
+                async for chunk in in_stream:
+                    await out_stream.send(chunk)
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
@@ -149,9 +156,11 @@ class FileValue(variable_value.IVariableValue, ABC):
     def is_text_based(self) -> Optional[bool]:
         return FileValue.is_text_based_static(self.mime_type)
 
-    @abstractmethod
-    def get_contents(self, encoding: Optional[str]) -> str:
-        raise NotImplementedError()
+    async def get_contents(self, encoding: Optional[str]) -> str:
+        file: Optional[PathLike] = self.actual_content_file_name()
+        async with await open_file(file=file, encoding=encoding) as f:
+            contents = await f.read()
+            return contents
 
     @abstractmethod
     def _has_content(self) -> bool:
@@ -187,8 +196,6 @@ class FileValue(variable_value.IVariableValue, ABC):
             obj[FileValue.ENCODING_KEY] = self._file_encoding
         return obj
 
-    # TODO: Async get_contents
-
 
 class EmptyFileValue(FileValue):
     """
@@ -216,11 +223,13 @@ class EmptyFileValue(FileValue):
     def actual_content_file_name(self) -> Optional[PathLike]:
         return None
 
-    def write_file(self, file_name: PathLike) -> None:
+    @overrides
+    async def write_file(self, file_name: PathLike) -> None:
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 
-    def get_contents(self, encoding: Optional[str]) -> str:
+    @overrides
+    async def get_contents(self, encoding: Optional[str]) -> str:
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 

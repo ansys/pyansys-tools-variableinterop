@@ -31,6 +31,7 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
 
     class NonManagingFileValue(file_value.FileValue):
 
+        @overrides
         def _has_content(self) -> bool:
             return bool(self._original_path)
 
@@ -43,18 +44,12 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
         def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
             return save_context.save_file(str(self.actual_content_file_name), None)
 
-        @property
+        @property  # type: ignore
+        @overrides
         def actual_content_file_name(self) -> Optional[PathLike]:
             return self._original_path
 
-        def write_file(self, file_name: PathLike) -> None:
-            # TODO: Implement
-            raise NotImplementedError()
-
-        def get_contents(self, encoding: Optional[str]) -> str:
-            # TODO: Implement
-            raise NotImplementedError()
-
+    @overrides
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
     ) -> file_value.FileValue:
