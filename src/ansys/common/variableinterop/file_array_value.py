@@ -66,7 +66,7 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
                     return scope.from_api_object(item, context)
                 else:
                     raise TypeError(f"Encountered a {type(item)} when attempting to deserialize "
-                                    f"a file value. Is the serialized array rectangular?")
+                                    f"a file value element. Is the serialized array rectangular?")
 
             # Construct the item.
             return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value)))

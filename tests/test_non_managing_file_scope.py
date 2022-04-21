@@ -256,3 +256,37 @@ def test_array_from_string_2d():
         assert result[0, 1].original_file_name == Path('test/files/test.txt')
         assert result[1, 0].original_file_name == Path('test/files/test-jis.txt')
         assert result[1, 1].original_file_name == Path('test/files/test-item.bin')
+
+
+def test_array_from_string_jagged():
+    expected_json_value = [
+        [
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test.txt',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test.txt',
+                acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+                acvi.FileValue.MIMETYPE_KEY: 'text/testfile'
+            }
+        ], [
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test-jis.txt',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-jis.txt',
+                acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+            },
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test-item.bin',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-item.bin',
+                acvi.FileValue.MIMETYPE_KEY: 'application/bytestream'
+            }]
+    ]
+
+    try:
+        with acvi.NonManagingFileScope() as sut_scope:
+            result = acvi.from_api_string(acvi.VariableType.FILE_ARRAY,
+                                          json.dumps(expected_json_value),
+                                          sut_scope, sut_scope)
+            assert False, "Should have failed by now."
+
+    except TypeError as thrown:
+        assert str(thrown) == f"Encountered a {list} when attempting to deserialize "\
+                              f"a file value element. Is the serialized array rectangular?"
