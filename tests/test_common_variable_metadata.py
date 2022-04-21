@@ -85,7 +85,7 @@ def get_test_real_array_meta(
         enums: List[float] = None) -> acvi.RealArrayMetadata:
     """Get a test RealArrayMetadata with optional lower and/or
     upper bounds, and optional enumerated values."""
-    return get_test_num_meta(acvi.RealArrayMetadata, acvi.IntegerValue, lower, upper, enums)
+    return get_test_num_meta(acvi.RealArrayMetadata, acvi.RealValue, lower, upper, enums)
 
 
 S = TypeVar('S', acvi.StringMetadata, acvi.StringArrayMetadata)
