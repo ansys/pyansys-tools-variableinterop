@@ -8,6 +8,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
+import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.isave_context as isave_context
@@ -65,8 +66,7 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
                 if isinstance(item, dict):
                     return scope.from_api_object(item, context)
                 else:
-                    raise TypeError(f"Encountered a {type(item)} when attempting to deserialize "
-                                    f"a file value element. Is the serialized array rectangular?")
+                    raise TypeError(exceptions._error("ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
             return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value)))
