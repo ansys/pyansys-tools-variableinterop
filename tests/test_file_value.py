@@ -87,9 +87,9 @@ __EMPTY_UUID = UUID(int = 0)
     ]
 )
 def test_constructor(
-        specified_orig_path: Optional[str], expected_orig_path: Optional[str],
+        specified_orig_path: Optional[PathLike], expected_orig_path: Optional[PathLike],
         specified_mime_type: Optional[str], expected_mime_type: Optional[str],
-        specified_encoding: Optional[Any], expected_encoding: Optional[Any],
+        specified_encoding: Optional[str], expected_encoding: Optional[str],
         specified_value_id: Optional[UUID], expected_value_id: Optional[UUID]) -> None:
     """
     Verify that the constructor works correctly.
