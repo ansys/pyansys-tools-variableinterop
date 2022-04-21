@@ -341,6 +341,14 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             return super().__new__(cls, arg)
 
     @overrides
+    def __str__(self):
+        return self.to_display_string(locale.getlocale()[0])
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
+
+    @overrides
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
@@ -462,6 +470,10 @@ class RealValue(np.float64, variable_value.IVariableValue):
         if np.isneginf(self):
             return RealValue.__CANONICAL_NEG_INF
         return np.float64.__str__(self)
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
 
     @staticmethod
     def from_api_string(value: str) -> RealValue:

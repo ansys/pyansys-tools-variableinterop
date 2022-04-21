@@ -43,6 +43,14 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return super().__new__(cls, shape=shape_, dtype=np.bool_)
 
     @overrides
+    def __str__(self):
+        return self.to_display_string(locale.getlocale()[0])
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
+
+    @overrides
     def __eq__(self, other) -> bool:
         return np.array_equal(self, other)
 
@@ -119,6 +127,14 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return super().__new__(cls, shape=shape_, dtype=np.int64)
 
     @overrides
+    def __str__(self):
+        return self.to_display_string(locale.getlocale()[0])
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
+
+    @overrides
     def __eq__(self, other):
         return np.array_equal(self, other)
 
@@ -191,6 +207,14 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         if values:
             return np.array(values, dtype=np.float64).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.float64)
+
+    @overrides
+    def __str__(self):
+        return self.to_display_string(locale.getlocale()[0])
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -286,6 +310,14 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         if values:
             return np.array(values, dtype=np.str_).view(cls)
         return super().__new__(cls, shape=shape_, dtype=np.str_)
+
+    @overrides
+    def __str__(self):
+        return self.to_display_string(locale.getlocale()[0])
+
+    @overrides
+    def __repr__(self):
+        return self.to_api_string()
 
     def __eq__(self, other):
         return np.array_equal(self, other)

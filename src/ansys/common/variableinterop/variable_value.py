@@ -17,17 +17,9 @@ T = TypeVar("T")
 class IVariableValue(ABC):
     """Interface that defines the common behavior between variable types."""
 
-    @overrides
-    def __str__(self):
-        return self.to_display_string()
-
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
         return copy.deepcopy(self)
-
-    @overrides
-    def __repr__(self) -> str:
-        return self.to_api_string()
 
     @abstractmethod
     def accept(
