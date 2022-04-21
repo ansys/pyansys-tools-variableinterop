@@ -64,7 +64,10 @@ except ModuleNotFoundError:
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from ansys.common.variableinterop.utils.coercion import implicit_coerce, implicit_coerce_single
+from ansys.common.variableinterop.utils.implicit_coercion import (
+    implicit_coerce,
+    implicit_coerce_single,
+)
 from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 
 from .api_serialization import from_api_string, to_api_string
