@@ -182,9 +182,9 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
         return value.to_real_array_value()
 
     @overrides
-    def visit_file_array(self, value: FileArrayValue) -> IntegerArrayValue:
+    def visit_file_array(self, value: FileArrayValue) -> RealArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type(), variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type(), variable_type.VariableType.REAL_ARRAY)
 
 
 class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
