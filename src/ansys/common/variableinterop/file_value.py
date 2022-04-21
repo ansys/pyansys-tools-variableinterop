@@ -149,8 +149,6 @@ class FileValue(variable_value.IVariableValue, ABC):
     def is_text_based(self) -> Optional[bool]:
         return FileValue.is_text_based_static(self.mime_type)
 
-    # TODO: How does Python handle BOM? implement static and non-static ReadBOM()
-
     @abstractmethod
     def get_contents(self, encoding: Optional[str]) -> str:
         raise NotImplementedError()

@@ -36,7 +36,6 @@ class FileScope(AbstractContextManager, ABC):
     def close(self) -> None:
         ...
 
-    # TODO: Proper type for encoding
     @abstractmethod
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
@@ -48,5 +47,3 @@ class FileScope(AbstractContextManager, ABC):
                         api_object: Dict[str, Optional[str]],
                         load_context: isave_context.ILoadContext) -> file_value.FileValue:
         ...
-
-    # TODO: All the many static construction methods

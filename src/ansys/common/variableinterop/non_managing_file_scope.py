@@ -34,8 +34,6 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
         def _has_content(self) -> bool:
             return bool(self._original_path)
 
-        # TODO: Make consistent for mime_type and encoding w/r/t Optional
-
         def __init__(
             self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
         ) -> None:
