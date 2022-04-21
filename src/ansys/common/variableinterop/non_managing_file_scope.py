@@ -81,9 +81,9 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
                     api_object.get(file_value.FileValue.MIMETYPE_KEY),
                     api_object.get(file_value.FileValue.ENCODING_KEY))
             else:
-                return file_value.EMPTY_FILE_VALUE
+                return file_value.EMPTY_FILE
         else:
-            return file_value.EMPTY_FILE_VALUE
+            return file_value.EMPTY_FILE
 
     @overrides
     def save_file(self, source: Union[PathLike, str], content_id: Optional[str]) -> str:

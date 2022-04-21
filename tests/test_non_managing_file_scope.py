@@ -111,3 +111,148 @@ def test_from_api_str_valid(source: str,
         assert sut_file_inst.actual_content_file_name == expected_file_name
         assert sut_file_inst.mime_type == expected_mime_type
         assert sut_file_inst.file_encoding == expected_encoding
+
+
+def test_array_to_api_str():
+
+    # Setup
+    with acvi.NonManagingFileScope() as sut_scope:
+        sut_values: acvi.FileArrayValue = acvi.FileArrayValue(values=[
+            acvi.EMPTY_FILE,
+            sut_scope.read_from_file('test/files/test.txt', 'text/testfile', 'Shift-JIS'),
+            sut_scope.read_from_file('test/files/test-jis.txt', None, 'Shift-JIS'),
+            sut_scope.read_from_file('test/files/test-item.bin', 'application/bytestream', None)])
+
+        # Execute
+        result: str = acvi.to_api_string(sut_values, sut_scope)
+
+        # Verify
+        json_parsed_result = json.loads(result)
+        expected_json_value = [
+             {},
+             {
+                 acvi.FileValue.CONTENTS_KEY: 'test/files/test.txt',
+                 acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test.txt',
+                 acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+                 acvi.FileValue.MIMETYPE_KEY: 'text/testfile'
+             },
+             {
+                 acvi.FileValue.CONTENTS_KEY: 'test/files/test-jis.txt',
+                 acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-jis.txt',
+                 acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+             },
+             {
+                 acvi.FileValue.CONTENTS_KEY: 'test/files/test-item.bin',
+                 acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-item.bin',
+                 acvi.FileValue.MIMETYPE_KEY: 'application/bytestream'
+             }]
+        assert json_parsed_result == expected_json_value
+
+
+def test_array_to_api_str_2d():
+
+    # Setup
+    with acvi.NonManagingFileScope() as sut_scope:
+        sut_values: acvi.FileArrayValue = acvi.FileArrayValue(values=[
+                [
+                    acvi.EMPTY_FILE,
+                    sut_scope.read_from_file('test/files/test.txt', 'text/testfile', 'Shift-JIS'),
+                ],
+                [
+
+                    sut_scope.read_from_file('test/files/test-jis.txt', None, 'Shift-JIS'),
+                    sut_scope.read_from_file('test/files/test-item.bin', 'application/bytestream',
+                                             None)
+                ]])
+
+        # Execute
+        result: str = acvi.to_api_string(sut_values, sut_scope)
+
+        # Verify
+        json_parsed_result = json.loads(result)
+        expected_json_value = [
+            [
+                {},
+                {
+                    acvi.FileValue.CONTENTS_KEY: 'test/files/test.txt',
+                    acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test.txt',
+                    acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+                    acvi.FileValue.MIMETYPE_KEY: 'text/testfile'
+                }
+            ], [
+                {
+                    acvi.FileValue.CONTENTS_KEY: 'test/files/test-jis.txt',
+                    acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-jis.txt',
+                    acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+                },
+                {
+                    acvi.FileValue.CONTENTS_KEY: 'test/files/test-item.bin',
+                    acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-item.bin',
+                    acvi.FileValue.MIMETYPE_KEY: 'application/bytestream'
+                }]
+        ]
+        assert json_parsed_result == expected_json_value
+
+
+def test_array_from_string():
+    expected_json_value = [
+        {},
+        {
+            acvi.FileValue.CONTENTS_KEY: 'test/files/test.txt',
+            acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test.txt',
+            acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+            acvi.FileValue.MIMETYPE_KEY: 'text/testfile'
+        },
+        {
+            acvi.FileValue.CONTENTS_KEY: 'test/files/test-jis.txt',
+            acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-jis.txt',
+            acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+        },
+        {
+            acvi.FileValue.CONTENTS_KEY: 'test/files/test-item.bin',
+            acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-item.bin',
+            acvi.FileValue.MIMETYPE_KEY: 'application/bytestream'
+        }]
+
+    with acvi.NonManagingFileScope() as sut_scope:
+        result = acvi.from_api_string(acvi.VariableType.FILE_ARRAY,
+                                      json.dumps(expected_json_value),
+                                      sut_scope, sut_scope)
+        assert isinstance(result, acvi.FileArrayValue)
+        assert result[0] is acvi.EMPTY_FILE
+        assert result[1].original_file_name == Path('test/files/test.txt')
+        assert result[2].original_file_name == Path('test/files/test-jis.txt')
+        assert result[3].original_file_name == Path('test/files/test-item.bin')
+
+
+def test_array_from_string_2d():
+    expected_json_value = [
+        [
+            {},
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test.txt',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test.txt',
+                acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+                acvi.FileValue.MIMETYPE_KEY: 'text/testfile'
+            }
+        ], [
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test-jis.txt',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-jis.txt',
+                acvi.FileValue.ENCODING_KEY: 'Shift-JIS',
+            },
+            {
+                acvi.FileValue.CONTENTS_KEY: 'test/files/test-item.bin',
+                acvi.FileValue.ORIGINAL_FILENAME_KEY: 'test/files/test-item.bin',
+                acvi.FileValue.MIMETYPE_KEY: 'application/bytestream'
+            }]
+    ]
+
+    with acvi.NonManagingFileScope() as sut_scope:
+        result = acvi.from_api_string(acvi.VariableType.FILE_ARRAY,
+                                      json.dumps(expected_json_value),
+                                      sut_scope, sut_scope)
+        assert result[0, 0] is acvi.EMPTY_FILE
+        assert result[0, 1].original_file_name == Path('test/files/test.txt')
+        assert result[1, 0].original_file_name == Path('test/files/test-jis.txt')
+        assert result[1, 1].original_file_name == Path('test/files/test-item.bin')

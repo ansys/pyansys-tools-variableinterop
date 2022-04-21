@@ -9,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.file_value import FileValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.scalar_values import (
@@ -59,6 +60,10 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> bool:
+        raise IncompatibleTypesException(value.variable_type(), "bool")
+
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> bool:
         raise IncompatibleTypesException(value.variable_type(), "bool")
 
 
@@ -121,6 +126,10 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     def visit_string_array(self, value: StringArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.INTEGER)
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> IntegerValue:
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER_ARRAY)
+
 
 def to_integer_value(other: IVariableValue) -> IntegerValue:
     """
@@ -177,6 +186,10 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.REAL)
+
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> RealValue:
+        raise IncompatibleTypesException(value.variable_type(), VariableType.REAL)
 
 
 def to_real_value(other: IVariableValue) -> RealValue:

@@ -8,6 +8,7 @@ from ansys.common.variableinterop.array_values import (
     RealArrayValue,
     StringArrayValue,
 )
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.file_scope import FileScope
 from ansys.common.variableinterop.isave_context import ILoadContext, ISaveContext
 from ansys.common.variableinterop.ivariable_type_pseudovisitor import vartype_accept
@@ -53,6 +54,9 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
 
     def visit_string_array(self, value: StringArrayValue) -> str:
         return value.to_api_string()
+
+    def visit_file_array(self, value: FileArrayValue) -> str:
+        return value.to_api_string(self._save_context)
 
 
 def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = None) -> str:

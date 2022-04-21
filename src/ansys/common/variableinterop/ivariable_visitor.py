@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         RealArrayValue,
         StringArrayValue,
     )
+    from ansys.common.variableinterop.file_array_value import FileArrayValue
     from ansys.common.variableinterop.file_value import FileValue
     from ansys.common.variableinterop.scalar_values import (
         BooleanValue,
@@ -155,6 +156,21 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
     @abstractmethod
     def visit_string_array(self, value: StringArrayValue) -> T:
+        """
+        Will be called if accept is called on a StringArrayValue.
+
+        Parameters
+        ----------
+        value The StringArrayValue being visited.
+
+        Returns
+        -------
+        The result.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_file_array(self, value: FileArrayValue) -> T:
         """
         Will be called if accept is called on a StringArrayValue.
 
