@@ -22,7 +22,7 @@ class ISaveContext(AbstractContextManager, ABC):
         return None
 
     @abstractmethod
-    def save_file(self, source: Union[PathLike, str], id: Optional[str]) -> str:
+    def save_file(self, source: Union[PathLike, str], content_id: Optional[str]) -> str:
         """
         Save a file to the save medium
 
@@ -33,8 +33,9 @@ class ISaveContext(AbstractContextManager, ABC):
         Parameters
         ----------
         source the file on disk to send or include in the save.
-        id If a unique ID is already known for the file, include it here. If it is not provided
-            one will be generated and returned. This ID can be used with an equivalent
+        content_id If a unique ID is already known for the file, include it here.
+            If it is not provided, one will be generated and returned.
+            This ID can be used with an equivalent
             ILoadContext to load the contents on deserialize.
 
         Returns

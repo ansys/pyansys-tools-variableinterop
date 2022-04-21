@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 from uuid import uuid4
 
 from overrides import overrides
@@ -12,17 +12,21 @@ import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.isave_context as isave_context
 
 
-class NonManagingFileScope(file_scope.FileScope):
+class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext):
     """
-    A file scope that allows you to create `FileValue` instances that are backed by arbitrary
+    A simple file scope implementation that performs no management.
+
+    This file scope that allows you to create `FileValue` instances that are backed by arbitrary
     preexisting files on disk. It is up to the caller to ensure that the file remains in place
     and unchanged for the lifespan of the FileValue instance, and that the file is deleted at
     an appropriate time. Because of these restrictions, it is generally not recommended using
     this file scope except for referencing permanently installed files.
-    """
 
-    def close(self) -> None:
-        pass
+    It also serves as a "pass-through" save context; since the files are assumed to be managed
+    externally such that they are permanent or at least not deleted while in use,
+    the save context takes no action to actually save them and simply passes through
+    their current location on disk as an identifier.
+    """
 
     class NonManagingFileValue(file_value.FileValue):
 
@@ -35,6 +39,10 @@ class NonManagingFileScope(file_scope.FileScope):
             self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
         ) -> None:
             super().__init__(to_read, mime_type, encoding, uuid4())
+
+        @overrides
+        def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
+            return save_context.save_file(str(self.actual_content_file_name), None)
 
         @property
         def actual_content_file_name(self) -> Optional[PathLike]:
@@ -76,3 +84,19 @@ class NonManagingFileScope(file_scope.FileScope):
                 return file_value.EMPTY_FILE_VALUE
         else:
             return file_value.EMPTY_FILE_VALUE
+
+    @overrides
+    def save_file(self, source: Union[PathLike, str], content_id: Optional[str]) -> str:
+        if content_id is not None:
+            return content_id
+
+        else:
+            return str(source)
+
+    @overrides
+    def flush(self) -> None:
+        pass
+
+    @overrides
+    def close(self) -> None:
+        pass
