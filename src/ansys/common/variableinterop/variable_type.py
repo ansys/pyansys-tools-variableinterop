@@ -1,9 +1,6 @@
 """Definition of VariableType."""
-import string
 from enum import Enum
 from typing import Dict
-
-from overrides import overrides
 
 
 class VariableType(Enum):
