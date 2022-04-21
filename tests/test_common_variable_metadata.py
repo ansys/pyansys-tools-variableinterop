@@ -2,15 +2,16 @@
 Unit tests of the methods on
 common_variable_metadata.CommonVariableMetadata.
 """
-from typing import List, Tuple, TypeVar, Type
+from typing import List, Tuple, Type, TypeVar
 
 import pytest
 
 import ansys.common.variableinterop as acvi
 from ansys.common.variableinterop.variable_value import CommonArrayValue
 
-
-M = TypeVar('M')
+M = TypeVar(
+    'M',
+    acvi.IntegerMetadata, acvi.RealMetadata, acvi.IntegerArrayMetadata, acvi.RealArrayMetadata)
 N = TypeVar('N', int, float)
 
 
@@ -87,10 +88,13 @@ def get_test_real_array_meta(
     return get_test_num_meta(acvi.RealArrayMetadata, acvi.IntegerValue, lower, upper, enums)
 
 
+S = TypeVar('S', acvi.StringMetadata, acvi.StringArrayMetadata)
+
+
 def get_test_str_meta(
         enums: List[str],
-        meta_type: Type[M] = acvi.StringMetadata,
-        value_type: Type = acvi.StringValue) -> M:
+        meta_type: Type[S] = acvi.StringMetadata,
+        value_type: Type = acvi.StringValue) -> S:
     """
     Get a test StringMetadata with enumerated values.
 
@@ -113,7 +117,7 @@ def get_test_str_meta(
 
 
 def get_test_str_array_meta(
-        enums: List[str]) -> M:
+        enums: List[str]) -> acvi.StringArrayMetadata:
     """Get a test StringArrayMetadata with enumerated values."""
     return get_test_str_meta(
         enums,

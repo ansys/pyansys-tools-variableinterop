@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from overrides import overrides
 from typing import Any, Dict, Type, TypeVar
+
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
@@ -94,12 +95,29 @@ class CommonVariableMetadata(ABC):
 
     def get_default_value(self) -> variable_value.IVariableValue:
         """
-        Gets the default value that should be used for the variable
-        described by this metadata.
-        """
+        Get default value that should be used for variable describe \
+        by this metadata.
 
-        from ansys.common.variableinterop import scalar_metadata, scalar_values, array_metadata, \
-            array_values
+        The metadata may have set lower bound, upper bounds or
+        enumerated values which restricts what are possible valid
+        values. This method will select a valid default value.
+
+        - If the type's default value (e.g. 0 or empty string) is a
+          valid value for the metadata, use it.
+        - else if metadata has enumerated values, select the first
+          value in the enumerated values which is valid per the other
+          restrictions.
+        - else if metadata has a lower bound and is it is valid, use it.
+        - else if metadata does not have a lower bound, but does have an
+          upper bound, use upper bound.
+        - else no value is valid, use the type's default value.
+        """
+        from ansys.common.variableinterop import (
+            array_metadata,
+            array_values,
+            scalar_metadata,
+            scalar_values,
+        )
 
         class __DefaultValueVisitor(
                 ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
@@ -109,8 +127,8 @@ class CommonVariableMetadata(ABC):
             def __get_str_enumerated_default(
                     metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
                 """
-                For given StringMetadata, use enumerated values to
-                get the default value to use for the associated
+                For given StringMetadata, use enumerated values to\
+                get the default value to use for the associated\
                 variable.
 
                 Parameters
@@ -122,19 +140,19 @@ class CommonVariableMetadata(ABC):
                 StringValue default value to use for associated
                 variable.
                 """
-                default_value = scalar_values.StringValue()
+                default_value: scalar_values.StringValue = scalar_values.StringValue()
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
                     if default_value not in metadata.enumerated_values:
-                        default_value: scalar_values.StringValue = metadata.enumerated_values[0]
+                        default_value = metadata.enumerated_values[0]
                 return default_value
 
             M = TypeVar('M', scalar_metadata.IntegerMetadata, scalar_metadata.RealMetadata)
             T = TypeVar('T', scalar_values.IntegerValue, scalar_values.RealValue)
 
             @staticmethod
-            def __get_numeric_default(metadata: M, type_: Type = T) -> T:
+            def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
-                For a numeric metadata (i.e. IntegerMetadata or
+                For a numeric metadata (i.e. IntegerMetadata or\
                 RealMetadata) get the default value to use.
 
                 Parameters
