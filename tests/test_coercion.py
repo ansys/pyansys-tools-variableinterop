@@ -1,6 +1,4 @@
-"""
-Tests for the type coercion module
-"""
+"""Tests for the implicit type coercion module."""
 from abc import ABC, abstractmethod
 from typing import Any, Optional, Tuple, Type
 

@@ -1,4 +1,4 @@
-"""This module contains utilities for coercing arbitrary Python objects \
+"""This module contains utilities for implicitly coercing arbitrary Python objects \
 into the appropriate IVariableValue type."""
 from __future__ import annotations
 
@@ -30,8 +30,11 @@ __TYPE_MAPPINGS = {
     np.str_: scalar_values.StringValue
 }
 """
-This map applies when coercing a non-IVariableValue type to a method argument that converts an
-IVariableValue. The type of the actual runtime argument value is the key in the dictionary,
+This map applies when coercing scalar values to a method argument type hinted as IVariableValue.
+
+It is used to determine the specific implementation of IVariableValue that should be generated
+from the argument's actual runtime value.
+The type of the actual runtime argument value is the key in the dictionary,
 and the value is the specific IVariableValue implementation that should be used.
 """
 
@@ -47,8 +50,11 @@ __ARR_TYPE_MAPPINGS = {
     np.str_: array_values.StringArrayValue
 }
 """
-This map applies when coercing a non-IVariableValue type to a method argument that converts an
-IVariableValue. The type of the actual runtime argument value is the key in the dictionary,
+This map applies when coercing ndarray values to a method argument type hinted as IVariableValue.
+
+It is used to determine the specific implementation of IVariableValue that should be generated
+from the argument's actual runtime value.
+The dtype of the actual ndarray value at runtime is the key in the dictionary,
 and the value is the specific IVariableValue implementation that should be used.
 """
 
@@ -64,9 +70,11 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
                                 str, np.str_, scalar_values.StringValue],
     }
 """
-This map applies when coercing any value to a specific IVariableValue implementation.
-The type declared in the method definition is the key in the dictionary,
-and the values are the allowable runtime types that may be converted implicitly to that type.
+Rules for implicitly coercing scalar values to a specific IVariableValue implementation.
+
+This map is used to determine whether the coercion is allowed.
+The IVariableValue implementation type is the key. The value is a list of all types that may be
+implicitly coerced to that type.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
@@ -75,6 +83,14 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
     array_values.BooleanArrayValue: [np.bool_],
     array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_]
 }
+"""
+Rules for implicitly coercing array values to a specific IVariableValue implementation.
+
+The map is used to determine whether the coercion is allowed.
+The IVariableValue implementation type is the key. NumPy ndarrays with their dtype set to any of
+the items in the value list are allowed to be implicitly coerced to the type represented by
+the key.
+"""
 
 
 def _is_optional(arg_type: type) -> bool:
