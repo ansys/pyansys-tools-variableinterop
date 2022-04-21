@@ -1,11 +1,12 @@
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import copy
+from abc import ABC, abstractmethod
 from typing import Generic, Tuple, TypeVar
 
 from numpy.typing import NDArray
+from overrides import overrides
 
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
@@ -19,6 +20,10 @@ class IVariableValue(ABC):
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
         return copy.deepcopy(self)
+
+    @overrides
+    def __repr__(self) -> str:
+        return self.to_api_string()
 
     @abstractmethod
     def accept(
