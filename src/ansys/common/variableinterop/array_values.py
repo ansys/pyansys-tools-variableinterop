@@ -38,7 +38,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.bool_).view(cls)
-        elif shape_:
+        elif shape_ is not None:
             return super().__new__(cls, shape=shape_, dtype=np.bool_)
         else:
             return np.zeros(shape=(), dtype=np.bool_)
@@ -120,7 +120,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.int64).view(cls)
-        elif shape_:
+        elif shape_ is not None:
             return super().__new__(cls, shape=shape_, dtype=np.int64)
         else:
             return np.zeros(shape=(), dtype=np.int64)
@@ -200,7 +200,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.float64).view(cls)
-        elif shape_:
+        elif shape_ is not None:
             return super().__new__(cls, shape=shape_, dtype=np.float64)
         else:
             return np.zeros(shape=(), dtype=np.float64)
@@ -295,7 +295,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=np.str_).view(cls)
-        elif shape_:
+        elif shape_ is not None:
             return super().__new__(cls, shape=shape_, dtype=np.str_)
         else:
             return np.zeros(shape=(), dtype=np.str_)
