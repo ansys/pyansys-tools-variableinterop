@@ -53,7 +53,7 @@ import pytest
 from test_utils import _create_exception_context
 from typing import Type
 
-from ansys.common import variableinterop as ansysvars
+from ansys.common import variableinterop as acvi
 
 
 @pytest.mark.parametrize(
@@ -80,14 +80,14 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseExc
     nothing
     """
     with _create_exception_context(expect_exception):
-        a = ansysvars.IntegerValue(cons_arg)
+        a = acvi.IntegerValue(cons_arg)
 
 
 @pytest.mark.parametrize(
     "left, right, expect_exception",
     [
-        (ansysvars.IntegerValue(0), 0, None),
-        (0, ansysvars.IntegerValue(0), None),
+        (acvi.IntegerValue(0), 0, None),
+        (0, acvi.IntegerValue(0), None),
         # TODO: numpy does not overflow in this case:
         # (ansysvars.IntegerValue(9223372036854775807), 1, ValueError),
     ],
@@ -116,12 +116,12 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseExc
 @pytest.mark.parametrize(
     "left, right, expect_exception",
     [
-        (ansysvars.IntegerValue(0), 0, None),
-        (ansysvars.IntegerValue(0), ansysvars.IntegerValue(-3), None),
-        (0, ansysvars.IntegerValue(1), None),
+        (acvi.IntegerValue(0), 0, None),
+        (acvi.IntegerValue(0), acvi.IntegerValue(-3), None),
+        (0, acvi.IntegerValue(1), None),
         # TODO: numpy does not overflow in this case
         # (ansysvars.IntegerValue(9223372036854775807), -1, ValueError),
-        (ansysvars.IntegerValue(2), "a", TypeError),
+        (acvi.IntegerValue(2), "a", TypeError),
         # TODO: This will need special handling: (ansysvars.IntegerValue(2), 3.5, TypeError),
         # TODO: This will need special handling:
         #  (ansysvars.IntegerValue(2), ansysvars.RealValue(3.2), TypeError),
@@ -146,3 +146,52 @@ def test_integer_value_sub(left: Any, right: Any, expect_exception: Type[BaseExc
         result = left - right
         assert np.int64(result) == np.int64(left) - np.int64(right)
         assert isinstance(result, np.int64)
+
+
+@pytest.mark.parametrize(
+    "inp,expected_result,unknown",
+    [
+        # Scalars
+        pytest.param('real', acvi.VariableType.REAL, False, id='Real'),
+        pytest.param('integer', acvi.VariableType.INTEGER, False, id="Integer"),
+        pytest.param('boolean', acvi.VariableType.BOOLEAN, False, id="Boolean"),
+        pytest.param('string', acvi.VariableType.STRING, False, id="String"),
+        pytest.param('file', acvi.VariableType.FILE, False, id="File"),
+
+        # Arrays
+        pytest.param('realarray', acvi.VariableType.REAL_ARRAY, False, id="RealArray"),
+        pytest.param('integerarray', acvi.VariableType.INTEGER_ARRAY, False, id="IntegerArray"),
+        pytest.param('booleanarray', acvi.VariableType.BOOLEAN_ARRAY, False, id="BooleanArray"),
+        pytest.param('stringarray', acvi.VariableType.STRING_ARRAY, False, id="StringArray"),
+        pytest.param('filearray', acvi.VariableType.FILE_ARRAY, False, id="FileArray"),
+
+        # Case, underscore and 'value'
+        pytest.param('reAl_ArrAy_Value', acvi.VariableType.REAL_ARRAY, False,
+                     id="RealArray mixed case and underscore + 'value'"),
+
+        # Unknown
+        pytest.param('unknown', acvi.VariableType.UNKNOWN, False, id="Expected unknown"),
+        pytest.param('reals', None, True, id="Unknown type: reals")
+    ]
+)
+def test_var_type_from_string(inp: str, expected_result: acvi.VariableType, unknown: bool):
+    """
+    Tests that VariableType.from_string returns the correct type.
+
+    Parameters
+    ----------
+    inp : str
+        Input string.
+    expected_result : VariableType
+        The expected resulting VariableType.
+    unknown : bool
+        True if the resulting VariableType should be unknown, otherwise False.
+    """
+    # SUT
+    _type = acvi.VariableType.from_string(inp)
+
+    # Verify
+    if unknown:
+        assert _type == acvi.VariableType.UNKNOWN
+    else:
+        assert _type == expected_result

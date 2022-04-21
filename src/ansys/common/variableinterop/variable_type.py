@@ -1,6 +1,9 @@
 """Definition of VariableType."""
+import string
 from enum import Enum
 from typing import Dict
+
+from overrides import overrides
 
 
 class VariableType(Enum):
@@ -66,3 +69,29 @@ class VariableType(Enum):
             VariableType.FILE_ARRAY: "fileArray",
         }
         return class_map[self]
+
+    @staticmethod
+    def from_string(s: str) -> Enum:
+        inp = s.strip()
+        try:
+            return VariableType[inp.upper()]
+        except KeyError:
+            inp = inp.lower().replace('_', '').replace('value', '')
+            str_to_vartype_map: Dict[str, VariableType] = {
+                'unknown': VariableType.UNKNOWN,
+                'integer': VariableType.INTEGER,
+                'real': VariableType.REAL,
+                'boolean': VariableType.BOOLEAN,
+                'string': VariableType.STRING,
+                'file': VariableType.FILE,
+                'integerarray': VariableType.INTEGER_ARRAY,
+                'realarray': VariableType.REAL_ARRAY,
+                'booleanarray': VariableType.BOOLEAN_ARRAY,
+                'stringarray': VariableType.STRING_ARRAY,
+                'filearray': VariableType.FILE_ARRAY
+            }
+
+            inp = inp.lower()
+            if inp not in str_to_vartype_map.keys():
+                inp = 'unknown'
+            return str_to_vartype_map[inp]
