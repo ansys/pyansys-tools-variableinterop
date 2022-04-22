@@ -1,3 +1,4 @@
+"""Definition of FileValue."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -7,6 +8,8 @@ from os import PathLike, path
 from typing import Dict, Final, Optional, TypeVar
 from uuid import UUID, uuid4
 
+from anyio import Path, open_file
+from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
 import ansys.common.variableinterop.isave_context as isave_context
@@ -21,15 +24,25 @@ RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 
 class FileValue(variable_value.IVariableValue, ABC):
-    """
-    Abstract base class for a file variable. To create instances, use a `FileScope`.
-    """
+    """Abstract base class for a file variable. To create instances, \
+    use a `FileScope`."""
 
     def __init__(self,
                  original_path: Optional[PathLike],
                  mime_type: Optional[str],
                  encoding: Optional[str],
                  value_id: Optional[UUID]):
+        """
+        Construct a new FileValue.
+
+        Parameters
+        ----------
+        original_path Path to the file to wrap.
+        mime_type Mime type of the file.
+        encoding The encoding of the file.
+        value_id The id that uniquely identifies this file. Auto-generated\
+            if not supplied.
+        """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
         self._file_encoding: Optional[str] = encoding
@@ -48,7 +61,7 @@ class FileValue(variable_value.IVariableValue, ABC):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_file(self)
 
-    @property # type: ignore
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.FILE
@@ -81,35 +94,76 @@ class FileValue(variable_value.IVariableValue, ABC):
     @property
     @abstractmethod
     def actual_content_file_name(self) -> Optional[PathLike]:
+        """
+        Get a PathLike to the actual file this FileValue wraps.
+
+        Returns
+        -------
+        PathLike to the file.
+        """
         raise NotImplementedError()
 
     @property
     def mime_type(self) -> str:
+        """
+        Get the mimetype of this FileValue.
+
+        Returns
+        -------
+        The mimetype of the file.
+        """
         return self._mime_type
 
     @property
     def original_file_name(self) -> Optional[PathLike]:
+        """
+        Get the filename of the file that was wrapped.
+
+        Returns
+        -------
+        The original filename.
+        """
         return self._original_path
 
     @property
     def extension(self) -> str:
+        """
+        Get the extension of the file.
+
+        Returns
+        -------
+        The file's extension.
+        """
         # TODO: Implement
         raise NotImplementedError()
 
-    # TODO: Figure out how Python handles encodings and make a proper return type.
-    #  Maybe codecs.CodecInfo
     @property
     def file_encoding(self) -> Optional[str]:
+        """
+        Get the encoding of the file.
+
+        Returns
+        -------
+        The file's encoding.
+        """
         return self._file_encoding
 
     @property
     def id(self) -> UUID:
+        """
+        Get the id of this FileValue.
+
+        Returns
+        -------
+        The UUID that identifies this value.
+        """
         return self._id
 
     @staticmethod
     def read_bom(filename: str) -> str:
         """
-        Opens a file for reading and detects a byte order mark at the beginning.
+        Open a file for reading and detects a byte order mark at the \
+        beginning.
 
         Parameters
         ----------
@@ -119,8 +173,9 @@ class FileValue(variable_value.IVariableValue, ABC):
         Returns
         -------
         str
-            If the file contains a BOM, an appropriate encoding will be returned. If the file does
-            not contain a BOM, 'None' is returned.
+            If the file contains a BOM, an appropriate encoding will be
+            returned. If the file does not contain a BOM, 'None' is
+            returned.
         """
         with open(filename, 'rb') as f:
             bom = f.read(4)
@@ -137,23 +192,74 @@ class FileValue(variable_value.IVariableValue, ABC):
             else:
                 return "None"
 
-    @abstractmethod
-    def write_file(self, file_name: PathLike) -> None:
-        raise NotImplementedError()
+    async def write_file(self, file_name: PathLike) -> None:
+        """
+        Write the file's contents to a new file.
 
-    # TODO: Async version?
+        Parameters
+        ----------
+        file_name PathLike to the file to create.
+
+        Returns
+        -------
+        None.
+        """
+        # make the file
+        Path(file_name).open('w').close()
+
+        # copy the contents from the actual content file
+        # TODO: why does using this property give you a method?
+        file: Optional[PathLike] = self.actual_content_file_name()
+        async with await FileReadStream.from_path(file) as in_stream:
+            async with await FileWriteStream.from_path(file_name) as out_stream:
+                async for chunk in in_stream:
+                    await out_stream.send(chunk)
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
+        """
+        Determine if a file is text-based via it's mimetype.
+
+        Parameters
+        ----------
+        mimetype The file's mimetype.
+
+        Returns
+        -------
+        True if the mimetype starts with text or is application/json,
+        False otherwise.
+        """
         return str(mimetype).startswith("text/") or str(mimetype).startswith("application/json")
 
     @property
     def is_text_based(self) -> Optional[bool]:
+        """
+        Determine if this file is text-based via it's mimetype.
+
+        Returns
+        -------
+        True if the mimetype starts with text or is application/json,
+        False otherwise.
+        """
         return FileValue.is_text_based_static(self.mime_type)
 
-    @abstractmethod
-    def get_contents(self, encoding: Optional[str]) -> str:
-        raise NotImplementedError()
+    async def get_contents(self, encoding: Optional[str]) -> str:
+        """
+        Read the file's contents as a string.
+
+        Parameters
+        ----------
+        encoding The encoding to use when reading.
+
+        Returns
+        -------
+        The file contents as a string.
+        """
+        # TODO: why does using this property give you a method?
+        file: Optional[PathLike] = self.actual_content_file_name()
+        async with await open_file(file=file, encoding=encoding) as f:
+            contents = await f.read()
+            return contents
 
     @abstractmethod
     def _has_content(self) -> bool:
@@ -169,6 +275,17 @@ class FileValue(variable_value.IVariableValue, ABC):
         """
 
     def to_api_string(self, save_context: isave_context.ISaveContext) -> str:
+        """
+        Convert this value to an API string using a save context.
+
+        Parameters
+        ----------
+        save_context The save context to use.
+
+        Returns
+        -------
+        A string appropriate for use in files and APIs.
+        """
         api_obj: Dict[str, Optional[str]] = self.to_api_object(save_context)
         return json.dumps(api_obj)
 
@@ -176,6 +293,17 @@ class FileValue(variable_value.IVariableValue, ABC):
         return save_context.save_file(self.actual_content_file_name, str(self.id))
 
     def to_api_object(self, save_context: isave_context.ISaveContext) -> Dict[str, Optional[str]]:
+        """
+        Convert this file to an api object.
+
+        Parameters
+        ----------
+        save_context The save context used for the conversion.
+
+        Returns
+        -------
+        API object that matches this FileValue.
+        """
         obj: Dict[str, Optional[str]] = {}
         if self._has_content():
             content_marker: str = self._send_actual_file(save_context)
@@ -212,18 +340,18 @@ class EmptyFileValue(FileValue):
     """
     Represents an empty file value.
 
-    Generally speaking, you should not create an instance of this class but instead use
-    ansys.common.variableinterop.EMPTY_FILE.
+    Generally speaking, you should not create an instance of this class
+    but instead use ansys.common.variableinterop.EMPTY_FILE.
     """
 
     def __init__(self):
         """
         Construct a new instance.
 
-        Generally speaking you should not create an instance of this class but instead use
-        ansys.common.variableinterop.EMPTY_FILE.
+        Generally speaking you should not create an instance of this
+        class but instead use ansys.common.variableinterop.EMPTY_FILE.
         """
-        super().__init__(None, None, None, UUID(int = 0))
+        super().__init__(None, None, None, UUID(int=0))
 
     @overrides
     def _has_content(self) -> bool:
@@ -234,11 +362,13 @@ class EmptyFileValue(FileValue):
     def actual_content_file_name(self) -> Optional[PathLike]:
         return None
 
-    def write_file(self, file_name: PathLike) -> None:
+    @overrides
+    async def write_file(self, file_name: PathLike) -> None:
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 
-    def get_contents(self, encoding: Optional[str]) -> str:
+    @overrides
+    async def get_contents(self, encoding: Optional[str]) -> str:
         # TODO: Research correct exception to throw
         raise NotImplementedError()
 

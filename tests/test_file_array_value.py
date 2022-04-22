@@ -1,8 +1,23 @@
 from pathlib import Path
 
+import numpy
 from test_file_value import _TestFileValue
 
 import ansys.common.variableinterop as acvi
+
+
+def test_default_construct() -> None:
+    result = acvi.FileArrayValue()
+
+    assert type(result) is acvi.FileArrayValue
+    assert numpy.shape(result) == ()
+
+
+def test_shape_construct() -> None:
+    result = acvi.FileArrayValue(shape_=(2, 4, 9))
+
+    assert type(result) is acvi.FileArrayValue
+    assert numpy.shape(result) == (2, 4, 9)
 
 
 def test_construct_1d():
