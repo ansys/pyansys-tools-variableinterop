@@ -1,8 +1,8 @@
 """Definition of FileArrayMetadata."""
 from overrides import overrides
 
-from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .file_metadata import FileMetadata
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .variable_type import VariableType
 
 

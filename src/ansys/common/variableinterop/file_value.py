@@ -208,8 +208,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         Path(file_name).open('w').close()
 
         # copy the contents from the actual content file
-        # TODO: why does using this property give you a method?
-        file: Optional[PathLike] = self.actual_content_file_name()
+        file: Optional[PathLike] = self.actual_content_file_name
         async with await FileReadStream.from_path(file) as in_stream:
             async with await FileWriteStream.from_path(file_name) as out_stream:
                 async for chunk in in_stream:
@@ -255,8 +254,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         -------
         The file contents as a string.
         """
-        # TODO: why does using this property give you a method?
-        file: Optional[PathLike] = self.actual_content_file_name()
+        file: Optional[PathLike] = self.actual_content_file_name
         async with await open_file(file=file, encoding=encoding) as f:
             contents = await f.read()
             return contents

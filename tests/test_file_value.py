@@ -25,6 +25,7 @@ class _TestFileValue(acvi.FileValue):
         super().__init__(original_path, mime_type, encoding, value_id)
         self._has_content_override: bool = False
 
+    @property  # type: ignore
     @overrides
     def actual_content_file_name(self) -> Optional[PathLike]:
         return test_read_file
