@@ -9,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 import ansys.common.variableinterop.exceptions as exceptions
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.file_value import FileValue
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.scalar_values import (
@@ -51,7 +52,7 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
     @overrides
     def visit_file(self, value: FileValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type(), variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) \
@@ -73,6 +74,11 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
             -> BooleanArrayValue:
         return value.to_boolean_array_value()
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> BooleanArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+
 
 def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArrayValue:
     """
@@ -84,10 +90,12 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
 
     Parameters
     ----------
-    other the other value to convert to a BooleanArrayValue.
+    other : IVariableValue
+        The other value to convert to a BooleanArrayValue.
 
     Returns
     -------
+    BooleanArrayValue
     The value as a BooleanArrayValue.
 
     """
@@ -124,7 +132,7 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
     @overrides
     def visit_file(self, value: FileValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type(), variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) \
@@ -146,6 +154,11 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
             -> IntegerArrayValue:
         return value.to_integer_array_value()
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> IntegerArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+
 
 def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArrayValue:
     """
@@ -157,10 +170,12 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
 
     Parameters
     ----------
-    other the other value to convert to a IntegerArrayValue.
+    other : IVariableValue
+        The other value to convert to a IntegerArrayValue.
 
     Returns
     -------
+    IntegerArrayValue
     The value as a IntegerArrayValue.
 
     """
@@ -193,7 +208,7 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
     @overrides
     def visit_file(self, value: FileValue) -> RealArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type(), variable_type.VariableType.REAL_ARRAY)
+            value.variable_type, variable_type.VariableType.REAL_ARRAY)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealArrayValue:
@@ -211,6 +226,11 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
     def visit_string_array(self, value: StringArrayValue) -> RealArrayValue:
         return value.to_real_array_value()
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> RealArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.REAL_ARRAY)
+
 
 def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     """
@@ -222,10 +242,12 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
 
     Parameters
     ----------
-    other the other value to convert to a RealArrayValue.
+    other : IVariableValue
+        The other value to convert to a RealArrayValue.
 
     Returns
     -------
+    RealArrayValue
     The value as a RealArrayValue.
 
     """
@@ -258,7 +280,7 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
     @overrides
     def visit_file(self, value: FileValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type(), variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> StringArrayValue:
@@ -276,6 +298,11 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
     def visit_string_array(self, value: StringArrayValue) -> StringArrayValue:
         return np.copy(value).view(StringArrayValue)
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> StringArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+
 
 def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayValue:
     """
@@ -287,10 +314,12 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
 
     Parameters
     ----------
-    other the other value to convert to a StringArrayValue.
+    other : IVariableValue
+        The other value to convert to a StringArrayValue.
 
     Returns
     -------
+    StringArrayValue
     The value as a StringArrayValue.
 
     """

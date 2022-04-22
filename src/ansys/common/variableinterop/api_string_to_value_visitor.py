@@ -16,6 +16,7 @@ from ansys.common.variableinterop.array_values import (
     RealArrayValue,
     StringArrayValue,
 )
+import ansys.common.variableinterop.file_array_value as file_array_value
 import ansys.common.variableinterop.file_scope as file_scope
 import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
@@ -171,5 +172,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         -------
         A FileArrayValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of array support PBI.
-        raise NotImplementedError
+        if self._scope is None or self._save_context is None:
+            raise NotImplementedError(
+                "Deserializing a file value requires a file scope and save context.")
+        else:
+            return file_array_value.FileArrayValue.from_api_object(
+                json.loads(self._source), self._save_context, self._scope)

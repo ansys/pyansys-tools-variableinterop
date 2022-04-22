@@ -9,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.file_value import FileValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.scalar_values import (
@@ -43,7 +44,7 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
     @overrides
     def visit_file(self, value: FileValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
@@ -61,6 +62,10 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
     def visit_string_array(self, value: StringArrayValue) -> bool:
         raise IncompatibleTypesException(value.variable_type, "bool")
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> bool:
+        raise IncompatibleTypesException(value.variable_type, "bool")
+
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
     """
@@ -72,12 +77,13 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     Parameters
     ----------
-    other the other value to convert to a BooleanValue.
+    other : IVariableValue
+        The other value to convert to a BooleanValue.
 
     Returns
     -------
-    The value as a BooleanValue.
-
+    BooleanValue
+        The value as a BooleanValue.
     """
     return BooleanValue(other.accept(__ToBooleanVisitor()))
 
@@ -103,7 +109,7 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> IntegerValue:
-        raise IncompatibleTypesException(value.variable_type(), VariableType.INTEGER)
+        raise IncompatibleTypesException(value.variable_type, VariableType.INTEGER)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
@@ -121,6 +127,10 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     def visit_string_array(self, value: StringArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.INTEGER)
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> IntegerValue:
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER)
+
 
 def to_integer_value(other: IVariableValue) -> IntegerValue:
     """
@@ -129,12 +139,16 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision)
     and some conversions are not possible (raises IncompatibleTypesException).
+
     Parameters
     ----------
-    other the other value to convert to a IntegerValue.
+    other : IVariableValue
+        The other value to convert to a IntegerValue.
+
     Returns
     -------
-    The value as a IntegerValue.
+    IntegerValue
+        The value as a IntegerValue.
     """
     return other.accept(__ToIntegerVisitor())
 
@@ -160,7 +174,7 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> RealValue:
-        raise IncompatibleTypesException(value.variable_type(), VariableType.REAL)
+        raise IncompatibleTypesException(value.variable_type, VariableType.REAL)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealValue:
@@ -178,6 +192,10 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
     def visit_string_array(self, value: StringArrayValue) -> RealValue:
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.REAL)
 
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> RealValue:
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.REAL)
+
 
 def to_real_value(other: IVariableValue) -> RealValue:
     """
@@ -189,14 +207,59 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     Parameters
     ----------
-    other the other value to convert to a RealValue.
+    other : IVariableValue
+        The other value to convert to a RealValue.
 
     Returns
     -------
-    The value as a RealValue.
-
+    RealValue
+        The value as a RealValue.
     """
     return other.accept(__ToRealVisitor())
+
+
+class __ToStringVisitor(IVariableValueVisitor[StringValue]):
+    """This visitor implementation converts the visited value to a StringValue."""
+
+    @overrides
+    def visit_integer(self, value: IntegerValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_real(self, value: RealValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_boolean(self, value: BooleanValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_string(self, value: StringValue) -> StringValue:
+        return value
+
+    @overrides
+    def visit_file(self, value: FileValue) -> StringValue:
+        raise IncompatibleTypesException(VariableType.FILE, VariableType.STRING)
+
+    @overrides
+    def visit_integer_array(self, value: IntegerArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_real_array(self, value: RealArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_boolean_array(self, value: BooleanArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_string_array(self, value: StringArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_file_array(self, value: FileArrayValue) -> StringValue:
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.STRING)
 
 
 def to_string_value(other: IVariableValue) -> StringValue:
@@ -209,11 +272,12 @@ def to_string_value(other: IVariableValue) -> StringValue:
 
     Parameters
     ----------
-    other the other value to convert to a StringValue.
+    other : IVariableValue
+        The other value to convert to a StringValue.
 
     Returns
     -------
-    The value as a StringValue.
-
+    StringValue
+        The value as a StringValue.
     """
-    return StringValue(other.to_api_string())
+    return other.accept(__ToStringVisitor())

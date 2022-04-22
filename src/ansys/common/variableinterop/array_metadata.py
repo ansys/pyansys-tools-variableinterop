@@ -14,7 +14,7 @@ from ansys.common.variableinterop.variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):
-    """Metadata for BooleanArrayValue"""
+    """Metadata for BooleanArrayValue."""
 
     T = TypeVar("T")
 
@@ -29,7 +29,7 @@ class BooleanArrayMetadata(BooleanMetadata):
 
 
 class IntegerArrayMetadata(IntegerMetadata):
-    """Metadata for IntegerArrayValue"""
+    """Metadata for IntegerArrayValue."""
 
     T = TypeVar("T")
 
@@ -44,7 +44,7 @@ class IntegerArrayMetadata(IntegerMetadata):
 
 
 class RealArrayMetadata(RealMetadata):
-    """Metadata for RealArrayValue"""
+    """Metadata for RealArrayValue."""
 
     T = TypeVar("T")
 
@@ -59,7 +59,7 @@ class RealArrayMetadata(RealMetadata):
 
 
 class StringArrayMetadata(StringMetadata):
-    """Metadata for StringArrayValue"""
+    """Metadata for StringArrayValue."""
 
     T = TypeVar("T")
 

@@ -5,6 +5,20 @@ import pytest
 from ansys.common.variableinterop import StringArrayValue
 
 
+def test_default_construct() -> None:
+    result = StringArrayValue()
+
+    assert type(result) is StringArrayValue
+    assert numpy.shape(result) == ()
+
+
+def test_shape_construct() -> None:
+    result = StringArrayValue(shape_=(2, 4, 9))
+
+    assert type(result) is StringArrayValue
+    assert numpy.shape(result) == (2, 4, 9)
+
+
 @pytest.mark.parametrize(
     'source,expected_result',
     [
@@ -76,7 +90,7 @@ def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
 )
 def test_from_api_string_valid(source: str, expected_result: StringArrayValue) -> None:
     """
-    Verify that valid cases work on StringArrayValue.from_api_string
+    Verify that valid cases work on StringArrayValue.from_api_string.
 
     Parameters
     ----------

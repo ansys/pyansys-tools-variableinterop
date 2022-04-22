@@ -4,6 +4,8 @@ Unit tests for checking equality of IVariableValues.
 For most types equality handling is gained for free by extending the
 numpy types, so these tests are just verifying that is working correctly.
 """
+from pathlib import Path
+from uuid import UUID
 
 import numpy as np
 import pytest
@@ -60,9 +62,12 @@ def test_equality_of_real_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -89,9 +94,12 @@ def test_equality_of_integer_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -120,9 +128,12 @@ def test_equality_of_string_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -153,9 +164,12 @@ def test_equality_of_boolean_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -167,9 +181,11 @@ def test_equality_of_boolean_values(
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 1),
+        pytest.param(_TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                     _TestFileValue(Path("d"), "e", "f", UUID(int=1)),
                      True, id="Same id"),
-        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 2),
+        pytest.param(_TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                     _TestFileValue(Path("d"), "e", "f", UUID(int=2)),
                      False, id="Different ids"),
     ]
 )
@@ -182,9 +198,12 @@ def test_equality_of_file_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -211,9 +230,12 @@ def test_equality_of_real_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -240,9 +262,12 @@ def test_equality_of_integer_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -271,9 +296,12 @@ def test_equality_of_string_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -302,9 +330,12 @@ def test_equality_of_boolean_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -317,21 +348,21 @@ def test_equality_of_boolean_array_values(
     "lhs,rhs,expected",
     [
         pytest.param(FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 1)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
                      ]),
                      FileArrayValue(values=[
-                         _TestFileValue("a", "b", "c", 1),
-                         _TestFileValue("a", "b", "c", 1)
+                         _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                         _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
                      ]),
                      True, id="Same Files"),
         pytest.param(FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 1)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1))
                     ]),
                     FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 2)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=2))
                     ]),
                     False, id="Different Different"),
     ]
@@ -345,9 +376,12 @@ def test_equality_of_file_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs

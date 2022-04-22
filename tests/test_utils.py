@@ -20,15 +20,16 @@ def _dummy_context():
 def _create_exception_context(expect_exception: Type[BaseException]):
     """
     Creates an object to use in a with block that will test for expect_exception
-    to be thrown, or does nothing if expect_exception is None
+    to be thrown, or does nothing if expect_exception is None.
 
     Parameters
     ----------
-    expect_exception The exception to expect, or None for not expecting an exception
+    expect_exception : Type[BaseException]
+        The exception to expect, or None for not expecting an exception.
 
     Returns
     -------
-    A context to use in a with block that will validate the expected exception
+    A context to use in a with block that will validate the expected exception.
     """
     if expect_exception is not None:
         return pytest.raises(expect_exception)
@@ -50,7 +51,7 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         The value to be converted.
     expected_result : acvi.IVariableValue
         The expected result of calling 'accept()' (can be None).
-    expected_exception_type : Type[BaseException].
+    expected_exception_type : Type[BaseException]
         The type of exception that is expected (can be None).
     visitor_type : Type[acvi.IVariableValueVisitor]
         The type of visitor to use.
@@ -73,7 +74,7 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         except expected_exception_type as e:
             # Verify (expected exception)
             if expected_exception_type == acvi.IncompatibleTypesException:
-                assert e.message == \
+                assert str(e) == \
                        ("Error: Cannot convert from type {0} to type {1}.\n"
                         "Reason: The types are incompatible.") \
                        .format(value.__class__.__name__, result_type.__name__)
@@ -88,11 +89,11 @@ def _assert_incompatible_types_exception(message: str,
 
     Parameters
     ----------
-    message
+    message : str
         Expected error message.
-    from_
+    from_ : str
         Type of the source value.
-    to
+    to : str
         Type to which the test was trying to convert source.
     """
     assert message == \

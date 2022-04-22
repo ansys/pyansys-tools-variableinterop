@@ -104,18 +104,21 @@ class BooleanValue(variable_value.IVariableValue):
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
 
     def __add__(self, other):
+        """Magic method add."""
         if isinstance(other, BooleanValue):
             return self.__value.__add__(other.__value)
         else:
             return self.__value.__add__(other)
 
     def __and__(self, other):
+        """Magic method and."""
         if isinstance(other, BooleanValue):
             return self.__value.__and__(other.__value)
         else:
             return self.__value.__and__(other)
 
     def __bool__(self):
+        """Magic method bool."""
         return self.__value.__bool__()
 
     @overrides
@@ -126,18 +129,21 @@ class BooleanValue(variable_value.IVariableValue):
             return self.__value.__eq__(other)
 
     def __floordiv__(self, other):
+        """Magic method floordiv."""
         if isinstance(other, BooleanValue):
             return self.__value.__floordiv__(other.__value)
         else:
             return self.__value.__floordiv__(other)
 
     def __gt__(self, other):
+        """Magic method gt."""
         if isinstance(other, BooleanValue):
             return self.__value.__gt__(other.__value)
         else:
             return self.__value.__gt__(other)
 
     def __ge__(self, other):
+        """Magic method ge."""
         if isinstance(other, BooleanValue):
             return self.__value.__ge__(other.__value)
         else:
@@ -148,18 +154,21 @@ class BooleanValue(variable_value.IVariableValue):
         return self.__value.__hash__()
 
     def __lshift__(self, other):
+        """Magic method lshift."""
         if isinstance(other, BooleanValue):
             return self.__value.__lshift__(other.__value)
         else:
             return self.__value.__lshift__(other)
 
     def __mod__(self, other):
+        """Magic method mod."""
         if isinstance(other, BooleanValue):
             return self.__value.__mod__(other.__value)
         else:
             return self.__value.__mod__(other)
 
     def __mul__(self, other):
+        """Magic method mul."""
         if isinstance(other, BooleanValue):
             return self.__value.__mul__(other.__value)
         else:
@@ -173,18 +182,21 @@ class BooleanValue(variable_value.IVariableValue):
             return self.__value.__ne__(other)
 
     def __or__(self, other):
+        """Magic method or."""
         if isinstance(other, BooleanValue):
             return self.__value.__or__(other.__value)
         else:
             return self.__value.__or__(other)
 
     def __pow__(self, other):
+        """Magic method pow."""
         if isinstance(other, BooleanValue):
             return self.__value.__pow__(other.__value)
         else:
             return self.__value.__pow__(other)
 
     def __rshift__(self, other):
+        """Magic method rshift."""
         if isinstance(other, BooleanValue):
             return self.__value.__rshift__(other.__value)
         else:
@@ -195,12 +207,14 @@ class BooleanValue(variable_value.IVariableValue):
         return self.__value.__str__()
 
     def __truediv__(self, other):
+        """Magic method truediv."""
         if isinstance(other, BooleanValue):
             return self.__value.__truediv__(other.__value)
         else:
             return self.__value.__truediv__(other)
 
     def __xor__(self, other):
+        """Magic method xor."""
         if isinstance(other, BooleanValue):
             return self.__value.__xor__(other.__value)
         else:
@@ -228,13 +242,10 @@ class BooleanValue(variable_value.IVariableValue):
         non-numpy64-bool derived version working, since there's currently no way to actually have
         a BooleanValue instance at the moment).
 
-        Parameters
-        ----------
-        orig the original BooleanValue
-
         Returns
         -------
-        A RealValue with value representing the original BooleanValue.
+        RealValue
+            A RealValue with value representing the original BooleanValue.
         """
         if self:
             return RealValue(1.0)
@@ -261,8 +272,13 @@ class BooleanValue(variable_value.IVariableValue):
 
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to parse.
+
+        Returns
+        -------
+        BooleanValue
+            A boolean value parsed from the API string.
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
@@ -272,12 +288,10 @@ class BooleanValue(variable_value.IVariableValue):
 
         True is converted to 1 and False is converted to 0.
 
-        Parameters
-        ----------
-        orig the original BooleanValue
         Returns
         -------
-        A RealValue with value representing the original BooleanValue.
+        IntegerValue
+            An IntegerValue with value representing the original BooleanValue.
         """
         if self:
             return IntegerValue(1)
@@ -308,7 +322,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     """
 
     @overrides
-    def __new__(cls, arg: Any):
+    def __new__(cls, arg: Any = 0):
         """
         Create a new instance.
 
@@ -321,7 +335,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        arg the argument from which to construct this instance
+        arg
+            The argument from which to construct this instance.
         """
 
         if isinstance(arg, variable_value.IVariableValue):
@@ -366,7 +381,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
         Returns
         -------
-        A RealValue with the same numeric value as this IntegerValue.
+        RealValue
+            A RealValue with the same numeric value as this IntegerValue.
         """
         return RealValue(self)
 
@@ -379,12 +395,16 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
         Values which can be correctly parsed as floating-point numbers
         are parsed in that manner, then rounded to integers. When rounding,
         values with a 5 in the tenths place are rounded away from zero.
+
         Parameters
         ----------
-        value the string to parse
+        value : str
+            The string to parse.
+
         Returns
         -------
-        An integer value parsed from the API string.
+        IntegerValue
+            An integer value parsed from the API string.
         """
         if value is None:
             raise TypeError("Cannot create integer values from NoneType")
@@ -424,7 +444,8 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        arg the argument from which to construct this instance
+        arg
+            The argument from which to construct this instance.
         """
 
         if isinstance(arg, BooleanValue):
@@ -486,8 +507,8 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to convert.
         """
         return RealValue(float(value))
 
@@ -503,9 +524,10 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Returns
         -------
-        An IntegerValue that is the result of rounding this value
-        to the nearest integer (values with a 5 in the tenths place
-        are rounded away from zero).
+        IntegerValue
+            An IntegerValue that is the result of rounding this value
+            to the nearest integer (values with a 5 in the tenths place
+            are rounded away from zero).
         """
         return IntegerValue(self)
 
@@ -516,9 +538,11 @@ class RealValue(np.float64, variable_value.IVariableValue):
         The conversion is performed according to the type
         interoperability specifications. Any value other than exactly 0
         is considered to be 'True'.
+
         Returns
         -------
-        A BooleanValue that is the result of converting this RealValue.
+        BooleanValue
+            A BooleanValue that is the result of converting this RealValue.
         """
         return BooleanValue(self != 0)
 
@@ -566,10 +590,11 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
         The string is stored exactly as specified; no escaping is performed
         as with from_formatted string.
+
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to convert.
         """
         if value is None:
             raise TypeError("Cannot create a StringValue from None.")

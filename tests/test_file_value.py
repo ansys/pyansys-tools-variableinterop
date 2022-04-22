@@ -1,12 +1,17 @@
 import json
+import os
 from os import PathLike
 from pathlib import Path
 from typing import Any, Optional, Union
 from uuid import UUID
 
+from overrides import overrides
 import pytest
 
 import ansys.common.variableinterop as acvi
+
+test_read_file: Path = Path("in.file")
+test_contents: str = "12345"
 
 
 class _TestFileValue(acvi.FileValue):
@@ -20,14 +25,10 @@ class _TestFileValue(acvi.FileValue):
         super().__init__(original_path, mime_type, encoding, value_id)
         self._has_content_override: bool = False
 
+    @property  # type: ignore
+    @overrides
     def actual_content_file_name(self) -> Optional[PathLike]:
-        return None
-
-    def get_contents(self, encoding: Optional[Any]) -> str:
-        raise NotImplementedError()
-
-    def write_file(self, file_name: PathLike) -> None:
-        raise NotImplementedError()
+        return test_read_file
 
     def set_content_override(self) -> '_TestFileValue':
         """
@@ -37,6 +38,7 @@ class _TestFileValue(acvi.FileValue):
         self._has_content_override = True
         return self
 
+    @overrides
     def _has_content(self) -> bool:
         return self._has_content_override or bool(self._original_path)
 
@@ -146,9 +148,9 @@ def test_base_serialization():
     """Verify that the base serialization routine works."""
     # Setup
     sut: _TestFileValue = _TestFileValue('/path/to/orig/file',
-                                           'text/testfile',
-                                           'Shift-JIS',
-                                           __TEST_UUID)
+                                         'text/testfile',
+                                         'Shift-JIS',
+                                         __TEST_UUID)
 
     # Execute
     serialized: str = sut.to_api_string(__TestSaveContext())
@@ -190,3 +192,80 @@ def test_to_display_string(sut: acvi.FileValue, expected_result: str):
 
     # Verify
     assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'orig_path,expected_result',
+    [
+        pytest.param(None, '.tmp', id="None"),
+        pytest.param(Path(''), '.tmp', id="empty"),
+        pytest.param(Path('no/ext'), '.tmp', id="no extension"),
+        pytest.param(Path('has/tmp/extension.tmp'), '.tmp', id="actually .tmp"),
+        pytest.param(Path('a/word/document.doc'), '.doc', id=".doc"),
+        pytest.param(Path('multiple/dots/in.a.file.name.txt'), '.txt', id="multiple dots"),
+        pytest.param(Path('last.dot/is/in/a/directory/element'), '.tmp',
+                     id="no ext with dot earlier in path"),
+        pytest.param(Path('longer/extension.longerthanthefilename'), '.longerthanthefilename',
+                     id="long extension"),
+    ]
+)
+def test_get_extension(orig_path: Optional[Path], expected_result: str):
+    # Setup
+    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None)
+
+    # Execute
+    result: str = sut.get_extension()
+
+    # Verify
+    assert result == expected_result
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    'encoding',
+    [
+        pytest.param(None),
+        pytest.param("UTF-8"),
+        pytest.param("shift-jis"),
+    ]
+)
+async def test_get_contents(encoding: Optional[str]):
+    # Setup
+    test_read_file.write_text(test_contents)
+    try:
+        file = _TestFileValue(None, None, encoding, None)
+
+        # SUT
+        result: str = await file.get_contents(encoding)
+
+        # Verification
+        assert result == test_contents
+    finally:
+        os.remove(test_read_file)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    'encoding',
+    [
+        pytest.param(None),
+        pytest.param("UTF-8"),
+        pytest.param("shift-jis"),
+    ]
+)
+async def test_write_file(encoding: Optional[str]):
+    # Setup
+    test_read_file.write_text(test_contents, encoding)
+    out_file = Path("out.file")
+    try:
+        file = _TestFileValue(None, None, encoding, None)
+
+        # SUT
+        await file.write_file(out_file)
+        result = out_file.read_text(encoding, None)
+
+        # Verification
+        assert result == test_contents
+    finally:
+        os.remove(test_read_file)
+        os.remove(out_file)

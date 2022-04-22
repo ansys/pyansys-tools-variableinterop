@@ -48,6 +48,9 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
     def visit_string_array(self, value: acvi.StringArrayValue) -> str:
         return value
 
+    def visit_file_array(self, value: acvi.FileArrayValue) -> str:
+        return value
+
 
 # region TestVisitor
 @pytest.mark.parametrize(
@@ -65,8 +68,10 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
 
     Parameters
     ----------
-    value The IVariableValue to visit.
-    expected The value the IVariableValue wraps.
+    value : IVariableValue
+        The IVariableValue to visit.
+    expected : Any
+        The value the IVariableValue wraps.
     """
     # Setup
     visitor = TestVisitor()
@@ -118,7 +123,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
 
         except acvi.IncompatibleTypesException as e:
             # Verify (expected exception)
-            assert e.message == \
+            assert str(e) == \
                    ("Error: Cannot convert from type {0} to type {1}.\n"
                     "Reason: The types are incompatible.") \
                    .format(value.__class__.__name__, acvi.RealArrayValue.__name__)
@@ -233,7 +238,7 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_integer_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.IntegerArrayValue,
-                                  expected_exception: Type[BaseException]):
+                                  expected_exception: Type[Exception]):
     """
     Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
     raised.
@@ -284,7 +289,7 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_string_array_visitor(value: acvi.IVariableValue,
                                  expected_result: acvi.StringArrayValue,
-                                 expected_exception: Type[BaseException]):
+                                 expected_exception: Type[Exception]):
     """
     Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
     raised.

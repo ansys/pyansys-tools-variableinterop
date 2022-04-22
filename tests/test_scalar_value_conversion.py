@@ -12,6 +12,11 @@ from test_utils import _assert_incompatible_types_exception, _create_exception_c
 from ansys.common.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
+    EMPTY_FILE,
+    BooleanArrayValue,
+    BooleanValue,
+    FileArrayValue,
+    FileValue,
     IncompatibleTypesException,
     IntegerArrayValue,
     IntegerValue,
@@ -66,9 +71,9 @@ def test_to_real_value(source: IVariableValue, expected_result: RealValue):
 
     Parameters
     ----------
-    source:
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result:
+    expected_result: RealValue
         The expected result of the test.
     """
     # SUT
@@ -106,15 +111,15 @@ def test_to_real_value(source: IVariableValue, expected_result: RealValue):
         pytest.param(StringValue("-3.14159"), IntegerValue(-3), id='String -3.14159'),
     ]
 )
-def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue):
+def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue) -> None:
     """
     Test behavior of to_integer_value().
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : IntegerValue
         The expected result of the test.
     """
     # SUT
@@ -211,15 +216,15 @@ def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue)
         pytest.param(StringValue("nan"), BooleanValue(True), id="StringValue(nan)"),
     ]
 )
-def test_to_boolean_value(source: IVariableValue, expected_result: BooleanValue):
+def test_to_boolean_value(source: IVariableValue, expected_result: BooleanValue) -> None:
     """
     Test behavior of to_boolean_value().
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : BooleanValue
         The expected result of the test.
     """
     # SUT
@@ -262,15 +267,15 @@ def test_to_boolean_value(source: IVariableValue, expected_result: BooleanValue)
     ]
 )
 def test_to_string_value(source: IVariableValue,
-                         expected_result: StringValue):
+                         expected_result: StringValue) -> None:
     """
     Test behavior of to_string_value().
 
     Parameters
     ----------
-    source:
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result:
+    expected_result : StringValue
         The expected result of the test.
     """
     # SUT
@@ -279,6 +284,30 @@ def test_to_string_value(source: IVariableValue,
     # Verify
     assert type(result) == StringValue
     assert result == expected_result
+
+
+def test_file_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(EMPTY_FILE)
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
+
+
+def test_file_array_value_to_string_value():
+    """Verify that to_string_value fails for FileArrayValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(FileArrayValue())
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileArrayValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
 
 
 @pytest.mark.parametrize(
@@ -298,15 +327,15 @@ def test_to_string_value(source: IVariableValue,
     ]
 )
 def test_to_real_value_raises(source: IVariableValue,
-                              expected_exception: Type[BaseException]):
+                              expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_real_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -343,15 +372,15 @@ def test_to_real_value_raises(source: IVariableValue,
     ]
 )
 def test_to_integer_value_raises(source: IVariableValue,
-                                 expected_exception: Type[BaseException]):
+                                 expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_integer_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -384,15 +413,15 @@ def test_to_integer_value_raises(source: IVariableValue,
     ]
 )
 def test_to_boolean_value_raises(source: IVariableValue,
-                                 expected_exception: Type[BaseException]):
+                                 expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_boolean_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -405,30 +434,4 @@ def test_to_boolean_value_raises(source: IVariableValue,
                 _assert_incompatible_types_exception(str(e),
                                                      source.__class__.__name__,
                                                      bool.__name__)
-            raise e
-
-
-@pytest.mark.skip(reason="Not expected any")
-def test_to_string_value_raises(source: IVariableValue,
-                                expected_exception: Type[BaseException]):
-    """
-    Test behavior of to_string_value() when it is expected to raise an exception.
-
-    Parameters
-    ----------
-    source
-        The IVariableValue to be converted.
-    expected_exception
-        Exception that is expected to be thrown.
-    """
-    with _create_exception_context(expected_exception):
-        try:
-            # SUT
-            _ = to_string_value(source)
-        except expected_exception as e:
-            # Verify
-            if expected_exception == IncompatibleTypesException:
-                _assert_incompatible_types_exception(str(e),
-                                                     source.__class__.__name__,
-                                                     StringValue.__name__)
             raise e

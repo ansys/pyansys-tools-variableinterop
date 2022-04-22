@@ -43,32 +43,28 @@ class VariableType(Enum):
     @property
     def associated_type_name(self) -> str:
         """Get the name of the associated IVariableValue type."""
-        from ansys.common.variableinterop.array_values import (
+        from .array_values import (
             BooleanArrayValue,
             IntegerArrayValue,
             RealArrayValue,
             StringArrayValue,
         )
-        from ansys.common.variableinterop.scalar_values import (
-            BooleanValue,
-            IntegerValue,
-            RealValue,
-            StringValue,
-        )
+        from .file_array_value import FileArrayValue
+        from .file_value import FileValue
+        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
-        # TODO: Update with file type names when available.
         class_map: Dict[VariableType, str] = {
             VariableType.UNKNOWN: "unknown",
             VariableType.STRING: StringValue.__name__,
             VariableType.REAL: RealValue.__name__,
             VariableType.INTEGER: IntegerValue.__name__,
             VariableType.BOOLEAN: BooleanValue.__name__,
-            VariableType.FILE: "file",
+            VariableType.FILE: FileValue.__name__,
             VariableType.STRING_ARRAY: StringArrayValue.__name__,
             VariableType.REAL_ARRAY: RealArrayValue.__name__,
             VariableType.INTEGER_ARRAY: IntegerArrayValue.__name__,
             VariableType.BOOLEAN_ARRAY: BooleanArrayValue.__name__,
-            VariableType.FILE_ARRAY: "fileArray",
+            VariableType.FILE_ARRAY: FileArrayValue.__name__,
         }
         return class_map[self]
 
@@ -161,6 +157,7 @@ class VariableType(Enum):
             StringArrayValue,
         )
         from .file_array_value import FileArrayValue
+        from .file_value import EMPTY_FILE
         from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
         from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
@@ -183,8 +180,7 @@ class VariableType(Enum):
                 return StringValue()
 
             def visit_file(self) -> IVariableValue:
-                # TODO: impl when file branch merged
-                pass
+                return EMPTY_FILE
 
             def visit_int_array(self) -> IVariableValue:
                 return IntegerArrayValue()
@@ -221,8 +217,8 @@ class VariableType(Enum):
             StringArrayMetadata,
         )
         from .common_variable_metadata import CommonVariableMetadata
-
-        # from .file_array_metadata import FileArrayMetadata
+        from .file_array_metadata import FileArrayMetadata
+        from .file_metadata import FileMetadata
         from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
         from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 
@@ -245,8 +241,7 @@ class VariableType(Enum):
                 return StringMetadata()
 
             def visit_file(self) -> CommonVariableMetadata:
-                # TODO: impl when file branch merged
-                pass
+                return FileMetadata()
 
             def visit_int_array(self) -> CommonVariableMetadata:
                 return IntegerArrayMetadata()
@@ -261,8 +256,7 @@ class VariableType(Enum):
                 return StringArrayMetadata()
 
             def visit_file_array(self) -> CommonVariableMetadata:
-                # return FileArrayMetadata()
-                pass
+                return FileArrayMetadata()
 
         visitor = __DefaultMetadataVisitor()
         return vartype_accept(visitor, self)
