@@ -145,6 +145,3 @@ def test_integer_value_sub(left: Any, right: Any, expect_exception: Type[BaseExc
         result = left - right
         assert np.int64(result) == np.int64(left) - np.int64(right)
         assert isinstance(result, np.int64)
-
-
-
