@@ -53,8 +53,8 @@ class IncompatibleTypesException(BaseException):
         else:
             self.to_type = None
             self.to_type_str = to_type
-        self.message = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
-        super().__init__(self.message)
+        message: str = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
+        super().__init__(message)
 
 
 class FormatException(BaseException):
@@ -63,8 +63,8 @@ class FormatException(BaseException):
 
     def __init__(self):
         """Construct exception."""
-        self.message = _error("ERROR_FORMAT")
-        super().__init__(self.message)
+        message: str = _error("ERROR_FORMAT")
+        super().__init__(message)
 
 
 class ValueDeserializationUnsupportedException(Exception):
@@ -72,5 +72,4 @@ class ValueDeserializationUnsupportedException(Exception):
 
     def __init__(self, message: str):
         """Construct a new instance."""
-        self.message: str = message
         super().__init__(message)

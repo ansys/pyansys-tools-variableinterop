@@ -1,11 +1,11 @@
 """Definition of all array value implementations of IVariableValue."""
 from __future__ import annotations
 
+from decimal import ROUND_HALF_UP, Decimal
 import functools
 import locale
 from typing import TypeVar
 
-from decimal import ROUND_HALF_UP, Decimal
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
