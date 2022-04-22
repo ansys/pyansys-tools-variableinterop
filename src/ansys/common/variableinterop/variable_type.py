@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Dict
+from typing import Dict, Union, Iterable, Any
 
 from .variable_value import IVariableValue
 
@@ -72,30 +72,50 @@ class VariableType(Enum):
         return class_map[self]
 
     @staticmethod
-    def from_string(s: str) -> Enum:
-        inp = s.strip()
-        try:
-            return VariableType[inp.upper()]
-        except KeyError:
-            inp = inp.lower().replace('_', '').replace('value', '')
-            str_to_vartype_map: Dict[str, VariableType] = {
-                'unknown': VariableType.UNKNOWN,
-                'integer': VariableType.INTEGER,
-                'real': VariableType.REAL,
-                'boolean': VariableType.BOOLEAN,
-                'string': VariableType.STRING,
-                'file': VariableType.FILE,
-                'integerarray': VariableType.INTEGER_ARRAY,
-                'realarray': VariableType.REAL_ARRAY,
-                'booleanarray': VariableType.BOOLEAN_ARRAY,
-                'stringarray': VariableType.STRING_ARRAY,
-                'filearray': VariableType.FILE_ARRAY
-            }
+    def from_string(s: str) -> VariableType:
+        """
+        Get VariableType from string.
 
-            inp = inp.lower()
-            if inp not in str_to_vartype_map.keys():
-                inp = 'unknown'
-            return str_to_vartype_map[inp]
+        Parameters
+        ----------
+        s : str
+            String to convert to a VariableType.
+
+        Returns
+        -------
+        VariableType
+            The result.
+        """
+        class __IterableKeyDict(Dict[Union[Iterable, str], Any]):
+            """Dict that can initialize with iterable keys and give each value its own entry."""
+            def __init__(self, d_: Dict[tuple, VariableType]):
+                def __br():
+                    """Break down initializer dict to tuple subkeys"""
+                    for k, v in d_.items():
+                        if isinstance(k, str):
+                            yield k, v
+                        else:
+                            for subkey in k:
+                                yield subkey, v
+                super().__init__(__br())
+
+        __valtype_strings: Dict[Union[tuple, str], VariableType] = __IterableKeyDict({
+            ('int', 'integer', 'long'): VariableType.INTEGER,
+            ('real', 'double', 'float'): VariableType.REAL,
+            ('bool', 'boolean'): VariableType.BOOLEAN,
+            ('str', 'string'): VariableType.STRING,
+            'file': VariableType.FILE,
+            ('int[]', 'integer[]', 'long[]'): VariableType.INTEGER_ARRAY,
+            ('real[]', 'double[]', 'float[]'): VariableType.REAL_ARRAY,
+            ('bool[]', 'boolean[]'): VariableType.BOOLEAN_ARRAY,
+            ('str[]', 'string[]'): VariableType.STRING_ARRAY,
+            'file[]': VariableType.FILE_ARRAY,
+        })
+
+        try:
+            return __valtype_strings[s.strip().lower()]
+        except KeyError:
+            return VariableType.UNKNOWN
             
     def get_default_value(self) -> IVariableValue:
         """
