@@ -248,6 +248,10 @@ get_default_value_tests: List[Tuple[str, acvi.CommonVariableMetadata, acvi.IVari
 
     # Other types, metadata has no effect, always get default
 
+    # Simple cases
+    ("Boolean", acvi.BooleanMetadata(), acvi.BooleanValue(False)),
+    ("File", acvi.FileMetadata(), acvi.EMPTY_FILE),
+
     # IntegerArrayMetadata to IntegerArray
     ("Integer[]", acvi.IntegerArrayMetadata(), acvi.IntegerArrayValue([])),
     # not effected by bounds or enum
@@ -267,11 +271,9 @@ get_default_value_tests: List[Tuple[str, acvi.CommonVariableMetadata, acvi.IVari
     # not effected by enum
     ("String[]", get_test_str_array_meta(["1st", "2nd", "last"]), acvi.StringArrayValue([])),
 
-    # Simple cases
-    ("Boolean", acvi.BooleanMetadata(), acvi.BooleanValue(False)),
-    # ("File", acvi.FileMetadata(), acvi.FileValue.Empty),
+    # Simple array cases
     ("Boolean[]", acvi.BooleanArrayMetadata(), acvi.BooleanArrayValue([])),
-    # ("File[]", acvi.FileArrayMetadata(), acvi.FileArrayValue([])),
+    ("File[]", acvi.FileArrayMetadata(), acvi.FileArrayValue([])),
 ]
 """List of test cases for meta.get_default_values. Each entry is a tuple
 containing in order:

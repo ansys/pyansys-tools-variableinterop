@@ -115,9 +115,14 @@ class CommonVariableMetadata(ABC):
         from ansys.common.variableinterop import (
             array_metadata,
             array_values,
+            file_array_metadata,
+            file_array_value,
+            file_metadata,
+            file_value,
             scalar_metadata,
-            scalar_values,
+            scalar_values
         )
+
 
         class __DefaultValueVisitor(
                 ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
@@ -223,10 +228,10 @@ class CommonVariableMetadata(ABC):
                     self, metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
                 return self.__get_str_enumerated_default(metadata)
 
-            # @overrides
-            # def visit_file_array(
-            #         self, metadata: file_metadata.FileMetadata): -> file_value.FileArrayValue:
-            #     return file_value.FileValue.Empty
+            @overrides
+            def visit_file(
+                    self, metadata: file_metadata.FileMetadata) -> file_value.FileArrayValue:
+                return file_value.EMPTY_FILE
 
             @overrides
             def visit_integer_array(
@@ -254,11 +259,11 @@ class CommonVariableMetadata(ABC):
                     metadata: array_metadata.StringArrayMetadata) -> array_values.StringArrayValue:
                 return array_values.StringArrayValue()
 
-            # @overrides
-            # def visit_file_array(
-            #       self,
-            #       metadata: file_array_metadata.FileArrayMetadata): -> array_values.FileArrayValue
-            #   return array_values.FileArrayValue()
+            @overrides
+            def visit_file_array(
+                    self,
+                    metadata: file_array_metadata.FileArrayMetadata) -> array_values.FileArrayValue:
+                return file_array_value.FileArrayValue()
 
         visitor = __DefaultValueVisitor()
         return self.accept(visitor)
