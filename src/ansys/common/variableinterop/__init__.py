@@ -97,7 +97,6 @@ from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, Str
 from .scalar_value_conversion import to_boolean_value, to_integer_value, to_real_value,\
     to_string_value
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
-from .utils import convert
 from .var_type_array_check import var_type_is_array
 from .variable_type import VariableType
 from .variable_value import IVariableValue, CommonArrayValue
