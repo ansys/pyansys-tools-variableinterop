@@ -86,8 +86,10 @@ class VariableType(Enum):
         VariableType
             The result.
         """
+
         class __IterableKeyDict(Dict[Union[Iterable, str], Any]):
             """Dict that can initialize with iterable keys and give each value its own entry."""
+
             def __init__(self, d_: Dict[tuple, VariableType]):
                 def __br():
                     """Break down initializer dict to tuple subkeys"""
@@ -97,6 +99,7 @@ class VariableType(Enum):
                         else:
                             for subkey in k:
                                 yield subkey, v
+
                 super().__init__(__br())
 
         __valtype_strings: Dict[Union[tuple, str], VariableType] = __IterableKeyDict({
@@ -116,7 +119,7 @@ class VariableType(Enum):
             return __valtype_strings[s.strip().lower()]
         except KeyError:
             return VariableType.UNKNOWN
-            
+
     def get_default_value(self) -> IVariableValue:
         """
         Construct the default value for this type.
