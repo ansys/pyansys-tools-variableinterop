@@ -4,15 +4,14 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
-
 if TYPE_CHECKING:
-    from ansys.common.variableinterop import FileArrayValue
     from ansys.common.variableinterop.array_values import (
         BooleanArrayValue,
         IntegerArrayValue,
         RealArrayValue,
         StringArrayValue,
     )
+    from ansys.common.variableinterop.file_array_value import FileArrayValue
     from ansys.common.variableinterop.file_value import FileValue
     from ansys.common.variableinterop.scalar_values import (
         BooleanValue,

@@ -2,7 +2,6 @@
 
 from overrides import overrides
 
-from ansys.common.variableinterop import FileArrayValue
 from ansys.common.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
@@ -10,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
+from ansys.common.variableinterop.file_array_value import FileArrayValue
 from ansys.common.variableinterop.file_value import FileValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.scalar_values import (
@@ -252,7 +252,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
         return StringValue(value.to_api_string())
 
     @overrides
-    def visit_file_array(self, value: FileValue) -> StringValue:
+    def visit_file_array(self, value: FileArrayValue) -> StringValue:
         raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.STRING)
 
 
