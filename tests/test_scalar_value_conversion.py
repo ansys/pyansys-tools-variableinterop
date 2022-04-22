@@ -10,8 +10,10 @@ import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 from ansys.common.variableinterop import (
+    EMPTY_FILE,
     BooleanArrayValue,
     BooleanValue,
+    FileValue,
     IncompatibleTypesException,
     IntegerArrayValue,
     IntegerValue,
@@ -281,6 +283,18 @@ def test_to_string_value(source: IVariableValue,
     assert result == expected_result
 
 
+def test_file_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(EMPTY_FILE)
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
+
+
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
@@ -405,30 +419,4 @@ def test_to_boolean_value_raises(source: IVariableValue,
                 _assert_incompatible_types_exception(str(e),
                                                      source.__class__.__name__,
                                                      bool.__name__)
-            raise e
-
-
-@pytest.mark.skip(reason="Not expected any")
-def test_to_string_value_raises(source: IVariableValue,
-                                expected_exception: Type[BaseException]):
-    """
-    Test behavior of to_string_value() when it is expected to raise an exception.
-
-    Parameters
-    ----------
-    source
-        The IVariableValue to be converted.
-    expected_exception
-        Exception that is expected to be thrown.
-    """
-    with _create_exception_context(expected_exception):
-        try:
-            # SUT
-            _ = to_string_value(source)
-        except expected_exception as e:
-            # Verify
-            if expected_exception == IncompatibleTypesException:
-                _assert_incompatible_types_exception(str(e),
-                                                     source.__class__.__name__,
-                                                     StringValue.__name__)
             raise e

@@ -199,6 +199,46 @@ def to_real_value(other: IVariableValue) -> RealValue:
     return other.accept(__ToRealVisitor())
 
 
+class __ToStringVisitor(IVariableValueVisitor[StringValue]):
+    """This visitor implementation converts the visited value to a StringValue."""
+
+    @overrides
+    def visit_integer(self, value: IntegerValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_real(self, value: RealValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_boolean(self, value: BooleanValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_string(self, value: StringValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_file(self, value: FileValue) -> StringValue:
+        raise IncompatibleTypesException(VariableType.FILE, VariableType.STRING)
+
+    @overrides
+    def visit_integer_array(self, value: IntegerArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_real_array(self, value: RealArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_boolean_array(self, value: BooleanArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+    @overrides
+    def visit_string_array(self, value: StringArrayValue) -> StringValue:
+        return StringValue(value.to_api_string())
+
+
 def to_string_value(other: IVariableValue) -> StringValue:
     """
     Convert the given value to a StringValue.
@@ -216,4 +256,4 @@ def to_string_value(other: IVariableValue) -> StringValue:
     The value as a StringValue.
 
     """
-    return StringValue(other.to_api_string())
+    return other.accept(__ToStringVisitor())
