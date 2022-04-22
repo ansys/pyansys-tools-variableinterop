@@ -297,7 +297,7 @@ def test_file_value_to_string_value():
 
 
 def test_file_array_value_to_string_value():
-    """Verify that to_string_value fails for FileValue instances."""
+    """Verify that to_string_value fails for FileArrayValue instances."""
     with _create_exception_context(IncompatibleTypesException):
         try:
             _ = to_string_value(FileArrayValue())
