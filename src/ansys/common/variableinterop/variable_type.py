@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Dict, Union, Iterable, Any
 
 from .variable_value import IVariableValue
-
+from .utils.locale_utils import Strings
 
 class VariableType(Enum):
     """Enumeration listing the possible variable types."""
@@ -119,6 +119,32 @@ class VariableType(Enum):
             return __valtype_strings[s.strip().lower()]
         except KeyError:
             return VariableType.UNKNOWN
+
+    def to_display_string(self) -> str:
+        """
+        Get the VariableType's display string.
+
+        Returns
+        -------
+        str
+            Display string.
+
+        """
+        __valtype_display_string: Dict[VariableType, str] = {
+            VariableType.REAL: 'DISPLAY_STRING_REAL',
+            VariableType.INTEGER: 'DISPLAY_STRING_INTEGER',
+            VariableType.BOOLEAN: 'DISPLAY_STRING_BOOL',
+            VariableType.STRING: 'DISPLAY_STRING_STRING',
+            VariableType.FILE: 'DISPLAY_STRING_FILE',
+            VariableType.REAL_ARRAY: 'DISPLAY_STRING_REAL_ARRAY',
+            VariableType.INTEGER_ARRAY: 'DISPLAY_STRING_INTEGER_ARRAY',
+            VariableType.BOOLEAN_ARRAY: 'DISPLAY_STRING_BOOL_ARRAY',
+            VariableType.STRING_ARRAY: 'DISPLAY_STRING_STRING_ARRAY',
+            VariableType.FILE_ARRAY: 'DISPLAY_STRING_FILE_ARRAY',
+            VariableType.UNKNOWN: 'DISPLAY_STRING_UNKNOWN'
+        }
+
+        return Strings.get('DisplayStrings', __valtype_display_string[self])
 
     def get_default_value(self) -> IVariableValue:
         """

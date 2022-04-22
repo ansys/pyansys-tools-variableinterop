@@ -50,3 +50,37 @@ def test_var_type_from_string(inp: str, expected_result: VariableType):
     # Verify
     for result in results:
         assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "inp,expected_result",
+    [
+        pytest.param(VariableType.REAL, 'Real', id='REAL'),
+        pytest.param(VariableType.INTEGER, 'Integer', id='INTEGER'),
+        pytest.param(VariableType.BOOLEAN, 'Boolean', id='BOOLEAN'),
+        pytest.param(VariableType.STRING, 'String', id='STRING'),
+        pytest.param(VariableType.FILE, 'File', id='File'),
+        pytest.param(VariableType.REAL_ARRAY, 'Real Array', id='REAL_ARRAY'),
+        pytest.param(VariableType.INTEGER_ARRAY, 'Integer Array', id='INTEGER_ARRAY'),
+        pytest.param(VariableType.BOOLEAN_ARRAY, 'Boolean Array', id='BOOLEAN_ARRAY'),
+        pytest.param(VariableType.STRING_ARRAY, 'String Array', id='STRING_ARRAY'),
+        pytest.param(VariableType.FILE_ARRAY, 'File Array', id='FILE_ARRAY'),
+        pytest.param(VariableType.UNKNOWN, 'Unknown', id='UNKNOWN'),
+    ]
+)
+def test_var_type_to_display_string(inp: VariableType, expected_result: str):
+    """
+    Tests that VariableType.to_display_string() returns the correct string.
+
+    Parameters
+    ----------
+    inp : VariableType
+        Type to be tested.
+    expected_result : str
+        The expected display string.
+    """
+    # SUT
+    result = inp.to_display_string()
+
+    # Verify
+    assert result == expected_result
