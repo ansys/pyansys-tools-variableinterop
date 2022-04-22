@@ -63,9 +63,9 @@ def test_boolean_unary_operators(
     Parameters
     ----------
     _ : str
-        An identifier of the operator testing
+        An identifier of the operator testing.
     type_ : Type
-        The type of Boolean to test: bool, numpy.bool_ or BooleanValue
+        The type of Boolean to test: bool, numpy.bool_ or BooleanValue.
     value : bool
         The value of the Boolean operand to test.
     operator : Callable[[BooleanTypes], BooleanTypes]
@@ -234,14 +234,14 @@ def test_boolean_binary_operators_same_types(
     ----------
     _ : str
         An identifier of the operator testing.
-    type_ :
+    type_ : Type
         The type of Boolean to test: bool, numpy.bool or BooleanValue.
     value1 : bool
-        Value of the first Boolean operand
+        Value of the first Boolean operand.
     value2 : bool
-        Value of the second Boolean operand
-    operator :
-        Operator to perform on the two operands
+        Value of the second Boolean operand.
+    operator : Callable[[BooleanTypes, BooleanTypes], BooleanTypes]
+        Operator to perform on the two operands.
     b_expected : Any
         Expected results if working with bool values. If operation
         raises an Exception, the type of the exception.
@@ -370,11 +370,14 @@ def test_construct(arg: Any, expect_equality: bool, expect_exception: Type[BaseE
 )
 def test_from_api_string_valid(arg: str, expected_result: acvi.BooleanValue) -> None:
     """
-    Verify that BooleanValue.from_api_string works for valid cases
+    Verify that BooleanValue.from_api_string works for valid cases.
+
     Parameters
     ----------
-    arg the string to parse
-    expected_result the expected result
+    arg : str
+        The string to parse.
+    expected_result : BooleanValue
+        The expected result.
     """
     # Execute
     result: acvi.BooleanValue = acvi.BooleanValue.from_api_string(arg)
@@ -406,15 +409,16 @@ def test_from_api_string_invalid(arg: str, expected_exception: Type[BaseExceptio
 def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
     """
     Verify that to_api_string for BooleanValue works correctly for valid cases.
+
     Parameters
     ----------
-    source the original BooleanValue
-    expected_value the expected API string
+    source : BooleanValue
+        The original BooleanValue.
+    expected_result : str
+        The expected API string.
     """
     # Execute
-    # TODO: restore this once we have a fully independent BooleanValue implementation
-    # result: str = source.to_api_string()
-    result: str = str(source)
+    result: str = source.to_api_string()
 
     # Verify
     assert type(result) is str
@@ -449,10 +453,13 @@ def test_to_real_value(source: acvi.BooleanValue, expected_result: str) -> None:
 def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
     """
     Verify that conversion to IntegerValue works correctly.
+
     Parameters
     ----------
-    source the original BooleanValue
-    expected_result the expected result of the conversion
+    source : BooleanValue
+        The original BooleanValue.
+    expected_result : str
+        The expected result of the conversion.
     """
     # Execute
     result: acvi.IntegerValue = source.to_integer_value()

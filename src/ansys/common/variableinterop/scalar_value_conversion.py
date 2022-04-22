@@ -72,12 +72,13 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     Parameters
     ----------
-    other the other value to convert to a BooleanValue.
+    other : IVariableValue
+        The other value to convert to a BooleanValue.
 
     Returns
     -------
-    The value as a BooleanValue.
-
+    BooleanValue
+        The value as a BooleanValue.
     """
     return BooleanValue(other.accept(__ToBooleanVisitor()))
 
@@ -129,12 +130,16 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision)
     and some conversions are not possible (raises IncompatibleTypesException).
+
     Parameters
     ----------
-    other the other value to convert to a IntegerValue.
+    other : IVariableValue
+        The other value to convert to a IntegerValue.
+
     Returns
     -------
-    The value as a IntegerValue.
+    IntegerValue
+        The value as a IntegerValue.
     """
     return other.accept(__ToIntegerVisitor())
 
@@ -189,12 +194,13 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     Parameters
     ----------
-    other the other value to convert to a RealValue.
+    other : IVariableValue
+        The other value to convert to a RealValue.
 
     Returns
     -------
-    The value as a RealValue.
-
+    RealValue
+        The value as a RealValue.
     """
     return other.accept(__ToRealVisitor())
 
@@ -209,11 +215,12 @@ def to_string_value(other: IVariableValue) -> StringValue:
 
     Parameters
     ----------
-    other the other value to convert to a StringValue.
+    other : IVariableValue
+        The other value to convert to a StringValue.
 
     Returns
     -------
-    The value as a StringValue.
-
+    StringValue
+        The value as a StringValue.
     """
     return StringValue(other.to_api_string())

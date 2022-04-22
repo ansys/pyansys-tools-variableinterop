@@ -56,8 +56,10 @@ def test_from_api_string(source: str, expected_value: StringValue) -> None:
     Verify that from_api_string for StringValue works correctly for valid cases.
     Parameters
     ----------
-    source the source string
-    expected_value the expected value
+    source : str
+        The source string.
+    expected_value : StringValue
+        The expected value.
     """
     # Execute
     result: StringValue = StringValue.from_api_string(source)
@@ -89,10 +91,13 @@ def test_from_api_string_rejects_none() -> None:
 def test_to_api_string(source: StringValue, expected_value: str) -> None:
     """
     Verify that to_api_string for StringValue works correctly for valid cases.
+
     Parameters
     ----------
-    source the original StringValue
-    expected_value the expected API string
+    source : str
+        The original StringValue.
+    expected_value : StringValue
+        The expected API string.
     """
     # Execute
     result: str = source.to_api_string()

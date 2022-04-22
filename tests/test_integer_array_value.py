@@ -68,7 +68,7 @@ def test_to_api_string(source: IntegerArrayValue, expected_result: str) -> None:
 )
 def test_from_api_string_valid(source: str, expected_result: IntegerArrayValue) -> None:
     """
-    Verify that valid cases work on IntegerArrayValue.from_api_string
+    Verify that valid cases work on IntegerArrayValue.from_api_string.
 
     Parameters
     ----------

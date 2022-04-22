@@ -62,9 +62,12 @@ def test_equality_of_real_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -91,9 +94,12 @@ def test_equality_of_integer_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -122,9 +128,12 @@ def test_equality_of_string_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -155,9 +164,12 @@ def test_equality_of_boolean_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -186,9 +198,12 @@ def test_equality_of_file_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -215,9 +230,12 @@ def test_equality_of_real_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -244,9 +262,12 @@ def test_equality_of_integer_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -275,9 +296,12 @@ def test_equality_of_string_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -306,9 +330,12 @@ def test_equality_of_boolean_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs
@@ -349,9 +376,12 @@ def test_equality_of_file_array_values(
 
     Parameters
     ----------
-    lhs Left-hand of the equality operation.
-    rhs Right-hand of the equality operation.
-    expected The expected result of equality check.
+    lhs : IVariableValue
+        Left-hand of the equality operation.
+    rhs : IVariableValue
+        Right-hand of the equality operation.
+    expected : bool
+        The expected result of equality check.
     """
     # SUT
     result: bool = lhs == rhs

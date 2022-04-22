@@ -99,11 +99,12 @@ def _is_optional(arg_type: type) -> bool:
 
     Parameters
     ----------
-    arg_type The type to check for optional
+    arg_type : type
+        The type to check for optional.
 
     Returns
     -------
-    True if the argument passed in is Optional[x] for some x.
+    ``True`` if the argument passed in is Optional[x] for some x.
     """
     return (
             hasattr(arg_type, "__origin__")
@@ -121,11 +122,13 @@ def _get_optional_type(arg_type: type) -> type:
 
     Parameters
     ----------
-    arg_type The Optional[x] type. Only valid if _is_optional(arg_type) returns true
+    arg_type : type
+        The Optional[x] type. Only valid if _is_optional(arg_type) returns true.
 
     Returns
     -------
-    The 'x' from Optional[x].
+    type
+        The 'x' from Optional[x].
     """
     return arg_type.__args__[0]  # type: ignore
 
@@ -138,13 +141,16 @@ def _specific_implicit_coerce_allowed(target_arg_type: type,
 
     Parameters
     ----------
-    target_arg_type the target type of the argument (the type declared on the method)
-    actual_arg_type the actual type of the argument (the type of the actual object being passed)
+    target_arg_type : type
+        The target type of the argument (the type declared on the method).
+    actual_arg_type : type
+        The actual type of the argument (the type of the actual object being passed).
 
     Returns
     -------
-    True if implicit coercion to the target type from the actual type is allowed,
-    False otherwise.
+    bool
+        ``True`` if implicit coercion to the target type from the actual type is allowed,
+        ``False`` otherwise.
     """
     if issubclass(actual_arg_type, target_arg_type):
         return True

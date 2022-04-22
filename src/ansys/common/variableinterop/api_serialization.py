@@ -81,13 +81,16 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
 
     Parameters
     ----------
-    value the value to convert to an API string
-    save_context the save context. This may be omitted in cases where you do not wish to support
+    value : IVariableValue
+        The value to convert to an API string.
+    save_context : Optional[ISaveContext], optional
+        The save context. This may be omitted in cases where you do not wish to support
         file values.
 
     Returns
     -------
-    The serialized form of value
+    str
+        The serialized form of value.
     """
     return value.accept(ToAPIStringVisitor(save_context))
 
@@ -99,15 +102,20 @@ def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileSc
 
     Parameters
     ----------
-    var_type the variable type to generate
-    source the source string
-    fscope the file scope to use to deserialize file variables. May be None if file variables
-      are not needed
-    load_context the load context to read file contents from. May be None if file variables are
-      not needed
+    var_type : VariableType
+        The variable type to generate.
+    source : str
+        The source string.
+    fscope : Optional[FileScope], optional
+        The file scope to use to deserialize file variables. May be None if file variables
+        are not needed.
+    load_context : Optional[ILoadContext], optional
+        The load context to read file contents from. May be None if file variables are
+        not needed.
 
     Returns
     -------
+    IVariableValue
     An implementation of IVariableValue of the correct type with a value parsed
     from the specified string.
     """

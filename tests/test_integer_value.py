@@ -96,12 +96,14 @@ def test_construct(arg: Any, expect_equality: numpy.int64, expect_exception: Typ
 )
 def test_from_api_string_valid(source: str, expected_result: IntegerValue) -> None:
     """
-    Verify that valid cases work on IntegerValue.from_api_string
+    Verify that valid cases work on IntegerValue.from_api_string.
 
     Parameters
     ----------
-    source the string to parse
-    expected_result the expected result
+    source : str
+        The string to parse.
+    expected_result : IntegerValue
+        The expected result.
     """
     # Execute
     result: IntegerValue = IntegerValue.from_api_string(source)
@@ -131,13 +133,16 @@ def test_from_api_string_valid(source: str, expected_result: IntegerValue) -> No
         pytest.param(None, TypeError, id="None"),
     ],
 )
-def test_from_api_string_invalid(source: str, expected_exception: IntegerValue) -> None:
+def test_from_api_string_invalid(source: str, expected_exception: Type[BaseException]) -> None:
     """
-    Verify that invalid cases raise on IntegerValue.from_api_string
+    Verify that invalid cases raise on IntegerValue.from_api_string.
+
     Parameters
     ----------
-    source the string to parse
-    expected_exception the exception to expect
+    source : str
+        The string to parse.
+    expected_exception : : Type[BaseException]
+        The exception to expect.
     """
     with _create_exception_context(expected_exception):
         result: IntegerValue = IntegerValue.from_api_string(source)
@@ -155,13 +160,16 @@ def test_from_api_string_invalid(source: str, expected_exception: IntegerValue) 
         pytest.param(IntegerValue(-9223372036854775808), '-9223372036854775808', id='min 64 bit'),
     ]
 )
-def test_to_api_string(source: IntegerValue, expected_result: str):
+def test_to_api_string(source: IntegerValue, expected_result: str) -> None:
     """
     Verify that to_api_string for IntegerValue works correctly for valid cases.
+
     Parameters
     ----------
-    source the original IntegerValue
-    expected_value the expected API string
+    source : IntegerValue
+        The original IntegerValue.
+    expected_result : str
+        The expected API string.
     """
     # Execute
     result: str = source.to_api_string()
@@ -195,8 +203,10 @@ def test_to_real_value(source: IntegerValue, expected_result: RealValue) -> None
 
     Parameters
     ----------
-    source the original IntegerValue
-    expected_result the expected RealValue
+    source : IntegerValue
+        The original IntegerValue.
+    expected_result : RealValue
+        The expected RealValue.
     """
     # Execute
     result: RealValue = source.to_real_value()
@@ -262,7 +272,7 @@ def test_to_real_value(source: IntegerValue, expected_result: RealValue) -> None
                      id='boolean false')
     ]
 )
-def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue):
+def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue) -> None:
     # Execute
     result: IntegerValue = to_integer_value(source)
 
@@ -303,7 +313,8 @@ def test_to_integer_value(source: IVariableValue, expected_result: IntegerValue)
         pytest.param(RealValue(float('-Infinity')), OverflowError, id="negative Infinity"),
     ],
 )
-def test_to_integer_value_invalid(source: IVariableValue, expected_exception: Type[BaseException]):
+def test_to_integer_value_invalid(source: IVariableValue, expected_exception: Type[BaseException])\
+        -> None:
     # Execute
     with _create_exception_context(expected_exception):
         result: IntegerValue = to_integer_value(source)

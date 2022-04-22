@@ -37,13 +37,15 @@ class ArrayToFromStringUtil:
 
         Parameters
         ----------
-        value The array value to convert.
-        stringify_action The action used to convert each individual
-        value in the array.
+        value : NDArray
+            The array value to convert.
+        stringify_action : Callable
+            The action used to convert each individual value in the array.
 
         Returns
         -------
-        The generated string.
+        str
+            The generated string.
         """
         api_string: str = ""
         # Specify bounds for arrays of more than 1d:
@@ -66,14 +68,18 @@ class ArrayToFromStringUtil:
 
         Parameters
         ----------
-        value The string value to parse.
-        create_action An action that takes either a shape or a list of initial values, and creates \
+        value : str
+            The string value to parse.
+        create_action : Callable[[Any], CommonArrayValue]
+            An action that takes either a shape or a list of initial values, and creates \
             a new array of the correct type.
-        valueify_action The action used to parse each individual value to the correct type.
+        valueify_action : Callable[[str], IVariableValue]
+            The action used to parse each individual value to the correct type.
 
         Returns
         -------
-        A new array object with the parsed values.
+        CommonArrayValue
+            A new array object with the parsed values.
         """
         array: CommonArrayValue
         value_str: str
@@ -132,11 +138,13 @@ class ArrayToFromStringUtil:
 
         Parameters
         ----------
-        value_str The string to parse.
+        value_str : str
+            The string to parse.
 
         Returns
         -------
-        The regex match object, or None if not matched.
+        Optional[Match[str]]
+            The regex match object, or None if not matched.
         """
         match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._quoted_value_regex,
                                                 value_str, flags=re.IGNORECASE)

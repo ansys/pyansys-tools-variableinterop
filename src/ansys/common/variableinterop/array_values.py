@@ -104,11 +104,13 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Parameters
         ----------
-        value : str API string to be parsed.
+        value : str
+            API string to be parsed.
 
         Returns
         -------
-        Result of a parse as BooleanArrayValue object.
+        BooleanArrayValue
+            Result of a parse as BooleanArrayValue object.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -207,11 +209,13 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Parameters
         ----------
-        value : str API string to be parsed.
+        value : str
+            API string to be parsed.
 
         Returns
         -------
-        Result of a parse as IntegerArrayValue object.
+        IntegerArrayValue
+            Result of a parse as IntegerArrayValue object.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -313,11 +317,13 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
         Parameters
         ----------
-        value : str API string to be parsed.
+        value : str
+            API string to be parsed.
 
         Returns
         -------
-        Result of a parse as RealArrayValue object.
+        RealArrayValue
+            Result of a parse as RealArrayValue object.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -397,20 +403,10 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
         Returns
         -------
-        A BooleanArrayValue with the same values converted to bool.
+        BooleanArrayValue
+            A BooleanArrayValue with the same values converted to bool.
         """
-        # TODO: use BooleanValue.to_api_string() when that is available
-        def as_bool(value: str) -> np.bool_:
-            normalized: str = str.lower(str.strip(value))
-            if normalized in ("yes", "y", "true"):
-                return np.bool_(True)
-            elif normalized in ("no", "n", "false"):
-                return np.bool_(False)
-            else:
-                # Try to parse as real then convert to boolean
-                return np.bool_(np.float64(value))
-
-        return np.vectorize(as_bool)(self).view(BooleanArrayValue)
+        return np.vectorize(BooleanValue.str_to_bool)(self).view(BooleanArrayValue)
 
     def to_integer_array_value(self) -> IntegerArrayValue:
         """
@@ -418,7 +414,8 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
         Returns
         -------
-        An IntegerArrayValue with the same values converted to int.
+        IntegerArrayValue
+            An IntegerArrayValue with the same values converted to int.
         """
         return self.to_real_array_value().to_integer_array_value()
 
@@ -435,11 +432,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
         Parameters
         ----------
-        value : str API string to be parsed.
+        value : str
+            API string to be parsed.
 
         Returns
         -------
-        Result of a parse as StringArrayValue object.
+        StringArrayValue
+            Result of a parse as StringArrayValue object.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,

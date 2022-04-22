@@ -242,13 +242,10 @@ class BooleanValue(variable_value.IVariableValue):
         non-numpy64-bool derived version working, since there's currently no way to actually have
         a BooleanValue instance at the moment).
 
-        Parameters
-        ----------
-        orig the original BooleanValue
-
         Returns
         -------
-        A RealValue with value representing the original BooleanValue.
+        RealValue
+            A RealValue with value representing the original BooleanValue.
         """
         if self:
             return RealValue(1.0)
@@ -275,8 +272,13 @@ class BooleanValue(variable_value.IVariableValue):
 
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to parse.
+
+        Returns
+        -------
+        BooleanValue
+            A boolean value parsed from the API string.
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
@@ -286,12 +288,10 @@ class BooleanValue(variable_value.IVariableValue):
 
         True is converted to 1 and False is converted to 0.
 
-        Parameters
-        ----------
-        orig the original BooleanValue
         Returns
         -------
-        A RealValue with value representing the original BooleanValue.
+        IntegerValue
+            An IntegerValue with value representing the original BooleanValue.
         """
         if self:
             return IntegerValue(1)
@@ -335,7 +335,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        arg the argument from which to construct this instance
+        arg
+            The argument from which to construct this instance.
         """
 
         if isinstance(arg, variable_value.IVariableValue):
@@ -380,7 +381,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
         Returns
         -------
-        A RealValue with the same numeric value as this IntegerValue.
+        RealValue
+            A RealValue with the same numeric value as this IntegerValue.
         """
         return RealValue(self)
 
@@ -393,12 +395,16 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
         Values which can be correctly parsed as floating-point numbers
         are parsed in that manner, then rounded to integers. When rounding,
         values with a 5 in the tenths place are rounded away from zero.
+
         Parameters
         ----------
-        value the string to parse
+        value : str
+            The string to parse.
+
         Returns
         -------
-        An integer value parsed from the API string.
+        IntegerValue
+            An integer value parsed from the API string.
         """
         if value is None:
             raise TypeError("Cannot create integer values from NoneType")
@@ -438,8 +444,10 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        arg the argument from which to construct this instance
+        arg
+            The argument from which to construct this instance.
         """
+
         if isinstance(arg, BooleanValue):
             return super().__new__(cls, bool(arg))
         else:
@@ -499,8 +507,8 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to convert.
         """
         return RealValue(float(value))
 
@@ -516,9 +524,10 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
         Returns
         -------
-        An IntegerValue that is the result of rounding this value
-        to the nearest integer (values with a 5 in the tenths place
-        are rounded away from zero).
+        IntegerValue
+            An IntegerValue that is the result of rounding this value
+            to the nearest integer (values with a 5 in the tenths place
+            are rounded away from zero).
         """
         return IntegerValue(self)
 
@@ -529,9 +538,11 @@ class RealValue(np.float64, variable_value.IVariableValue):
         The conversion is performed according to the type
         interoperability specifications. Any value other than exactly 0
         is considered to be 'True'.
+
         Returns
         -------
-        A BooleanValue that is the result of converting this RealValue.
+        BooleanValue
+            A BooleanValue that is the result of converting this RealValue.
         """
         return BooleanValue(self != 0)
 
@@ -579,10 +590,11 @@ class StringValue(np.str_, variable_value.IVariableValue):
 
         The string is stored exactly as specified; no escaping is performed
         as with from_formatted string.
+
         Parameters
         ----------
-        value
-        The string to convert.
+        value : str
+            The string to convert.
         """
         if value is None:
             raise TypeError("Cannot create a StringValue from None.")
