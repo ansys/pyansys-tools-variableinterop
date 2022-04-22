@@ -3,26 +3,27 @@ Unit tests for scalar_value_conversion.
 """
 
 import sys
+from typing import Type
+
 import numpy
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
-from typing import Type
 
 from ansys.common.variableinterop import (
-    BooleanValue,
     BooleanArrayValue,
-    IntegerValue,
+    BooleanValue,
+    IncompatibleTypesException,
     IntegerArrayValue,
+    IntegerValue,
     IVariableValue,
-    RealValue,
     RealArrayValue,
-    StringValue,
+    RealValue,
     StringArrayValue,
+    StringValue,
     to_boolean_value,
     to_integer_value,
     to_real_value,
     to_string_value,
-    IncompatibleTypesException,
 )
 
 
