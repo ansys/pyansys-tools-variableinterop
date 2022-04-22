@@ -17,9 +17,7 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 
 def to_type(var_type: variable_type.VariableType):
-    """
-    Get the associated IVariableValue type.
-    """
+    """Get the associated IVariableValue type."""
     __class_map: Dict[variable_type.VariableType, str] = {
         variable_type.VariableType.STRING: StringValue,
         variable_type.VariableType.REAL: RealValue,
@@ -34,7 +32,5 @@ def to_type(var_type: variable_type.VariableType):
 
 
 def to_type_name(var_type: variable_type.VariableType):
-    """
-    Get the name of the associated IVariableValue type.
-    """
+    """Get the name of the associated IVariableValue type."""
     return to_type(var_type).__name__

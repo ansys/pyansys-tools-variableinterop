@@ -38,7 +38,7 @@ def _create_exception_context(expect_exception: Type[BaseException]):
 
 def _test_to_value_visitor(value: acvi.IVariableValue,
                            expected_result: acvi.IVariableValue,
-                           expected_exception_type: Type[BaseException],
+                           expected_exception_type: Type[Exception],
                            visitor_type: Type[acvi.IVariableValueVisitor],
                            result_type: Type[acvi.IVariableValue] = None) -> None:
     """
@@ -73,7 +73,7 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         except expected_exception_type as e:
             # Verify (expected exception)
             if expected_exception_type == acvi.IncompatibleTypesException:
-                assert e.message == \
+                assert str(e) == \
                        ("Error: Cannot convert from type {0} to type {1}.\n"
                         "Reason: The types are incompatible.") \
                        .format(value.__class__.__name__, result_type.__name__)

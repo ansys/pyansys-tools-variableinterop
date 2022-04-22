@@ -81,11 +81,10 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     Returns
     -------
-    The value as a RealValue.
+    The value as a BooleanValue.
 
     """
-    visitor = __ToBooleanVisitor()
-    return BooleanValue(other.accept(visitor))
+    return BooleanValue(other.accept(__ToBooleanVisitor()))
 
 
 class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
@@ -260,17 +259,18 @@ def to_string_value(other: IVariableValue) -> StringValue:
     """
     Convert the given value to a StringValue.
 
-    The conversion is performed according to the type interoperability
-    specifications.
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
 
     Parameters
     ----------
-    other : IVariableValue
-        Value to convert
+    other the other value to convert to a StringValue.
 
     Returns
     -------
-    StringValue representation of the source value.
+    The value as a StringValue.
+
     """
-    visitor = __ToStringVisitor()
-    return other.accept(visitor)
+    return other.accept(__ToStringVisitor())
+

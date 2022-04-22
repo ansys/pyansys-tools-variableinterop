@@ -1,6 +1,4 @@
-"""
-Provides functions for ModelCenter-standard string escaping.
-"""
+"""Provides functions for ModelCenter-standard string escaping."""
 from typing import Dict, List
 
 

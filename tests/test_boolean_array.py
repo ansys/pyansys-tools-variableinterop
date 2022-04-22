@@ -5,6 +5,20 @@ import pytest
 from ansys.common.variableinterop.array_values import BooleanArrayValue
 
 
+def test_default_construct() -> None:
+    result = BooleanArrayValue()
+
+    assert type(result) is BooleanArrayValue
+    assert numpy.shape(result) == ()
+
+
+def test_shape_construct() -> None:
+    result = BooleanArrayValue(shape_=(2, 4, 9))
+
+    assert type(result) is BooleanArrayValue
+    assert numpy.shape(result) == (2, 4, 9)
+
+
 # @pytest.mark.skip('bool array nditer returning array of bool instead of a bool for each element')
 @pytest.mark.parametrize(
     'source,expected_result',

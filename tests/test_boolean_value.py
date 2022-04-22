@@ -31,7 +31,7 @@ def cross_types(source: List[Tuple[Any, ...]]):
     return r
 
 
-unary_tests: List[Tuple[str, bool, Callable[[BooleanTypes], BooleanTypes], bool]] = [
+unary_tests: List[Tuple[Any, ...]] = [
     ("identity",  True, lambda a: a,       True),
     ("identity", False, lambda a: a,       False),
     ("not",       True, lambda a: not a,   False),
@@ -86,9 +86,7 @@ def test_boolean_unary_operators(
     assert isinstance(result, (bool, type_)), f"type of results is {result_type}"
 
 
-binary_tests: List[
-    Tuple[str, bool, bool, Callable[[BooleanTypes, BooleanTypes], BooleanTypes], Any, Any, Any]
-] = [
+binary_tests: List[Tuple[Any, ...]] = [
     # addition
     ("addition",    False, False, lambda a, b: a + b,  0, np.False_, None),
     ("addition",    False,  True, lambda a, b: a + b,  1, np.True_, None),
@@ -260,6 +258,8 @@ def test_boolean_binary_operators_same_types(
     operand2 = type_(value2)
     result = None
     result_ex = None
+    expected: Union[
+        Union[bool, int], Union[np.bool_, np.int8, Exception], Union[acvi.BooleanValue, Exception]]
     if type_ is bool:
         expected = b_expected
     else:

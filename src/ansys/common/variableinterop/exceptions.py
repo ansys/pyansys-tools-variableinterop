@@ -1,6 +1,4 @@
-"""
-Custom Exception types.
-"""
+"""Custom Exception types."""
 
 from configparser import ConfigParser
 import os
@@ -21,21 +19,22 @@ def _error(name: str, *args: object) -> str:
     -------
     The formatted error string.
     """
-
     parser = ConfigParser()
     parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))
     return parser.get("Errors", name).format(*args)
 
 
 class IncompatibleTypesException(BaseException):
-    """Exception raised when attempting to convert from one IVariableValue to an
-    incompatible type."""
+    """Exception raised when attempting to convert from one \
+    IVariableValue to an incompatible type."""
+
     def __init__(
             self,
             from_type: Union[variable_type.VariableType, str],
             to_type: Union[variable_type.VariableType, str]):
         """
         Construct exception.
+
         :param from_type a VariableType or a string identifying the type converting from.
         :param to_type a VariableType or a string identifying the type converting to.
         """
@@ -54,8 +53,8 @@ class IncompatibleTypesException(BaseException):
         else:
             self.to_type = None
             self.to_type_str = to_type
-        self.message = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
-        super().__init__(self.message)
+        message: str = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
+        super().__init__(message)
 
 
 class FormatException(BaseException):
@@ -64,13 +63,13 @@ class FormatException(BaseException):
 
     def __init__(self):
         """Construct exception."""
-        self.message = _error("ERROR_FORMAT")
-        super().__init__(self.message)
+        message: str = _error("ERROR_FORMAT")
+        super().__init__(message)
 
 
 class ValueDeserializationUnsupportedException(Exception):
+    """Exception raised when deserializing a value is not allowed."""
 
     def __init__(self, message: str):
         """Construct a new instance."""
-        self.message: str = message
         super().__init__(message)
