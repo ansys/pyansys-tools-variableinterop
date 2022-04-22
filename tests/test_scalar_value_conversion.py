@@ -3,26 +3,29 @@ Unit tests for scalar_value_conversion.
 """
 
 import sys
+from typing import Type
+
 import numpy
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
-from typing import Type
 
 from ansys.common.variableinterop import (
-    BooleanValue,
+    EMPTY_FILE,
     BooleanArrayValue,
-    IntegerValue,
+    BooleanValue,
+    FileValue,
+    IncompatibleTypesException,
     IntegerArrayValue,
+    IntegerValue,
     IVariableValue,
-    RealValue,
     RealArrayValue,
-    StringValue,
+    RealValue,
     StringArrayValue,
+    StringValue,
     to_boolean_value,
     to_integer_value,
     to_real_value,
     to_string_value,
-    IncompatibleTypesException,
 )
 
 
@@ -278,6 +281,18 @@ def test_to_string_value(source: IVariableValue,
     # Verify
     assert type(result) == StringValue
     assert result == expected_result
+
+
+def test_file_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(EMPTY_FILE)
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
 
 
 @pytest.mark.parametrize(
