@@ -142,22 +142,23 @@ def test_intvalue_conversion_invalid(
         pytest.param(RealValue(float('inf')), BooleanValue(True), id="inf"),
         pytest.param(RealValue(float('-inf')), BooleanValue(True), id="-inf"),
         pytest.param(RealValue(float('nan')), BooleanValue(True), id="NaN"),
-
     ],
 )
 def test_boolean_value_conversion(
         orig_real: RealValue, expected_result: BooleanValue) -> None:
     """
-    Verify that RealValues are correctly converted to BooleanValues
+    Verify that RealValues are correctly converted to BooleanValues.
+
     Parameters
     ----------
-    orig_real the original real
-    expected_result the expected boolean
+    orig_real : RealValue
+        The original real.
+    expected_result : BooleanValue
+        The expected boolean.
     """
     result: BooleanValue = orig_real.to_boolean_value()
 
-    # TODO: Figure out the whole numpy.bool_ decomposition issue here
-    # assert type(result) is BooleanValue
+    assert type(result) is BooleanValue
     assert result == expected_result
 
 
@@ -213,8 +214,10 @@ def test_from_api_string_valid(
 
     Parameters
     ----------
-    source the string to convert
-    expected_result the expected result
+    source : str
+        The string to convert.
+    expected_result : RealValue
+        The expected result.
     """
     # Execute
     actual_result: RealValue = RealValue.from_api_string(source)
@@ -246,8 +249,10 @@ def test_from_api_string_invalid(
 
     Parameters
     ----------
-    source the string to convert
-    expected_exception the expected error raised
+    source : str
+        The string to convert.
+    expected_exception : Type[BaseException]
+        The expected error raised.
     """
     # Execute
     with _create_exception_context(expected_exception):
@@ -276,8 +281,10 @@ def test_to_api_string(
 
     Parameters
     ----------
-    source the original RealValue.
-    expected_value the original string.
+    source : RealValue
+        The original RealValue.
+    expected_value : str
+        The expected string.
     """
     # Execute
     result: str = source.to_api_string()
@@ -285,6 +292,7 @@ def test_to_api_string(
     # Verify
     assert type(result) is str
     assert result == expected_value
+
 
 def test_clone() -> None:
     """Verifies that clone returns a new RealValue with the same value."""
@@ -340,8 +348,10 @@ def test_to_real_value_valid(
 
     Parameters
     ----------
-    source the source variable to convert to RealValue
-    expected_value the expected result of the conversion
+    source : IVariableValue
+        The source variable to convert to RealValue.
+    expected_value : RealValue
+        The expected result of the conversion.
     """
 
     # Execute
@@ -373,8 +383,10 @@ def test_to_real_value_invalid(
 
     Parameters
     ----------
-    source the source variable to convert to IntegerValue
-    expected_exception the expected error to raise
+    source : IVariableValue
+        The source variable to convert to IntegerValue.
+    expected_exception : Type[BaseException]
+        The expected error to raise.
     """
     with _create_exception_context(expected_exception):
         result: RealValue = to_real_value(source)

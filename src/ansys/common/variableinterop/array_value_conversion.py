@@ -90,10 +90,12 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
 
     Parameters
     ----------
-    other the other value to convert to a BooleanArrayValue.
+    other : IVariableValue
+        The other value to convert to a BooleanArrayValue.
 
     Returns
     -------
+    BooleanArrayValue
     The value as a BooleanArrayValue.
 
     """
@@ -168,10 +170,12 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
 
     Parameters
     ----------
-    other the other value to convert to a IntegerArrayValue.
+    other : IVariableValue
+        The other value to convert to a IntegerArrayValue.
 
     Returns
     -------
+    IntegerArrayValue
     The value as a IntegerArrayValue.
 
     """
@@ -238,10 +242,12 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
 
     Parameters
     ----------
-    other the other value to convert to a RealArrayValue.
+    other : IVariableValue
+        The other value to convert to a RealArrayValue.
 
     Returns
     -------
+    RealArrayValue
     The value as a RealArrayValue.
 
     """
@@ -308,10 +314,12 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
 
     Parameters
     ----------
-    other the other value to convert to a StringArrayValue.
+    other : IVariableValue
+        The other value to convert to a StringArrayValue.
 
     Returns
     -------
+    StringArrayValue
     The value as a StringArrayValue.
 
     """

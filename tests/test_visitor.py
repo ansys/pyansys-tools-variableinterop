@@ -68,8 +68,10 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
 
     Parameters
     ----------
-    value The IVariableValue to visit.
-    expected The value the IVariableValue wraps.
+    value : IVariableValue
+        The IVariableValue to visit.
+    expected : Any
+        The value the IVariableValue wraps.
     """
     # Setup
     visitor = TestVisitor()
@@ -178,7 +180,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.BooleanArrayValue,
-                                  expected_exception: Type[Exception]):
+                                  expected_exception: Type[BaseException]):
     """
     Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
     raised.

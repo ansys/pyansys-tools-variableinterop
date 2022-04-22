@@ -47,9 +47,9 @@ def test_to_real_array_value(source: acvi.IVariableValue,
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : RealArrayValue
         The expected result of the test.
     """
     # SUT
@@ -94,15 +94,15 @@ def test_to_real_array_value(source: acvi.IVariableValue,
     ]
 )
 def test_to_integer_array_value(source: acvi.IVariableValue,
-                                expected_result: acvi.IntegerArrayValue):
+                                expected_result: acvi.IntegerArrayValue) -> None:
     """
     Test behavior of to_integer_array_value().
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : IntegerArrayValue
         The expected result of the test.
     """
     # SUT
@@ -151,15 +151,15 @@ def test_to_integer_array_value(source: acvi.IVariableValue,
     ]
 )
 def test_to_boolean_array_value(source: acvi.IVariableValue,
-                                expected_result: acvi.BooleanArrayValue):
+                                expected_result: acvi.BooleanArrayValue) -> None:
     """
     Test behavior of to_boolean_array_value().
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : BooleanArrayValue
         The expected result of the test.
     """
     # SUT
@@ -207,15 +207,15 @@ def test_to_boolean_array_value(source: acvi.IVariableValue,
     ]
 )
 def test_to_string_array_value(source: acvi.IVariableValue,
-                               expected_result: acvi.StringArrayValue):
+                               expected_result: acvi.StringArrayValue) -> None:
     """
     Test behavior of to_string_array_value().
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_result
+    expected_result : StringArrayValue
         The expected result of the test.
     """
     # SUT
@@ -242,15 +242,15 @@ def test_to_string_array_value(source: acvi.IVariableValue,
     ]
 )
 def test_to_real_array_value_raises(source: acvi.IVariableValue,
-                                    expected_exception: Type[BaseException]):
+                                    expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_real_array_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -288,15 +288,15 @@ def test_to_real_array_value_raises(source: acvi.IVariableValue,
     ]
 )
 def test_to_integer_array_value_raises(source: acvi.IVariableValue,
-                                       expected_exception: Type[BaseException]):
+                                       expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_integer_array_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -328,15 +328,15 @@ def test_to_integer_array_value_raises(source: acvi.IVariableValue,
     ]
 )
 def test_to_boolean_array_value_raises(source: acvi.IVariableValue,
-                                       expected_exception: Type[BaseException]):
+                                       expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_boolean_array_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
@@ -362,15 +362,15 @@ def test_to_boolean_array_value_raises(source: acvi.IVariableValue,
     ]
 )
 def test_to_string_array_value_raises(source: acvi.IVariableValue,
-                                      expected_exception: Type[BaseException]):
+                                      expected_exception: Type[BaseException]) -> None:
     """
     Test behavior of to_string_array_value() when it is expected to raise an exception.
 
     Parameters
     ----------
-    source
+    source : IVariableValue
         The IVariableValue to be converted.
-    expected_exception
+    expected_exception : Type[BaseException]
         Exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):

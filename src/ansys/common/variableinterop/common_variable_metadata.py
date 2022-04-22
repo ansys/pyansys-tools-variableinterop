@@ -38,11 +38,13 @@ class CommonVariableMetadata(ABC):
 
         Parameters
         ----------
-        other Object to compare this object to.
+        other : Any
+            Object to compare this object to.
 
         Returns
         -------
-        True if metadata objects are equal, false otherwise.
+        bool
+            ``True`` if metadata objects are equal, false otherwise.
         """
         equal: bool = (isinstance(other, CommonVariableMetadata) and
                        self.variable_type == other.variable_type and
@@ -64,11 +66,13 @@ class CommonVariableMetadata(ABC):
 
         Parameters
         ----------
-        visitor The visitor object to call
+        visitor : IVariableMetadataVisitor[T]
+            The visitor object to call.
 
         Returns
         -------
-        The results of the visitor invocation
+        T
+            The results of the visitor invocation.
         """
         raise NotImplementedError
 
@@ -84,8 +88,8 @@ class CommonVariableMetadata(ABC):
 
         Parameters
         ----------
-        value
-        The new description to set.
+        value : str
+            The new description to set.
         """
         self._description = value
 
@@ -142,8 +146,8 @@ class CommonVariableMetadata(ABC):
                     Metadata to use to generate default value.
                 Returns
                 -------
-                StringValue default value to use for associated
-                variable.
+                StringValue
+                    Default value to use for associated variable.
                 """
                 default_value: scalar_values.StringValue = scalar_values.StringValue()
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
@@ -166,9 +170,11 @@ class CommonVariableMetadata(ABC):
                     Metadata to use to generate default value.
                 type_ : IntegerValue or RealValue
                     Type of the default value to generate.
+
                 Returns
                 -------
-                Default value to use for associated variable
+                T
+                    Default value to use for associated variable.
                 """
                 default_value = type_()
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
@@ -351,6 +357,7 @@ class CommonVariableMetadata(ABC):
 
         Returns
         -------
-        The variable type of this object.
+        VariableType
+            The variable type of this object.
         """
         raise NotImplementedError

@@ -1,3 +1,4 @@
+from typing import Type
 import numpy
 import pytest
 from test_utils import _create_exception_context
@@ -236,9 +237,12 @@ def test_from_api_string_valid(
 
     Parameters
     ----------
-    var_type the variable type to pass
-    source the string to convert
-    expected_result the expected result
+    var_type : VariableType
+        The variable type to pass.
+    source : str
+        The string to convert.
+    expected_result : IVariableValue
+        The expected result.
     """
     # Execute
     actual_result: IVariableValue = from_api_string(var_type, source)
@@ -293,18 +297,18 @@ def test_from_api_string_valid(
     ],
 )
 def test_from_api_string_invalid(
-        var_type: VariableType, source: str, expected_exception: IVariableValue) -> None:
+        var_type: VariableType, source: str, expected_exception: Type[BaseException]) -> None:
     """
-    Verify that
+    Verify that from_api_string raises the expected exception in
+
     Parameters
     ----------
-    var_type
-    source
-    expected_exception
-
-    Returns
-    -------
-
+    var_type : VariableType
+        The variable type to pass.
+    source : str
+        The string to convert.
+    expected_exception : Type[BaseException]
+        The exception that is expected to be thrown.
     """
     with _create_exception_context(expected_exception):
         actual_result: IVariableValue = from_api_string(var_type, source)

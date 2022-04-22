@@ -90,7 +90,7 @@ def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
 )
 def test_from_api_string_valid(source: str, expected_result: StringArrayValue) -> None:
     """
-    Verify that valid cases work on StringArrayValue.from_api_string
+    Verify that valid cases work on StringArrayValue.from_api_string.
 
     Parameters
     ----------
