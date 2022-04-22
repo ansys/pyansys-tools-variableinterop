@@ -10,8 +10,11 @@ import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 from ansys.common.variableinterop import (
+    EMPTY_FILE,
     BooleanArrayValue,
     BooleanValue,
+    FileArrayValue,
+    FileValue,
     IncompatibleTypesException,
     IntegerArrayValue,
     IntegerValue,
@@ -279,6 +282,30 @@ def test_to_string_value(source: IVariableValue,
     # Verify
     assert type(result) == StringValue
     assert result == expected_result
+
+
+def test_file_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(EMPTY_FILE)
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
+
+
+def test_file_array_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(FileArrayValue())
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileArrayValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
 
 
 @pytest.mark.parametrize(
