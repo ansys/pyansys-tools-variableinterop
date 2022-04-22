@@ -1,9 +1,12 @@
+"""Definition of ISaveContext."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
 from typing import Optional, Union
+
+from overrides import overrides
 
 
 class ISaveContext(AbstractContextManager, ABC):
@@ -18,13 +21,14 @@ class ISaveContext(AbstractContextManager, ABC):
 
     # TODO: Proper types for this method
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """Magic method exit."""
         self.close()
         return None
 
     @abstractmethod
     def save_file(self, source: Union[PathLike, str], content_id: Optional[str]) -> str:
         """
-        Save a file to the save medium
+        Save a file to the save medium.
 
         Note, it is up to the ISaveContext implementation to decide how or when to send the actual
         data. Some ISaveContexts may merely collect metadata as part of this call and actually
@@ -55,22 +59,27 @@ class ISaveContext(AbstractContextManager, ABC):
 
     @abstractmethod
     def flush(self) -> None:
+        """TODO."""
         ...
 
     @abstractmethod
     def close(self) -> None:
+        """TODO."""
         ...
 
 
 class ILoadContext(AbstractContextManager, ABC):
+    """TODO."""
 
     # TODO: Proper types for this method
+    @overrides
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
         return None
 
     @abstractmethod
     def load_file(self, content_id: Optional[str]) -> Optional[PathLike]:
+        """TODO."""
         ...
 
 # TODO: Uncomment once we know what stream API to use
@@ -81,8 +90,10 @@ class ILoadContext(AbstractContextManager, ABC):
 
     @abstractmethod
     def flush(self) -> None:
+        """TODO."""
         ...
 
     @abstractmethod
     def close(self) -> None:
+        """TODO."""
         ...

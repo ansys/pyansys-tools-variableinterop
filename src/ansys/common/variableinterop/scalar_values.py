@@ -104,18 +104,21 @@ class BooleanValue(variable_value.IVariableValue):
                 type(source).__name__, variable_type.VariableType.BOOLEAN)
 
     def __add__(self, other):
+        """Magic method add."""
         if isinstance(other, BooleanValue):
             return self.__value.__add__(other.__value)
         else:
             return self.__value.__add__(other)
 
     def __and__(self, other):
+        """Magic method and."""
         if isinstance(other, BooleanValue):
             return self.__value.__and__(other.__value)
         else:
             return self.__value.__and__(other)
 
     def __bool__(self):
+        """Magic method bool."""
         return self.__value.__bool__()
 
     @overrides
@@ -126,18 +129,21 @@ class BooleanValue(variable_value.IVariableValue):
             return self.__value.__eq__(other)
 
     def __floordiv__(self, other):
+        """Magic method floordiv."""
         if isinstance(other, BooleanValue):
             return self.__value.__floordiv__(other.__value)
         else:
             return self.__value.__floordiv__(other)
 
     def __gt__(self, other):
+        """Magic method gt."""
         if isinstance(other, BooleanValue):
             return self.__value.__gt__(other.__value)
         else:
             return self.__value.__gt__(other)
 
     def __ge__(self, other):
+        """Magic method ge."""
         if isinstance(other, BooleanValue):
             return self.__value.__ge__(other.__value)
         else:
@@ -148,18 +154,21 @@ class BooleanValue(variable_value.IVariableValue):
         return self.__value.__hash__()
 
     def __lshift__(self, other):
+        """Magic method lshift."""
         if isinstance(other, BooleanValue):
             return self.__value.__lshift__(other.__value)
         else:
             return self.__value.__lshift__(other)
 
     def __mod__(self, other):
+        """Magic method mod."""
         if isinstance(other, BooleanValue):
             return self.__value.__mod__(other.__value)
         else:
             return self.__value.__mod__(other)
 
     def __mul__(self, other):
+        """Magic method mul."""
         if isinstance(other, BooleanValue):
             return self.__value.__mul__(other.__value)
         else:
@@ -173,18 +182,21 @@ class BooleanValue(variable_value.IVariableValue):
             return self.__value.__ne__(other)
 
     def __or__(self, other):
+        """Magic method or."""
         if isinstance(other, BooleanValue):
             return self.__value.__or__(other.__value)
         else:
             return self.__value.__or__(other)
 
     def __pow__(self, other):
+        """Magic method pow."""
         if isinstance(other, BooleanValue):
             return self.__value.__pow__(other.__value)
         else:
             return self.__value.__pow__(other)
 
     def __rshift__(self, other):
+        """Magic method rshift."""
         if isinstance(other, BooleanValue):
             return self.__value.__rshift__(other.__value)
         else:
@@ -195,12 +207,14 @@ class BooleanValue(variable_value.IVariableValue):
         return self.__value.__str__()
 
     def __truediv__(self, other):
+        """Magic method truediv."""
         if isinstance(other, BooleanValue):
             return self.__value.__truediv__(other.__value)
         else:
             return self.__value.__truediv__(other)
 
     def __xor__(self, other):
+        """Magic method xor."""
         if isinstance(other, BooleanValue):
             return self.__value.__xor__(other.__value)
         else:
@@ -426,7 +440,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
         ----------
         arg the argument from which to construct this instance
         """
-
         if isinstance(arg, BooleanValue):
             return super().__new__(cls, bool(arg))
         else:

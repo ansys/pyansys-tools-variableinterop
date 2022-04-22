@@ -175,7 +175,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.BooleanArrayValue,
-                                  expected_exception: Type[BaseException]):
+                                  expected_exception: Type[Exception]):
     """
     Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
     raised.
@@ -233,7 +233,7 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_integer_array_visitor(value: acvi.IVariableValue,
                                   expected_result: acvi.IntegerArrayValue,
-                                  expected_exception: Type[BaseException]):
+                                  expected_exception: Type[Exception]):
     """
     Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
     raised.
@@ -284,7 +284,7 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
     ])
 def test_to_string_array_visitor(value: acvi.IVariableValue,
                                  expected_result: acvi.StringArrayValue,
-                                 expected_exception: Type[BaseException]):
+                                 expected_exception: Type[Exception]):
     """
     Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
     raised.

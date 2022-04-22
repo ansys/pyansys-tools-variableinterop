@@ -4,6 +4,8 @@ Unit tests for checking equality of IVariableValues.
 For most types equality handling is gained for free by extending the
 numpy types, so these tests are just verifying that is working correctly.
 """
+from pathlib import Path
+from uuid import UUID
 
 import numpy as np
 import pytest
@@ -167,9 +169,11 @@ def test_equality_of_boolean_values(
 @pytest.mark.parametrize(
     "lhs,rhs,expected",
     [
-        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 1),
+        pytest.param(_TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                     _TestFileValue(Path("d"), "e", "f", UUID(int=1)),
                      True, id="Same id"),
-        pytest.param(_TestFileValue("a", "b", "c", 1), _TestFileValue("d", "e", "f", 2),
+        pytest.param(_TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                     _TestFileValue(Path("d"), "e", "f", UUID(int=2)),
                      False, id="Different ids"),
     ]
 )
@@ -317,21 +321,21 @@ def test_equality_of_boolean_array_values(
     "lhs,rhs,expected",
     [
         pytest.param(FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 1)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
                      ]),
                      FileArrayValue(values=[
-                         _TestFileValue("a", "b", "c", 1),
-                         _TestFileValue("a", "b", "c", 1)
+                         _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                         _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
                      ]),
                      True, id="Same Files"),
         pytest.param(FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 1)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1))
                     ]),
                     FileArrayValue(values=[
-                        _TestFileValue("a", "b", "c", 1),
-                        _TestFileValue("a", "b", "c", 2)
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                        _TestFileValue(Path("a"), "b", "c", UUID(int=2))
                     ]),
                     False, id="Different Different"),
     ]
