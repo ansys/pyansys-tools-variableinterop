@@ -9,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 import ansys.common.variableinterop.exceptions as exceptions
+from ansys.common.variableinterop.file_value import FileValue
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
@@ -17,6 +18,7 @@ from ansys.common.variableinterop.scalar_values import (
     StringValue,
 )
 import ansys.common.variableinterop.variable_type as variable_type
+import ansys.common.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
@@ -47,6 +49,11 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
 
     @overrides
+    def visit_file(self, value: FileValue) -> BooleanArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type(), variable_type.VariableType.BOOLEAN_ARRAY)
+
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) \
             -> BooleanArrayValue:
         return value.to_boolean_array_value()
@@ -65,6 +72,26 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
     def visit_string_array(self, value: StringArrayValue) \
             -> BooleanArrayValue:
         return value.to_boolean_array_value()
+
+
+def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArrayValue:
+    """
+    Convert the given value to a BooleanArrayValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a BooleanArrayValue.
+
+    Returns
+    -------
+    The value as a BooleanArrayValue.
+
+    """
+    return other.accept(__ToBooleanArrayVisitor())
 
 
 class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
@@ -95,6 +122,11 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
             value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
 
     @overrides
+    def visit_file(self, value: FileValue) -> IntegerArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type(), variable_type.VariableType.INTEGER_ARRAY)
+
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) \
             -> IntegerArrayValue:
         return np.copy(value).view(IntegerArrayValue)
@@ -113,6 +145,26 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
     def visit_string_array(self, value: StringArrayValue) \
             -> IntegerArrayValue:
         return value.to_integer_array_value()
+
+
+def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArrayValue:
+    """
+    Convert the given value to a IntegerArrayValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a IntegerArrayValue.
+
+    Returns
+    -------
+    The value as a IntegerArrayValue.
+
+    """
+    return other.accept(__ToIntegerArrayVisitor())
 
 
 class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
@@ -139,6 +191,11 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
                                                     variable_type.VariableType.REAL_ARRAY)
 
     @overrides
+    def visit_file(self, value: FileValue) -> RealArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type(), variable_type.VariableType.REAL_ARRAY)
+
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealArrayValue:
         return value.to_real_array_value()
 
@@ -153,6 +210,26 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> RealArrayValue:
         return value.to_real_array_value()
+
+
+def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
+    """
+    Convert the given value to a RealArrayValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a RealArrayValue.
+
+    Returns
+    -------
+    The value as a RealArrayValue.
+
+    """
+    return other.accept(__ToRealArrayVisitor())
 
 
 class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
@@ -179,6 +256,11 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
             value.variable_type, variable_type.VariableType.STRING_ARRAY)
 
     @overrides
+    def visit_file(self, value: FileValue) -> StringArrayValue:
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type(), variable_type.VariableType.STRING_ARRAY)
+
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> StringArrayValue:
         return value.to_string_array_value()
 
@@ -194,4 +276,22 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
     def visit_string_array(self, value: StringArrayValue) -> StringArrayValue:
         return np.copy(value).view(StringArrayValue)
 
-# TODO: need to_x_array methods
+
+def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayValue:
+    """
+    Convert the given value to a StringArrayValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a StringArrayValue.
+
+    Returns
+    -------
+    The value as a StringArrayValue.
+
+    """
+    return other.accept(__ToStringArrayVisitor())

@@ -66,3 +66,11 @@ class FormatException(BaseException):
         """Construct exception."""
         self.message = _error("ERROR_FORMAT")
         super().__init__(self.message)
+
+
+class ValueDeserializationUnsupportedException(Exception):
+
+    def __init__(self, message: str):
+        """Construct a new instance."""
+        self.message: str = message
+        super().__init__(message)

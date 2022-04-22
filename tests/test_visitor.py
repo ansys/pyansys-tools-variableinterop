@@ -1,10 +1,9 @@
 """Unit tests of IVariableVisitor, and accept methods of value types."""
 
-from typing import Any
+from typing import Any, Type
 
 import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
-from typing import Type
 
 import ansys.common.variableinterop as acvi
 from ansys.common.variableinterop.array_value_conversion import (
@@ -33,6 +32,9 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
 
     def visit_string(self, value: acvi.StringValue) -> str:
         return value + ""
+
+    def visit_file(self, value: acvi.FileValue) -> str:
+        return str(value.original_file_name)
 
     def visit_integer_array(self, value: acvi.IntegerArrayValue) -> str:
         return value
@@ -86,9 +88,8 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
                      id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, acvi.IncompatibleTypesException, id="RealValue"),
 
-        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
-        #       inherit np.bool_
-        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+        pytest.param(acvi.BooleanValue(False), None, acvi.IncompatibleTypesException,
+                     id="BooleanValue"),
 
         pytest.param(acvi.StringValue(""), None, acvi.IncompatibleTypesException, id="StringValue"),
         pytest.param(acvi.IntegerArrayValue(values=[1, 2]), acvi.RealArrayValue(values=[1.0, 2.0]),
@@ -138,9 +139,10 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
                      acvi.IncompatibleTypesException,
                      id="RealValue"),
 
-        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
-        #       inherit np.bool_
-        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+        pytest.param(acvi.BooleanValue(False),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="BooleanValue"),
 
         pytest.param(acvi.StringValue(""),
                      None,
@@ -196,9 +198,10 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                      acvi.IncompatibleTypesException,
                      id="RealValue"),
 
-        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
-        #       inherit np.bool_
-        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+        pytest.param(acvi.BooleanValue(False),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="BooleanValue"),
 
         pytest.param(acvi.StringValue(""),
                      None,
@@ -208,11 +211,9 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
                      acvi.IntegerArrayValue(values=[-1, 0, 1]),
                      None,
                      id="IntegerArrayValue"),
-        # TODO: expected results to be updated after merging utils.convert
-        # Reals should round away from zero, i.e. 0.1 rounds to 1 and -0.1 to -1
-        #   ^ this is not correct
+        # Reals should round away from zero, i.e. 0.5 rounds to 1 and -0.5 to -1
         pytest.param(acvi.RealArrayValue(values=[-0.9, -0.5, -0.1, 0.0, 0.1, 0.5, 0.9]),
-                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1]),
+                     acvi.IntegerArrayValue(values=[-1, -1, 0, 0, 0, 1, 1]),
                      None,
                      id="RealArrayValue"),
         pytest.param(acvi.BooleanArrayValue(values=[True, False]),
@@ -222,7 +223,7 @@ def test_to_boolean_array_visitor(value: acvi.IVariableValue,
         # Test rounding from string arrays as well
         pytest.param(acvi.StringArrayValue(
                         values=["-0.9", "-0.5", "-0.1", "0", "0.1", "0.5", "0.9", "50"]),
-                     acvi.IntegerArrayValue(values=[-1, -1, -1, 0, 1, 1, 1, 50]),
+                     acvi.IntegerArrayValue(values=[-1, -1, 0, 0, 0, 1, 1, 50]),
                      None,
                      id="StringArrayValue_valid"),
         pytest.param(acvi.StringArrayValue(values=["1", "2", "this raises ValueError"]),
@@ -255,9 +256,10 @@ def test_to_integer_array_visitor(value: acvi.IVariableValue,
                      acvi.IncompatibleTypesException,
                      id="RealValue"),
 
-        # TODO: uncomment when we figure out what to do with BooleanValue since it can't
-        #       inherit np.bool_
-        # pytest.param(BooleanValue(False), None, IncompatibleTypesException, id="BooleanValue"),
+        pytest.param(acvi.BooleanValue(False),
+                     None,
+                     acvi.IncompatibleTypesException,
+                     id="BooleanValue"),
 
         pytest.param(acvi.StringValue(""),
                      None,

@@ -1,6 +1,10 @@
 """Definition of VariableType."""
+from __future__ import annotations
+
 from enum import Enum
 from typing import Dict
+
+from .variable_value import IVariableValue
 
 
 class VariableType(Enum):
@@ -92,3 +96,124 @@ class VariableType(Enum):
             if inp not in str_to_vartype_map.keys():
                 inp = 'unknown'
             return str_to_vartype_map[inp]
+            
+    def get_default_value(self) -> IVariableValue:
+        """
+        Construct the default value for this type.
+
+        Returns
+        -------
+        A new value object whose type matches this type.
+        """
+        from .array_values import (
+            BooleanArrayValue,
+            IntegerArrayValue,
+            RealArrayValue,
+            StringArrayValue,
+        )
+        from .file_array_value import FileArrayValue
+        from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
+        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+
+        class __DefaultValueVisitor(IVariableTypePseudoVisitor[IVariableValue]):
+            """Visitor that returns a default value for each type."""
+
+            def visit_unknown(self) -> IVariableValue:
+                raise TypeError
+
+            def visit_int(self) -> IVariableValue:
+                return IntegerValue(0)
+
+            def visit_real(self) -> IVariableValue:
+                return RealValue()
+
+            def visit_boolean(self) -> IVariableValue:
+                return BooleanValue()
+
+            def visit_string(self) -> IVariableValue:
+                return StringValue()
+
+            def visit_file(self) -> IVariableValue:
+                # TODO: impl when file branch merged
+                pass
+
+            def visit_int_array(self) -> IVariableValue:
+                return IntegerArrayValue()
+
+            def visit_real_array(self) -> IVariableValue:
+                return RealArrayValue()
+
+            def visit_bool_array(self) -> IVariableValue:
+                return BooleanArrayValue()
+
+            def visit_string_array(self) -> IVariableValue:
+                return StringArrayValue()
+
+            def visit_file_array(self) -> IVariableValue:
+                return FileArrayValue()
+
+        visitor = __DefaultValueVisitor()
+        return vartype_accept(visitor, self)
+
+    from .common_variable_metadata import CommonVariableMetadata
+
+    def construct_variable_metadata(self) -> CommonVariableMetadata:
+        """
+        Construct the default metadata for this type.
+
+        Returns
+        -------
+        A new metadata object whose type matches this type.
+        """
+        from .array_metadata import (
+            BooleanArrayMetadata,
+            IntegerArrayMetadata,
+            RealArrayMetadata,
+            StringArrayMetadata,
+        )
+        from .common_variable_metadata import CommonVariableMetadata
+
+        # from .file_array_metadata import FileArrayMetadata
+        from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
+        from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
+
+        class __DefaultMetadataVisitor(IVariableTypePseudoVisitor[CommonVariableMetadata]):
+            """Visitor that returns a default metadata for each type."""
+
+            def visit_unknown(self) -> CommonVariableMetadata:
+                raise TypeError
+
+            def visit_int(self) -> CommonVariableMetadata:
+                return IntegerMetadata()
+
+            def visit_real(self) -> CommonVariableMetadata:
+                return RealMetadata()
+
+            def visit_boolean(self) -> CommonVariableMetadata:
+                return BooleanMetadata()
+
+            def visit_string(self) -> CommonVariableMetadata:
+                return StringMetadata()
+
+            def visit_file(self) -> CommonVariableMetadata:
+                # TODO: impl when file branch merged
+                pass
+
+            def visit_int_array(self) -> CommonVariableMetadata:
+                return IntegerArrayMetadata()
+
+            def visit_real_array(self) -> CommonVariableMetadata:
+                return RealArrayMetadata()
+
+            def visit_bool_array(self) -> CommonVariableMetadata:
+                return BooleanArrayMetadata()
+
+            def visit_string_array(self) -> CommonVariableMetadata:
+                return StringArrayMetadata()
+
+            def visit_file_array(self) -> CommonVariableMetadata:
+                # return FileArrayMetadata()
+                pass
+
+        visitor = __DefaultMetadataVisitor()
+        return vartype_accept(visitor, self)

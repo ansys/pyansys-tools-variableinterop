@@ -8,6 +8,8 @@ from ansys.common.variableinterop.array_metadata import (
     RealArrayMetadata,
     StringArrayMetadata,
 )
+from ansys.common.variableinterop.file_array_metadata import FileArrayMetadata
+from ansys.common.variableinterop.file_metadata import FileMetadata
 from ansys.common.variableinterop.scalar_metadata import (
     BooleanMetadata,
     IntegerMetadata,
@@ -29,7 +31,9 @@ all_metadata_types = [
     BooleanMetadata.__name__,
     BooleanArrayMetadata.__name__,
     StringMetadata.__name__,
-    StringArrayMetadata.__name__
+    StringArrayMetadata.__name__,
+    FileMetadata.__name__,
+    FileArrayMetadata.__name__
     ]
 
 
@@ -333,7 +337,7 @@ def test_equals_different_display_format(type_name: str) -> None:
         ("IntegerArrayMetadata", "upper_bound", 200, 200),
         ("RealMetadata", "lower_bound", None, None),
         ("RealMetadata", "lower_bound", 0.1, 0.1),
-        ("RealMetadata", "lower_bound", RealValue(0.0), 0),
+        ("RealMetadata", "lower_bound", RealValue(0.0), 0.0),
         ("RealMetadata", "lower_bound", RealValue(-0.5), -0.5),
         ("RealArrayMetadata", "lower_bound", 0.1, 0.1),
         ("RealMetadata", "upper_bound", None, None),

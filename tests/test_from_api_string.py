@@ -3,15 +3,15 @@ import pytest
 from test_utils import _create_exception_context
 
 from ansys.common.variableinterop import (
-    BooleanValue,
     BooleanArrayValue,
-    IntegerValue,
+    BooleanValue,
     IntegerArrayValue,
+    IntegerValue,
     IVariableValue,
-    RealValue,
     RealArrayValue,
-    StringValue,
+    RealValue,
     StringArrayValue,
+    StringValue,
     VariableType,
     from_api_string,
 )

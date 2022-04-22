@@ -5,6 +5,7 @@ import functools
 import locale
 from typing import TypeVar
 
+from decimal import ROUND_HALF_UP, Decimal
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
@@ -16,6 +17,7 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
 import ansys.common.variableinterop.variable_type as variable_type
@@ -30,17 +32,17 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    operators.
     """
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.bool_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        elif shape_ is not None:
+            return super().__new__(cls, shape=shape_, dtype=np.bool_)
+        else:
+            return np.zeros(shape=(), dtype=np.bool_)
 
     @overrides
     def __eq__(self, other) -> bool:
@@ -102,21 +104,27 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
 
 class IntegerArrayValue(CommonArrayValue[np.int64]):
-    """Array of integer values.
+    """
+    Array of integer values.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards.
     For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    of rounded. If you want the variable interop standard conversions, call to_integer_array_value
+    on the RealArrayValue and use the resulting IntegerArrayValue as you would a NumPy ndarray of
+    int64 values.
     """
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.int64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.int64)
+        elif shape_ is not None:
+            return super().__new__(cls, shape=shape_, dtype=np.int64)
+        else:
+            return np.zeros(shape=(), dtype=np.int64)
 
     @overrides
     def __eq__(self, other):
@@ -176,21 +184,27 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
 
 class RealArrayValue(CommonArrayValue[np.float64]):
-    """Array of real values.
+    """
+    Array of real values.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards.
     For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    of rounded. If you want the variable interop standard conversions, call to_integer_array_value
+    on the RealArrayValue and use the resulting IntegerArrayValue as you would a NumPy ndarray of
+    int64 values.
     """
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.float64).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.float64)
+        elif shape_ is not None:
+            return super().__new__(cls, shape=shape_, dtype=np.float64)
+        else:
+            return np.zeros(shape=(), dtype=np.float64)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -214,8 +228,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_integer_array_value(self):
         def away_from_zero(x: np.float64) -> np.int64:
-            f = np.floor if x < 0 else np.ceil
-            return np.int64(f(x))
+            return np.int64(Decimal(x).to_integral(ROUND_HALF_UP))
 
         return np.vectorize(away_from_zero)(self).astype(np.int64) \
             .view(IntegerArrayValue)
@@ -275,17 +288,17 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     In Python StringArrayValue is implemented by extending NumPy's ndarray type. This means that
     they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    operators.
     """
 
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
-        if values:
+        if values is not None:
             return np.array(values, dtype=np.str_).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=np.str_)
+        elif shape_ is not None:
+            return super().__new__(cls, shape=shape_, dtype=np.str_)
+        else:
+            return np.zeros(shape=(), dtype=np.str_)
 
     def __eq__(self, other):
         return np.array_equal(self, other)
@@ -327,7 +340,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self,
-            lambda elem: "\"" + StringValue(elem).to_api_string() + "\"")
+            lambda elem: "\"" + escape_string(StringValue(elem).to_api_string()) + "\"")
         return api_string
 
     @staticmethod
@@ -345,7 +358,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: StringArrayValue(values=val),
-            lambda val: StringValue.from_api_string(val))
+            lambda val: StringValue.from_api_string(unescape_string(val)))
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:

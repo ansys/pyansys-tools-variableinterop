@@ -9,6 +9,7 @@ from ansys.common.variableinterop.array_values import (
     StringArrayValue,
 )
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
+from ansys.common.variableinterop.file_value import FileValue
 from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
@@ -41,20 +42,24 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
         return BooleanValue.str_to_bool(value)
 
     @overrides
-    def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
+    def visit_file(self, value: FileValue) -> bool:
         raise IncompatibleTypesException(value.variable_type(), "bool")
+
+    @overrides
+    def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
@@ -71,10 +76,10 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     Returns
     -------
-    The value as a RealValue.
+    The value as a BooleanValue.
 
     """
-    return other.accept(__ToBooleanVisitor())
+    return BooleanValue(other.accept(__ToBooleanVisitor()))
 
 
 class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
@@ -95,6 +100,10 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     @overrides
     def visit_string(self, value: StringValue) -> IntegerValue:
         return IntegerValue.from_api_string(value.to_api_string())
+
+    @overrides
+    def visit_file(self, value: FileValue) -> IntegerValue:
+        raise IncompatibleTypesException(value.variable_type(), VariableType.INTEGER)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
@@ -122,10 +131,10 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
     and some conversions are not possible (raises IncompatibleTypesException).
     Parameters
     ----------
-    other the other value to convert to a RealValue.
+    other the other value to convert to a IntegerValue.
     Returns
     -------
-    The value as a RealValue.
+    The value as a IntegerValue.
     """
     return other.accept(__ToIntegerVisitor())
 
@@ -148,6 +157,10 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
     @overrides
     def visit_string(self, value: StringValue) -> RealValue:
         return RealValue.from_api_string(value.to_api_string())
+
+    @overrides
+    def visit_file(self, value: FileValue) -> RealValue:
+        raise IncompatibleTypesException(value.variable_type(), VariableType.REAL)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealValue:
@@ -184,3 +197,23 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     """
     return other.accept(__ToRealVisitor())
+
+
+def to_string_value(other: IVariableValue) -> StringValue:
+    """
+    Convert the given value to a StringValue.
+
+    The conversion is performed according to the type interoperability specifications.
+    Note that some conversions are lossy (resulting in a loss of precision)
+    and some conversions are not possible (raises IncompatibleTypesException).
+
+    Parameters
+    ----------
+    other the other value to convert to a StringValue.
+
+    Returns
+    -------
+    The value as a StringValue.
+
+    """
+    return StringValue(other.to_api_string())
