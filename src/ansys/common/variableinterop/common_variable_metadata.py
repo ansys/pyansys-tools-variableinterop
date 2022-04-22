@@ -123,7 +123,6 @@ class CommonVariableMetadata(ABC):
             scalar_values
         )
 
-
         class __DefaultValueVisitor(
                 ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
             """Metadata visitor to implement getting the default value."""
@@ -230,7 +229,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file(
-                    self, metadata: file_metadata.FileMetadata) -> file_value.FileArrayValue:
+                    self, metadata: file_metadata.FileMetadata) -> file_value.FileValue:
                 return file_value.EMPTY_FILE
 
             @overrides
@@ -262,7 +261,8 @@ class CommonVariableMetadata(ABC):
             @overrides
             def visit_file_array(
                     self,
-                    metadata: file_array_metadata.FileArrayMetadata) -> array_values.FileArrayValue:
+                    metadata: file_array_metadata.FileArrayMetadata) \
+                    -> file_array_value.FileArrayValue:
                 return file_array_value.FileArrayValue()
 
         visitor = __DefaultValueVisitor()
