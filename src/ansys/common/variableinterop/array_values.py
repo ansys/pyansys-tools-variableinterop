@@ -17,9 +17,9 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
-from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 import ansys.common.variableinterop.variable_type as variable_type
 
 from .variable_value import CommonArrayValue
@@ -40,9 +40,9 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         if values is not None:
             return np.array(values, dtype=np.bool_).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.bool_)
+            return super().__new__(cls, shape=shape_, dtype=np.bool_).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.bool_)
+            return np.zeros(shape=(), dtype=np.bool_).view(cls)
 
     @overrides
     def __eq__(self, other) -> bool:
@@ -122,9 +122,9 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         if values is not None:
             return np.array(values, dtype=np.int64).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.int64)
+            return super().__new__(cls, shape=shape_, dtype=np.int64).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.int64)
+            return np.zeros(shape=(), dtype=np.int64).view(cls)
 
     @overrides
     def __eq__(self, other):
@@ -202,9 +202,9 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         if values is not None:
             return np.array(values, dtype=np.float64).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.float64)
+            return super().__new__(cls, shape=shape_, dtype=np.float64).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.float64)
+            return np.zeros(shape=(), dtype=np.float64).view(cls)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
@@ -296,9 +296,9 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         if values is not None:
             return np.array(values, dtype=np.str_).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.str_)
+            return super().__new__(cls, shape=shape_, dtype=np.str_).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.str_)
+            return np.zeros(shape=(), dtype=np.str_).view(cls)
 
     def __eq__(self, other):
         return np.array_equal(self, other)

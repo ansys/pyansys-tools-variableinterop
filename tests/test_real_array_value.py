@@ -5,6 +5,19 @@ import pytest
 from ansys.common.variableinterop import RealArrayValue
 
 
+def test_default_construct() -> None:
+    result = RealArrayValue()
+
+    assert type(result) is RealArrayValue
+    assert numpy.shape(result) == ()
+
+
+def test_shape_construct() -> None:
+    result = RealArrayValue(shape_=(2, 4, 9))
+
+    assert type(result) is RealArrayValue
+    assert numpy.shape(result) == (2, 4, 9)
+
 @pytest.mark.parametrize(
     'source,expected_result',
     [

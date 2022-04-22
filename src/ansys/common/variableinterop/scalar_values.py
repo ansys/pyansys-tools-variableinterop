@@ -308,7 +308,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     """
 
     @overrides
-    def __new__(cls, arg: Any):
+    def __new__(cls, arg: Any = 0):
         """
         Create a new instance.
 
