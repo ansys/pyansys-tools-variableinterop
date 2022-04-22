@@ -5,6 +5,20 @@ import pytest
 from ansys.common.variableinterop import IntegerArrayValue
 
 
+def test_default_construct() -> None:
+    result = IntegerArrayValue()
+
+    assert type(result) is IntegerArrayValue
+    assert numpy.shape(result) == ()
+
+
+def test_shape_construct() -> None:
+    result = IntegerArrayValue(shape_=(2, 4, 9))
+
+    assert type(result) is IntegerArrayValue
+    assert numpy.shape(result) == (2, 4, 9)
+
+
 @pytest.mark.parametrize(
     'source,expected_result',
     [
