@@ -298,7 +298,6 @@ class CommonVariableMetadata(ABC):
             ivariablemetadata_visitor.IVariableMetadataVisitor[
                     variable_value.IVariableValue]):
 
-
             @overrides
             def visit_integer(self, metadata) -> scalar_values.IntegerValue:
                 return scalar_value_conversion.to_integer_value(source)
