@@ -89,6 +89,8 @@ class FileValue(variable_value.IVariableValue, ABC):
 
     CONTENTS_KEY: Final[str] = "contents"
 
+    _DEFAULT_EXT = ".tmp"
+
     @property
     @abstractmethod
     def actual_content_file_name(self) -> Optional[PathLike]:
@@ -312,6 +314,24 @@ class FileValue(variable_value.IVariableValue, ABC):
         if self._file_encoding:
             obj[FileValue.ENCODING_KEY] = self._file_encoding
         return obj
+
+    # TODO: Async get_contents
+
+    def get_extension(self) -> str:
+        """
+        Get the file extension of the file value held, if known, including the period.
+
+        If the file extension is not known, ".tmp" is returned.
+        Returns
+        -------
+        The file extension of the file value held if known, otherwise, ".tmp"
+        """
+        ext: str = FileValue._DEFAULT_EXT
+        if isinstance(self._original_path, PathLike):
+            orig_path, split_ext = path.splitext(self._original_path)
+            if split_ext:
+                ext = split_ext
+        return ext
 
 
 class EmptyFileValue(FileValue):
