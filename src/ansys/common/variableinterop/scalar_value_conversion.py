@@ -11,7 +11,7 @@ from ansys.common.variableinterop.array_values import (
 )
 from ansys.common.variableinterop.exceptions import IncompatibleTypesException
 from ansys.common.variableinterop.file_value import FileValue
-from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor, T
+from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
@@ -127,7 +127,7 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
         raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.INTEGER)
 
     @overrides
-    def visit_file_array(self, value: FileArrayValue) -> T:
+    def visit_file_array(self, value: FileArrayValue) -> IntegerValue:
         raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER)
 
 
@@ -140,10 +140,10 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
     and some conversions are not possible (raises IncompatibleTypesException).
     Parameters
     ----------
-    other the other value to convert to a RealValue.
+    other the other value to convert to a IntegerValue.
     Returns
     -------
-    The value as a RealValue.
+    The value as a IntegerValue.
     """
     return other.accept(__ToIntegerVisitor())
 
@@ -213,7 +213,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
 
 class __ToStringVisitor(IVariableValueVisitor[StringValue]):
-    """This visitor implementation converts the visited value to a RealValue."""
+    """This visitor implementation converts the visited value to a StringValue."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringValue:
@@ -233,7 +233,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> StringValue:
-        raise IncompatibleTypesException(value.variable_type, VariableType.STRING)
+        raise IncompatibleTypesException(VariableType.FILE, VariableType.STRING)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> StringValue:
@@ -253,7 +253,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
     @overrides
     def visit_file_array(self, value: FileValue) -> StringValue:
-        raise IncompatibleTypesException(value.variable_type, VariableType.STRING)
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.STRING)
 
 
 def to_string_value(other: IVariableValue) -> StringValue:
