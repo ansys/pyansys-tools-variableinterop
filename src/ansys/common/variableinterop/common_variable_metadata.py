@@ -120,7 +120,7 @@ class CommonVariableMetadata(ABC):
             file_metadata,
             file_value,
             scalar_metadata,
-            scalar_values
+            scalar_values,
         )
 
         class __DefaultValueVisitor(
