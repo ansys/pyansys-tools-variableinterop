@@ -5,6 +5,9 @@ from abc import ABC, abstractmethod
 import copy
 from typing import Any, Dict
 
+from overrides import overrides
+
+from ansys.common.variableinterop import exceptions
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
 import ansys.common.variableinterop.variable_value as variable_value
@@ -90,6 +93,83 @@ class CommonVariableMetadata(ABC):
     def custom_metadata(self) -> Dict[str, variable_value.IVariableValue]:
         """Additional, custom metadata may be stored in this dictionary."""
         return self._custom_metadata
+
+    def runtime_convert(
+            self,
+            source: variable_value.IVariableValue) -> variable_value.IVariableValue:
+        """
+        Convert the value of the given variable value to the \
+        appropriate type for this meta data.
+
+        Parameters
+        ----------
+        source : IVariableValue
+            value to convert
+
+        Returns
+        -------
+        Value converted to the appropriate type.
+        """
+        from ansys.common.variableinterop import (
+            array_value_conversion,
+            array_values,
+            file_array_value,
+            file_value,
+            scalar_value_conversion,
+            scalar_values,
+        )
+
+        class __RuntimeConvertVisitor(
+            ivariablemetadata_visitor.IVariableMetadataVisitor[
+                    variable_value.IVariableValue]):
+
+            # def __init__(self, src: variable_value.IVariableValue):
+            #    self._source = src
+
+            @overrides
+            def visit_integer(self, metadata) -> scalar_values.IntegerValue:
+                return scalar_value_conversion.to_integer_value(source)
+
+            @overrides
+            def visit_real(self, metadata) -> scalar_values.RealValue:
+                return scalar_value_conversion.to_real_value(source)
+
+            @overrides
+            def visit_boolean(self, metadata) -> scalar_values.BooleanValue:
+                return scalar_value_conversion.to_boolean_value(source)
+
+            @overrides
+            def visit_string(self, metadata) -> scalar_values.StringValue:
+                return scalar_value_conversion.to_string_value(source)
+
+            @overrides
+            def visit_file(self, metadata) -> file_value.FileValue:
+                raise exceptions.IncompatibleTypesException(
+                    source.variable_type, variable_type_lib.VariableType.FILE)
+
+            @overrides
+            def visit_integer_array(self, metadata) -> array_values.IntegerArrayValue:
+                return array_value_conversion.to_integer_array_value(source)
+
+            @overrides
+            def visit_real_array(self, metadata) -> array_values.RealArrayValue:
+                return array_value_conversion.to_real_array_value(source)
+
+            @overrides
+            def visit_boolean_array(self, metadata) -> array_values.BooleanArrayValue:
+                return array_value_conversion.to_boolean_array_value(source)
+
+            @overrides
+            def visit_string_array(self, metadata) -> array_values.StringArrayValue:
+                return array_value_conversion.to_string_array_value(source)
+
+            @overrides
+            def visit_file_array(self, metadata) -> file_array_value.FileArrayValue:
+                raise exceptions.IncompatibleTypesException(
+                    source.variable_type, variable_type_lib.VariableType.FILE_ARRAY)
+
+        visitor = __RuntimeConvertVisitor()
+        return self.accept(visitor)
 
     @property
     @abstractmethod

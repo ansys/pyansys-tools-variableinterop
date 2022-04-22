@@ -54,6 +54,9 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
     def visit_string_array(self, value: StringArrayValue) -> str:
         return value.to_api_string()
 
+    def visit_file_array(self, value: file_value.FileValue) -> str:
+        return value.to_api_string(self._save_context)
+
 
 def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = None) -> str:
     """

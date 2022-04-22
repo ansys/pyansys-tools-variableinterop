@@ -4,7 +4,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
+
 if TYPE_CHECKING:
+    from ansys.common.variableinterop import FileArrayValue
     from ansys.common.variableinterop.array_values import (
         BooleanArrayValue,
         IntegerArrayValue,
@@ -111,7 +113,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file(self, value: FileValue) -> T:
         """
-        Will be called if accept is called on an FileValue
+        Will be called if accept is called on an FileValue.
 
         Parameters
         ----------
@@ -165,5 +167,20 @@ class IVariableValueVisitor(ABC, Generic[T]):
         Returns
         -------
         The result.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_file_array(self, value: FileArrayValue) -> T:
+        """
+        Will be called if accept is called on an FileArrayValue.
+
+        Parameters
+        ----------
+        value The FileArrayValue being visited
+
+        Returns
+        -------
+        The result
         """
         raise NotImplementedError

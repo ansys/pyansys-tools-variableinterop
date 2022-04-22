@@ -48,6 +48,9 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
     def visit_string_array(self, value: acvi.StringArrayValue) -> str:
         return value
 
+    def visit_file_array(self, value: acvi.FileArrayValue) -> str:
+        return value
+
 
 # region TestVisitor
 @pytest.mark.parametrize(
