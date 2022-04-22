@@ -112,7 +112,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file(self, value: FileValue) -> T:
         """
-        Will be called if accept is called on an FileValue
+        Will be called if accept is called on an FileValue.
 
         Parameters
         ----------

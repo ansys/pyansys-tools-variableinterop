@@ -36,7 +36,7 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=file_value.FileValue).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=file_value.FileValue)
+        return super().__new__(cls, shape=shape_, dtype=file_value.FileValue).view(cls)
 
     @overrides
     def __eq__(self, other):

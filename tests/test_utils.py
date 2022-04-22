@@ -38,7 +38,7 @@ def _create_exception_context(expect_exception: Type[BaseException]):
 
 def _test_to_value_visitor(value: acvi.IVariableValue,
                            expected_result: acvi.IVariableValue,
-                           expected_exception_type: Type[BaseException],
+                           expected_exception_type: Type[Exception],
                            visitor_type: Type[acvi.IVariableValueVisitor],
                            result_type: Type[acvi.IVariableValue] = None) -> None:
     """

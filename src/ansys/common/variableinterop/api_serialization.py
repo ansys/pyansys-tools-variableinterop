@@ -1,4 +1,7 @@
+"""Definition of ToAPIStringVisitor."""
 from typing import Optional
+
+from overrides import overrides
 
 from ansys.common.variableinterop import file_value as file_value
 from ansys.common.variableinterop.api_string_to_value_visitor import APIStringToValueVisitor
@@ -24,34 +27,51 @@ from ansys.common.variableinterop.variable_value import IVariableValue
 
 
 class ToAPIStringVisitor(IVariableValueVisitor[str]):
+    """Visitor to convert values to an API string."""
 
     def __init__(self, save_context: Optional[ISaveContext]):
+        """
+        Initialize the visitor.
+
+        Parameters
+        ----------
+        save_context Tge save context to use for conversion.
+        """
         self._save_context = save_context
 
+    @overrides
     def visit_integer(self, value: IntegerValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_real(self, value: RealValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_boolean(self, value: BooleanValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_string(self, value: StringValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_file(self, value: file_value.FileValue) -> str:
         return value.to_api_string(self._save_context)
 
+    @overrides
     def visit_real_array(self, value: RealArrayValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_string_array(self, value: StringArrayValue) -> str:
         return value.to_api_string()
 
