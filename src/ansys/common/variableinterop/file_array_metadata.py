@@ -1,6 +1,7 @@
 """Definition of FileArrayMetadata."""
 from overrides import overrides
 
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .file_metadata import FileMetadata
 from .variable_type import VariableType
 
@@ -12,3 +13,7 @@ class FileArrayMetadata(FileMetadata):
     @overrides
     def variable_type(self) -> VariableType:
         return VariableType.FILE_ARRAY
+
+    @overrides
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
+        return visitor.visit_file_array(self)
