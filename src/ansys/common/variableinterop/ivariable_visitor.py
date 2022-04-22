@@ -172,14 +172,14 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file_array(self, value: FileArrayValue) -> T:
         """
-        Will be called if accept is called on a StringArrayValue.
+        Will be called if accept is called on an FileArrayValue.
 
         Parameters
         ----------
-        value The StringArrayValue being visited.
+        value The FileArrayValue being visited
 
         Returns
         -------
-        The result.
+        The result
         """
         raise NotImplementedError

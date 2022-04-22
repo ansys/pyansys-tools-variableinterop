@@ -49,7 +49,7 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
         return value
 
     def visit_file_array(self, value: acvi.FileArrayValue) -> str:
-        return str(value)
+        return value
 
 
 # region TestVisitor

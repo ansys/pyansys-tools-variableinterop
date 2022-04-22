@@ -44,7 +44,7 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
     @overrides
     def visit_file(self, value: FileValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
@@ -64,7 +64,7 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type(), "bool")
+        raise IncompatibleTypesException(value.variable_type, "bool")
 
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
@@ -108,7 +108,7 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> IntegerValue:
-        raise IncompatibleTypesException(value.variable_type(), VariableType.INTEGER)
+        raise IncompatibleTypesException(value.variable_type, VariableType.INTEGER)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
@@ -128,7 +128,7 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER_ARRAY)
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER)
 
 
 def to_integer_value(other: IVariableValue) -> IntegerValue:
@@ -169,7 +169,7 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> RealValue:
-        raise IncompatibleTypesException(value.variable_type(), VariableType.REAL)
+        raise IncompatibleTypesException(value.variable_type, VariableType.REAL)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealValue:
@@ -189,7 +189,7 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> RealValue:
-        raise IncompatibleTypesException(value.variable_type(), VariableType.REAL)
+        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.REAL)
 
 
 def to_real_value(other: IVariableValue) -> RealValue:
@@ -229,7 +229,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
     @overrides
     def visit_string(self, value: StringValue) -> StringValue:
-        return StringValue(value.to_api_string())
+        return value
 
     @overrides
     def visit_file(self, value: FileValue) -> StringValue:
@@ -252,7 +252,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
         return StringValue(value.to_api_string())
 
     @overrides
-    def visit_file_array(self, value: StringArrayValue) -> StringValue:
+    def visit_file_array(self, value: FileArrayValue) -> StringValue:
         raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.STRING)
 
 
