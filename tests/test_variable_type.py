@@ -1,3 +1,5 @@
+from typing import Iterable, Tuple
+
 import pytest
 
 from ansys.common.variableinterop import VariableType
@@ -45,11 +47,18 @@ def test_var_type_from_string(inp: str, expected_result: VariableType):
     inputs = inp.split(',')
 
     # SUT
-    results = (VariableType.from_string(i) for i in inputs)
+    # Store results as a tuple where [0]=the input string and [1]=the actual result of the SUT.
+    results: Iterable[Tuple[str, VariableType]] \
+        = ((i, VariableType.from_string(i)) for i in inputs)
 
     # Verify
     for result in results:
-        assert result == expected_result
+        input_string: str = result[0]
+        actual_result: VariableType = result[1]
+        assert actual_result == expected_result, \
+            (f"\nInput string causing failure: '{input_string}'"
+             f"\nExpected: {expected_result}"
+             f"\nActual: {actual_result}")
 
 
 @pytest.mark.parametrize(

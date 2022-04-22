@@ -50,9 +50,9 @@ from typing import Any, Type
 
 import numpy as np
 import pytest
+from test_utils import _create_exception_context
 
 from ansys.common import variableinterop as acvi
-from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(

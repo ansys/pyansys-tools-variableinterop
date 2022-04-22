@@ -1,11 +1,11 @@
 """Definition of all array value implementations of IVariableValue."""
 from __future__ import annotations
 
+from decimal import ROUND_HALF_UP, Decimal
 import functools
 import locale
 from typing import TypeVar
 
-from decimal import ROUND_HALF_UP, Decimal
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
@@ -17,9 +17,9 @@ from ansys.common.variableinterop.scalar_values import (
     RealValue,
     StringValue,
 )
-from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
 from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
+from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
 import ansys.common.variableinterop.variable_type as variable_type
 
 from .variable_value import CommonArrayValue

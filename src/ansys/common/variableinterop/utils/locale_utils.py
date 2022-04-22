@@ -1,7 +1,7 @@
 """Utilities for dealing with locales."""
+from configparser import ConfigParser
 import locale
 import os
-from configparser import ConfigParser
 from typing import Any, Callable
 
 

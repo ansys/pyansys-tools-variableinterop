@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Dict, Union, Iterable, Any
+from typing import Any, Dict, Iterable, Union
 
-from .variable_value import IVariableValue
 from .utils.locale_utils import Strings
+from .variable_value import IVariableValue
+
 
 class VariableType(Enum):
     """Enumeration listing the possible variable types."""
@@ -128,7 +129,6 @@ class VariableType(Enum):
         -------
         str
             Display string.
-
         """
         __valtype_display_string: Dict[VariableType, str] = {
             VariableType.REAL: 'DISPLAY_STRING_REAL',
