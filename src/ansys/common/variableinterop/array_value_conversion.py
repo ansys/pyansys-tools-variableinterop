@@ -295,4 +295,3 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
 
     """
     return other.accept(__ToStringArrayVisitor())
-
