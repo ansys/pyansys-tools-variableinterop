@@ -2,7 +2,6 @@
 import numpy as np
 from overrides import overrides
 
-from ansys.common.variableinterop import IVariableValue
 from ansys.common.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
@@ -79,6 +78,7 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
             -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+
 
 def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArrayValue:
     """
@@ -158,6 +158,7 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
 
+
 def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArrayValue:
     """
     Convert the given value to a IntegerArrayValue.
@@ -227,6 +228,7 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
             -> RealArrayValue:
         raise exceptions.IncompatibleTypesException(
             value.variable_type, variable_type.VariableType.REAL_ARRAY)
+
 
 def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     """

@@ -130,6 +130,7 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
     def visit_file_array(self, value: FileArrayValue) -> T:
         raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER)
 
+
 def to_integer_value(other: IVariableValue) -> IntegerValue:
     """
     Convert the given value to an IntegerValue.
@@ -273,4 +274,3 @@ def to_string_value(other: IVariableValue) -> StringValue:
 
     """
     return other.accept(__ToStringVisitor())
-

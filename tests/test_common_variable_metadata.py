@@ -123,8 +123,8 @@ def get_test_str_array_meta(
     """Get a test StringArrayMetadata with enumerated values."""
     return get_test_str_meta(
         enums,
-        meta_type = acvi.StringArrayMetadata,
-        value_type = acvi.StringValue)
+        meta_type=acvi.StringArrayMetadata,
+        value_type=acvi.StringValue)
 
 
 get_default_value_tests: List[Tuple[str, acvi.CommonVariableMetadata, acvi.IVariableValue]] = [
@@ -311,27 +311,20 @@ def test_meta_get_default_value(
     else:
         assert result == expected
 
-def get_test_bool_array( vals: List[bool]) -> acvi.BooleanArrayValue:
+
+def get_test_bool_array(vals: List[bool]) -> acvi.BooleanArrayValue:
     test = acvi.BooleanArrayValue(len(vals))
     for i in range(0, len(vals)):
         test[i] = vals[i]
     return test
 
 
-def get_test_int_array( vals: List[int]) -> acvi.IntegerArrayValue:
+def get_test_int_array(vals: List[int]) -> acvi.IntegerArrayValue:
     return acvi.IntegerArrayValue(values=vals)
-#    test = acvi.IntegerArrayValue(len(vals))
-#    for i in range(0, len(vals)):
-#        test[i] = vals[i]
-#    return test
 
 
-def get_test_real_array( vals: List[float]) -> acvi.RealArrayValue:
+def get_test_real_array(vals: List[float]) -> acvi.RealArrayValue:
     return acvi.RealArrayValue(values=vals)
-#    test = acvi.RealArrayValue(len(vals))
-#    for i in range(0, len(vals)):
-#        test[i] = vals[i]
-#    return test
 
 
 def get_test_str_array(vals: List[str]) -> acvi.StringArrayValue:
@@ -340,10 +333,6 @@ def get_test_str_array(vals: List[str]) -> acvi.StringArrayValue:
 
 def get_test_file_array(vals: List[acvi.FileValue]) -> acvi.FileArrayValue:
     return acvi.FileArrayValue(values=vals)
-#    test = acvi.FileArrayValue(len(vals))
-#    for i in range(0, len(vals)):
-#        test[i] = vals[i]
-#    return test
 
 
 runtime_convert_tests = [
@@ -661,7 +650,8 @@ runtime_convert_tests = [
         acvi.StringValue('"1st","2nd","3rd"')],
     [
         "str[] -> file",
-        acvi.FileMetadata(),get_test_str_array(["1st", "2nd", "3rd"]),
+        acvi.FileMetadata(),
+        get_test_str_array(["1st", "2nd", "3rd"]),
         acvi.IncompatibleTypesException],
     [
         "str[] -> bool[]",
@@ -753,10 +743,11 @@ runtime_convert_tests = [
     ],
 ]
 
-@pytest.mark.parametrize( "_,meta,source,expected", runtime_convert_tests)
+
+@pytest.mark.parametrize("_,meta,source,expected", runtime_convert_tests)
 def test_runtime_convert(
         _: str,
-        meta : acvi.CommonVariableMetadata,
+        meta: acvi.CommonVariableMetadata,
         source: acvi.IVariableValue,
         expected: Union[acvi.IVariableValue, Type[BaseException]]) -> None:
     # Setup
