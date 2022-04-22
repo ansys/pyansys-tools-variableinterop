@@ -25,6 +25,7 @@ class _TestFileValue(acvi.FileValue):
         super().__init__(original_path, mime_type, encoding, value_id)
         self._has_content_override: bool = False
 
+    @property  # type: ignore
     @overrides
     def actual_content_file_name(self) -> Optional[PathLike]:
         return test_read_file
@@ -188,6 +189,32 @@ def test_empty_file_value():
 def test_to_display_string(sut: acvi.FileValue, expected_result: str):
     # Execute
     result: str = sut.to_display_string('locale ignored')
+
+    # Verify
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'orig_path,expected_result',
+    [
+        pytest.param(None, '.tmp', id="None"),
+        pytest.param(Path(''), '.tmp', id="empty"),
+        pytest.param(Path('no/ext'), '.tmp', id="no extension"),
+        pytest.param(Path('has/tmp/extension.tmp'), '.tmp', id="actually .tmp"),
+        pytest.param(Path('a/word/document.doc'), '.doc', id=".doc"),
+        pytest.param(Path('multiple/dots/in.a.file.name.txt'), '.txt', id="multiple dots"),
+        pytest.param(Path('last.dot/is/in/a/directory/element'), '.tmp',
+                     id="no ext with dot earlier in path"),
+        pytest.param(Path('longer/extension.longerthanthefilename'), '.longerthanthefilename',
+                     id="long extension"),
+    ]
+)
+def test_get_extension(orig_path: Optional[Path], expected_result: str):
+    # Setup
+    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None)
+
+    # Execute
+    result: str = sut.get_extension()
 
     # Verify
     assert result == expected_result

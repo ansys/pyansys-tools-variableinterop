@@ -3,26 +3,30 @@ Unit tests for scalar_value_conversion.
 """
 
 import sys
+from typing import Type
+
 import numpy
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
-from typing import Type
 
 from ansys.common.variableinterop import (
-    BooleanValue,
+    EMPTY_FILE,
     BooleanArrayValue,
-    IntegerValue,
+    BooleanValue,
+    FileArrayValue,
+    FileValue,
+    IncompatibleTypesException,
     IntegerArrayValue,
+    IntegerValue,
     IVariableValue,
-    RealValue,
     RealArrayValue,
-    StringValue,
+    RealValue,
     StringArrayValue,
+    StringValue,
     to_boolean_value,
     to_integer_value,
     to_real_value,
     to_string_value,
-    IncompatibleTypesException,
 )
 
 
@@ -280,6 +284,30 @@ def test_to_string_value(source: IVariableValue,
     assert result == expected_result
 
 
+def test_file_value_to_string_value():
+    """Verify that to_string_value fails for FileValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(EMPTY_FILE)
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
+
+
+def test_file_array_value_to_string_value():
+    """Verify that to_string_value fails for FileArrayValue instances."""
+    with _create_exception_context(IncompatibleTypesException):
+        try:
+            _ = to_string_value(FileArrayValue())
+        except IncompatibleTypesException as thrown:
+            _assert_incompatible_types_exception(str(thrown),
+                                                 FileArrayValue.__name__,
+                                                 StringValue.__name__)
+            raise thrown
+
+
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
@@ -404,30 +432,4 @@ def test_to_boolean_value_raises(source: IVariableValue,
                 _assert_incompatible_types_exception(str(e),
                                                      source.__class__.__name__,
                                                      bool.__name__)
-            raise e
-
-
-@pytest.mark.skip(reason="Not expected any")
-def test_to_string_value_raises(source: IVariableValue,
-                                expected_exception: Type[BaseException]) -> None:
-    """
-    Test behavior of to_string_value() when it is expected to raise an exception.
-
-    Parameters
-    ----------
-    source : IVariableValue
-        The IVariableValue to be converted.
-    expected_exception : Type[BaseException]
-        Exception that is expected to be thrown.
-    """
-    with _create_exception_context(expected_exception):
-        try:
-            # SUT
-            _ = to_string_value(source)
-        except expected_exception as e:
-            # Verify
-            if expected_exception == IncompatibleTypesException:
-                _assert_incompatible_types_exception(str(e),
-                                                     source.__class__.__name__,
-                                                     StringValue.__name__)
             raise e

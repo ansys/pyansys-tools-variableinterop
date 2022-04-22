@@ -48,6 +48,9 @@ class TestVisitor(acvi.IVariableValueVisitor[str]):
     def visit_string_array(self, value: acvi.StringArrayValue) -> str:
         return value
 
+    def visit_file_array(self, value: acvi.FileArrayValue) -> str:
+        return value
+
 
 # region TestVisitor
 @pytest.mark.parametrize(
@@ -120,7 +123,7 @@ def test_to_real_array_visitor(value: acvi.IVariableValue,
 
         except acvi.IncompatibleTypesException as e:
             # Verify (expected exception)
-            assert e.message == \
+            assert str(e) == \
                    ("Error: Cannot convert from type {0} to type {1}.\n"
                     "Reason: The types are incompatible.") \
                    .format(value.__class__.__name__, acvi.RealArrayValue.__name__)

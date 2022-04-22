@@ -1,9 +1,10 @@
 """
 Unit tests for array_value_conversion
 """
+from typing import Type
+
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
-from typing import Type
 
 import ansys.common.variableinterop as acvi
 import ansys.common.variableinterop.array_value_conversion as array_value_conversion
