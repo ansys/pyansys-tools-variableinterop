@@ -313,10 +313,7 @@ def test_meta_get_default_value(
 
 
 def get_test_bool_array(vals: List[bool]) -> acvi.BooleanArrayValue:
-    test = acvi.BooleanArrayValue(len(vals))
-    for i in range(0, len(vals)):
-        test[i] = vals[i]
-    return test
+    return acvi.BooleanArrayValue(values=vals)
 
 
 def get_test_int_array(vals: List[int]) -> acvi.IntegerArrayValue:
