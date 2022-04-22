@@ -73,7 +73,7 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         except expected_exception_type as e:
             # Verify (expected exception)
             if expected_exception_type == acvi.IncompatibleTypesException:
-                assert e.message == \
+                assert str(e) == \
                        ("Error: Cannot convert from type {0} to type {1}.\n"
                         "Reason: The types are incompatible.") \
                        .format(value.__class__.__name__, result_type.__name__)

@@ -433,29 +433,3 @@ def test_to_boolean_value_raises(source: IVariableValue,
                                                      source.__class__.__name__,
                                                      bool.__name__)
             raise e
-
-
-@pytest.mark.skip(reason="Not expected any")
-def test_to_string_value_raises(source: IVariableValue,
-                                expected_exception: Type[BaseException]):
-    """
-    Test behavior of to_string_value() when it is expected to raise an exception.
-
-    Parameters
-    ----------
-    source
-        The IVariableValue to be converted.
-    expected_exception
-        Exception that is expected to be thrown.
-    """
-    with _create_exception_context(expected_exception):
-        try:
-            # SUT
-            _ = to_string_value(source)
-        except expected_exception as e:
-            # Verify
-            if expected_exception == IncompatibleTypesException:
-                _assert_incompatible_types_exception(str(e),
-                                                     source.__class__.__name__,
-                                                     StringValue.__name__)
-            raise e
