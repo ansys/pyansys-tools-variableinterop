@@ -7,7 +7,6 @@ from typing import Type
 
 import numpy
 import pytest
-from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 from ansys.common.variableinterop import (
     EMPTY_FILE,
@@ -28,6 +27,7 @@ from ansys.common.variableinterop import (
     to_real_value,
     to_string_value,
 )
+from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 
 @pytest.mark.parametrize(

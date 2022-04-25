@@ -52,7 +52,7 @@ import numpy as np
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common import variableinterop as ansysvars
+from ansys.common import variableinterop as acvi
 
 
 @pytest.mark.parametrize(
@@ -79,14 +79,14 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseExc
     nothing
     """
     with _create_exception_context(expect_exception):
-        a = ansysvars.IntegerValue(cons_arg)
+        a = acvi.IntegerValue(cons_arg)
 
 
 @pytest.mark.parametrize(
     "left, right, expect_exception",
     [
-        (ansysvars.IntegerValue(0), 0, None),
-        (0, ansysvars.IntegerValue(0), None),
+        (acvi.IntegerValue(0), 0, None),
+        (0, acvi.IntegerValue(0), None),
         # TODO: numpy does not overflow in this case:
         # (ansysvars.IntegerValue(9223372036854775807), 1, ValueError),
     ],
@@ -115,12 +115,12 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseExc
 @pytest.mark.parametrize(
     "left, right, expect_exception",
     [
-        (ansysvars.IntegerValue(0), 0, None),
-        (ansysvars.IntegerValue(0), ansysvars.IntegerValue(-3), None),
-        (0, ansysvars.IntegerValue(1), None),
+        (acvi.IntegerValue(0), 0, None),
+        (acvi.IntegerValue(0), acvi.IntegerValue(-3), None),
+        (0, acvi.IntegerValue(1), None),
         # TODO: numpy does not overflow in this case
         # (ansysvars.IntegerValue(9223372036854775807), -1, ValueError),
-        (ansysvars.IntegerValue(2), "a", TypeError),
+        (acvi.IntegerValue(2), "a", TypeError),
         # TODO: This will need special handling: (ansysvars.IntegerValue(2), 3.5, TypeError),
         # TODO: This will need special handling:
         #  (ansysvars.IntegerValue(2), ansysvars.RealValue(3.2), TypeError),

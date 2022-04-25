@@ -1,5 +1,7 @@
 """Utilities for dealing with locales."""
+from configparser import ConfigParser
 import locale
+import os
 from typing import Any, Callable
 
 
@@ -27,3 +29,30 @@ class LocaleUtils:
         finally:
             locale.setlocale(locale.LC_ALL, restore_local)
         return result
+
+
+class Strings:
+    """Contains utilities for obtaining string resources."""
+
+    @staticmethod
+    def get(section: str, name: str, *args: object) -> str:
+        """
+        Get a localized string from strings.properties.
+
+        Parameters
+        ----------
+        section : str
+            Section of strings.properties to get from.
+        name : str
+            Identifier for the string to get.
+        args : object
+            Optional formatting arguments.
+
+        Returns
+        -------
+        str
+            The localized string.
+        """
+        parser = ConfigParser()
+        parser.read(os.path.join(os.path.dirname(__file__), "../strings.properties"))
+        return parser.get(section, name).format(*args)
