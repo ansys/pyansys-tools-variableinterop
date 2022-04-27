@@ -46,7 +46,7 @@ mypy = {version="^0.940", optional=true}
 
 
 [tool.poetry.extras]
-dev = ["Sphinx", "numpydoc", "overrides", "anyio", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
-docs = ["Sphinx", "numpydoc", "overrides", "anyio", "pyansys_sphinx_theme", "sphinx-copybutton"]
+dev = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
+docs = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
-test = ["overrides", "anyio", "pytest", "pytest-cov", "pytest-mock"]
+test = ["pytest", "pytest-cov", "pytest-mock"]
