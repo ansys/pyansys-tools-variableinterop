@@ -316,7 +316,7 @@ name = "overrides"
 version = "6.1.0"
 description = "A decorator to automatically detect mismatch when overriding a method."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -708,7 +708,7 @@ name = "typing-utils"
 version = "0.1.0"
 description = "utils to inspect Python type annotations"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6.1"
 
 [package.extras]
@@ -766,7 +766,7 @@ test = ["overrides", "anyio", "pytest", "pytest-cov", "pytest-mock"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "65d0e4db11469f248d4318f93c71971324c2bb2e3f4ed2ec0628eba693221fd0"
+content-hash = "538918d401dfdfc9e7acf1a4a23d220b8d99fc4cb3c53866abb75fecfbed962d"
 
 [metadata.files]
 alabaster = [
