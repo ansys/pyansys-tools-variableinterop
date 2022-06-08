@@ -124,9 +124,9 @@ class VariableState:
 
         Parameters
         ----------
-        value
+        value : IVariableValue
             The variable value.
-        is_valid
+        is_valid : bool
             The validity flag (true indicates the value is valid).
         """
         self.__value = value
