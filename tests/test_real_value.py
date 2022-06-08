@@ -303,6 +303,7 @@ def test_clone() -> None:
     result: RealValue = sut.clone()
 
     # Verification
+    assert isinstance(result, RealValue)
     assert result is not sut
     assert result == 6.9
 

@@ -329,5 +329,6 @@ def test_clone() -> None:
     result: IntegerValue = sut.clone()
 
     # Verification
+    assert isinstance(result, IntegerValue)
     assert result is not sut
     assert result == 7

@@ -116,5 +116,6 @@ def test_clone() -> None:
     result: StringValue = sut.clone()
 
     # Verification
+    assert isinstance(result, StringValue)
     assert result is not sut
     assert result == "word"

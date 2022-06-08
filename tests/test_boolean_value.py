@@ -478,5 +478,6 @@ def test_clone() -> None:
     result: acvi.BooleanValue = sut.clone()
 
     # Verification
+    assert isinstance(result, acvi.BooleanValue)
     assert result is not sut
     assert np.equal(result, True)
