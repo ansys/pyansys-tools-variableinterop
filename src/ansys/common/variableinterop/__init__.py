@@ -103,5 +103,10 @@ from .scalar_value_conversion import (
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .var_type_array_check import var_type_is_array
 from .variable_type import VariableType
-from .variable_value import CommonArrayValue, IVariableValue
+from .variable_value import (
+    CommonArrayValue,
+    IVariableValue,
+    VariableState,
+    VariableValueInvalidError
+)
 from .vartype_arrays_and_elements import get_element_type, to_array_type
