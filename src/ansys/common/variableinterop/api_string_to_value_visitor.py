@@ -36,8 +36,12 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     The actual type generated is determined by the type that accepts this visitor.
     """
 
-    def __init__(self, source: str, fscope: Optional[file_scope.FileScope],
-                 save_context: Optional[isave_context.ILoadContext]):
+    def __init__(
+        self,
+        source: str,
+        fscope: Optional[file_scope.FileScope],
+        save_context: Optional[isave_context.ILoadContext],
+    ):
         """
         Create a new instance of this class.
 
@@ -120,7 +124,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         # class to take a file store (see C# implementation for details).
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
-                "Deserializing a file value requires a file scope and save context.")
+                "Deserializing a file value requires a file scope and save context."
+            )
         else:
             return self._scope.from_api_object(json.loads(self._source), self._save_context)
 
@@ -174,7 +179,9 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
-                "Deserializing a file value requires a file scope and save context.")
+                "Deserializing a file value requires a file scope and save context."
+            )
         else:
             return file_array_value.FileArrayValue.from_api_object(
-                json.loads(self._source), self._save_context, self._scope)
+                json.loads(self._source), self._save_context, self._scope
+            )

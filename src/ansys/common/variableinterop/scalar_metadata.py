@@ -34,8 +34,7 @@ class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        equal: bool = (isinstance(other, BooleanMetadata) and
-                       super().equals(other))
+        equal: bool = isinstance(other, BooleanMetadata) and super().equals(other)
         return equal
 
 
@@ -161,12 +160,14 @@ class IntegerMetadata(NumericMetadata):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        equal: bool = (isinstance(other, IntegerMetadata) and
-                       super().equals(other) and
-                       self._lower_bound == other._lower_bound and
-                       self._upper_bound == other._upper_bound and
-                       self._enumerated_values == other._enumerated_values and
-                       self._enumerated_aliases == other._enumerated_aliases)
+        equal: bool = (
+            isinstance(other, IntegerMetadata)
+            and super().equals(other)
+            and self._lower_bound == other._lower_bound
+            and self._upper_bound == other._upper_bound
+            and self._enumerated_values == other._enumerated_values
+            and self._enumerated_aliases == other._enumerated_aliases
+        )
         return equal
 
 
@@ -292,12 +293,14 @@ class RealMetadata(NumericMetadata):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        equal: bool = (isinstance(other, RealMetadata) and
-                       super().equals(other) and
-                       self._lower_bound == other._lower_bound and
-                       self._upper_bound == other._upper_bound and
-                       self._enumerated_values == other._enumerated_values and
-                       self._enumerated_aliases == other._enumerated_aliases)
+        equal: bool = (
+            isinstance(other, RealMetadata)
+            and super().equals(other)
+            and self._lower_bound == other._lower_bound
+            and self._upper_bound == other._upper_bound
+            and self._enumerated_values == other._enumerated_values
+            and self._enumerated_aliases == other._enumerated_aliases
+        )
         return equal
 
 
@@ -373,8 +376,10 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        equal: bool = (isinstance(other, StringMetadata) and
-                       super().equals(other) and
-                       self._enumerated_values == other._enumerated_values and
-                       self._enumerated_aliases == other._enumerated_aliases)
+        equal: bool = (
+            isinstance(other, StringMetadata)
+            and super().equals(other)
+            and self._enumerated_values == other._enumerated_values
+            and self._enumerated_aliases == other._enumerated_aliases
+        )
         return equal

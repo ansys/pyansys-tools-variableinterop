@@ -8,7 +8,8 @@ import ansys.common.variableinterop.variable_type as variable_type
 
 
 class __ScalarToArrayPseudoVisitor(
-        pseudovisitor.IVariableTypePseudoVisitor[Optional[variable_type.VariableType]]):
+    pseudovisitor.IVariableTypePseudoVisitor[Optional[variable_type.VariableType]]
+):
     """
     Provides the corresponding array type for a given scalar type.
 
@@ -50,7 +51,8 @@ class __ScalarToArrayPseudoVisitor(
 
 
 class __ElementTypePseudoVisitor(
-        pseudovisitor.IVariableTypePseudoVisitor[Optional[variable_type.VariableType]]):
+    pseudovisitor.IVariableTypePseudoVisitor[Optional[variable_type.VariableType]]
+):
     """
     Provides the corresponding element type for a given array type.
 
@@ -109,10 +111,11 @@ def to_array_type(vartype: variable_type.VariableType) -> variable_type.Variable
 
     """
     result: Optional[variable_type.VariableType] = pseudovisitor.vartype_accept(
-        __ScalarToArrayPseudoVisitor(), vartype)
+        __ScalarToArrayPseudoVisitor(), vartype
+    )
 
     if result is None:
-        raise ValueError(exceptions._error('ERROR_NO_ARRAY_TYPE', vartype.associated_type_name))
+        raise ValueError(exceptions._error("ERROR_NO_ARRAY_TYPE", vartype.associated_type_name))
     else:
         return result
 
@@ -137,9 +140,10 @@ def get_element_type(vartype: variable_type.VariableType) -> variable_type.Varia
 
     """
     result: Optional[variable_type.VariableType] = pseudovisitor.vartype_accept(
-        __ElementTypePseudoVisitor(), vartype)
+        __ElementTypePseudoVisitor(), vartype
+    )
 
     if result is None:
-        raise ValueError(exceptions._error('ERROR_NO_SCALAR_TYPE', vartype.associated_type_name))
+        raise ValueError(exceptions._error("ERROR_NO_SCALAR_TYPE", vartype.associated_type_name))
     else:
         return result

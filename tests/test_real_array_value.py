@@ -18,20 +18,25 @@ def test_shape_construct() -> None:
     assert type(result) is RealArrayValue
     assert numpy.shape(result) == (2, 4, 9)
 
+
 @pytest.mark.parametrize(
-    'source,expected_result',
+    "source,expected_result",
     [
-        pytest.param(RealArrayValue(values=[4.2]), '4.2', id='Single value'),
-        pytest.param(RealArrayValue(values=[3.14, 4.25, 5.36]), '3.14,4.25,5.36', id='Single dim'),
-        pytest.param(RealArrayValue(values=[[1.7976931348623157E+308], [-1.7976931348623157E+308]]),
-                     'bounds[2,1]{1.7976931348623157e+308,-1.7976931348623157e+308}',
-                     id='Two dims'),
-        pytest.param(RealArrayValue(values=[
-            [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]],
-            [[7.7, 8.8, 9.9], [10.0, -11.1, -12.2]]]),
-                     'bounds[2,2,3]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.0,-11.1,-12.2}',
-                     id='Three dims'),
-    ]
+        pytest.param(RealArrayValue(values=[4.2]), "4.2", id="Single value"),
+        pytest.param(RealArrayValue(values=[3.14, 4.25, 5.36]), "3.14,4.25,5.36", id="Single dim"),
+        pytest.param(
+            RealArrayValue(values=[[1.7976931348623157e308], [-1.7976931348623157e308]]),
+            "bounds[2,1]{1.7976931348623157e+308,-1.7976931348623157e+308}",
+            id="Two dims",
+        ),
+        pytest.param(
+            RealArrayValue(
+                values=[[[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]], [[7.7, 8.8, 9.9], [10.0, -11.1, -12.2]]]
+            ),
+            "bounds[2,2,3]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.0,-11.1,-12.2}",
+            id="Three dims",
+        ),
+    ],
 )
 def test_to_api_string(source: RealArrayValue, expected_result: str) -> None:
     """
@@ -55,17 +60,21 @@ def test_to_api_string(source: RealArrayValue, expected_result: str) -> None:
 @pytest.mark.parametrize(
     "source,expected_result",
     [
-        pytest.param('4.2', RealArrayValue(values=[4.2]), id='Single value'),
-        pytest.param('3.14,4.25,5.36', RealArrayValue(values=[3.14, 4.25, 5.36]), id='Single dim'),
-        pytest.param('bounds[2,1]{1.7976931348623157e+308,-1.7976931348623157e+308}',
-                     RealArrayValue(values=[[1.7976931348623157E+308], [-1.7976931348623157E+308]]),
-                     id='Two dims'),
-        pytest.param('bounds[2,2,3]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.0,-11.1,-12.2}',
-                     RealArrayValue(values=[
-                         [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]],
-                         [[7.7, 8.8, 9.9], [10.0, -11.1, -12.2]]]),
-                     id='Three dims'),
-    ]
+        pytest.param("4.2", RealArrayValue(values=[4.2]), id="Single value"),
+        pytest.param("3.14,4.25,5.36", RealArrayValue(values=[3.14, 4.25, 5.36]), id="Single dim"),
+        pytest.param(
+            "bounds[2,1]{1.7976931348623157e+308,-1.7976931348623157e+308}",
+            RealArrayValue(values=[[1.7976931348623157e308], [-1.7976931348623157e308]]),
+            id="Two dims",
+        ),
+        pytest.param(
+            "bounds[2,2,3]{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.0,-11.1,-12.2}",
+            RealArrayValue(
+                values=[[[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]], [[7.7, 8.8, 9.9], [10.0, -11.1, -12.2]]]
+            ),
+            id="Three dims",
+        ),
+    ],
 )
 def test_from_api_string_valid(source: str, expected_result: RealArrayValue) -> None:
     """

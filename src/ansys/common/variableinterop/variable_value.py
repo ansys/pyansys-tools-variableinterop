@@ -3,10 +3,12 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
+from dataclasses import dataclass
 from typing import Generic, Tuple, TypeVar
 
 from numpy.typing import NDArray
 
+import ansys.common.variableinterop.exceptions as exceptions
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
 
@@ -22,7 +24,7 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
+        self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
     ) -> ivariable_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
@@ -80,6 +82,25 @@ class IVariableValue(ABC):
             A string appropriate for use in user facing areas.
         """
         raise NotImplementedError
+
+
+@dataclass(frozen=True)
+class VariableState:
+    """Provides safe access to the variable value."""
+
+    is_valid: bool
+    value: IVariableValue
+
+    @property
+    def safe_value(self) -> IVariableValue:
+        """
+        Safe value.
+
+        Raises `VariableValueInvalidException` if value is not valid.
+        """
+        if not self.is_valid:
+            raise exceptions.VariableValueInvalidException()
+        return self.value
 
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):

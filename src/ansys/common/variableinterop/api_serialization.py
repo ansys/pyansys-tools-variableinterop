@@ -75,6 +75,7 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
     def visit_string_array(self, value: StringArrayValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_file_array(self, value: FileArrayValue) -> str:
         return value.to_api_string(self._save_context)
 
@@ -99,8 +100,12 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     return value.accept(ToAPIStringVisitor(save_context))
 
 
-def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileScope] = None,
-                    load_context: Optional[ILoadContext] = None) -> IVariableValue:
+def from_api_string(
+    var_type: VariableType,
+    source: str,
+    fscope: Optional[FileScope] = None,
+    load_context: Optional[ILoadContext] = None,
+) -> IVariableValue:
     """
     Generate a value from an API string.
 
@@ -123,7 +128,6 @@ def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileSc
     An implementation of IVariableValue of the correct type with a value parsed
     from the specified string.
     """
-    generator: APIStringToValueVisitor = \
-        APIStringToValueVisitor(source, fscope, load_context)
+    generator: APIStringToValueVisitor = APIStringToValueVisitor(source, fscope, load_context)
     result: IVariableValue = vartype_accept(generator, var_type)
     return result

@@ -26,58 +26,56 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
     """Visitor pattern to call conversion methods to BooleanArrayValue."""
 
     @overrides
-    def visit_integer(self, value: IntegerValue) \
-            -> BooleanArrayValue:
+    def visit_integer(self, value: IntegerValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
     @overrides
-    def visit_real(self, value: RealValue) \
-            -> BooleanArrayValue:
+    def visit_real(self, value: RealValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
     @overrides
-    def visit_boolean(self, value: BooleanValue) \
-            -> BooleanArrayValue:
+    def visit_boolean(self, value: BooleanValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
     @overrides
-    def visit_string(self, value: StringValue) \
-            -> BooleanArrayValue:
+    def visit_string(self, value: StringValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
     @overrides
     def visit_file(self, value: FileValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
     @overrides
-    def visit_integer_array(self, value: IntegerArrayValue) \
-            -> BooleanArrayValue:
+    def visit_integer_array(self, value: IntegerArrayValue) -> BooleanArrayValue:
         return value.to_boolean_array_value()
 
     @overrides
-    def visit_real_array(self, value: RealArrayValue) \
-            -> BooleanArrayValue:
+    def visit_real_array(self, value: RealArrayValue) -> BooleanArrayValue:
         return value.to_boolean_array_value()
 
     @overrides
-    def visit_boolean_array(self, value: BooleanArrayValue) \
-            -> BooleanArrayValue:
+    def visit_boolean_array(self, value: BooleanArrayValue) -> BooleanArrayValue:
         return np.copy(value).view(BooleanArrayValue)
 
     @overrides
-    def visit_string_array(self, value: StringArrayValue) \
-            -> BooleanArrayValue:
+    def visit_string_array(self, value: StringArrayValue) -> BooleanArrayValue:
         return value.to_boolean_array_value()
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> BooleanArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY)
+            value.variable_type, variable_type.VariableType.BOOLEAN_ARRAY
+        )
 
 
 def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArrayValue:
@@ -106,58 +104,56 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
     """Visitor pattern to call conversion methods to IntegerArrayValue."""
 
     @overrides
-    def visit_integer(self, value: IntegerValue) \
-            -> IntegerArrayValue:
+    def visit_integer(self, value: IntegerValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
     @overrides
-    def visit_real(self, value: RealValue) \
-            -> IntegerArrayValue:
+    def visit_real(self, value: RealValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
     @overrides
-    def visit_boolean(self, value: BooleanValue) \
-            -> IntegerArrayValue:
+    def visit_boolean(self, value: BooleanValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
     @overrides
-    def visit_string(self, value: StringValue) \
-            -> IntegerArrayValue:
+    def visit_string(self, value: StringValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
     @overrides
     def visit_file(self, value: FileValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
     @overrides
-    def visit_integer_array(self, value: IntegerArrayValue) \
-            -> IntegerArrayValue:
+    def visit_integer_array(self, value: IntegerArrayValue) -> IntegerArrayValue:
         return np.copy(value).view(IntegerArrayValue)
 
     @overrides
-    def visit_real_array(self, value: RealArrayValue) \
-            -> IntegerArrayValue:
+    def visit_real_array(self, value: RealArrayValue) -> IntegerArrayValue:
         return value.to_integer_array_value()
 
     @overrides
-    def visit_boolean_array(self, value: BooleanArrayValue) \
-            -> IntegerArrayValue:
+    def visit_boolean_array(self, value: BooleanArrayValue) -> IntegerArrayValue:
         return value.to_integer_array_value()
 
     @overrides
-    def visit_string_array(self, value: StringArrayValue) \
-            -> IntegerArrayValue:
+    def visit_string_array(self, value: StringArrayValue) -> IntegerArrayValue:
         return value.to_integer_array_value()
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> IntegerArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.INTEGER_ARRAY)
+            value.variable_type, variable_type.VariableType.INTEGER_ARRAY
+        )
 
 
 def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArrayValue:
@@ -187,28 +183,33 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealArrayValue:
-        raise exceptions.IncompatibleTypesException(value.variable_type,
-                                                    variable_type.VariableType.REAL_ARRAY)
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
     @overrides
     def visit_real(self, value: RealValue) -> RealArrayValue:
-        raise exceptions.IncompatibleTypesException(value.variable_type,
-                                                    variable_type.VariableType.REAL_ARRAY)
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
     @overrides
     def visit_boolean(self, value: BooleanValue) -> RealArrayValue:
-        raise exceptions.IncompatibleTypesException(value.variable_type,
-                                                    variable_type.VariableType.REAL_ARRAY)
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
     @overrides
     def visit_string(self, value: StringValue) -> RealArrayValue:
-        raise exceptions.IncompatibleTypesException(value.variable_type,
-                                                    variable_type.VariableType.REAL_ARRAY)
+        raise exceptions.IncompatibleTypesException(
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
     @overrides
     def visit_file(self, value: FileValue) -> RealArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.REAL_ARRAY)
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealArrayValue:
@@ -229,7 +230,8 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> RealArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.REAL_ARRAY)
+            value.variable_type, variable_type.VariableType.REAL_ARRAY
+        )
 
 
 def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
@@ -260,27 +262,32 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
     @overrides
     def visit_real(self, value: RealValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
     @overrides
     def visit_boolean(self, value: BooleanValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
     @overrides
     def visit_string(self, value: StringValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
     @overrides
     def visit_file(self, value: FileValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> StringArrayValue:
@@ -301,7 +308,8 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> StringArrayValue:
         raise exceptions.IncompatibleTypesException(
-            value.variable_type, variable_type.VariableType.STRING_ARRAY)
+            value.variable_type, variable_type.VariableType.STRING_ARRAY
+        )
 
 
 def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayValue:

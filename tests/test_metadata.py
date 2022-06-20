@@ -33,8 +33,8 @@ all_metadata_types = [
     StringMetadata.__name__,
     StringArrayMetadata.__name__,
     FileMetadata.__name__,
-    FileArrayMetadata.__name__
-    ]
+    FileArrayMetadata.__name__,
+]
 
 
 def assert_equals(metadata1, metadata2) -> None:
@@ -216,8 +216,8 @@ numeric_metadata_types = [
     "IntegerMetadata",
     "IntegerArrayMetadata",
     "RealMetadata",
-    "RealArrayMetadata"
-    ]
+    "RealArrayMetadata",
+]
 
 
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
@@ -346,8 +346,7 @@ def test_equals_different_display_format(type_name: str) -> None:
         ("RealArrayMetadata", "upper_bound", 1.1, 1.1),
     ],
 )
-def test_equals_same_bound(
-        type_name: str, bound: str, value1: Any, value2: Any) -> None:
+def test_equals_same_bound(type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same bound value are equal.
@@ -394,8 +393,7 @@ def test_equals_same_bound(
         ("RealArrayMetadata", "upper_bound", 1.1, 20.0),
     ],
 )
-def test_equals_different_bound(
-        type_name: str, bound: str, value1: Any, value2: Any) -> None:
+def test_equals_different_bound(type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different bound values are not equal.
@@ -438,8 +436,7 @@ def test_equals_different_bound(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "dos", "tres"]),
     ],
 )
-def test_equals_same_enumerated_values(
-        type_name: str, value1: Any, value2: Any) -> None:
+def test_equals_same_enumerated_values(type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same enumerated_values value are equal.
@@ -482,8 +479,7 @@ def test_equals_same_enumerated_values(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "tres", "dos"]),
     ],
 )
-def test_equals_different_enumerated_values(
-        type_name: str, value1: Any, value2: Any) -> None:
+def test_equals_different_enumerated_values(type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different enumerated_values value are not equal.
@@ -525,8 +521,7 @@ def test_equals_different_enumerated_values(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "dos", "tres"]),
     ],
 )
-def test_equals_same_enumerated_aliases(
-        type_name: str, value1: Any, value2: Any) -> None:
+def test_equals_same_enumerated_aliases(type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     the same enumerated_values value are equal.
@@ -567,8 +562,7 @@ def test_equals_same_enumerated_aliases(
         ("StringArrayMetadata", ["uno", "dos", "tres"], ["uno", "tres", "dos"]),
     ],
 )
-def test_equals_different_enumerated_aliases(
-        type_name: str, value1: Any, value2: Any) -> None:
+def test_equals_different_enumerated_aliases(type_name: str, value1: Any, value2: Any) -> None:
     """
     Tests whether metadata objects of the same type and having
     different enumerated_values value are not equal.

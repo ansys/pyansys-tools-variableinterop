@@ -11,4 +11,4 @@ def anyio_backend():
     -------
     The backends to run async tests on.
     """
-    return 'asyncio'
+    return "asyncio"

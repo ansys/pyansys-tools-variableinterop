@@ -27,7 +27,7 @@ __TYPE_MAPPINGS = {
     bool: scalar_values.BooleanValue,
     np.bool_: scalar_values.BooleanValue,
     str: scalar_values.StringValue,
-    np.str_: scalar_values.StringValue
+    np.str_: scalar_values.StringValue,
 }
 """
 This map applies when coercing scalar values to a method argument type hinted as IVariableValue.
@@ -47,7 +47,7 @@ __ARR_TYPE_MAPPINGS = {
     np.float32: array_values.RealArrayValue,
     np.float64: array_values.RealArrayValue,
     np.bool_: array_values.BooleanArrayValue,
-    np.str_: array_values.StringArrayValue
+    np.str_: array_values.StringArrayValue,
 }
 """
 This map applies when coercing ndarray values to a method argument type hinted as IVariableValue.
@@ -59,16 +59,41 @@ and the value is the specific IVariableValue implementation that should be used.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
-    scalar_values.IntegerValue: [int, np.int8, np.int16, np.int32, np.int64,
-                                 bool, np.bool_, scalar_values.BooleanValue],
-    scalar_values.RealValue: [float, np.float16, np.float32, np.float64,
-                              bool, np.bool_, scalar_values.BooleanValue],
+    scalar_values.IntegerValue: [
+        int,
+        np.int8,
+        np.int16,
+        np.int32,
+        np.int64,
+        bool,
+        np.bool_,
+        scalar_values.BooleanValue,
+    ],
+    scalar_values.RealValue: [
+        float,
+        np.float16,
+        np.float32,
+        np.float64,
+        bool,
+        np.bool_,
+        scalar_values.BooleanValue,
+    ],
     scalar_values.BooleanValue: [bool, np.bool_],
-    scalar_values.StringValue: [int, np.integer, scalar_values.IntegerValue,
-                                bool, np.bool_, scalar_values.BooleanValue,
-                                float, np.inexact, scalar_values.RealValue,
-                                str, np.str_, scalar_values.StringValue],
-    }
+    scalar_values.StringValue: [
+        int,
+        np.integer,
+        scalar_values.IntegerValue,
+        bool,
+        np.bool_,
+        scalar_values.BooleanValue,
+        float,
+        np.inexact,
+        scalar_values.RealValue,
+        str,
+        np.str_,
+        scalar_values.StringValue,
+    ],
+}
 """
 Rules for implicitly coercing scalar values to a specific IVariableValue implementation.
 
@@ -81,7 +106,7 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
     array_values.IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
     array_values.RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
     array_values.BooleanArrayValue: [np.bool_],
-    array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_]
+    array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
 }
 """
 Rules for implicitly coercing array values to a specific IVariableValue implementation.
@@ -107,10 +132,10 @@ def _is_optional(arg_type: type) -> bool:
     ``True`` if the argument passed in is Optional[x] for some x.
     """
     return (
-            hasattr(arg_type, "__origin__")
-            and arg_type.__origin__ == typing.Union  # type: ignore
-            and len(arg_type.__args__) == 2  # type: ignore
-            and arg_type.__args__[1] == type(None)  # type: ignore
+        hasattr(arg_type, "__origin__")
+        and arg_type.__origin__ == typing.Union  # type: ignore
+        and len(arg_type.__args__) == 2  # type: ignore
+        and arg_type.__args__[1] == type(None)  # type: ignore
     )
 
 
@@ -133,9 +158,9 @@ def _get_optional_type(arg_type: type) -> type:
     return arg_type.__args__[0]  # type: ignore
 
 
-def _specific_implicit_coerce_allowed(target_arg_type: type,
-                                      actual_arg_type: type,
-                                      ruleset: Dict[type, List[type]]) -> bool:
+def _specific_implicit_coerce_allowed(
+    target_arg_type: type, actual_arg_type: type, ruleset: Dict[type, List[type]]
+) -> bool:
     """
     Check whether implicit coercion from a given type to a given type is allowed or not.
 
@@ -156,8 +181,10 @@ def _specific_implicit_coerce_allowed(target_arg_type: type,
         return True
 
     if target_arg_type in ruleset:
-        return any(issubclass(actual_arg_type, allowed_coerce_type)
-                   for allowed_coerce_type in ruleset[target_arg_type])
+        return any(
+            issubclass(actual_arg_type, allowed_coerce_type)
+            for allowed_coerce_type in ruleset[target_arg_type]
+        )
     else:
         return False
 
@@ -173,39 +200,48 @@ def __implicit_coerce_single_scalar_free(arg: Any):
     for cls in type(arg).__mro__:
         if cls in __TYPE_MAPPINGS:
             return __TYPE_MAPPINGS[cls](arg)
-    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
-                                      type(arg), variable_value.IVariableValue))
+    raise TypeError(
+        exceptions._error(
+            "ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), variable_value.IVariableValue
+        )
+    )
 
 
 def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> variable_value.IVariableValue:
     for cls in arr_type.__mro__:
         if cls in __ARR_TYPE_MAPPINGS:
             return __ARR_TYPE_MAPPINGS[cls](values=arg)
-    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
-                                      ' with dtype '.join([str(type(arg)), str(arr_type)]),
-                                      variable_value.IVariableValue))
+    raise TypeError(
+        exceptions._error(
+            "ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
+            " with dtype ".join([str(type(arg)), str(arr_type)]),
+            variable_value.IVariableValue,
+        )
+    )
 
 
 def __implicit_coerce_single_array_specific(arg: Any, target_type: type):
     maybe_arr_type: Optional[type] = __numpy_array_dtype(arg)
     if maybe_arr_type is not None:
-        if _specific_implicit_coerce_allowed(target_type, maybe_arr_type,
-                                             __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR):
+        if _specific_implicit_coerce_allowed(
+            target_type, maybe_arr_type, __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR
+        ):
             return target_type(values=arg)
 
     from_type_str: str = str(type(arg))
     if maybe_arr_type is not None:
-        from_type_str = ' with dtype '.join([str(type(arg)), str(maybe_arr_type)])
-    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
-                                      from_type_str, target_type))
+        from_type_str = " with dtype ".join([str(type(arg)), str(maybe_arr_type)])
+    raise TypeError(
+        exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", from_type_str, target_type)
+    )
 
 
 def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
-    if _specific_implicit_coerce_allowed(target_type, type(arg),
-                                         __ALLOWED_SPECIFIC_IMPLICIT_COERCE):
+    if _specific_implicit_coerce_allowed(
+        target_type, type(arg), __ALLOWED_SPECIFIC_IMPLICIT_COERCE
+    ):
         return target_type(arg)
-    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
-                                      type(arg), target_type))
+    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), target_type))
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:

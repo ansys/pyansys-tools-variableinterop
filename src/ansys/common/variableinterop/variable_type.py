@@ -89,7 +89,7 @@ class VariableType(Enum):
 
             def __init__(self, d_: Dict[tuple, VariableType]):
                 def __br():
-                    """Break down initializer dict to tuple subkeys"""
+                    """Break down initializer dict to tuple subkeys."""
                     for k, v in d_.items():
                         if isinstance(k, str):
                             yield k, v
@@ -99,18 +99,20 @@ class VariableType(Enum):
 
                 super().__init__(__br())
 
-        __valtype_strings: Dict[Union[tuple, str], VariableType] = __IterableKeyDict({
-            ('int', 'integer', 'long'): VariableType.INTEGER,
-            ('real', 'double', 'float'): VariableType.REAL,
-            ('bool', 'boolean'): VariableType.BOOLEAN,
-            ('str', 'string'): VariableType.STRING,
-            'file': VariableType.FILE,
-            ('int[]', 'integer[]', 'long[]'): VariableType.INTEGER_ARRAY,
-            ('real[]', 'double[]', 'float[]'): VariableType.REAL_ARRAY,
-            ('bool[]', 'boolean[]'): VariableType.BOOLEAN_ARRAY,
-            ('str[]', 'string[]'): VariableType.STRING_ARRAY,
-            'file[]': VariableType.FILE_ARRAY,
-        })
+        __valtype_strings: Dict[Union[tuple, str], VariableType] = __IterableKeyDict(
+            {  # type: ignore
+                ("int", "integer", "long"): VariableType.INTEGER,
+                ("real", "double", "float"): VariableType.REAL,
+                ("bool", "boolean"): VariableType.BOOLEAN,
+                ("str", "string"): VariableType.STRING,
+                ("file",): VariableType.FILE,
+                ("int[]", "integer[]", "long[]"): VariableType.INTEGER_ARRAY,
+                ("real[]", "double[]", "float[]"): VariableType.REAL_ARRAY,
+                ("bool[]", "boolean[]"): VariableType.BOOLEAN_ARRAY,
+                ("str[]", "string[]"): VariableType.STRING_ARRAY,
+                ("file[]",): VariableType.FILE_ARRAY,
+            }
+        )
 
         try:
             return __valtype_strings[s.strip().lower()]
@@ -127,20 +129,20 @@ class VariableType(Enum):
             Display string.
         """
         __valtype_display_string: Dict[VariableType, str] = {
-            VariableType.REAL: 'DISPLAY_STRING_REAL',
-            VariableType.INTEGER: 'DISPLAY_STRING_INTEGER',
-            VariableType.BOOLEAN: 'DISPLAY_STRING_BOOL',
-            VariableType.STRING: 'DISPLAY_STRING_STRING',
-            VariableType.FILE: 'DISPLAY_STRING_FILE',
-            VariableType.REAL_ARRAY: 'DISPLAY_STRING_REAL_ARRAY',
-            VariableType.INTEGER_ARRAY: 'DISPLAY_STRING_INTEGER_ARRAY',
-            VariableType.BOOLEAN_ARRAY: 'DISPLAY_STRING_BOOL_ARRAY',
-            VariableType.STRING_ARRAY: 'DISPLAY_STRING_STRING_ARRAY',
-            VariableType.FILE_ARRAY: 'DISPLAY_STRING_FILE_ARRAY',
-            VariableType.UNKNOWN: 'DISPLAY_STRING_UNKNOWN'
+            VariableType.REAL: "DISPLAY_STRING_REAL",
+            VariableType.INTEGER: "DISPLAY_STRING_INTEGER",
+            VariableType.BOOLEAN: "DISPLAY_STRING_BOOL",
+            VariableType.STRING: "DISPLAY_STRING_STRING",
+            VariableType.FILE: "DISPLAY_STRING_FILE",
+            VariableType.REAL_ARRAY: "DISPLAY_STRING_REAL_ARRAY",
+            VariableType.INTEGER_ARRAY: "DISPLAY_STRING_INTEGER_ARRAY",
+            VariableType.BOOLEAN_ARRAY: "DISPLAY_STRING_BOOL_ARRAY",
+            VariableType.STRING_ARRAY: "DISPLAY_STRING_STRING_ARRAY",
+            VariableType.FILE_ARRAY: "DISPLAY_STRING_FILE_ARRAY",
+            VariableType.UNKNOWN: "DISPLAY_STRING_UNKNOWN",
         }
 
-        return Strings.get('DisplayStrings', __valtype_display_string[self])
+        return Strings.get("DisplayStrings", __valtype_display_string[self])
 
     def get_default_value(self) -> IVariableValue:
         """

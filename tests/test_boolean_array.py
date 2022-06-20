@@ -21,20 +21,26 @@ def test_shape_construct() -> None:
 
 # @pytest.mark.skip('bool array nditer returning array of bool instead of a bool for each element')
 @pytest.mark.parametrize(
-    'source,expected_result',
+    "source,expected_result",
     [
-        pytest.param(BooleanArrayValue(values=[True]), 'True', id='Single value'),
-        pytest.param(BooleanArrayValue(values=[False, True, False]),
-                     'False,True,False', id='Single dim'),
-        pytest.param(BooleanArrayValue(values=[[True], [False]]),
-                     'bounds[2,1]{True,False}',
-                     id='Two dims'),
-        pytest.param(BooleanArrayValue(values=[
-            [[False, True, False], [True, False, True]],
-            [[False, False, True], [True, False, False]]]),
-            'bounds[2,2,3]{False,True,False,True,False,True,False,False,True,True,False,False}',
-            id='Three dims'),
-    ]
+        pytest.param(BooleanArrayValue(values=[True]), "True", id="Single value"),
+        pytest.param(
+            BooleanArrayValue(values=[False, True, False]), "False,True,False", id="Single dim"
+        ),
+        pytest.param(
+            BooleanArrayValue(values=[[True], [False]]), "bounds[2,1]{True,False}", id="Two dims"
+        ),
+        pytest.param(
+            BooleanArrayValue(
+                values=[
+                    [[False, True, False], [True, False, True]],
+                    [[False, False, True], [True, False, False]],
+                ]
+            ),
+            "bounds[2,2,3]{False,True,False,True,False,True,False,False,True,True,False,False}",
+            id="Three dims",
+        ),
+    ],
 )
 def test_to_api_string(source: BooleanArrayValue, expected_result: str) -> None:
     """
@@ -58,18 +64,24 @@ def test_to_api_string(source: BooleanArrayValue, expected_result: str) -> None:
 @pytest.mark.parametrize(
     "source,expected_result",
     [
-        pytest.param('True', BooleanArrayValue(values=[True]), id='Single value'),
-        pytest.param('False,True,False', BooleanArrayValue(values=[False, True, False]),
-                     id='Single dim'),
-        pytest.param('bounds[2,1]{True,False}', BooleanArrayValue(values=[[True], [False]]),
-                     id='Two dims'),
+        pytest.param("True", BooleanArrayValue(values=[True]), id="Single value"),
         pytest.param(
-            'bounds[2,2,3]{False,True,False,True,False,True,False,False,True,True,False,False}',
-            BooleanArrayValue(values=[
-                [[False, True, False], [True, False, True]],
-                [[False, False, True], [True, False, False]]]),
-            id='Three dims'),
-    ]
+            "False,True,False", BooleanArrayValue(values=[False, True, False]), id="Single dim"
+        ),
+        pytest.param(
+            "bounds[2,1]{True,False}", BooleanArrayValue(values=[[True], [False]]), id="Two dims"
+        ),
+        pytest.param(
+            "bounds[2,2,3]{False,True,False,True,False,True,False,False,True,True,False,False}",
+            BooleanArrayValue(
+                values=[
+                    [[False, True, False], [True, False, True]],
+                    [[False, False, True], [True, False, False]],
+                ]
+            ),
+            id="Three dims",
+        ),
+    ],
 )
 def test_from_api_string_valid(source: str, expected_result: BooleanArrayValue) -> None:
     """

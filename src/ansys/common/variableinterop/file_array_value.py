@@ -52,13 +52,29 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
         return VariableType.FILE_ARRAY
 
     def to_api_string(self, context: isave_context.ISaveContext) -> str:
+        """
+        Convert this value to an API string using a save context.
+
+        Parameters
+        ----------
+        context : ISaveContext
+            The save context to use.
+
+        Returns
+        -------
+        A string appropriate for use in files and APIs.
+        """
+
         def elem_to_api_obj(item: file_value.FileValue) -> str:
             return item.to_api_object(context)
+
         return json.dumps(np.vectorize(elem_to_api_obj)(self).tolist())
 
     @staticmethod
-    def from_api_object(value: Any, context: isave_context.ILoadContext,
-                        scope: file_scope.FileScope) -> FileArrayValue:
+    def from_api_object(
+        value: Any, context: isave_context.ILoadContext, scope: file_scope.FileScope
+    ) -> FileArrayValue:
+        """Convert API value to `FileArrayValue` using a load context."""
         if isinstance(value, list):
 
             # Define a function for transforming individual API objects to elements.
@@ -76,5 +92,6 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         disp_str: str = ArrayToFromStringUtil.value_to_string(
-            self, lambda elem: np.asscalar(elem).to_display_string(locale_name))
+            self, lambda elem: np.asscalar(elem).to_display_string(locale_name)
+        )
         return disp_str

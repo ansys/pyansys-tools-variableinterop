@@ -13,8 +13,9 @@ import ansys.common.variableinterop.file_value as file_value
 import ansys.common.variableinterop.isave_context as isave_context
 
 
-class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
-                           isave_context.ILoadContext):
+class NonManagingFileScope(
+    file_scope.FileScope, isave_context.ISaveContext, isave_context.ILoadContext
+):
     """
     A simple file scope implementation that performs no management.
 
@@ -68,8 +69,7 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
     ) -> file_value.FileValue:
         return NonManagingFileScope.NonManagingFileValue(to_read, mime_type, encoding)
 
-    def to_api_string_file_store(self,
-                                 file_var: file_value.FileValue) -> str:
+    def to_api_string_file_store(self, file_var: file_value.FileValue) -> str:
         """
         TODO.
 
@@ -88,17 +88,19 @@ class NonManagingFileScope(file_scope.FileScope, isave_context.ISaveContext,
         return file_var.actual_content_file_name
 
     @overrides
-    def from_api_object(self,
-                        api_object: Dict[str, Optional[str]],
-                        load_context: isave_context.ILoadContext) -> file_value.FileValue:
+    def from_api_object(
+        self, api_object: Dict[str, Optional[str]], load_context: isave_context.ILoadContext
+    ) -> file_value.FileValue:
         if file_value.FileValue.CONTENTS_KEY in api_object:
             content: Optional[PathLike] = load_context.load_file(
-                api_object.get(file_value.FileValue.CONTENTS_KEY))
+                api_object.get(file_value.FileValue.CONTENTS_KEY)
+            )
             if content is not None:
                 return NonManagingFileScope.NonManagingFileValue(
                     content,
                     api_object.get(file_value.FileValue.MIMETYPE_KEY),
-                    api_object.get(file_value.FileValue.ENCODING_KEY))
+                    api_object.get(file_value.FileValue.ENCODING_KEY),
+                )
             else:
                 return file_value.EMPTY_FILE
         else:

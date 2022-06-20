@@ -54,8 +54,8 @@ class FileScope(AbstractContextManager, ABC):
         ...
 
     @abstractmethod
-    def from_api_object(self,
-                        api_object: Dict[str, Optional[str]],
-                        load_context: isave_context.ILoadContext) -> file_value.FileValue:
+    def from_api_object(
+        self, api_object: Dict[str, Optional[str]], load_context: isave_context.ILoadContext
+    ) -> file_value.FileValue:
         """TODO."""
         ...

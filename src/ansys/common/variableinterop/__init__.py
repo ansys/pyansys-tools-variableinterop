@@ -79,7 +79,11 @@ from .array_metadata import (
 )
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .common_variable_metadata import CommonVariableMetadata
-from .exceptions import IncompatibleTypesException, ValueDeserializationUnsupportedException
+from .exceptions import (
+    IncompatibleTypesException,
+    ValueDeserializationUnsupportedException,
+    VariableValueInvalidException,
+)
 from .file_array_metadata import FileArrayMetadata
 from .file_array_value import FileArrayValue
 from .file_metadata import FileMetadata

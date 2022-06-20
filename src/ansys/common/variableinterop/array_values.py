@@ -56,7 +56,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 
-    @property   # type: ignore
+    @property  # type: ignore
     @overrides
     def variable_type(self) -> variable_type.VariableType:
         return variable_type.VariableType.BOOLEAN_ARRAY
@@ -94,8 +94,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     @overrides
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: BooleanValue(elem.tolist()).to_api_string())
+            self, lambda elem: BooleanValue(elem.tolist()).to_api_string()
+        )
         return api_string
 
     @staticmethod
@@ -115,13 +115,14 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: BooleanArrayValue(values=val),
-            lambda val: BooleanValue.from_api_string(val))
+            lambda val: BooleanValue.from_api_string(val),
+        )
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: BooleanValue(elem.tolist()).to_display_string(locale_name))
+            self, lambda elem: BooleanValue(elem.tolist()).to_display_string(locale_name)
+        )
         return api_string
         pass
 
@@ -199,8 +200,8 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     @overrides
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: IntegerValue(elem).to_api_string())
+            self, lambda elem: IntegerValue(elem).to_api_string()
+        )
         return api_string
 
     @staticmethod
@@ -220,13 +221,14 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: IntegerArrayValue(values=val),
-            lambda val: IntegerValue.from_api_string(val))
+            lambda val: IntegerValue.from_api_string(val),
+        )
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: IntegerValue(elem).to_display_string(locale_name))
+            self, lambda elem: IntegerValue(elem).to_display_string(locale_name)
+        )
         return api_string
 
 
@@ -288,11 +290,11 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         -------
         An IntegerArrayValue with the same values converted to int.
         """
+
         def away_from_zero(x: np.float64) -> np.int64:
             return np.int64(Decimal(x).to_integral(ROUND_HALF_UP))
 
-        return np.vectorize(away_from_zero)(self).astype(np.int64) \
-            .view(IntegerArrayValue)
+        return np.vectorize(away_from_zero)(self).astype(np.int64).view(IntegerArrayValue)
 
     def to_string_array_value(self) -> StringArrayValue:
         """
@@ -307,8 +309,8 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     @overrides
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: RealValue(elem).to_api_string())
+            self, lambda elem: RealValue(elem).to_api_string()
+        )
         return api_string
 
     @staticmethod
@@ -328,7 +330,8 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: RealArrayValue(values=val),
-            lambda val: RealValue.from_api_string(val))
+            lambda val: RealValue.from_api_string(val),
+        )
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
@@ -338,18 +341,16 @@ class RealArrayValue(CommonArrayValue[np.float64]):
             # Old form arrays (without quotes around each item) do not work for languages where ','
             # is the decimal separator. Use new form for those languages.
             def escape_if_needed(val: str) -> str:
-                if locale.localeconv()["decimal_point"] == ',':
-                    val = "\"" + val + "\""
+                if locale.localeconv()["decimal_point"] == ",":
+                    val = '"' + val + '"'
                 return val
 
             value = LocaleUtils.perform_safe_locale_action(
-                locale_name,
-                functools.partial(escape_if_needed, val=value))
+                locale_name, functools.partial(escape_if_needed, val=value)
+            )
             return value
 
-        api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            parse_real_element)
+        api_string: str = ArrayToFromStringUtil.value_to_string(self, parse_real_element)
         return api_string
 
 
@@ -422,8 +423,8 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     @overrides
     def to_api_string(self) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem: "\"" + escape_string(StringValue(elem).to_api_string()) + "\"")
+            self, lambda elem: '"' + escape_string(StringValue(elem).to_api_string()) + '"'
+        )
         return api_string
 
     @staticmethod
@@ -443,13 +444,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return ArrayToFromStringUtil.string_to_value(
             value,
             lambda val: StringArrayValue(values=val),
-            lambda val: StringValue.from_api_string(unescape_string(val)))
+            lambda val: StringValue.from_api_string(unescape_string(val)),
+        )
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
 
         api_string: str = ArrayToFromStringUtil.value_to_string(
-            self,
-            lambda elem:
-            "\"" + StringValue(elem).to_display_string(locale_name) + "\"")
+            self, lambda elem: '"' + StringValue(elem).to_display_string(locale_name) + '"'
+        )
         return api_string
