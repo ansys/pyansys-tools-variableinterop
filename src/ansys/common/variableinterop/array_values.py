@@ -4,12 +4,13 @@ from __future__ import annotations
 from decimal import ROUND_HALF_UP, Decimal
 import functools
 import locale
-from typing import TypeVar
+from typing import Optional, TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
+import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 from ansys.common.variableinterop.scalar_values import (
     BooleanValue,
@@ -92,7 +93,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: BooleanValue(elem.tolist()).to_api_string()
         )
@@ -198,7 +199,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: IntegerValue(elem).to_api_string()
         )
@@ -307,7 +308,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: RealValue(elem).to_api_string()
         )
@@ -421,7 +422,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return self.to_real_array_value().to_integer_array_value()
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: '"' + escape_string(StringValue(elem).to_api_string()) + '"'
         )

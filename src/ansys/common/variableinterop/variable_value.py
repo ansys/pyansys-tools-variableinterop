@@ -3,10 +3,11 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from typing import Generic, Tuple, TypeVar
+from typing import Generic, Optional, Tuple, TypeVar
 
 from numpy.typing import NDArray
 
+import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
 
@@ -53,7 +54,7 @@ class IVariableValue(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         """
         Convert this value to an API string.
 

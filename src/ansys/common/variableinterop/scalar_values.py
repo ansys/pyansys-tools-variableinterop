@@ -3,12 +3,13 @@ from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import Any, Dict, TypeVar
+from typing import Any, Dict, Optional, TypeVar
 
 import numpy as np
 from overrides import overrides
 
 import ansys.common.variableinterop.exceptions as exceptions
+import ansys.common.variableinterop.isave_context as isave_context
 import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.utils.locale_utils as locale_utils
 import ansys.common.variableinterop.variable_type as variable_type
@@ -241,7 +242,7 @@ class BooleanValue(variable_value.IVariableValue):
         return variable_type.VariableType.BOOLEAN
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: isave_context.ISaveContext = None) -> str:
         return str(self)
 
     def to_real_value(self) -> RealValue:
@@ -379,7 +380,7 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
         return variable_type.VariableType.INTEGER
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         return str(self)
 
     def to_real_value(self) -> RealValue:
@@ -499,7 +500,7 @@ class RealValue(np.float64, variable_value.IVariableValue):
         return variable_type.VariableType.REAL
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         return str(self)
 
     @overrides
@@ -593,7 +594,7 @@ class StringValue(np.str_, variable_value.IVariableValue):
         return variable_type.VariableType.STRING
 
     @overrides
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
         return str(self)
 
     @staticmethod

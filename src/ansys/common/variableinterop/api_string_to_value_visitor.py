@@ -10,26 +10,16 @@ compared to bare switch statements.
 import json
 from typing import Optional
 
-from ansys.common.variableinterop.array_values import (
-    BooleanArrayValue,
-    IntegerArrayValue,
-    RealArrayValue,
-    StringArrayValue,
-)
-import ansys.common.variableinterop.file_array_value as file_array_value
-import ansys.common.variableinterop.file_scope as file_scope
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_type_pseudovisitor as pv_interface
-from ansys.common.variableinterop.scalar_values import (
-    BooleanValue,
-    IntegerValue,
-    RealValue,
-    StringValue,
-)
-import ansys.common.variableinterop.variable_value as var_value
+from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+from .file_array_value import FileArrayValue
+from .file_scope import FileScope
+from .isave_context import ILoadContext
+from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .variable_value import IVariableValue
 
 
-class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
+class APIStringToValueVisitor(IVariableTypePseudoVisitor):
     """
     A pseudo-visitor for the variable type enum that produces variable values from strings.
 
@@ -39,8 +29,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
     def __init__(
         self,
         source: str,
-        fscope: Optional[file_scope.FileScope],
-        save_context: Optional[isave_context.ILoadContext],
+        fscope: Optional[FileScope],
+        save_context: Optional[ILoadContext],
     ):
         """
         Create a new instance of this class.
@@ -50,8 +40,8 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         source the string from which values should be parsed
         """
         self._source: str = source
-        self._scope: Optional[file_scope.FileScope] = fscope
-        self._save_context: Optional[isave_context.ILoadContext] = save_context
+        self._scope: Optional[FileScope] = fscope
+        self._save_context: Optional[ILoadContext] = save_context
 
     def visit_unknown(self):
         """
@@ -111,7 +101,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         """
         return StringValue.from_api_string(self._source)
 
-    def visit_file(self) -> var_value.IVariableValue:
+    def visit_file(self) -> IVariableValue:
         """
         Produce a FileValue from the API string format.
 
@@ -169,7 +159,7 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
         """
         return StringArrayValue.from_api_string(self._source)
 
-    def visit_file_array(self) -> var_value.IVariableValue:
+    def visit_file_array(self) -> IVariableValue:
         """
         Produce a FileArrayValue from the API string format.
 
@@ -182,6 +172,6 @@ class APIStringToValueVisitor(pv_interface.IVariableTypePseudoVisitor):
                 "Deserializing a file value requires a file scope and save context."
             )
         else:
-            return file_array_value.FileArrayValue.from_api_object(
+            return FileArrayValue.from_api_object(
                 json.loads(self._source), self._save_context, self._scope
             )

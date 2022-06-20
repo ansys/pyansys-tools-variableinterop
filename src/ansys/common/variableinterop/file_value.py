@@ -5,17 +5,17 @@ from abc import ABC, abstractmethod
 from configparser import ConfigParser
 import json
 from os import PathLike, path
-from typing import Dict, Final, Optional, TypeVar
+from typing import Dict, Final, Optional, TypeVar, Union, cast
 from uuid import UUID, uuid4
 
 from anyio import Path, open_file
 from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+from .isave_context import ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
+from .variable_type import VariableType
+from .variable_value import IVariableValue
 
 T = TypeVar("T")
 
@@ -23,7 +23,7 @@ RESOURCE_PARSER = ConfigParser()
 RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 
-class FileValue(variable_value.IVariableValue, ABC):
+class FileValue(IVariableValue, ABC):
     """Abstract base class for a file variable. To create instances, \
     use a `FileScope`."""
 
@@ -60,13 +60,13 @@ class FileValue(variable_value.IVariableValue, ABC):
         return hash(self._id)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_file(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.FILE
+    def variable_type(self) -> VariableType:
+        return VariableType.FILE
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
@@ -275,7 +275,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         True if there is content, false otherwise.
         """
 
-    def to_api_string(self, save_context: isave_context.ISaveContext) -> str:
+    def to_api_string(self, save_context: Optional[ISaveContext] = None) -> str:
         """
         Convert this value to an API string using a save context.
 
@@ -287,13 +287,18 @@ class FileValue(variable_value.IVariableValue, ABC):
         -------
         A string appropriate for use in files and APIs.
         """
-        api_obj: Dict[str, Optional[str]] = self.to_api_object(save_context)
+        if save_context is None:
+            raise ValueError  # TODO: msg
+        api_obj: Dict[str, Optional[str]] = self.to_api_object(cast(ISaveContext, save_context))
         return json.dumps(api_obj)
 
-    def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
-        return save_context.save_file(self.actual_content_file_name, str(self.id))
+    def _send_actual_file(self, save_context: ISaveContext) -> str:
+        name: Union[PathLike, str] = ""
+        if self.actual_content_file_name is not None:
+            name = cast(PathLike, self.actual_content_file_name)
+        return save_context.save_file(name, str(self.id))
 
-    def to_api_object(self, save_context: isave_context.ISaveContext) -> Dict[str, Optional[str]]:
+    def to_api_object(self, save_context: ISaveContext) -> Dict[str, Optional[str]]:
         """
         Convert this file to an api object.
 
