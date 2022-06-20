@@ -5,14 +5,14 @@ import ansys.common.variableinterop as acvi
 
 
 @pytest.mark.parametrize(
-    'vartype,expected_result',
+    "vartype,expected_result",
     [
         (acvi.VariableType.REAL, acvi.VariableType.REAL_ARRAY),
         (acvi.VariableType.INTEGER, acvi.VariableType.INTEGER_ARRAY),
         (acvi.VariableType.BOOLEAN, acvi.VariableType.BOOLEAN_ARRAY),
         (acvi.VariableType.STRING, acvi.VariableType.STRING_ARRAY),
         (acvi.VariableType.FILE, acvi.VariableType.FILE_ARRAY),
-    ]
+    ],
 )
 def test_to_array_type(vartype: acvi.VariableType, expected_result: acvi.VariableType) -> None:
     """
@@ -33,7 +33,7 @@ def test_to_array_type(vartype: acvi.VariableType, expected_result: acvi.Variabl
 
 
 @pytest.mark.parametrize(
-    'vartype',
+    "vartype",
     [
         acvi.VariableType.REAL_ARRAY,
         acvi.VariableType.INTEGER_ARRAY,
@@ -41,10 +41,9 @@ def test_to_array_type(vartype: acvi.VariableType, expected_result: acvi.Variabl
         acvi.VariableType.STRING_ARRAY,
         acvi.VariableType.FILE_ARRAY,
         acvi.VariableType.UNKNOWN,
-    ]
+    ],
 )
-def test_to_array_type_invalid(
-        vartype: acvi.VariableType) -> None:
+def test_to_array_type_invalid(vartype: acvi.VariableType) -> None:
     """
     Verify that to_array_type works correctly for invalid cases.
 
@@ -59,14 +58,14 @@ def test_to_array_type_invalid(
 
 
 @pytest.mark.parametrize(
-    'vartype,expected_result',
+    "vartype,expected_result",
     [
         (acvi.VariableType.REAL_ARRAY, acvi.VariableType.REAL),
         (acvi.VariableType.INTEGER_ARRAY, acvi.VariableType.INTEGER),
         (acvi.VariableType.BOOLEAN_ARRAY, acvi.VariableType.BOOLEAN),
         (acvi.VariableType.STRING_ARRAY, acvi.VariableType.STRING),
         (acvi.VariableType.FILE_ARRAY, acvi.VariableType.FILE),
-    ]
+    ],
 )
 def test_get_element_type(vartype: acvi.VariableType, expected_result: acvi.VariableType) -> None:
     """
@@ -87,7 +86,7 @@ def test_get_element_type(vartype: acvi.VariableType, expected_result: acvi.Vari
 
 
 @pytest.mark.parametrize(
-    'vartype',
+    "vartype",
     [
         acvi.VariableType.REAL,
         acvi.VariableType.INTEGER,
@@ -95,10 +94,9 @@ def test_get_element_type(vartype: acvi.VariableType, expected_result: acvi.Vari
         acvi.VariableType.STRING,
         acvi.VariableType.FILE,
         acvi.VariableType.UNKNOWN,
-    ]
+    ],
 )
-def test_get_element_type_invalid(
-        vartype: acvi.VariableType) -> None:
+def test_get_element_type_invalid(vartype: acvi.VariableType) -> None:
     """
     Verify that get_element_type works correctly for invalid cases.
 

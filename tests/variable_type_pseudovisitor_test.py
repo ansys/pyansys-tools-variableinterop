@@ -4,59 +4,58 @@ from ansys.common.variableinterop import IVariableTypePseudoVisitor, VariableTyp
 
 
 class TestPseudoVisitor(IVariableTypePseudoVisitor[str]):
-
     def visit_unknown(self):
-        return 'dunno'
+        return "dunno"
 
     def visit_int(self):
-        return 'whole number'
+        return "whole number"
 
     def visit_real(self):
-        return 'whole number and change'
+        return "whole number and change"
 
     def visit_boolean(self):
-        return 'true or false'
+        return "true or false"
 
     def visit_string(self):
-        return 'letters'
+        return "letters"
 
     def visit_file(self):
-        return 'pages'
+        return "pages"
 
     def visit_int_array(self):
-        return 'some whole numbers'
+        return "some whole numbers"
 
     def visit_real_array(self):
-        return 'some whole numbers and change'
+        return "some whole numbers and change"
 
     def visit_bool_array(self):
-        return 'some true or false'
+        return "some true or false"
 
     def visit_string_array(self):
-        return 'some letters'
+        return "some letters"
 
     def visit_file_array(self):
-        return 'some pages'
+        return "some pages"
 
 
 @pytest.mark.parametrize(
     "var_type,expect_return",
     [
-        pytest.param(VariableType.UNKNOWN, 'dunno'),
-        pytest.param(VariableType.INTEGER, 'whole number'),
-        pytest.param(VariableType.REAL,    'whole number and change'),
-        pytest.param(VariableType.BOOLEAN, 'true or false'),
-        pytest.param(VariableType.STRING,  'letters'),
-        pytest.param(VariableType.FILE,   'pages'),
-        pytest.param(VariableType.INTEGER_ARRAY, 'some whole numbers'),
-        pytest.param(VariableType.REAL_ARRAY,    'some whole numbers and change'),
-        pytest.param(VariableType.BOOLEAN_ARRAY, 'some true or false'),
-        pytest.param(VariableType.STRING_ARRAY,  'some letters'),
-        pytest.param(VariableType.FILE_ARRAY,  'some pages'),
-        pytest.param(None, 'dunno'),
-    ])
-def test_accept_pseudovisitor(
-        var_type: VariableType, expect_return: str) -> None:
+        pytest.param(VariableType.UNKNOWN, "dunno"),
+        pytest.param(VariableType.INTEGER, "whole number"),
+        pytest.param(VariableType.REAL, "whole number and change"),
+        pytest.param(VariableType.BOOLEAN, "true or false"),
+        pytest.param(VariableType.STRING, "letters"),
+        pytest.param(VariableType.FILE, "pages"),
+        pytest.param(VariableType.INTEGER_ARRAY, "some whole numbers"),
+        pytest.param(VariableType.REAL_ARRAY, "some whole numbers and change"),
+        pytest.param(VariableType.BOOLEAN_ARRAY, "some true or false"),
+        pytest.param(VariableType.STRING_ARRAY, "some letters"),
+        pytest.param(VariableType.FILE_ARRAY, "some pages"),
+        pytest.param(None, "dunno"),
+    ],
+)
+def test_accept_pseudovisitor(var_type: VariableType, expect_return: str) -> None:
     # Setup: create a test pseudo-visitor.
     visitor: IVariableTypePseudoVisitor[str] = TestPseudoVisitor()
 

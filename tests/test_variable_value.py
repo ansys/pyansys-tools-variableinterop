@@ -1,6 +1,6 @@
-import ansys.common.variableinterop as acvi
 import pytest
 
+import ansys.common.variableinterop as acvi
 
 __value_cases = [
     pytest.param(acvi.IntegerValue(47), True, id="valid integer"),
@@ -10,7 +10,7 @@ __value_cases = [
 ]
 
 
-@pytest.mark.parametrize('value,is_valid', __value_cases)
+@pytest.mark.parametrize("value,is_valid", __value_cases)
 def test_construct(value: acvi.IVariableValue, is_valid: bool):
     """Verify that the constructor works correctly."""
     # Execute
@@ -20,7 +20,7 @@ def test_construct(value: acvi.IVariableValue, is_valid: bool):
     assert sut.is_valid == is_valid
 
 
-@pytest.mark.parametrize('value,is_valid', __value_cases)
+@pytest.mark.parametrize("value,is_valid", __value_cases)
 def test_clone(value: acvi.IVariableValue, is_valid: bool):
     """Verify that cloning works correctly."""
     # Setup

@@ -37,10 +37,12 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
         -------
         True if metadata objects are equal, false otherwise.
         """
-        equal: bool = (isinstance(other, NumericMetadata) and
-                       super().equals(other) and
-                       self._units == other._units and
-                       self._display_format == other._display_format)
+        equal: bool = (
+            isinstance(other, NumericMetadata)
+            and super().equals(other)
+            and self._units == other._units
+            and self._display_format == other._display_format
+        )
         return equal
 
     @overrides

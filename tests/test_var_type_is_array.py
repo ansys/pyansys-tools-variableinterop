@@ -16,8 +16,8 @@ import ansys.common.variableinterop as acvi
         (acvi.VariableType.REAL_ARRAY, True),
         (acvi.VariableType.BOOLEAN_ARRAY, True),
         (acvi.VariableType.STRING_ARRAY, True),
-        (acvi.VariableType.FILE_ARRAY, True)
-    ]
+        (acvi.VariableType.FILE_ARRAY, True),
+    ],
 )
 def test_var_type_is_array(vartype: acvi.VariableType, expected_result: bool) -> None:
     """

@@ -4,7 +4,7 @@ from typing import Callable, Dict, Generic, TypeVar
 
 from ansys.common.variableinterop.variable_type import VariableType
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class IVariableTypePseudoVisitor(ABC, Generic[T]):
@@ -140,7 +140,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
 
-def __accept_unknown(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the UNKNOWN type.
 
@@ -151,7 +151,7 @@ def __accept_unknown(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_unknown()
 
 
-def __accept_int(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_int(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the INTEGER type.
 
@@ -162,7 +162,7 @@ def __accept_int(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_int()
 
 
-def __accept_real(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_real(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the REAL type.
 
@@ -173,7 +173,7 @@ def __accept_real(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_real()
 
 
-def __accept_boolean(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_boolean(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the BOOLEAN type.
 
@@ -184,7 +184,7 @@ def __accept_boolean(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_boolean()
 
 
-def __accept_string(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_string(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the STRING type.
 
@@ -195,7 +195,7 @@ def __accept_string(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_string()
 
 
-def __accept_file(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the FILE type.
 
@@ -206,7 +206,7 @@ def __accept_file(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_file()
 
 
-def __accept_int_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the INTEGER_ARRAY type.
 
@@ -217,7 +217,7 @@ def __accept_int_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_int_array()
 
 
-def __accept_real_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_real_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the REAL_ARRAY type.
 
@@ -228,7 +228,7 @@ def __accept_real_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_real_array()
 
 
-def __accept_boolean_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_boolean_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the BOOLEAN_ARRAY type.
 
@@ -239,7 +239,7 @@ def __accept_boolean_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_bool_array()
 
 
-def __accept_string_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_string_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the STRING_ARRAY type.
 
@@ -250,7 +250,7 @@ def __accept_string_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_string_array()
 
 
-def __accept_file_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
+def __accept_file_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the FILE_ARRAY type.
 
@@ -261,8 +261,7 @@ def __accept_file_array(visitor: 'IVariableTypePseudoVisitor[T]') -> T:
     return visitor.visit_file_array()
 
 
-__accept_map: Dict['VariableType',
-                   Callable[['IVariableTypePseudoVisitor[T]'], T]] = {
+__accept_map: Dict["VariableType", Callable[["IVariableTypePseudoVisitor[T]"], T]] = {
     VariableType.UNKNOWN: __accept_unknown,
     VariableType.INTEGER: __accept_int,
     VariableType.REAL: __accept_real,
@@ -283,8 +282,7 @@ implementation.
 """
 
 
-def vartype_accept(visitor: 'IVariableTypePseudoVisitor[T]',
-                   var_type: VariableType) -> T:
+def vartype_accept(visitor: "IVariableTypePseudoVisitor[T]", var_type: VariableType) -> T:
     """
     Accept a visitor to the specified type.
 

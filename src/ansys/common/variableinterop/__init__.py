@@ -32,7 +32,19 @@ Characteristics
 
 Examples
 --------
-TODO: fill in
+>>> import ansys.common.variableinterop as acvi
+>>> width = acvi.RealValue(3.1)
+>>> width
+3.1
+
+# Standard python operations should work seamlessly
+>>> 4 + width
+7.1
+
+>>> width_metadata = acvi.RealMetadata()
+>>> width_metadata.lower_bound = 0.1
+>>> var(width_metadata)
+{'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
 
 Project Background
 ------------------
@@ -107,6 +119,6 @@ from .variable_value import (
     CommonArrayValue,
     IVariableValue,
     VariableState,
-    VariableValueInvalidError
+    VariableValueInvalidError,
 )
 from .vartype_arrays_and_elements import get_element_type, to_array_type

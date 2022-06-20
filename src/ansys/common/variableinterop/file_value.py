@@ -17,7 +17,7 @@ import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type
 import ansys.common.variableinterop.variable_value as variable_value
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 RESOURCE_PARSER = ConfigParser()
 RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
@@ -27,11 +27,13 @@ class FileValue(variable_value.IVariableValue, ABC):
     """Abstract base class for a file variable. To create instances, \
     use a `FileScope`."""
 
-    def __init__(self,
-                 original_path: Optional[PathLike],
-                 mime_type: Optional[str],
-                 encoding: Optional[str],
-                 value_id: Optional[UUID]):
+    def __init__(
+        self,
+        original_path: Optional[PathLike],
+        mime_type: Optional[str],
+        encoding: Optional[str],
+        value_id: Optional[UUID],
+    ):
         """
         Construct a new FileValue.
 
@@ -70,9 +72,10 @@ class FileValue(variable_value.IVariableValue, ABC):
     def to_display_string(self, locale_name: str) -> str:
         if self._has_content():
             return RESOURCE_PARSER.get("DisplayFormats", "FILE_CONTENTS_FORMAT").format(
-                self._original_path if self._original_path\
-                                    else RESOURCE_PARSER.get("DisplayFormats",
-                                                             "FILE_LOCATION_UNKNOWN"))
+                self._original_path
+                if self._original_path
+                else RESOURCE_PARSER.get("DisplayFormats", "FILE_LOCATION_UNKNOWN")
+            )
         else:
             return RESOURCE_PARSER.get("DisplayFormats", "FILE_EMPTY")
 
@@ -177,17 +180,17 @@ class FileValue(variable_value.IVariableValue, ABC):
             returned. If the file does not contain a BOM, 'None' is
             returned.
         """
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             bom = f.read(4)
-            if bom == b'\x00\x00\xfe\xff':
+            if bom == b"\x00\x00\xfe\xff":
                 return "UTF-32 BE"
-            elif bom == b'\xff\xfe\x00\x00':
+            elif bom == b"\xff\xfe\x00\x00":
                 return "UTF-32 LE"
-            elif bom[0:3] == b'\xef\xbb\xbf':
+            elif bom[0:3] == b"\xef\xbb\xbf":
                 return "UTF-8"
-            elif bom[0:2] == b'\xff\xfe':
+            elif bom[0:2] == b"\xff\xfe":
                 return "UTF-16 LE"
-            elif bom[0:2] == b'\xfe\xff':
+            elif bom[0:2] == b"\xfe\xff":
                 return "UTF-16 BE"
             else:
                 return "None"
@@ -205,7 +208,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         None.
         """
         # make the file
-        Path(file_name).open('w').close()
+        Path(file_name).open("w").close()
 
         # copy the contents from the actual content file
         file: Optional[PathLike] = self.actual_content_file_name

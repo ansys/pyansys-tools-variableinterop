@@ -48,14 +48,14 @@ class ISaveContext(AbstractContextManager, ABC):
         """
         ...
 
-# TODO: What stream API to use?
-# TODO: Async?
+    # TODO: What stream API to use?
+    # TODO: Async?
 
-# TODO: Uncomment once we know what stream API to use
-#    @abstractmethod
-#   def save_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
-#            -> Tuple[Stream, str]:
-#        ...
+    # TODO: Uncomment once we know what stream API to use
+    #    @abstractmethod
+    #   def save_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
+    #            -> Tuple[Stream, str]:
+    #        ...
 
     @abstractmethod
     def flush(self) -> None:
@@ -82,11 +82,11 @@ class ILoadContext(AbstractContextManager, ABC):
         """TODO."""
         ...
 
-# TODO: Uncomment once we know what stream API to use
-#    @abstractmethod
-#    def load_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
-#            -> Tuple[Stream, str]:
-#        ...
+    # TODO: Uncomment once we know what stream API to use
+    #    @abstractmethod
+    #    def load_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
+    #            -> Tuple[Stream, str]:
+    #        ...
 
     @abstractmethod
     def flush(self) -> None:

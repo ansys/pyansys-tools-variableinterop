@@ -29,9 +29,10 @@ class IncompatibleTypesException(BaseException):
     IVariableValue to an incompatible type."""
 
     def __init__(
-            self,
-            from_type: Union[variable_type.VariableType, str],
-            to_type: Union[variable_type.VariableType, str]):
+        self,
+        from_type: Union[variable_type.VariableType, str],
+        to_type: Union[variable_type.VariableType, str],
+    ):
         """
         Construct exception.
 
@@ -53,7 +54,7 @@ class IncompatibleTypesException(BaseException):
         else:
             self.to_type = None
             self.to_type_str = to_type
-        message: str = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str )
+        message: str = _error("ERROR_INCOMPATIBLE_TYPES", self.from_type_str, self.to_type_str)
         super().__init__(message)
 
 

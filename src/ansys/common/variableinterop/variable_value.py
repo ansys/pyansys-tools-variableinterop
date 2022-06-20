@@ -22,7 +22,7 @@ class IVariableValue(ABC):
 
     @abstractmethod
     def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
+        self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
     ) -> ivariable_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
@@ -110,13 +110,12 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
 
 class VariableValueInvalidError(Exception):
     """Raised to indicate a required variable value was invalid."""
+
     pass
 
 
 class VariableState:
-    """
-    Bundles a variable state with a validity flag.
-    """
+    """Bundles a variable state with a validity flag."""
 
     def __init__(self, value: IVariableValue, is_valid: bool):
         """
@@ -138,7 +137,7 @@ class VariableState:
         return self.__value
 
     @property
-    def is_valid(self) -> IVariableValue:
+    def is_valid(self) -> bool:
         """Get the validity flag. True indicates the value is valid."""
         return self.__is_valid
 

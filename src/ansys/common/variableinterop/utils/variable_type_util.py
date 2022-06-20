@@ -26,7 +26,7 @@ def to_type(var_type: variable_type.VariableType):
         variable_type.VariableType.STRING_ARRAY: StringArrayValue,
         variable_type.VariableType.REAL_ARRAY: RealArrayValue,
         variable_type.VariableType.INTEGER_ARRAY: IntegerArrayValue,
-        variable_type.VariableType.BOOLEAN_ARRAY: BooleanArrayValue
+        variable_type.VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
     }
     return __class_map[var_type]
 

@@ -44,12 +44,12 @@ class BooleanValue(variable_value.IVariableValue):
         return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
-        'yes': True,
-        'y': True,
-        'true': True,
-        'no': False,
-        'n': False,
-        'false': False
+        "yes": True,
+        "y": True,
+        "true": True,
+        "no": False,
+        "n": False,
+        "false": False,
     }
     """
     A mapping of acceptable normalized values for API string conversion
@@ -88,20 +88,31 @@ class BooleanValue(variable_value.IVariableValue):
             self.__value = np.bool_(source)
         elif isinstance(source, variable_value.IVariableValue):
             from ansys.common.variableinterop.scalar_value_conversion import to_boolean_value
+
             self.__value = np.bool_(to_boolean_value(source))
         elif isinstance(
-                source,
-                (
-                        int, np.byte, np.ubyte, np.short, np.ushort, np.intc,
-                        np.uintc, np.int_, np.uint, np.longlong, np.ulonglong
-                )):
+            source,
+            (
+                int,
+                np.byte,
+                np.ubyte,
+                np.short,
+                np.ushort,
+                np.intc,
+                np.uintc,
+                np.int_,
+                np.uint,
+                np.longlong,
+                np.ulonglong,
+            ),
+        ):
             self.__value = np.bool_(source != 0)
-        elif isinstance(
-                source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
+        elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value = np.bool_(source != 0.0)
         else:
             raise exceptions.IncompatibleTypesException(
-                type(source).__name__, variable_type.VariableType.BOOLEAN)
+                type(source).__name__, variable_type.VariableType.BOOLEAN
+            )
 
     def __add__(self, other):
         """Magic method add."""
@@ -301,7 +312,8 @@ class BooleanValue(variable_value.IVariableValue):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
-            locale_name, lambda: locale.format_string("%s", self))
+            locale_name, lambda: locale.format_string("%s", self)
+        )
         return result
 
 
@@ -420,7 +432,8 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
-            locale_name, lambda: locale.format_string("%G", self))
+            locale_name, lambda: locale.format_string("%G", self)
+        )
         return result
 
 
@@ -447,7 +460,6 @@ class RealValue(np.float64, variable_value.IVariableValue):
         arg
             The argument from which to construct this instance.
         """
-
         if isinstance(arg, BooleanValue):
             return super().__new__(cls, bool(arg))
         else:
@@ -549,7 +561,8 @@ class RealValue(np.float64, variable_value.IVariableValue):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
-            locale_name, lambda: locale.format_string("%.15G", self))
+            locale_name, lambda: locale.format_string("%.15G", self)
+        )
         return result
 
 
