@@ -4,15 +4,13 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Dict, Optional
+from types import TracebackType
+from typing import Dict, Optional, Type
 
 from overrides import overrides
 
 from .file_value import FileValue
 from .isave_context import ILoadContext
-
-# TODO: What formatting does pydoc use? I'm using back tick for code below.
-#  Who knows if that is correct
 
 
 class FileScope(AbstractContextManager, ABC):
@@ -32,12 +30,16 @@ class FileScope(AbstractContextManager, ABC):
     """
 
     def __init__(self):
-        """TODO."""
+        """Initialize."""
         pass
 
-    # TODO: Proper types for this method
     @overrides
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         self.close()
         return None
 

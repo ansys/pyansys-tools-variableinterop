@@ -5,8 +5,6 @@ import pytest
 
 import ansys.common.variableinterop as acvi
 
-# TODO: search google, is there a standard way to do this?
-
 
 @contextmanager
 def _dummy_context():

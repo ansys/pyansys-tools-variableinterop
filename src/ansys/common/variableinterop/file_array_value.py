@@ -66,7 +66,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
             A string appropriate for use in files and APIs.
         """
         if context is None:
-            raise ValueError  # TODO: msg
+            raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
 
         def elem_to_api_obj(item: FileValue) -> Dict[str, Optional[str]]:
             return item.to_api_object(cast(ISaveContext, context))

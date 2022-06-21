@@ -109,9 +109,6 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         -------
         A FileValue with a value determined by the specified string.
         """
-        # TODO: implement this as part of file support PBI.
-        # Note that doing so will also require extending this
-        # class to take a file store (see C# implementation for details).
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
                 "Deserializing a file value requires a file scope and save context."

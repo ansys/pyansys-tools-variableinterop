@@ -306,7 +306,6 @@ def test_boolean_binary_operators_same_types(
         pytest.param(True, True, None, id="true"),
         pytest.param(False, False, None, id="false"),
         pytest.param(None, False, None, id="none"),
-        # TODO: Should we even accept strings?
         pytest.param("", None, acvi.IncompatibleTypesException, id="empty-string"),
         pytest.param("something", None, acvi.IncompatibleTypesException, id="non-empty-string"),
         pytest.param(

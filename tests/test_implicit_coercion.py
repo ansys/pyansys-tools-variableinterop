@@ -27,9 +27,6 @@ class IDummy(ABC):
     def variable_argument(self, value: IVariableValue) -> IVariableValue:
         ...
 
-    # TODO: methods that accept specific types of IVariableValue
-    # TODO: test that it ignores other parameters
-
 
 class Impl(ABC):
     """Test implementation that just returns what it gets sent"""
