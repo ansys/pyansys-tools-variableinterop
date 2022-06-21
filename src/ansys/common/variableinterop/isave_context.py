@@ -4,7 +4,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Optional, Union
+from types import TracebackType
+from typing import Optional, Type, Union
 
 from overrides import overrides
 
@@ -19,8 +20,13 @@ class ISaveContext(AbstractContextManager, ABC):
     files or other large data.
     """
 
-    # TODO: Proper types for this method
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    @overrides
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         """Magic method exit."""
         self.close()
         return None
@@ -71,9 +77,13 @@ class ISaveContext(AbstractContextManager, ABC):
 class ILoadContext(AbstractContextManager, ABC):
     """TODO."""
 
-    # TODO: Proper types for this method
     @overrides
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         self.close()
         return None
 

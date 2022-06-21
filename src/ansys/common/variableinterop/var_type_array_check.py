@@ -1,11 +1,11 @@
 """Provides a function that allows checking whether a variable type is an array type."""
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudovisitor
-import ansys.common.variableinterop.variable_type as variable_type
+from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
+from .variable_type import VariableType
 
 
-class _var_type_is_array_visitor(pseudovisitor.IVariableTypePseudoVisitor[bool]):
+class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
     """
     A pseudovisitor implementation that checks whether the visited type is an array.
 
@@ -57,7 +57,7 @@ class _var_type_is_array_visitor(pseudovisitor.IVariableTypePseudoVisitor[bool])
         return True
 
 
-def var_type_is_array(vartype: variable_type.VariableType) -> bool:
+def var_type_is_array(vartype: VariableType) -> bool:
     """
     Check whether the provided variable type is an array type or not.
 
@@ -69,4 +69,4 @@ def var_type_is_array(vartype: variable_type.VariableType) -> bool:
     -------
     True if the specified variable type is an array type, false otherwise.
     """
-    return pseudovisitor.vartype_accept(_var_type_is_array_visitor(), vartype)
+    return vartype_accept(_VarTypeIsArrayVisitor(), vartype)

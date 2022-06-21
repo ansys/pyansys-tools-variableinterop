@@ -50,6 +50,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     def variable_type(self) -> VariableType:
         return VariableType.FILE_ARRAY
 
+    @overrides
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
         Convert this value to an API string.

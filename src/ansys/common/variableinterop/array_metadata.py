@@ -3,14 +3,9 @@ from typing import TypeVar
 
 from overrides import overrides
 
-from ansys.common.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
-from ansys.common.variableinterop.scalar_metadata import (
-    BooleanMetadata,
-    IntegerMetadata,
-    RealMetadata,
-    StringMetadata,
-)
-from ansys.common.variableinterop.variable_type import VariableType
+from .ivariablemetadata_visitor import IVariableMetadataVisitor
+from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
+from .variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):

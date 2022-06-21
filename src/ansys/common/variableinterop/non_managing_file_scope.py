@@ -8,14 +8,12 @@ from uuid import uuid4
 
 from overrides import overrides
 
-import ansys.common.variableinterop.file_scope as file_scope
-import ansys.common.variableinterop.file_value as file_value
-import ansys.common.variableinterop.isave_context as isave_context
+from .file_scope import FileScope
+from .file_value import EMPTY_FILE, FileValue
+from .isave_context import ILoadContext, ISaveContext
 
 
-class NonManagingFileScope(
-    file_scope.FileScope, isave_context.ISaveContext, isave_context.ILoadContext
-):
+class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     """
     A simple file scope implementation that performs no management.
 
@@ -31,7 +29,7 @@ class NonManagingFileScope(
     their current location on disk as an identifier.
     """
 
-    class NonManagingFileValue(file_value.FileValue):
+    class NonManagingFileValue(FileValue):
         """Implementation of FileValue used by this scope."""
 
         @overrides
@@ -55,7 +53,7 @@ class NonManagingFileScope(
             super().__init__(to_read, mime_type, encoding, uuid4())
 
         @overrides
-        def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
+        def _send_actual_file(self, save_context: ISaveContext) -> str:
             return save_context.save_file(str(self.actual_content_file_name), None)
 
         @property  # type: ignore
@@ -66,10 +64,10 @@ class NonManagingFileScope(
     @overrides
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
-    ) -> file_value.FileValue:
+    ) -> FileValue:
         return NonManagingFileScope.NonManagingFileValue(to_read, mime_type, encoding)
 
-    def to_api_string_file_store(self, file_var: file_value.FileValue) -> str:
+    def to_api_string_file_store(self, file_var: FileValue) -> str:
         """
         TODO.
 
@@ -85,26 +83,28 @@ class NonManagingFileScope(
             raise TypeError("This file scope cannot serialize file values it did not create.")
 
         # Just return the file name.
-        return file_var.actual_content_file_name
+        if file_var.actual_content_file_name is None:
+            return ""
+        return str(file_var.actual_content_file_name)
 
     @overrides
     def from_api_object(
-        self, api_object: Dict[str, Optional[str]], load_context: isave_context.ILoadContext
-    ) -> file_value.FileValue:
-        if file_value.FileValue.CONTENTS_KEY in api_object:
+        self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
+    ) -> FileValue:
+        if FileValue.CONTENTS_KEY in api_object:
             content: Optional[PathLike] = load_context.load_file(
-                api_object.get(file_value.FileValue.CONTENTS_KEY)
+                api_object.get(FileValue.CONTENTS_KEY)
             )
             if content is not None:
                 return NonManagingFileScope.NonManagingFileValue(
                     content,
-                    api_object.get(file_value.FileValue.MIMETYPE_KEY),
-                    api_object.get(file_value.FileValue.ENCODING_KEY),
+                    api_object.get(FileValue.MIMETYPE_KEY),
+                    api_object.get(FileValue.ENCODING_KEY),
                 )
             else:
-                return file_value.EMPTY_FILE
+                return EMPTY_FILE
         else:
-            return file_value.EMPTY_FILE
+            return EMPTY_FILE
 
     @overrides
     def save_file(self, source: Union[PathLike, str], content_id: Optional[str]) -> str:

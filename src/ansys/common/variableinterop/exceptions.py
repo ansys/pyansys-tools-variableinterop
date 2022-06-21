@@ -2,9 +2,9 @@
 
 from configparser import ConfigParser
 import os
-from typing import Union
+from typing import Optional, Union
 
-import ansys.common.variableinterop.variable_type as variable_type
+from .variable_type import VariableType
 
 
 def _error(name: str, *args: object) -> str:
@@ -30,8 +30,8 @@ class IncompatibleTypesException(BaseException):
 
     def __init__(
         self,
-        from_type: Union[variable_type.VariableType, str],
-        to_type: Union[variable_type.VariableType, str],
+        from_type: Union[VariableType, str],
+        to_type: Union[VariableType, str],
     ):
         """
         Construct exception.
@@ -39,16 +39,17 @@ class IncompatibleTypesException(BaseException):
         :param from_type a VariableType or a string identifying the type converting from.
         :param to_type a VariableType or a string identifying the type converting to.
         """
-        self.from_type: variable_type.VariableType
+        self.from_type: Optional[VariableType]
         self.from_type_str: str
+        self.to_type: Optional[VariableType]
 
-        if isinstance(from_type, variable_type.VariableType):
+        if isinstance(from_type, VariableType):
             self.from_type = from_type
             self.from_type_str = from_type.associated_type_name
         else:
             self.from_type = None
             self.from_type_str = from_type
-        if isinstance(to_type, variable_type.VariableType):
+        if isinstance(to_type, VariableType):
             self.to_type = to_type
             self.to_type_str = to_type.associated_type_name
         else:

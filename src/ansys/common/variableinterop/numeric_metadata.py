@@ -6,13 +6,13 @@ from typing import Any, TypeVar
 
 from overrides import overrides
 
-import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
+from .common_variable_metadata import CommonVariableMetadata
+from .ivariablemetadata_visitor import IVariableMetadataVisitor
 
 T = TypeVar("T")
 
 
-class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
+class NumericMetadata(CommonVariableMetadata, ABC):
     """Generic base class for all numeric metadata implementations."""
 
     @overrides
@@ -46,7 +46,7 @@ class NumericMetadata(common_variable_metadata.CommonVariableMetadata, ABC):
         return equal
 
     @overrides
-    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         raise NotImplementedError
 
     @property

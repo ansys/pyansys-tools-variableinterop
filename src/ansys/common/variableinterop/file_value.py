@@ -275,7 +275,8 @@ class FileValue(IVariableValue, ABC):
         True if there is content, false otherwise.
         """
 
-    def to_api_string(self, save_context: Optional[ISaveContext] = None) -> str:
+    @overrides
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
         Convert this value to an API string using a save context.
 
@@ -287,9 +288,9 @@ class FileValue(IVariableValue, ABC):
         -------
         A string appropriate for use in files and APIs.
         """
-        if save_context is None:
+        if context is None:
             raise ValueError  # TODO: msg
-        api_obj: Dict[str, Optional[str]] = self.to_api_object(cast(ISaveContext, save_context))
+        api_obj: Dict[str, Optional[str]] = self.to_api_object(cast(ISaveContext, context))
         return json.dumps(api_obj)
 
     def _send_actual_file(self, save_context: ISaveContext) -> str:

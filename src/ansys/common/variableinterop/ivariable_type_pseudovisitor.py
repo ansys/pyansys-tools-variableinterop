@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Generic, TypeVar
 
-from ansys.common.variableinterop.variable_type import VariableType
+from .variable_type import VariableType
 
 T = TypeVar("T")
 

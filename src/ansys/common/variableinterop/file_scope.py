@@ -8,8 +8,8 @@ from typing import Dict, Optional
 
 from overrides import overrides
 
-import ansys.common.variableinterop.file_value as file_value
-import ansys.common.variableinterop.isave_context as isave_context
+from .file_value import FileValue
+from .isave_context import ILoadContext
 
 # TODO: What formatting does pydoc use? I'm using back tick for code below.
 #  Who knows if that is correct
@@ -49,13 +49,13 @@ class FileScope(AbstractContextManager, ABC):
     @abstractmethod
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
-    ) -> file_value.FileValue:
+    ) -> FileValue:
         """TODO."""
         ...
 
     @abstractmethod
     def from_api_object(
-        self, api_object: Dict[str, Optional[str]], load_context: isave_context.ILoadContext
-    ) -> file_value.FileValue:
+        self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
+    ) -> FileValue:
         """TODO."""
         ...

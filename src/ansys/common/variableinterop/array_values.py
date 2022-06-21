@@ -10,19 +10,13 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-from ansys.common.variableinterop.scalar_values import (
-    BooleanValue,
-    IntegerValue,
-    RealValue,
-    StringValue,
-)
-from ansys.common.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
-from ansys.common.variableinterop.utils.locale_utils import LocaleUtils
-from ansys.common.variableinterop.utils.string_escaping import escape_string, unescape_string
-import ansys.common.variableinterop.variable_type as variable_type
-
+from .isave_context import ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .utils.array_to_from_string_util import ArrayToFromStringUtil
+from .utils.locale_utils import LocaleUtils
+from .utils.string_escaping import escape_string, unescape_string
+from .variable_type import VariableType
 from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
@@ -54,13 +48,13 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return np.copy(self).view(BooleanArrayValue)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean_array(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.BOOLEAN_ARRAY
+    def variable_type(self) -> VariableType:
+        return VariableType.BOOLEAN_ARRAY
 
     def to_real_array_value(self) -> RealArrayValue:
         """
@@ -93,7 +87,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: BooleanValue(elem.tolist()).to_api_string()
         )
@@ -160,13 +154,13 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return np.copy(self).view(IntegerArrayValue)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer_array(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.INTEGER_ARRAY
+    def variable_type(self) -> VariableType:
+        return VariableType.INTEGER_ARRAY
 
     def to_boolean_array_value(self):
         """
@@ -199,7 +193,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: IntegerValue(elem).to_api_string()
         )
@@ -265,13 +259,13 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return np.copy(self).view(RealArrayValue)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_real_array(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.REAL_ARRAY
+    def variable_type(self) -> VariableType:
+        return VariableType.REAL_ARRAY
 
     def to_boolean_array_value(self):
         """
@@ -308,7 +302,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return self.astype(np.str_).view(StringArrayValue)
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: RealValue(elem).to_api_string()
         )
@@ -381,13 +375,13 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return np.copy(self).view(StringArrayValue)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_string_array(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.STRING_ARRAY
+    def variable_type(self) -> VariableType:
+        return VariableType.STRING_ARRAY
 
     def to_real_array_value(self) -> RealArrayValue:
         """
@@ -422,7 +416,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         return self.to_real_array_value().to_integer_array_value()
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: '"' + escape_string(StringValue(elem).to_api_string()) + '"'
         )

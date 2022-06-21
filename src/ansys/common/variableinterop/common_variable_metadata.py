@@ -10,7 +10,8 @@ from overrides import overrides
 from ansys.common.variableinterop import exceptions
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
-import ansys.common.variableinterop.variable_value as variable_value
+
+from .variable_value import IVariableValue
 
 
 class CommonVariableMetadata(ABC):
@@ -27,7 +28,7 @@ class CommonVariableMetadata(ABC):
     def __init__(self) -> None:
         """Initialize all members."""
         self._description: str = ""
-        self._custom_metadata: Dict[str, variable_value.IVariableValue] = {}
+        self._custom_metadata: Dict[str, IVariableValue] = {}
 
     def __eq__(self, other):
         """Determine if a given object is equal to this metadata."""
@@ -96,11 +97,11 @@ class CommonVariableMetadata(ABC):
         self._description = value
 
     @property
-    def custom_metadata(self) -> Dict[str, variable_value.IVariableValue]:
+    def custom_metadata(self) -> Dict[str, IVariableValue]:
         """Additional, custom metadata may be stored in this dictionary."""
         return self._custom_metadata
 
-    def get_default_value(self) -> variable_value.IVariableValue:
+    def get_default_value(self) -> IVariableValue:
         """
         Get default value that should be used for variable describe \
         by this metadata.
@@ -131,7 +132,7 @@ class CommonVariableMetadata(ABC):
         )
 
         class __DefaultValueVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]
+            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
         ):
             """Metadata visitor to implement getting the default value."""
 
@@ -290,9 +291,7 @@ class CommonVariableMetadata(ABC):
         visitor = __DefaultValueVisitor()
         return self.accept(visitor)
 
-    def runtime_convert(
-        self, source: variable_value.IVariableValue
-    ) -> variable_value.IVariableValue:
+    def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
         Convert the value of the given variable value to the \
         appropriate type for this meta data.
@@ -316,7 +315,7 @@ class CommonVariableMetadata(ABC):
         )
 
         class __RuntimeConvertVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]
+            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
         ):
             @overrides
             def visit_integer(self, metadata) -> scalar_values.IntegerValue:

@@ -2,24 +2,14 @@
 
 from overrides import overrides
 
-from ansys.common.variableinterop.array_values import (
-    BooleanArrayValue,
-    IntegerArrayValue,
-    RealArrayValue,
-    StringArrayValue,
-)
-from ansys.common.variableinterop.exceptions import IncompatibleTypesException
-from ansys.common.variableinterop.file_array_value import FileArrayValue
-from ansys.common.variableinterop.file_value import FileValue
-from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-from ansys.common.variableinterop.scalar_values import (
-    BooleanValue,
-    IntegerValue,
-    RealValue,
-    StringValue,
-)
-from ansys.common.variableinterop.variable_type import VariableType
-from ansys.common.variableinterop.variable_value import IVariableValue
+from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+from .exceptions import IncompatibleTypesException
+from .file_array_value import FileArrayValue
+from .file_value import FileValue
+from .ivariable_visitor import IVariableValueVisitor
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .variable_type import VariableType
+from .variable_value import IVariableValue
 
 
 class __ToBooleanVisitor(IVariableValueVisitor[bool]):

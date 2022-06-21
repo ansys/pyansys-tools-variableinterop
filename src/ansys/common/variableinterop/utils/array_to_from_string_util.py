@@ -6,8 +6,8 @@ from typing import Any, Callable, List, Match, Optional, Tuple
 import numpy as np
 from numpy.typing import NDArray
 
-from ansys.common.variableinterop.exceptions import FormatException
-from ansys.common.variableinterop.variable_value import CommonArrayValue, IVariableValue
+from ..exceptions import FormatException
+from ..variable_value import CommonArrayValue, IVariableValue
 
 
 class ArrayToFromStringUtil:

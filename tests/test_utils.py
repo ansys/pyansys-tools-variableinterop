@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from typing import Type
+from typing import Optional, Type
 
 import pytest
 
@@ -17,7 +17,7 @@ def _dummy_context():
     yield None
 
 
-def _create_exception_context(expect_exception: Type[BaseException]):
+def _create_exception_context(expect_exception: Optional[Type[BaseException]]):
     """
     Creates an object to use in a with block that will test for expect_exception
     to be thrown, or does nothing if expect_exception is None.

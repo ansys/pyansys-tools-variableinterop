@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from ansys.common.variableinterop import (
@@ -6,6 +8,7 @@ from ansys.common.variableinterop import (
     GetModelCenterTypeForValue,
     IntegerArrayValue,
     IntegerValue,
+    ISaveContext,
     IVariableValue,
     RealArrayValue,
     RealValue,
@@ -27,7 +30,7 @@ class TestUnknownValue(IVariableValue):
     def variable_type(self) -> variable_type_lib.VariableType:
         return VariableType.UNKNOWN
 
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[ISaveContext]) -> str:
         pass
 
     def from_api_string(self, value: str) -> None:

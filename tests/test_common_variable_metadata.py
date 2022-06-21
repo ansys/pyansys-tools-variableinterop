@@ -5,10 +5,9 @@ common_variable_metadata.CommonVariableMetadata.
 from typing import List, Tuple, Type, TypeVar, Union
 
 import pytest
+from test_utils import _create_exception_context
 
 import ansys.common.variableinterop as acvi
-from ansys.common.variableinterop.variable_value import CommonArrayValue
-from tests.test_utils import _create_exception_context
 
 M = TypeVar(
     "M", acvi.IntegerMetadata, acvi.RealMetadata, acvi.IntegerArrayMetadata, acvi.RealArrayMetadata
@@ -285,7 +284,7 @@ def test_meta_get_default_value(
 
     # Verify
     assert type(result) == type(expected)
-    if isinstance(result, CommonArrayValue):
+    if isinstance(result, acvi.CommonArrayValue):
         # to avoid an issue with default constructed numpy arrays not being equal to each other
         assert len(result.shape) == 0
     else:

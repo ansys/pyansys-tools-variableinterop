@@ -2,32 +2,32 @@
 into the appropriate IVariableValue type."""
 from __future__ import annotations
 
+from decimal import Decimal
 import functools
 import inspect
-import typing
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union, get_type_hints
 
 import numpy as np
 
-import ansys.common.variableinterop.array_values as array_values
-import ansys.common.variableinterop.exceptions as exceptions
-import ansys.common.variableinterop.scalar_values as scalar_values
-import ansys.common.variableinterop.variable_value as variable_value
+from ..array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+from ..exceptions import _error
+from ..scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from ..variable_value import CommonArrayValue, IVariableValue
 
 __TYPE_MAPPINGS = {
-    int: scalar_values.IntegerValue,
-    np.int8: scalar_values.IntegerValue,
-    np.int16: scalar_values.IntegerValue,
-    np.int32: scalar_values.IntegerValue,
-    np.int64: scalar_values.IntegerValue,
-    float: scalar_values.RealValue,
-    np.float16: scalar_values.RealValue,
-    np.float32: scalar_values.RealValue,
-    np.float64: scalar_values.RealValue,
-    bool: scalar_values.BooleanValue,
-    np.bool_: scalar_values.BooleanValue,
-    str: scalar_values.StringValue,
-    np.str_: scalar_values.StringValue,
+    int: IntegerValue,
+    np.int8: IntegerValue,
+    np.int16: IntegerValue,
+    np.int32: IntegerValue,
+    np.int64: IntegerValue,
+    float: RealValue,
+    np.float16: RealValue,
+    np.float32: RealValue,
+    np.float64: RealValue,
+    bool: BooleanValue,
+    np.bool_: BooleanValue,
+    str: StringValue,
+    np.str_: StringValue,
 }
 """
 This map applies when coercing scalar values to a method argument type hinted as IVariableValue.
@@ -39,15 +39,15 @@ and the value is the specific IVariableValue implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
-    np.int8: array_values.IntegerArrayValue,
-    np.int16: array_values.IntegerArrayValue,
-    np.int32: array_values.IntegerArrayValue,
-    np.int64: array_values.IntegerArrayValue,
-    np.float16: array_values.RealArrayValue,
-    np.float32: array_values.RealArrayValue,
-    np.float64: array_values.RealArrayValue,
-    np.bool_: array_values.BooleanArrayValue,
-    np.str_: array_values.StringArrayValue,
+    np.int8: IntegerArrayValue,
+    np.int16: IntegerArrayValue,
+    np.int32: IntegerArrayValue,
+    np.int64: IntegerArrayValue,
+    np.float16: RealArrayValue,
+    np.float32: RealArrayValue,
+    np.float64: RealArrayValue,
+    np.bool_: BooleanArrayValue,
+    np.str_: StringArrayValue,
 }
 """
 This map applies when coercing ndarray values to a method argument type hinted as IVariableValue.
@@ -59,39 +59,40 @@ and the value is the specific IVariableValue implementation that should be used.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
-    scalar_values.IntegerValue: [
+    IntegerValue: [
         int,
+        Decimal,
         np.int8,
         np.int16,
         np.int32,
         np.int64,
         bool,
         np.bool_,
-        scalar_values.BooleanValue,
+        BooleanValue,
     ],
-    scalar_values.RealValue: [
+    RealValue: [
         float,
         np.float16,
         np.float32,
         np.float64,
         bool,
         np.bool_,
-        scalar_values.BooleanValue,
+        BooleanValue,
     ],
-    scalar_values.BooleanValue: [bool, np.bool_],
-    scalar_values.StringValue: [
+    BooleanValue: [bool, np.bool_],
+    StringValue: [
         int,
         np.integer,
-        scalar_values.IntegerValue,
+        IntegerValue,
         bool,
         np.bool_,
-        scalar_values.BooleanValue,
+        BooleanValue,
         float,
         np.inexact,
-        scalar_values.RealValue,
+        RealValue,
         str,
         np.str_,
-        scalar_values.StringValue,
+        StringValue,
     ],
 }
 """
@@ -103,10 +104,10 @@ implicitly coerced to that type.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
-    array_values.IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
-    array_values.RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
-    array_values.BooleanArrayValue: [np.bool_],
-    array_values.StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
+    IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
+    RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
+    BooleanArrayValue: [np.bool_],
+    StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
 }
 """
 Rules for implicitly coercing array values to a specific IVariableValue implementation.
@@ -133,7 +134,7 @@ def _is_optional(arg_type: type) -> bool:
     """
     return (
         hasattr(arg_type, "__origin__")
-        and arg_type.__origin__ == typing.Union  # type: ignore
+        and arg_type.__origin__ == Union  # type: ignore
         and len(arg_type.__args__) == 2  # type: ignore
         and arg_type.__args__[1] == type(None)  # type: ignore
     )
@@ -200,22 +201,18 @@ def __implicit_coerce_single_scalar_free(arg: Any):
     for cls in type(arg).__mro__:
         if cls in __TYPE_MAPPINGS:
             return __TYPE_MAPPINGS[cls](arg)
-    raise TypeError(
-        exceptions._error(
-            "ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), variable_value.IVariableValue
-        )
-    )
+    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), IVariableValue))
 
 
-def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> variable_value.IVariableValue:
+def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> IVariableValue:
     for cls in arr_type.__mro__:
         if cls in __ARR_TYPE_MAPPINGS:
             return __ARR_TYPE_MAPPINGS[cls](values=arg)
     raise TypeError(
-        exceptions._error(
+        _error(
             "ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
             " with dtype ".join([str(type(arg)), str(arr_type)]),
-            variable_value.IVariableValue,
+            IVariableValue,
         )
     )
 
@@ -231,9 +228,7 @@ def __implicit_coerce_single_array_specific(arg: Any, target_type: type):
     from_type_str: str = str(type(arg))
     if maybe_arr_type is not None:
         from_type_str = " with dtype ".join([str(type(arg)), str(maybe_arr_type)])
-    raise TypeError(
-        exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", from_type_str, target_type)
-    )
+    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", from_type_str, target_type))
 
 
 def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
@@ -241,7 +236,7 @@ def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
         target_type, type(arg), __ALLOWED_SPECIFIC_IMPLICIT_COERCE
     ):
         return target_type(arg)
-    raise TypeError(exceptions._error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), target_type))
+    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), target_type))
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
@@ -275,7 +270,7 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
         # No type coercion necessary. Pass through the original argument.
         return arg
 
-    if arg_type == variable_value.IVariableValue:
+    if arg_type == IVariableValue:
         maybe_np_array_type: Optional[type] = __numpy_array_dtype(arg)
         if maybe_np_array_type is None:
             return __implicit_coerce_single_scalar_free(arg)
@@ -284,11 +279,11 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
     # TODO: This probably doesn't have all the right semantics for our set of implicit
     #  type conversions
-    if issubclass(arg_type, variable_value.IVariableValue):
+    if issubclass(arg_type, IVariableValue):
         if arg is None:
             raise TypeError(f"Type {type(arg)} cannot be converted to {arg_type}")
         # Check if the proposed conversion is even allowed:
-        if issubclass(arg_type, variable_value.CommonArrayValue):
+        if issubclass(arg_type, CommonArrayValue):
             return __implicit_coerce_single_array_specific(arg, arg_type)
         else:
             return __implicit_coerce_single_scalar_specific(arg, arg_type)
@@ -315,7 +310,7 @@ def implicit_coerce(func):
     """
     assert inspect.isfunction(func), "Decorator must be used on functions"
     signature = inspect.signature(func)
-    type_hints = typing.get_type_hints(func)
+    type_hints = get_type_hints(func)
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):

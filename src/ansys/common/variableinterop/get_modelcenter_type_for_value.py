@@ -1,9 +1,8 @@
 """Definition of GetModelCenterTypeForValue."""
 from overrides import overrides
 
-import ansys.common.variableinterop.ivariable_type_pseudovisitor as pseudo_visitor
-from ansys.common.variableinterop.ivariable_type_pseudovisitor import T
-import ansys.common.variableinterop.variable_value as variable_value
+from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
+from .variable_value import IVariableValue
 
 
 class GetModelCenterTypeForValue:
@@ -11,7 +10,7 @@ class GetModelCenterTypeForValue:
     corresponding ModelCenter type for an IVariableValue."""
 
     @staticmethod
-    def get_modelcenter_type(value: variable_value.IVariableValue) -> str:
+    def get_modelcenter_type(value: IVariableValue) -> str:
         """
         Get the corresponding ModelCenter type for an IVariableValue.
 
@@ -24,10 +23,10 @@ class GetModelCenterTypeForValue:
         The corresponding ModelCenter type string.
         """
         generator = GetModelCenterTypeForValue._GetModelCenterTypeVisitor()
-        result: str = pseudo_visitor.vartype_accept(generator, value.variable_type)
+        result: str = vartype_accept(generator, value.variable_type)
         return result
 
-    class _GetModelCenterTypeVisitor(pseudo_visitor.IVariableTypePseudoVisitor[str]):
+    class _GetModelCenterTypeVisitor(IVariableTypePseudoVisitor[str]):
         """Helper visitor used by GetModelCenterTypeForValue."""
 
         @overrides
@@ -51,7 +50,7 @@ class GetModelCenterTypeForValue:
             return "string"
 
         @overrides
-        def visit_file(self) -> T:
+        def visit_file(self) -> str:
             return "file"
 
         @overrides

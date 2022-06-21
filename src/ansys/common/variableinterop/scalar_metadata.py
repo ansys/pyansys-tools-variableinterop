@@ -5,18 +5,17 @@ from typing import Any, List, Optional, TypeVar
 
 from overrides import overrides
 
-import ansys.common.variableinterop.common_variable_metadata as common_variable_metadata
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.variable_type as variable_type
-
+from .common_variable_metadata import CommonVariableMetadata
+from .ivariablemetadata_visitor import IVariableMetadataVisitor
 from .numeric_metadata import NumericMetadata
 from .scalar_values import IntegerValue, RealValue, StringValue
 from .utils.implicit_coercion import implicit_coerce
+from .variable_type import VariableType
 
 T = TypeVar("T")
 
 
-class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
+class BooleanMetadata(CommonVariableMetadata):
     """Common metadata for VariableType.BOOLEAN and VariableType.BOOLEAN_ARRAY."""
 
     @overrides
@@ -24,13 +23,13 @@ class BooleanMetadata(common_variable_metadata.CommonVariableMetadata):
         return self.equals(other)
 
     @overrides
-    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.BOOLEAN
+    def variable_type(self) -> VariableType:
+        return VariableType.BOOLEAN
 
     @overrides
     def equals(self, other: Any) -> bool:
@@ -54,13 +53,13 @@ class IntegerMetadata(NumericMetadata):
         return self.equals(other)
 
     @overrides
-    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.INTEGER
+    def variable_type(self) -> VariableType:
+        return VariableType.INTEGER
 
     @property
     def lower_bound(self) -> Optional[IntegerValue]:
@@ -187,13 +186,13 @@ class RealMetadata(NumericMetadata):
         return self.equals(other)
 
     @overrides
-    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_real(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.REAL
+    def variable_type(self) -> VariableType:
+        return VariableType.REAL
 
     @property
     def lower_bound(self) -> Optional[RealValue]:
@@ -304,7 +303,7 @@ class RealMetadata(NumericMetadata):
         return equal
 
 
-class StringMetadata(common_variable_metadata.CommonVariableMetadata):
+class StringMetadata(CommonVariableMetadata):
     """Common metadata for VariableType.STRING and VariableType.STRING_ARRAY."""
 
     @overrides
@@ -318,13 +317,13 @@ class StringMetadata(common_variable_metadata.CommonVariableMetadata):
         return self.equals(other)
 
     @overrides
-    def accept(self, visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[T]) -> T:
+    def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_string(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.STRING
+    def variable_type(self) -> VariableType:
+        return VariableType.STRING
 
     @property
     def enumerated_values(self) -> List[StringValue]:

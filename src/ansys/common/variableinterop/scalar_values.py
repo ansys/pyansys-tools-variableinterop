@@ -3,22 +3,22 @@ from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import Any, Dict, Optional, TypeVar
+from typing import Any, Dict, Optional, TypeVar, cast
 
 import numpy as np
 from overrides import overrides
 
-import ansys.common.variableinterop.exceptions as exceptions
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.utils.locale_utils as locale_utils
-import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+from .exceptions import IncompatibleTypesException
+from .isave_context import ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
+from .utils.locale_utils import LocaleUtils
+from .variable_type import VariableType
+from .variable_value import IVariableValue
 
 T = TypeVar("T")
 
 
-class BooleanValue(variable_value.IVariableValue):
+class BooleanValue(IVariableValue):
     """
     Wrapper around a boolean value.
 
@@ -87,7 +87,7 @@ class BooleanValue(variable_value.IVariableValue):
             self.__value = np.False_
         elif isinstance(source, (bool, np.bool_)):
             self.__value = np.bool_(source)
-        elif isinstance(source, variable_value.IVariableValue):
+        elif isinstance(source, IVariableValue):
             from ansys.common.variableinterop.scalar_value_conversion import to_boolean_value
 
             self.__value = np.bool_(to_boolean_value(source))
@@ -111,9 +111,7 @@ class BooleanValue(variable_value.IVariableValue):
         elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value = np.bool_(source != 0.0)
         else:
-            raise exceptions.IncompatibleTypesException(
-                type(source).__name__, variable_type.VariableType.BOOLEAN
-            )
+            raise IncompatibleTypesException(type(source).__name__, VariableType.BOOLEAN)
 
     def __add__(self, other):
         """Magic method add."""
@@ -233,16 +231,16 @@ class BooleanValue(variable_value.IVariableValue):
             return self.__value.__xor__(other)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_boolean(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.BOOLEAN
+    def variable_type(self) -> VariableType:
+        return VariableType.BOOLEAN
 
     @overrides
-    def to_api_string(self, context: isave_context.ISaveContext = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         return str(self)
 
     def to_real_value(self) -> RealValue:
@@ -312,13 +310,13 @@ class BooleanValue(variable_value.IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self)
         )
         return result
 
 
-class IntegerValue(np.int64, variable_value.IVariableValue):
+class IntegerValue(np.int64, IVariableValue):
     """
     Wrapper around an integer value.
 
@@ -352,16 +350,18 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             The argument from which to construct this instance.
         """
 
-        if isinstance(arg, variable_value.IVariableValue):
+        if isinstance(arg, IVariableValue):
             # Constructing from an IVariableValue is handled specially.
-            if arg.variable_type == variable_type.VariableType.REAL:
+            if arg.variable_type == VariableType.REAL:
                 # For IVariableValues representing a real, use a different rounding strategy.
-                return super().__new__(cls, Decimal(arg).to_integral(ROUND_HALF_UP))
-            elif arg.variable_type == variable_type.VariableType.STRING:
+                return super().__new__(
+                    cls, Decimal(cast(RealValue, arg)).to_integral(ROUND_HALF_UP)
+                )
+            elif arg.variable_type == VariableType.STRING:
                 # For IVariableValues representing a string, convert to RealValue to use
                 # the alternate rounding strategy.
-                return cls.__new__(cls, RealValue.from_api_string(arg))
-            elif arg.variable_type == variable_type.VariableType.BOOLEAN:
+                return cls.__new__(cls, RealValue.from_api_string(cast(StringValue, arg)))
+            elif arg.variable_type == VariableType.BOOLEAN:
                 return super().__new__(cls, bool(arg))
             else:
                 # For other IVariableValues, attempt to use the default conversions.
@@ -371,16 +371,16 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
             return super().__new__(cls, arg)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.INTEGER
+    def variable_type(self) -> VariableType:
+        return VariableType.INTEGER
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         return str(self)
 
     def to_real_value(self) -> RealValue:
@@ -432,13 +432,13 @@ class IntegerValue(np.int64, variable_value.IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%G", self)
         )
         return result
 
 
-class RealValue(np.float64, variable_value.IVariableValue):
+class RealValue(np.float64, IVariableValue):
     """
     Wrapper around a real value.
 
@@ -491,16 +491,16 @@ class RealValue(np.float64, variable_value.IVariableValue):
     """
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_real(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.REAL
+    def variable_type(self) -> VariableType:
+        return VariableType.REAL
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         return str(self)
 
     @overrides
@@ -561,13 +561,13 @@ class RealValue(np.float64, variable_value.IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: np.str_ = locale_utils.LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%.15G", self)
         )
         return result
 
 
-class StringValue(np.str_, variable_value.IVariableValue):
+class StringValue(np.str_, IVariableValue):
     """
     Wrapper around a string value.
 
@@ -582,19 +582,17 @@ class StringValue(np.str_, variable_value.IVariableValue):
     naturally to the analogous NumPy type.
     """
 
-    import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_string(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.STRING
+    def variable_type(self) -> VariableType:
+        return VariableType.STRING
 
     @overrides
-    def to_api_string(self, context: Optional[isave_context.ISaveContext] = None) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         return str(self)
 
     @staticmethod
