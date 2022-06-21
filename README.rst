@@ -8,16 +8,17 @@ This library contains definitions of the basic variables, types,
 metadata, and values intended to provide interoperability between
 all Ansys products.
 The top level items in this package are:
-    - The base metadata type that all variable types extend is
-      CommonVariableMetadata. Metadata is defined as the information
-      about a variable that is static and does not change when a
-      component or workflow is run.
-    - The value interface is IVariableValue. These values are defined
-      so they know how to properly convert from one type to the other
-      via language operators, losslessly are implicitly. Operations
-      that are lossy, such as converting a real to an integer value, are
-      explicit. Explicit conversions may also throw an exception if
-      there is an overflow or other "bad data" situation.
+
+- The base metadata type that all variable types extend is
+  CommonVariableMetadata. Metadata is defined as the information
+  about a variable that is static and does not change when a
+  component or workflow is run.
+- The value interface is IVariableValue. These values are defined
+  so they know how to properly convert from one type to the other
+  via language operators, losslessly are implicitly. Operations
+  that are lossy, such as converting a real to an integer value, are
+  explicit. Explicit conversions may also throw an exception if
+  there is an overflow or other "bad data" situation.
 
 
 Installation
