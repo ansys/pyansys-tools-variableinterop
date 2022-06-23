@@ -26,7 +26,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-numpy = "^1.22.3"
+numpy = "1.22.4"
 overrides = "^6.1"
 anyio = "^3.5.0"
 
