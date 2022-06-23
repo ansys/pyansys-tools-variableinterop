@@ -108,11 +108,7 @@ from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.implicit_coercion import implicit_coerce, implicit_coerce_single
 from .utils.string_escaping import escape_string, unescape_string
 from .var_type_array_check import var_type_is_array
+from .variable_state import VariableState
 from .variable_type import VariableType
-from .variable_value import (
-    CommonArrayValue,
-    IVariableValue,
-    VariableState,
-    VariableValueInvalidError,
-)
+from .variable_value import CommonArrayValue, IVariableValue, VariableValueInvalidError
 from .vartype_arrays_and_elements import get_element_type, to_array_type
