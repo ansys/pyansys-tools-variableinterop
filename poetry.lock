@@ -766,7 +766,7 @@ test = ["pytest", "pytest-cov", "pytest-mock"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "d0408b9affeef05253bd0bfd2865b7d082c26062260dd05dab3a71efad25f8bd"
+content-hash = "1a48ef25a5063230ed0ec95667dc6a0b7e820ca743d5099ab05d367562b211a1"
 
 [metadata.files]
 alabaster = [
