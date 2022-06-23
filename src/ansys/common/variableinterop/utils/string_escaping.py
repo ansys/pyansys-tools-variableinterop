@@ -19,20 +19,17 @@ def escape_string(unescaped: str) -> str:
     The string with the specified characters escaped.
 
     """
-    return unescaped.replace("\\", r"\\")\
-                    .replace("\n", r"\n")\
-                    .replace("\r", r"\r")\
-                    .replace("\t", r'\t')\
-                    .replace('\"', r'\"')\
-                    .replace("\0", r'\0')
+    return (
+        unescaped.replace("\\", r"\\")
+        .replace("\n", r"\n")
+        .replace("\r", r"\r")
+        .replace("\t", r"\t")
+        .replace('"', r"\"")
+        .replace("\0", r"\0")
+    )
 
 
-__unescape_map: Dict[str, str] = {
-    'n': '\n',
-    'r': '\r',
-    't': '\t',
-    '0': '\0'
-}
+__unescape_map: Dict[str, str] = {"n": "\n", "r": "\r", "t": "\t", "0": "\0"}
 """
 This map contains characters escaped by escape_string that require special handling.
 
@@ -74,7 +71,7 @@ def unescape_string(escaped: str) -> str:
         # and increment the index by one.
         str_index += 1
         # If the current character is a backslash,
-        if current_char == '\\':
+        if current_char == "\\":
             # look at the next character in the string (if available),
             if str_index < str_length:
                 current_char = escaped[str_index]

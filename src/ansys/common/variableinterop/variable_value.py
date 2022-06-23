@@ -3,12 +3,14 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from typing import Generic, Tuple, TypeVar
+from typing import Generic, Optional, Tuple, TypeVar
 
 from numpy.typing import NDArray
 
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
+
+from .isave_context import ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
 
 T = TypeVar("T")
 
@@ -21,9 +23,7 @@ class IVariableValue(ABC):
         return copy.deepcopy(self)
 
     @abstractmethod
-    def accept(
-            self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
-    ) -> ivariable_visitor.T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
 
@@ -53,7 +53,7 @@ class IVariableValue(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
         Convert this value to an API string.
 
@@ -110,13 +110,12 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
 
 class VariableValueInvalidError(Exception):
     """Raised to indicate a required variable value was invalid."""
+
     pass
 
 
 class VariableState:
-    """
-    Bundles a variable state with a validity flag.
-    """
+    """Bundles a variable state with a validity flag."""
 
     def __init__(self, value: IVariableValue, is_valid: bool):
         """
@@ -138,7 +137,7 @@ class VariableState:
         return self.__value
 
     @property
-    def is_valid(self) -> IVariableValue:
+    def is_valid(self) -> bool:
         """Get the validity flag. True indicates the value is valid."""
         return self.__is_valid
 

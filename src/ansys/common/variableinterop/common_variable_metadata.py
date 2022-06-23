@@ -10,7 +10,8 @@ from overrides import overrides
 from ansys.common.variableinterop import exceptions
 import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.common.variableinterop.variable_type as variable_type_lib
-import ansys.common.variableinterop.variable_value as variable_value
+
+from .variable_value import IVariableValue
 
 
 class CommonVariableMetadata(ABC):
@@ -27,7 +28,7 @@ class CommonVariableMetadata(ABC):
     def __init__(self) -> None:
         """Initialize all members."""
         self._description: str = ""
-        self._custom_metadata: Dict[str, variable_value.IVariableValue] = {}
+        self._custom_metadata: Dict[str, IVariableValue] = {}
 
     def __eq__(self, other):
         """Determine if a given object is equal to this metadata."""
@@ -46,10 +47,12 @@ class CommonVariableMetadata(ABC):
         bool
             ``True`` if metadata objects are equal, false otherwise.
         """
-        equal: bool = (isinstance(other, CommonVariableMetadata) and
-                       self.variable_type == other.variable_type and
-                       self._description == other._description and
-                       self._custom_metadata == other._custom_metadata)
+        equal: bool = (
+            isinstance(other, CommonVariableMetadata)
+            and self.variable_type == other.variable_type
+            and self._description == other._description
+            and self._custom_metadata == other._custom_metadata
+        )
         return equal
 
     def clone(self) -> CommonVariableMetadata:
@@ -58,8 +61,8 @@ class CommonVariableMetadata(ABC):
 
     @abstractmethod
     def accept(
-            self,
-            visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T]
+        self,
+        visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T],
     ) -> ivariablemetadata_visitor.T:
         """
         Invoke the visitor pattern of this object using the passed in visitor implementation.
@@ -94,11 +97,11 @@ class CommonVariableMetadata(ABC):
         self._description = value
 
     @property
-    def custom_metadata(self) -> Dict[str, variable_value.IVariableValue]:
+    def custom_metadata(self) -> Dict[str, IVariableValue]:
         """Additional, custom metadata may be stored in this dictionary."""
         return self._custom_metadata
 
-    def get_default_value(self) -> variable_value.IVariableValue:
+    def get_default_value(self) -> IVariableValue:
         """
         Get default value that should be used for variable describe \
         by this metadata.
@@ -129,12 +132,14 @@ class CommonVariableMetadata(ABC):
         )
 
         class __DefaultValueVisitor(
-                ivariablemetadata_visitor.IVariableMetadataVisitor[variable_value.IVariableValue]):
+            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
+        ):
             """Metadata visitor to implement getting the default value."""
 
             @staticmethod
             def __get_str_enumerated_default(
-                    metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
+                metadata: scalar_metadata.StringMetadata,
+            ) -> scalar_values.StringValue:
                 """
                 For given StringMetadata, use enumerated values to\
                 get the default value to use for the associated\
@@ -155,8 +160,8 @@ class CommonVariableMetadata(ABC):
                         default_value = metadata.enumerated_values[0]
                 return default_value
 
-            M = TypeVar('M', scalar_metadata.IntegerMetadata, scalar_metadata.RealMetadata)
-            T = TypeVar('T', scalar_values.IntegerValue, scalar_values.RealValue)
+            M = TypeVar("M", scalar_metadata.IntegerMetadata, scalar_metadata.RealMetadata)
+            T = TypeVar("T", scalar_values.IntegerValue, scalar_values.RealValue)
 
             @staticmethod
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
@@ -180,31 +185,44 @@ class CommonVariableMetadata(ABC):
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
                     # enumerated values are defined
                     # if default value is not valid
-                    if default_value not in metadata.enumerated_values \
-                            or (metadata.lower_bound is not None
-                                and default_value < metadata.lower_bound) \
-                            or (metadata.upper_bound is not None
-                                and metadata.upper_bound < default_value):
+                    if (
+                        default_value not in metadata.enumerated_values
+                        or (
+                            metadata.lower_bound is not None
+                            and default_value < metadata.lower_bound
+                        )
+                        or (
+                            metadata.upper_bound is not None
+                            and metadata.upper_bound < default_value
+                        )
+                    ):
                         # find the first enumerated value that is valid
                         # if one does not exist, use default value anyway
                         default_value = next(
-                            (e for e in metadata.enumerated_values
-                             if (metadata.lower_bound is None or metadata.lower_bound <= e)
-                             and (metadata.upper_bound is None or e <= metadata.upper_bound)),
-                            default_value)
+                            (
+                                e
+                                for e in metadata.enumerated_values
+                                if (metadata.lower_bound is None or metadata.lower_bound <= e)
+                                and (metadata.upper_bound is None or e <= metadata.upper_bound)
+                            ),
+                            default_value,
+                        )
                 else:
                     # no enumerated values are defined
                     # if default value is not valid
-                    if (metadata.lower_bound is not None
-                        and default_value < metadata.lower_bound) \
-                       or (metadata.upper_bound is not None
-                           and metadata.upper_bound < default_value):
+                    if (
+                        metadata.lower_bound is not None and default_value < metadata.lower_bound
+                    ) or (
+                        metadata.upper_bound is not None and metadata.upper_bound < default_value
+                    ):
                         # default is not valid.
                         # if have a lower_bound
                         if metadata.lower_bound is not None:
                             # if lower_bound is valid, use it
-                            if metadata.upper_bound is None \
-                                    or metadata.lower_bound <= metadata.upper_bound:
+                            if (
+                                metadata.upper_bound is None
+                                or metadata.lower_bound <= metadata.upper_bound
+                            ):
                                 default_value = metadata.lower_bound
                         # else if have an upper_bound, use it
                         elif metadata.upper_bound is not None:
@@ -216,68 +234,64 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_integer(
-                    self, metadata: scalar_metadata.IntegerMetadata) -> scalar_values.IntegerValue:
+                self, metadata: scalar_metadata.IntegerMetadata
+            ) -> scalar_values.IntegerValue:
                 return self.__get_numeric_default(metadata, scalar_values.IntegerValue)
 
             @overrides
-            def visit_real(
-                    self, metadata: scalar_metadata.RealMetadata) -> scalar_values.RealValue:
+            def visit_real(self, metadata: scalar_metadata.RealMetadata) -> scalar_values.RealValue:
                 return self.__get_numeric_default(metadata, scalar_values.RealValue)
 
             @overrides
             def visit_boolean(
-                    self, metadata: scalar_metadata.BooleanMetadata) -> scalar_values.BooleanValue:
+                self, metadata: scalar_metadata.BooleanMetadata
+            ) -> scalar_values.BooleanValue:
                 return scalar_values.BooleanValue()
 
             @overrides
             def visit_string(
-                    self, metadata: scalar_metadata.StringMetadata) -> scalar_values.StringValue:
+                self, metadata: scalar_metadata.StringMetadata
+            ) -> scalar_values.StringValue:
                 return self.__get_str_enumerated_default(metadata)
 
             @overrides
-            def visit_file(
-                    self, metadata: file_metadata.FileMetadata) -> file_value.FileValue:
+            def visit_file(self, metadata: file_metadata.FileMetadata) -> file_value.FileValue:
                 return file_value.EMPTY_FILE
 
             @overrides
             def visit_integer_array(
-                    self,
-                    metadata: array_metadata.IntegerArrayMetadata
+                self, metadata: array_metadata.IntegerArrayMetadata
             ) -> array_values.IntegerArrayValue:
                 return array_values.IntegerArrayValue()
 
             @overrides
             def visit_real_array(
-                    self,
-                    metadata: array_metadata.RealArrayMetadata) -> array_values.RealArrayValue:
+                self, metadata: array_metadata.RealArrayMetadata
+            ) -> array_values.RealArrayValue:
                 return array_values.RealArrayValue()
 
             @overrides
             def visit_boolean_array(
-                    self,
-                    metadata: array_metadata.BooleanArrayMetadata
+                self, metadata: array_metadata.BooleanArrayMetadata
             ) -> array_values.BooleanArrayValue:
                 return array_values.BooleanArrayValue()
 
             @overrides
             def visit_string_array(
-                    self,
-                    metadata: array_metadata.StringArrayMetadata) -> array_values.StringArrayValue:
+                self, metadata: array_metadata.StringArrayMetadata
+            ) -> array_values.StringArrayValue:
                 return array_values.StringArrayValue()
 
             @overrides
             def visit_file_array(
-                    self,
-                    metadata: file_array_metadata.FileArrayMetadata) \
-                    -> file_array_value.FileArrayValue:
+                self, metadata: file_array_metadata.FileArrayMetadata
+            ) -> file_array_value.FileArrayValue:
                 return file_array_value.FileArrayValue()
 
         visitor = __DefaultValueVisitor()
         return self.accept(visitor)
 
-    def runtime_convert(
-            self,
-            source: variable_value.IVariableValue) -> variable_value.IVariableValue:
+    def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
         Convert the value of the given variable value to the \
         appropriate type for this meta data.
@@ -301,9 +315,8 @@ class CommonVariableMetadata(ABC):
         )
 
         class __RuntimeConvertVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[
-                    variable_value.IVariableValue]):
-
+            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
+        ):
             @overrides
             def visit_integer(self, metadata) -> scalar_values.IntegerValue:
                 return scalar_value_conversion.to_integer_value(source)
@@ -323,7 +336,8 @@ class CommonVariableMetadata(ABC):
             @overrides
             def visit_file(self, metadata) -> file_value.FileValue:
                 raise exceptions.IncompatibleTypesException(
-                    source.variable_type, variable_type_lib.VariableType.FILE)
+                    source.variable_type, variable_type_lib.VariableType.FILE
+                )
 
             @overrides
             def visit_integer_array(self, metadata) -> array_values.IntegerArrayValue:
@@ -344,7 +358,8 @@ class CommonVariableMetadata(ABC):
             @overrides
             def visit_file_array(self, metadata) -> file_array_value.FileArrayValue:
                 raise exceptions.IncompatibleTypesException(
-                    source.variable_type, variable_type_lib.VariableType.FILE_ARRAY)
+                    source.variable_type, variable_type_lib.VariableType.FILE_ARRAY
+                )
 
         visitor = __RuntimeConvertVisitor()
         return self.accept(visitor)

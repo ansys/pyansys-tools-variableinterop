@@ -2,26 +2,25 @@
 from __future__ import annotations
 
 import json
-from typing import Any, TypeVar
+from typing import Any, Dict, Optional, TypeVar, cast
 
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
-import ansys.common.variableinterop.exceptions as exceptions
-import ansys.common.variableinterop.file_scope as file_scope
-import ansys.common.variableinterop.file_value as file_value
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_value as variable_value
-
+from .exceptions import _error
+from .file_scope import FileScope
+from .file_value import FileValue
+from .isave_context import ILoadContext, ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .variable_type import VariableType
+from .variable_value import CommonArrayValue
 
 T = TypeVar("T")
 
 
-class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
+class FileArrayValue(CommonArrayValue[FileValue]):
     """Array of file values.
 
     In Python FileArrayValue is implemented by extending NumPy's ndarray type. This means that
@@ -35,15 +34,15 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return np.array(values, dtype=file_value.FileValue).view(cls)
-        return super().__new__(cls, shape=shape_, dtype=file_value.FileValue).view(cls)
+            return np.array(values, dtype=FileValue).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=FileValue).view(cls)
 
     @overrides
     def __eq__(self, other):
         return np.array_equal(self, other)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_file_array(self)
 
     @property  # type: ignore
@@ -51,22 +50,52 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     def variable_type(self) -> VariableType:
         return VariableType.FILE_ARRAY
 
-    def to_api_string(self, context: isave_context.ISaveContext) -> str:
-        def elem_to_api_obj(item: file_value.FileValue) -> str:
-            return item.to_api_object(context)
+    @overrides
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
+        """
+        Convert this value to an API string.
+
+        Parameters
+        ----------
+        context : ISaveContext
+            The context used for saving.
+
+        Returns
+        -------
+        str
+            A string appropriate for use in files and APIs.
+        """
+        if context is None:
+            raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
+
+        def elem_to_api_obj(item: FileValue) -> Dict[str, Optional[str]]:
+            return item.to_api_object(cast(ISaveContext, context))
+
         return json.dumps(np.vectorize(elem_to_api_obj)(self).tolist())
 
     @staticmethod
-    def from_api_object(value: Any, context: isave_context.ILoadContext,
-                        scope: file_scope.FileScope) -> FileArrayValue:
+    def from_api_object(value: Any, context: ILoadContext, scope: FileScope) -> FileArrayValue:
+        """
+        Initialize a new FileArrayValue from a list of api strings.
+
+        Parameters
+        ----------
+        value The value to use.
+        context The load context to initialize the value with.
+        scope The scope to initialize the value in.
+
+        Returns
+        -------
+        A new FileArrayValue initialized from value.
+        """
         if isinstance(value, list):
 
             # Define a function for transforming individual API objects to elements.
-            def api_obj_to_elem(item: Any) -> file_value.FileValue:
+            def api_obj_to_elem(item: Any) -> FileValue:
                 if isinstance(item, dict):
                     return scope.from_api_object(item, context)
                 else:
-                    raise TypeError(exceptions._error("ERROR_JAGGED_FILE_ARRAY", type(item)))
+                    raise TypeError(_error("ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
             return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value)))
@@ -76,5 +105,6 @@ class FileArrayValue(variable_value.CommonArrayValue[file_value.FileValue]):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         disp_str: str = ArrayToFromStringUtil.value_to_string(
-            self, lambda elem: np.asscalar(elem).to_display_string(locale_name))
+            self, lambda elem: np.asscalar(elem).to_display_string(locale_name)
+        )
         return disp_str

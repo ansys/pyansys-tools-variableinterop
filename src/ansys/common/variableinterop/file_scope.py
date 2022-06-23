@@ -4,15 +4,13 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Dict, Optional
+from types import TracebackType
+from typing import Dict, Optional, Type
 
 from overrides import overrides
 
-import ansys.common.variableinterop.file_value as file_value
-import ansys.common.variableinterop.isave_context as isave_context
-
-# TODO: What formatting does pydoc use? I'm using back tick for code below.
-#  Who knows if that is correct
+from .file_value import FileValue
+from .isave_context import ILoadContext
 
 
 class FileScope(AbstractContextManager, ABC):
@@ -32,12 +30,16 @@ class FileScope(AbstractContextManager, ABC):
     """
 
     def __init__(self):
-        """TODO."""
+        """Initialize."""
         pass
 
-    # TODO: Proper types for this method
     @overrides
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         self.close()
         return None
 
@@ -49,13 +51,13 @@ class FileScope(AbstractContextManager, ABC):
     @abstractmethod
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
-    ) -> file_value.FileValue:
+    ) -> FileValue:
         """TODO."""
         ...
 
     @abstractmethod
-    def from_api_object(self,
-                        api_object: Dict[str, Optional[str]],
-                        load_context: isave_context.ILoadContext) -> file_value.FileValue:
+    def from_api_object(
+        self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
+    ) -> FileValue:
         """TODO."""
         ...

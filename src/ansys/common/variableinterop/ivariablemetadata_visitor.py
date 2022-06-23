@@ -5,19 +5,15 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from ansys.common.variableinterop import FileArrayMetadata, FileMetadata
-    from ansys.common.variableinterop.array_metadata import (
+    from .array_metadata import (
         BooleanArrayMetadata,
         IntegerArrayMetadata,
         RealArrayMetadata,
         StringArrayMetadata,
     )
-    from ansys.common.variableinterop.scalar_metadata import (
-        BooleanMetadata,
-        IntegerMetadata,
-        RealMetadata,
-        StringMetadata,
-    )
+    from .file_array_metadata import FileArrayMetadata
+    from .file_metadata import FileMetadata
+    from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 
 T = TypeVar("T")
 

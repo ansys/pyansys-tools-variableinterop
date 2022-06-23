@@ -3,27 +3,17 @@ from typing import Optional
 
 from overrides import overrides
 
-from ansys.common.variableinterop import file_value as file_value
-from ansys.common.variableinterop.api_string_to_value_visitor import APIStringToValueVisitor
-from ansys.common.variableinterop.array_values import (
-    BooleanArrayValue,
-    IntegerArrayValue,
-    RealArrayValue,
-    StringArrayValue,
-)
-from ansys.common.variableinterop.file_array_value import FileArrayValue
-from ansys.common.variableinterop.file_scope import FileScope
-from ansys.common.variableinterop.isave_context import ILoadContext, ISaveContext
-from ansys.common.variableinterop.ivariable_type_pseudovisitor import vartype_accept
-from ansys.common.variableinterop.ivariable_visitor import IVariableValueVisitor
-from ansys.common.variableinterop.scalar_values import (
-    BooleanValue,
-    IntegerValue,
-    RealValue,
-    StringValue,
-)
-from ansys.common.variableinterop.variable_type import VariableType
-from ansys.common.variableinterop.variable_value import IVariableValue
+from .api_string_to_value_visitor import APIStringToValueVisitor
+from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+from .file_array_value import FileArrayValue
+from .file_scope import FileScope
+from .file_value import FileValue
+from .isave_context import ILoadContext, ISaveContext
+from .ivariable_type_pseudovisitor import vartype_accept
+from .ivariable_visitor import IVariableValueVisitor
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .variable_type import VariableType
+from .variable_value import IVariableValue
 
 
 class ToAPIStringVisitor(IVariableValueVisitor[str]):
@@ -60,7 +50,7 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
         return value.to_api_string()
 
     @overrides
-    def visit_file(self, value: file_value.FileValue) -> str:
+    def visit_file(self, value: FileValue) -> str:
         return value.to_api_string(self._save_context)
 
     @overrides
@@ -75,6 +65,7 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
     def visit_string_array(self, value: StringArrayValue) -> str:
         return value.to_api_string()
 
+    @overrides
     def visit_file_array(self, value: FileArrayValue) -> str:
         return value.to_api_string(self._save_context)
 
@@ -99,8 +90,12 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     return value.accept(ToAPIStringVisitor(save_context))
 
 
-def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileScope] = None,
-                    load_context: Optional[ILoadContext] = None) -> IVariableValue:
+def from_api_string(
+    var_type: VariableType,
+    source: str,
+    fscope: Optional[FileScope] = None,
+    load_context: Optional[ILoadContext] = None,
+) -> IVariableValue:
     """
     Generate a value from an API string.
 
@@ -123,7 +118,6 @@ def from_api_string(var_type: VariableType, source: str, fscope: Optional[FileSc
     An implementation of IVariableValue of the correct type with a value parsed
     from the specified string.
     """
-    generator: APIStringToValueVisitor = \
-        APIStringToValueVisitor(source, fscope, load_context)
+    generator: APIStringToValueVisitor = APIStringToValueVisitor(source, fscope, load_context)
     result: IVariableValue = vartype_accept(generator, var_type)
     return result

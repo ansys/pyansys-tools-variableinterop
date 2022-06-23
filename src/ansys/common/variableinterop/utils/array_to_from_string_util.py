@@ -6,8 +6,8 @@ from typing import Any, Callable, List, Match, Optional, Tuple
 import numpy as np
 from numpy.typing import NDArray
 
-from ansys.common.variableinterop.exceptions import FormatException
-from ansys.common.variableinterop.variable_value import CommonArrayValue, IVariableValue
+from ..exceptions import FormatException
+from ..variable_value import CommonArrayValue, IVariableValue
 
 
 class ArrayToFromStringUtil:
@@ -16,12 +16,16 @@ class ArrayToFromStringUtil:
 
     # Regular Expression pattern, as a string, of an array value with the optional curly braces.
     # Captures the list of values, unparsed, in valueList.
-    _array_with_curly_braces_regex: str = r'{(?P<valueList>.*)}'
+    _array_with_curly_braces_regex: str = r"{(?P<valueList>.*)}"
     # Regular Expression pattern, as a string, of an array value with the optional bounds prefix
     # Captures the list of values, unparsed, in valueList and the list of
     # array bounds, unparsed, in boundList.
-    _array_with_bounds_regex: str = r'^\s*' + r'BOUNDS\s*\[(?P<boundList>[\d,\s]*)\]\s*' + \
-        _array_with_curly_braces_regex + r'\s*$'
+    _array_with_bounds_regex: str = (
+        r"^\s*"
+        + r"BOUNDS\s*\[(?P<boundList>[\d,\s]*)\]\s*"
+        + _array_with_curly_braces_regex
+        + r"\s*$"
+    )
     #
     _quoted_value_regex: str = r'^\s*"(?P<value>(([^"\\])|(\\.))*)"\s*(?P<comma>,?)(?P<rest>.*)$'
     #
@@ -50,16 +54,18 @@ class ArrayToFromStringUtil:
         api_string: str = ""
         # Specify bounds for arrays of more than 1d:
         if value.ndim > 1:
-            api_string = "bounds[" + ','.join(map(str, value.shape)) + "]{"
-        api_string += ','.join(map(stringify_action, np.nditer(value, flags=['refs_ok'])))
+            api_string = "bounds[" + ",".join(map(str, value.shape)) + "]{"
+        api_string += ",".join(map(stringify_action, np.nditer(value, flags=["refs_ok"])))
         if value.ndim > 1:
             api_string += "}"
         return api_string
 
     @staticmethod
-    def string_to_value(value: str,
-                        create_action: Callable[[Any], CommonArrayValue],
-                        valueify_action: Callable[[str], IVariableValue]) -> CommonArrayValue:
+    def string_to_value(
+        value: str,
+        create_action: Callable[[Any], CommonArrayValue],
+        valueify_action: Callable[[str], IVariableValue],
+    ) -> CommonArrayValue:
         """
         Convert a string into a CommonValueArray object.
 
@@ -85,14 +91,15 @@ class ArrayToFromStringUtil:
         value_str: str
 
         # check for bounds string
-        match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._array_with_bounds_regex,
-                                                value, flags=re.IGNORECASE)
+        match: Optional[Match[str]] = re.search(
+            ArrayToFromStringUtil._array_with_bounds_regex, value, flags=re.IGNORECASE
+        )
         if match is not None:  # There are bounds
             value_str = match.groupdict()["valueList"]
 
             # parse bounds as tuple
             bounds: str = match.groupdict()["boundList"]
-            lengths: Tuple = tuple([int(b) for b in bounds.split(',')])
+            lengths: Tuple = tuple([int(b) for b in bounds.split(",")])
 
             # parse each value into a flat list
             comma_after_last_value: str = ""
@@ -114,7 +121,8 @@ class ArrayToFromStringUtil:
 
         else:  # No bounds
             match = re.search(
-                ArrayToFromStringUtil._array_with_curly_braces_regex, value, flags=re.IGNORECASE)
+                ArrayToFromStringUtil._array_with_curly_braces_regex, value, flags=re.IGNORECASE
+            )
             if match is not None:
                 value_str = match.groupdict()["valueList"]
             else:
@@ -146,8 +154,9 @@ class ArrayToFromStringUtil:
         Optional[Match[str]]
             The regex match object, or None if not matched.
         """
-        match: Optional[Match[str]] = re.search(ArrayToFromStringUtil._quoted_value_regex,
-                                                value_str, flags=re.IGNORECASE)
+        match: Optional[Match[str]] = re.search(
+            ArrayToFromStringUtil._quoted_value_regex, value_str, flags=re.IGNORECASE
+        )
         if match is None:
             match = re.search(ArrayToFromStringUtil._unquoted_value_regex, value_str)
         return match

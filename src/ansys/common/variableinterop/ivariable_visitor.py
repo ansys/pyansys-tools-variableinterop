@@ -5,20 +5,10 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from ansys.common.variableinterop.array_values import (
-        BooleanArrayValue,
-        IntegerArrayValue,
-        RealArrayValue,
-        StringArrayValue,
-    )
-    from ansys.common.variableinterop.file_array_value import FileArrayValue
-    from ansys.common.variableinterop.file_value import FileValue
-    from ansys.common.variableinterop.scalar_values import (
-        BooleanValue,
-        IntegerValue,
-        RealValue,
-        StringValue,
-    )
+    from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+    from .file_array_value import FileArrayValue
+    from .file_value import FileValue
+    from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
 T = TypeVar("T")
 

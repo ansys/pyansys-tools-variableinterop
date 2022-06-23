@@ -4,7 +4,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import AbstractContextManager
 from os import PathLike
-from typing import Optional, Union
+from types import TracebackType
+from typing import Optional, Type, Union
 
 from overrides import overrides
 
@@ -19,8 +20,13 @@ class ISaveContext(AbstractContextManager, ABC):
     files or other large data.
     """
 
-    # TODO: Proper types for this method
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    @overrides
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         """Magic method exit."""
         self.close()
         return None
@@ -48,14 +54,14 @@ class ISaveContext(AbstractContextManager, ABC):
         """
         ...
 
-# TODO: What stream API to use?
-# TODO: Async?
+    # TODO: What stream API to use?
+    # TODO: Async?
 
-# TODO: Uncomment once we know what stream API to use
-#    @abstractmethod
-#   def save_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
-#            -> Tuple[Stream, str]:
-#        ...
+    # TODO: Uncomment once we know what stream API to use
+    #    @abstractmethod
+    #   def save_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
+    #            -> Tuple[Stream, str]:
+    #        ...
 
     @abstractmethod
     def flush(self) -> None:
@@ -71,9 +77,13 @@ class ISaveContext(AbstractContextManager, ABC):
 class ILoadContext(AbstractContextManager, ABC):
     """TODO."""
 
-    # TODO: Proper types for this method
     @overrides
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        __exc_type: Type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         self.close()
         return None
 
@@ -82,11 +92,11 @@ class ILoadContext(AbstractContextManager, ABC):
         """TODO."""
         ...
 
-# TODO: Uncomment once we know what stream API to use
-#    @abstractmethod
-#    def load_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
-#            -> Tuple[Stream, str]:
-#        ...
+    # TODO: Uncomment once we know what stream API to use
+    #    @abstractmethod
+    #    def load_file_stream(self, source: Union[PathLike, str], id: Optional[str]) \
+    #            -> Tuple[Stream, str]:
+    #        ...
 
     @abstractmethod
     def flush(self) -> None:

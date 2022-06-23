@@ -71,10 +71,11 @@ class TestVisitor(acvi.IVariableMetadataVisitor[str]):
         pytest.param(acvi.BooleanArrayMetadata(), "BOOLEAN_ARRAY", id="BooleanArray"),
         pytest.param(acvi.StringArrayMetadata(), "STRING_ARRAY", id="StringArray"),
         pytest.param(acvi.FileArrayMetadata(), "FILE_ARRAY", id="FileArray"),
-    ]
+    ],
 )
-def test_visiting_a_metadata_should_work(metadata: acvi.CommonVariableMetadata,
-                                         expected: Any) -> None:
+def test_visiting_a_metadata_should_work(
+    metadata: acvi.CommonVariableMetadata, expected: Any
+) -> None:
     """
     Verifies that the visitor pattern is working for CommonVariableMetadata.
 

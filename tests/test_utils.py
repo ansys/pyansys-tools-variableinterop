@@ -1,11 +1,9 @@
 from contextlib import contextmanager
-from typing import Type
+from typing import Optional, Type
 
 import pytest
 
 import ansys.common.variableinterop as acvi
-
-# TODO: search google, is there a standard way to do this?
 
 
 @contextmanager
@@ -17,7 +15,7 @@ def _dummy_context():
     yield None
 
 
-def _create_exception_context(expect_exception: Type[BaseException]):
+def _create_exception_context(expect_exception: Optional[Type[BaseException]]):
     """
     Creates an object to use in a with block that will test for expect_exception
     to be thrown, or does nothing if expect_exception is None.
@@ -37,11 +35,13 @@ def _create_exception_context(expect_exception: Type[BaseException]):
         return _dummy_context()
 
 
-def _test_to_value_visitor(value: acvi.IVariableValue,
-                           expected_result: acvi.IVariableValue,
-                           expected_exception_type: Type[BaseException],
-                           visitor_type: Type[acvi.IVariableValueVisitor],
-                           result_type: Type[acvi.IVariableValue] = None) -> None:
+def _test_to_value_visitor(
+    value: acvi.IVariableValue,
+    expected_result: acvi.IVariableValue,
+    expected_exception_type: Type[BaseException],
+    visitor_type: Type[acvi.IVariableValueVisitor],
+    result_type: Type[acvi.IVariableValue] = None,
+) -> None:
     """
     General helper function to test ``To__type__Visitor`` classes.
 
@@ -74,16 +74,14 @@ def _test_to_value_visitor(value: acvi.IVariableValue,
         except expected_exception_type as e:
             # Verify (expected exception)
             if expected_exception_type == acvi.IncompatibleTypesException:
-                assert str(e) == \
-                       ("Error: Cannot convert from type {0} to type {1}.\n"
-                        "Reason: The types are incompatible.") \
-                       .format(value.__class__.__name__, result_type.__name__)
+                assert str(e) == (
+                    "Error: Cannot convert from type {0} to type {1}.\n"
+                    "Reason: The types are incompatible."
+                ).format(value.__class__.__name__, result_type.__name__)
             raise e
 
 
-def _assert_incompatible_types_exception(message: str,
-                                         from_: str,
-                                         to: str) -> None:
+def _assert_incompatible_types_exception(message: str, from_: str, to: str) -> None:
     """
     Helper function to assert IncompatibleTypesException gave the expected message.
 
@@ -96,7 +94,6 @@ def _assert_incompatible_types_exception(message: str,
     to : str
         Type to which the test was trying to convert source.
     """
-    assert message == \
-           ("Error: Cannot convert from type {0} to type {1}.\n"
-            "Reason: The types are incompatible.") \
-           .format(from_, to)
+    assert message == (
+        "Error: Cannot convert from type {0} to type {1}.\n" "Reason: The types are incompatible."
+    ).format(from_, to)

@@ -16,21 +16,36 @@ import ansys.common.variableinterop as interop
         pytest.param(interop.VariableType.BOOLEAN, interop.BooleanMetadata(), None, id="Boolean"),
         pytest.param(interop.VariableType.STRING, interop.StringMetadata(), None, id="String"),
         # pytest.param(interop.VariableType.FILE, interop.FileMetadata(), None, id="File"),
-        pytest.param(interop.VariableType.INTEGER_ARRAY, interop.IntegerArrayMetadata(), None,
-                     id="Integer Array"),
-        pytest.param(interop.VariableType.REAL_ARRAY, interop.RealArrayMetadata(), None,
-                     id="Real Array"),
-        pytest.param(interop.VariableType.BOOLEAN_ARRAY, interop.BooleanArrayMetadata(), None,
-                     id="Boolean Array"),
-        pytest.param(interop.VariableType.STRING_ARRAY, interop.StringArrayMetadata(), None,
-                     id="String Array"),
+        pytest.param(
+            interop.VariableType.INTEGER_ARRAY,
+            interop.IntegerArrayMetadata(),
+            None,
+            id="Integer Array",
+        ),
+        pytest.param(
+            interop.VariableType.REAL_ARRAY, interop.RealArrayMetadata(), None, id="Real Array"
+        ),
+        pytest.param(
+            interop.VariableType.BOOLEAN_ARRAY,
+            interop.BooleanArrayMetadata(),
+            None,
+            id="Boolean Array",
+        ),
+        pytest.param(
+            interop.VariableType.STRING_ARRAY,
+            interop.StringArrayMetadata(),
+            None,
+            id="String Array",
+        ),
         # pytest.param(interop.VariableType.FILE_ARRAY, interop.FileArrayMetadata(), None,
         #             id="File Array"),
     ],
 )
-def test_construct_variable_metadata(source: interop.VariableType,
-                                     expect: interop.CommonVariableMetadata,
-                                     expect_exception: Type[BaseException]) -> None:
+def test_construct_variable_metadata(
+    source: interop.VariableType,
+    expect: interop.CommonVariableMetadata,
+    expect_exception: Type[BaseException],
+) -> None:
     """
     Verify that the correct metadata is returned for each type.
 

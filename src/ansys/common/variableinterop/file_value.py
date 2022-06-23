@@ -5,33 +5,36 @@ from abc import ABC, abstractmethod
 from configparser import ConfigParser
 import json
 from os import PathLike, path
-from typing import Dict, Final, Optional, TypeVar
+from typing import Dict, Final, Optional, TypeVar, Union, cast
 from uuid import UUID, uuid4
 
 from anyio import Path, open_file
 from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
-import ansys.common.variableinterop.isave_context as isave_context
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+from .exceptions import _error
+from .isave_context import ISaveContext
+from .ivariable_visitor import IVariableValueVisitor
+from .variable_type import VariableType
+from .variable_value import IVariableValue
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 RESOURCE_PARSER = ConfigParser()
 RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 
-class FileValue(variable_value.IVariableValue, ABC):
+class FileValue(IVariableValue, ABC):
     """Abstract base class for a file variable. To create instances, \
     use a `FileScope`."""
 
-    def __init__(self,
-                 original_path: Optional[PathLike],
-                 mime_type: Optional[str],
-                 encoding: Optional[str],
-                 value_id: Optional[UUID]):
+    def __init__(
+        self,
+        original_path: Optional[PathLike],
+        mime_type: Optional[str],
+        encoding: Optional[str],
+        value_id: Optional[UUID],
+    ):
         """
         Construct a new FileValue.
 
@@ -58,21 +61,22 @@ class FileValue(variable_value.IVariableValue, ABC):
         return hash(self._id)
 
     @overrides
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[T]) -> T:
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_file(self)
 
     @property  # type: ignore
     @overrides
-    def variable_type(self) -> variable_type.VariableType:
-        return variable_type.VariableType.FILE
+    def variable_type(self) -> VariableType:
+        return VariableType.FILE
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         if self._has_content():
             return RESOURCE_PARSER.get("DisplayFormats", "FILE_CONTENTS_FORMAT").format(
-                self._original_path if self._original_path\
-                                    else RESOURCE_PARSER.get("DisplayFormats",
-                                                             "FILE_LOCATION_UNKNOWN"))
+                self._original_path
+                if self._original_path
+                else RESOURCE_PARSER.get("DisplayFormats", "FILE_LOCATION_UNKNOWN")
+            )
         else:
             return RESOURCE_PARSER.get("DisplayFormats", "FILE_EMPTY")
 
@@ -177,17 +181,17 @@ class FileValue(variable_value.IVariableValue, ABC):
             returned. If the file does not contain a BOM, 'None' is
             returned.
         """
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             bom = f.read(4)
-            if bom == b'\x00\x00\xfe\xff':
+            if bom == b"\x00\x00\xfe\xff":
                 return "UTF-32 BE"
-            elif bom == b'\xff\xfe\x00\x00':
+            elif bom == b"\xff\xfe\x00\x00":
                 return "UTF-32 LE"
-            elif bom[0:3] == b'\xef\xbb\xbf':
+            elif bom[0:3] == b"\xef\xbb\xbf":
                 return "UTF-8"
-            elif bom[0:2] == b'\xff\xfe':
+            elif bom[0:2] == b"\xff\xfe":
                 return "UTF-16 LE"
-            elif bom[0:2] == b'\xfe\xff':
+            elif bom[0:2] == b"\xfe\xff":
                 return "UTF-16 BE"
             else:
                 return "None"
@@ -205,7 +209,7 @@ class FileValue(variable_value.IVariableValue, ABC):
         None.
         """
         # make the file
-        Path(file_name).open('w').close()
+        Path(file_name).open("w").close()
 
         # copy the contents from the actual content file
         file: Optional[PathLike] = self.actual_content_file_name
@@ -272,7 +276,8 @@ class FileValue(variable_value.IVariableValue, ABC):
         True if there is content, false otherwise.
         """
 
-    def to_api_string(self, save_context: isave_context.ISaveContext) -> str:
+    @overrides
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
         Convert this value to an API string using a save context.
 
@@ -284,13 +289,18 @@ class FileValue(variable_value.IVariableValue, ABC):
         -------
         A string appropriate for use in files and APIs.
         """
-        api_obj: Dict[str, Optional[str]] = self.to_api_object(save_context)
+        if context is None:
+            raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
+        api_obj: Dict[str, Optional[str]] = self.to_api_object(cast(ISaveContext, context))
         return json.dumps(api_obj)
 
-    def _send_actual_file(self, save_context: isave_context.ISaveContext) -> str:
-        return save_context.save_file(self.actual_content_file_name, str(self.id))
+    def _send_actual_file(self, save_context: ISaveContext) -> str:
+        name: Union[PathLike, str] = ""
+        if self.actual_content_file_name is not None:
+            name = cast(PathLike, self.actual_content_file_name)
+        return save_context.save_file(name, str(self.id))
 
-    def to_api_object(self, save_context: isave_context.ISaveContext) -> Dict[str, Optional[str]]:
+    def to_api_object(self, save_context: ISaveContext) -> Dict[str, Optional[str]]:
         """
         Convert this file to an api object.
 

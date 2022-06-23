@@ -16,20 +16,33 @@ import ansys.common.variableinterop as interop
         pytest.param(interop.VariableType.BOOLEAN, interop.BooleanValue(), None, id="Boolean"),
         pytest.param(interop.VariableType.STRING, interop.StringValue(), None, id="String"),
         # pytest.param(interop.VariableType.FILE, interop.FileValue(), None, id="File"),
-        pytest.param(interop.VariableType.INTEGER_ARRAY, interop.IntegerArrayValue(), None,
-                     id="Integer Array"),
-        pytest.param(interop.VariableType.REAL_ARRAY, interop.RealArrayValue(), None,
-                     id="Real Array"),
-        pytest.param(interop.VariableType.BOOLEAN_ARRAY, interop.BooleanArrayValue(), None,
-                     id="Boolean Array"),
-        pytest.param(interop.VariableType.STRING_ARRAY, interop.StringArrayValue(), None,
-                     id="String Array"),
+        pytest.param(
+            interop.VariableType.INTEGER_ARRAY,
+            interop.IntegerArrayValue(),
+            None,
+            id="Integer Array",
+        ),
+        pytest.param(
+            interop.VariableType.REAL_ARRAY, interop.RealArrayValue(), None, id="Real Array"
+        ),
+        pytest.param(
+            interop.VariableType.BOOLEAN_ARRAY,
+            interop.BooleanArrayValue(),
+            None,
+            id="Boolean Array",
+        ),
+        pytest.param(
+            interop.VariableType.STRING_ARRAY, interop.StringArrayValue(), None, id="String Array"
+        ),
         # pytest.param(interop.VariableType.FILE_ARRAY, interop.FileArrayValue(), None,
         #             id="File Array"),
     ],
 )
-def test_default_value(source: interop.VariableType, expect: interop.IVariableValue,
-                       expect_exception: Type[BaseException]) -> None:
+def test_default_value(
+    source: interop.VariableType,
+    expect: interop.IVariableValue,
+    expect_exception: Type[BaseException],
+) -> None:
     """
     Verify that the correct default value is returned for each type.
 

@@ -1,41 +1,53 @@
-PyAnsys Library Template
-########################
-
-This repository is a template repository where you can `Create a
-repository from a template`_ and create a new PyAnsys project that
-follows the guidelines specified in the `PyAnsys Developer's Guide`_.
-
-The following sections should be filled and documented for your project.
-
-.. _Create a repository from a template: https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
-.. _PyAnsys Developer's Guide: https://github.com/pyansys/about
+PyAnsys Common Variable Interop
+###############################
 
 
 Project Overview
 ----------------
-Provide a description of your PyAnsys Python library.
+This library contains definitions of the basic variables, types,
+metadata, and values intended to provide interoperability between
+all Ansys products.
+The top level items in this package are:
+
+- The base metadata type that all variable types extend is
+  CommonVariableMetadata. Metadata is defined as the information
+  about a variable that is static and does not change when a
+  component or workflow is run.
+- The value interface is IVariableValue. These values are defined
+  so they know how to properly convert from one type to the other
+  via language operators, losslessly are implicitly. Operations
+  that are lossy, such as converting a real to an integer value, are
+  explicit. Explicit conversions may also throw an exception if
+  there is an overflow or other "bad data" situation.
 
 
 Installation
 ------------
-Include installation directions.  Note that this README will be
-included in your PyPI package, so be sure to include ``pip``
-directions along with developer installation directions.  For example.
-
-Install <PyAnsys Library> with:
-
-.. code::
-
-   pip install ansys-<product/service>-<library>
-
-Alternatively, clone and install in development mode with:
+The ``ansys-common-variableinterop`` package currently supports Python
+3.8 through 3.10 on Windows and Linux.
+This package is not currently available on PyPI, but will be when it is
+ready for use.
+At that time you can install ``ansys-common-variableinterop`` with:
 
 .. code::
 
-   git clone https://github.com/pyansys/
-   cd <PyAnsys-Library>
+   pip install ansys-common-variableinterop
+
+Alternatively, install the latest from `ansys-common-variableinterop GitHub
+<https://github.com/pyansys/ansys-common-variableinterop>`_ via:
+
+.. code::
+
+   pip install git+https://github.com/pyansys/ansys-common-variableinterop.git
+
+For a local "development" version, install with:
+
+.. code::
+
+   git clone https://github.com/pyansys/ansys-common-variableinterop.git
+   cd ansys-common-variableinterop
    pip install poetry
-   poetry install
+   poetry install -E dev
 
 This creates a new virtual environment, which can be activated with
 
@@ -45,49 +57,59 @@ This creates a new virtual environment, which can be activated with
 
 Documentation
 -------------
-Include a link to the full sphinx documentation.  For example `PyAnsys <https://docs.pyansys.com/>`_
+TODO: link to the full sphinx documentation.
+`ansys-common-variableinterop <https://common-variableinterop.docs.pyansys.com/>`_
+For building documentation, you can run the usual rules provided in the Sphinx Makefile, such as:
+
+.. code::
+
+    make -C doc/ html && your_browser_name doc/html/index.html
+
+on Unix, or:
+
+.. code::
+
+    .\doc\make.bat html
+
+on Windows. Make sure the required dependencies are installed with:
+
+.. code::
+
+    pip install -E docs
 
 
 Usage
 -----
-It's best to provide a sample code or even a figure demonstrating the usage of your library.  For example:
+Values and metadata can be created like any other Python object:
 
 .. code:: python
 
-   >>> from ansys.<product/service> import <library>
-   >>> my_object.<library>()
-   >>> my_object.foo()
-   'bar'
+   >>> import ansys.common.variableinterop as acvi
+   >>> width = acvi.RealValue(3.1)
+   >>> width
+   3.1
+
+   # Standard python operations should work seamlessly
+   >>> 4 + width
+   7.1
+
+   >>> width_metadata = acvi.RealMetadata()
+   >>> width_metadata.lower_bound = 0.1
+   >>> var(width_metadata)
+   {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
 
 
 Testing
 -------
-You can feel free to include this at the README level or in CONTRIBUTING.md
+Dependencies required for testing can be installed via:
+
+.. code::
+
+    pip install -E test
+
+The tests can then be run via pytest.
 
 
 License
 -------
-Be sure to point out your license (and any acknowledgments).  State
-that the full license can be found in the root directory of the
-repository.
-
-
-TODO
--------
-	- Finish documentation such that pre-commit works as intended
-	- Copy (manually, automatically?) main package documentation to README
-	- To/FromAPI String
-		- No extension methods in Python, add to base interface explicitly?
-		- Our string quoting rules per standard doc (Phoenix.ModelCenter.Common.ModelCenterUtils.EscapeString and UnescapeString)
-	- To/From Formatted String
-	- Scalar Types
-	- Array Types
-		- Strong typing of ndarray in numpy only added in version of numpy that doesn't support Python 3.7
-	- File Types
-		- Use interface to separate behavior of files from library
-		- Implement default behavior
-	- Clone
-	- LinkingRules
-	- Variable Factory
-	- Variable State
-	- Variable Scope
+ansys-common-variableinterop is licensed under the MIT license.

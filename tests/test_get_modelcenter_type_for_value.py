@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from ansys.common.variableinterop import (
@@ -6,6 +8,7 @@ from ansys.common.variableinterop import (
     GetModelCenterTypeForValue,
     IntegerArrayValue,
     IntegerValue,
+    ISaveContext,
     IVariableValue,
     RealArrayValue,
     RealValue,
@@ -18,16 +21,16 @@ from ansys.common.variableinterop import variable_type as variable_type_lib
 
 
 class TestUnknownValue(IVariableValue):
-
-    def accept(self, visitor: ivariable_visitor.IVariableValueVisitor[
-            ivariable_visitor.T]) -> ivariable_visitor.T:
+    def accept(
+        self, visitor: ivariable_visitor.IVariableValueVisitor[ivariable_visitor.T]
+    ) -> ivariable_visitor.T:
         pass
 
     @property
     def variable_type(self) -> variable_type_lib.VariableType:
         return VariableType.UNKNOWN
 
-    def to_api_string(self) -> str:
+    def to_api_string(self, context: Optional[ISaveContext]) -> str:
         pass
 
     def from_api_string(self, value: str) -> None:
@@ -54,7 +57,7 @@ class TestUnknownValue(IVariableValue):
         pytest.param(StringArrayValue(1, ["0"]), "string[]"),
         # pytest.param(FileValue(), "file"),
         # pytest.param(FileArrayValue(0, []), "file[]")
-    ]
+    ],
 )
 def test_get_modelcenter_type_for_value(value: IVariableValue, expected: str) -> None:
     """

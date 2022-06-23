@@ -30,6 +30,5 @@ class FileMetadata(CommonVariableMetadata):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        equal: bool = (isinstance(other, FileMetadata) and
-                       super().equals(other))
+        equal: bool = isinstance(other, FileMetadata) and super().equals(other)
         return equal
