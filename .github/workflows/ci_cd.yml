@@ -1,6 +1,17 @@
 # check spelling, codestyle
 name: GitHub CI
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 # run only on main branch.  This avoids duplicated actions on PRs
 on:
   pull_request:
@@ -129,8 +140,7 @@ jobs:
 #          single-commit: true
 
   Deploy-Pages: 
-    # TODO: Add once working:
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
