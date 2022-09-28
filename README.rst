@@ -6,20 +6,68 @@ Project Overview
 ----------------
 This library contains definitions of the basic variables, types,
 metadata, and values intended to provide interoperability between
-all Ansys products.
+all products that optionally choose to participate.
+
+Characteristics
+---------------
+Characteristics of this library include:
+
+- Minimal but complete set of formally defined data types for engineering work
+- Standard base implementation in each supported language that matches the style and intent of
+  the given language
+- Follows and implements the standards in TODO: Add reference to standards doc
+- Provides the following capabilities
+
+  - to/from "API" string (not intended for UI layer, allows data transfer in human readable format
+    across products and regions)
+  - to/from human display strings
+  - to/from binary blocks that are platform agnostic
+  - implicit conversion to/from language primitives for lossless conversions. Explicit conversion
+    for lossy conversions
+
+- A data type library can either make it easy to add new data types or make it easy to add new
+  operations to the existing data types. It is extremely hard to make both possible at the same
+  time. This library uses the `visitor pattern <https://en.wikipedia.org/wiki/Visitor_pattern>`_ to
+  make it easy and reliable to add and reuse
+  new operations with compile-time semantics. 
+- In trade, adding new datatypes is not easy
+- Most commonly re-used metadata strongly defined. Generic dictionary provided for custom metadata
+
+Top Level Items
+---------------
 The top level items in this package are:
 
-- The base metadata type that all variable types extend is
+* The base metadata type that all variable types extend is
   CommonVariableMetadata. Metadata is defined as the information
   about a variable that is static and does not change when a
   component or workflow is run.
-- The value interface is IVariableValue. These values are defined
+* The value interface is IVariableValue. These values are defined
   so they know how to properly convert from one type to the other
-  via language operators, losslessly are implicitly. Operations
+  via language operators. Lossless conversions are implicit. Operations
   that are lossy, such as converting a real to an integer value, are
   explicit. Explicit conversions may also throw an exception if
   there is an overflow or other "bad data" situation.
 
+Project Background
+------------------
+After 20 years of working on integration problems a holistic review was performed around the
+concept of a variable in some legacy codebases. No less than 2 dozen classes that represent a
+variable were found. There were many more switch statements where one datatype needed to be
+converted to another. This inconsistency brings about the following problems:
+
+- The behavior of one capability within the product suite does not match that of other
+  capabilities - leading to confusion, bugs, and lost time
+- Switch statements are notorious for introducing bugs. People tend to cut-n-paste them, leading
+  to subtle maintenance issues as one is modified and the other diverges. There is no compile-time
+  type checking.
+- Slight differences datatypes (int32 vs int64) can lead to unexpected bugs, including disastrous
+  "bad data with no error" class issues.
+- Seemingly simple tasks like reliably converting to string or byte buffer and back are
+  surprisingly hard to do correct in all the edge cases. Worse, even if you get a "correct"
+  implementation, if it doesn't match what is used at an API boundary by a different capability
+  or product, errors ensue.
+
+The standards and the standard implementations in several languages came out of this review.
 
 Installation
 ------------
