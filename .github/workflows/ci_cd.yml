@@ -7,12 +7,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
-# run only on main branch.  This avoids duplicated actions on PRs
 on:
   pull_request:
   push:
@@ -116,28 +110,12 @@ jobs:
 #          sudo apt-get install -y texlive-latex-extra latexmk
 #          make -C doc latexpdf
 
-#      - name: Upload HTML Documentation
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Documentation-html
-#          path: doc/build/html
-#          retention-days: 7
-
 #      - name: Upload PDF Documentation
 #        uses: actions/upload-artifact@v2
 #        with:
 #          name: Documentation-pdf
 #          path: doc/build/latex/*.pdf
 #          retention-days: 7
-
-#      - name: Deploy to gh-pages
-#        if: github.ref == 'refs/heads/main'
-#        uses: JamesIves/github-pages-deploy-action@4.1.8
-#        with:
-#          BRANCH: gh-pages
-#          FOLDER: doc/build/html
-#          CLEAN: true
-#          single-commit: true
 
   Deploy-Pages: 
     if: github.ref == 'refs/heads/main'
@@ -171,21 +149,18 @@ jobs:
 #        with:
 #          name: Documentation-pdf
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: Documentation-html
-          path: ~/html
+# When we go to publish this on PyPi, if we want docs included we
+# will need to rewrite this section because the artifact was changed
+# to save using actions/upload-pages-artifact@v1actions/upload-pages-artifact@v1
+# This saves in a slightly different format (zip of a tar file)
+#      - uses: actions/download-artifact@v2
+#        with:
+#          name: Documentation-html
+#          path: ~/html
 
       # list current directory
       - name: List directory structure
         run: ls -R
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.5
-        with:
-          BRANCH: gh-pages
-          FOLDER: ~/html
-          CLEAN: true
 
       # note how we use the PyPI tokens
       - name: Upload to Azure PyPi (disabled)
