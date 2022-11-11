@@ -8,6 +8,12 @@ This library contains definitions of the basic variables, types,
 metadata, and values intended to provide interoperability between
 all products that optionally choose to participate.
 
+**Work in Progress**
+
+This library is a work in progress and has not been released yet. 
+It still has unfinished documentation and APIs are not guaranteed 
+to be stable yet.
+
 Characteristics
 ---------------
 Characteristics of this library include:
