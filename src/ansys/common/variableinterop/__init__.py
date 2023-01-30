@@ -4,7 +4,7 @@ metadata, and values intended to provide interoperability between
 all products that optionally choose to participate.
 
 See the high level project documentation with examples and installation instructions at 
-`http://docs.variableinterop.pyansys.com <http://docs.variableinterop.pyansys.com>`_.
+`http://variableinterop.docs.pyansys.com <http://variableinterop.docs.pyansys.com>`_.
 """
 
 try:
