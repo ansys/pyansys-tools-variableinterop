@@ -617,3 +617,37 @@ class StringValue(np.str_, IVariableValue):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         return self
+
+
+class StructValue(Dict[str, IVariableValue], IVariableValue):
+    @overrides
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
+        return visitor.visit_struct(self)
+
+    @property  # type: ignore
+    @overrides
+    def variable_type(self) -> VariableType:
+        return VariableType.STRUCT
+
+    @overrides
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
+        raise NotImplemented
+
+    @staticmethod
+    def from_api_string(value: str) -> StringValue:
+        """
+        Convert an API string back to a struct value.
+
+        Parameters
+        ----------
+        value : str
+            The string to convert.
+        """
+        if value is None:
+            raise TypeError("Cannot create a StructValue from None.")
+
+        raise NotImplemented
+
+    @overrides
+    def to_display_string(self, locale_name: str) -> str:
+        raise NotImplemented

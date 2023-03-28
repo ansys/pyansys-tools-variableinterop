@@ -85,6 +85,17 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
+    def visit_struct(self) -> T:
+        """
+        Visit the STRUCT variable type.
+
+        Returns
+        -------
+        A result as documented by the implementing class.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def visit_int_array(self) -> T:
         """
         Visit the INTEGER_ARRAY variable type.
@@ -132,6 +143,17 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     def visit_file_array(self) -> T:
         """
         Visit the FILE_ARRAY variable type.
+
+        Returns
+        -------
+        A result as documented by the implementing class.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_struct_array(self) -> T:
+        """
+        Visit the STRUCT_ARRAY variable type.
 
         Returns
         -------
@@ -206,6 +228,17 @@ def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     return visitor.visit_file()
 
 
+def __accept_struct(visitor: "IVariableTypePseudoVisitor[T]") -> T:
+    """
+    Accept a visitor to the STRUCT type.
+
+    Returns
+    -------
+    The visitor's result.
+    """
+    return visitor.visit_struct()
+
+
 def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
     Accept a visitor to the INTEGER_ARRAY type.
@@ -261,6 +294,17 @@ def __accept_file_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     return visitor.visit_file_array()
 
 
+def __accept_struct_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
+    """
+    Accept a visitor to the STRUCT_ARRAY type.
+
+    Returns
+    -------
+    The visitor's result.
+    """
+    return visitor.visit_struct_array()
+
+
 __accept_map: Dict["VariableType", Callable[["IVariableTypePseudoVisitor[T]"], T]] = {
     VariableType.UNKNOWN: __accept_unknown,
     VariableType.INTEGER: __accept_int,
@@ -268,11 +312,13 @@ __accept_map: Dict["VariableType", Callable[["IVariableTypePseudoVisitor[T]"], T
     VariableType.BOOLEAN: __accept_boolean,
     VariableType.STRING: __accept_string,
     VariableType.FILE: __accept_file,
+    VariableType.STRUCT: __accept_struct,
     VariableType.INTEGER_ARRAY: __accept_int_array,
     VariableType.REAL_ARRAY: __accept_real_array,
     VariableType.BOOLEAN_ARRAY: __accept_boolean_array,
     VariableType.STRING_ARRAY: __accept_string_array,
     VariableType.FILE_ARRAY: __accept_file_array,
+    VariableType.STRUCT_ARRAY: __accept_struct_array,
 }
 """
 A map of the variable types to the actual

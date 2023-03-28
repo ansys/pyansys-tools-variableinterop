@@ -12,7 +12,7 @@ from overrides import overrides
 
 from .isave_context import ISaveContext
 from .ivariable_visitor import IVariableValueVisitor
-from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue, StructValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .utils.locale_utils import LocaleUtils
 from .utils.string_escaping import escape_string, unescape_string
@@ -449,3 +449,53 @@ class StringArrayValue(CommonArrayValue[np.str_]):
             self, lambda elem: '"' + StringValue(elem).to_display_string(locale_name) + '"'
         )
         return api_string
+
+
+class StructArrayValue(CommonArrayValue[StructValue]):
+    """Array of struct values.
+
+    (TODO)
+    """
+
+    @overrides
+    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+        if values is not None:
+            return np.array(values, dtype=StructValue).view(cls)
+        return super().__new__(cls, shape=shape_, dtype=StructValue).view(cls)
+
+    @overrides
+    def __eq__(self, other):
+        return np.array_equal(self, other)
+
+    @overrides
+    def accept(self, visitor: IVariableValueVisitor[T]) -> T:
+        return visitor.visit_struct_array(self)
+
+    @property  # type: ignore
+    @overrides
+    def variable_type(self) -> VariableType:
+        return VariableType.STRUCT_ARRAY
+
+    @overrides
+    def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
+        """
+        Convert this value to an API string.
+
+        Parameters
+        ----------
+        context : ISaveContext
+            The context used for saving.
+
+        Returns
+        -------
+        str
+            A string appropriate for use in files and APIs.
+        """
+        raise NotImplemented
+
+    @overrides
+    def to_display_string(self, locale_name: str) -> str:
+        disp_str: str = ArrayToFromStringUtil.value_to_string(
+            self, lambda elem: np.asscalar(elem).to_display_string(locale_name)
+        )
+        return disp_str

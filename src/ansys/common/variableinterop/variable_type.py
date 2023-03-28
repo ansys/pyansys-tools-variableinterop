@@ -27,18 +27,22 @@ class VariableType(Enum):
     """String values."""
     FILE = 5
     """File values."""
-    INTEGER_ARRAY = 6
+    STRUCT = 6
+    """Struct values."""
+    INTEGER_ARRAY = 7
     """An array of integer values. These are stored as 64 bit signed integers. Multidimensional
     arrays are supported."""
-    REAL_ARRAY = 7
+    REAL_ARRAY = 8
     """An array of real values. These are stored as 64 bit floating point numbers. Multidimensional
         arrays are supported."""
-    BOOLEAN_ARRAY = 8
+    BOOLEAN_ARRAY = 9
     """An array of boolean values. Multidimensional arrays are supported."""
-    STRING_ARRAY = 9
+    STRING_ARRAY = 10
     """An array of string values. Multidimensional arrays are supported."""
-    FILE_ARRAY = 10
+    FILE_ARRAY = 11
     """An array of file values. Multidimensional arrays are supported."""
+    STRUCT_ARRAY = 12
+    """An array of struct values. Multidimensional arrays are supported"""
 
     @property
     def associated_type_name(self) -> str:
@@ -48,10 +52,11 @@ class VariableType(Enum):
             IntegerArrayValue,
             RealArrayValue,
             StringArrayValue,
+            StructArrayValue,
         )
         from .file_array_value import FileArrayValue
         from .file_value import FileValue
-        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue, StructValue
 
         class_map: Dict[VariableType, str] = {
             VariableType.UNKNOWN: "unknown",
@@ -60,11 +65,13 @@ class VariableType(Enum):
             VariableType.INTEGER: IntegerValue.__name__,
             VariableType.BOOLEAN: BooleanValue.__name__,
             VariableType.FILE: FileValue.__name__,
+            VariableType.STRUCT: StructValue.__name__,
             VariableType.STRING_ARRAY: StringArrayValue.__name__,
             VariableType.REAL_ARRAY: RealArrayValue.__name__,
             VariableType.INTEGER_ARRAY: IntegerArrayValue.__name__,
             VariableType.BOOLEAN_ARRAY: BooleanArrayValue.__name__,
             VariableType.FILE_ARRAY: FileArrayValue.__name__,
+            VariableType.STRUCT_ARRAY: StructArrayValue.__name__,
         }
         return class_map[self]
 
@@ -106,11 +113,13 @@ class VariableType(Enum):
                 ("bool", "boolean"): VariableType.BOOLEAN,
                 ("str", "string"): VariableType.STRING,
                 "file": VariableType.FILE,
+                "struct": VariableType.STRUCT,
                 ("int[]", "integer[]", "long[]"): VariableType.INTEGER_ARRAY,
                 ("real[]", "double[]", "float[]"): VariableType.REAL_ARRAY,
                 ("bool[]", "boolean[]"): VariableType.BOOLEAN_ARRAY,
                 ("str[]", "string[]"): VariableType.STRING_ARRAY,
                 "file[]": VariableType.FILE_ARRAY,
+                "struct[]": VariableType.STRUCT_ARRAY,
             }
         )
 
@@ -134,11 +143,13 @@ class VariableType(Enum):
             VariableType.BOOLEAN: "DISPLAY_STRING_BOOL",
             VariableType.STRING: "DISPLAY_STRING_STRING",
             VariableType.FILE: "DISPLAY_STRING_FILE",
+            VariableType.STRUCT: "DISPLAY_STRING_STRUCT",
             VariableType.REAL_ARRAY: "DISPLAY_STRING_REAL_ARRAY",
             VariableType.INTEGER_ARRAY: "DISPLAY_STRING_INTEGER_ARRAY",
             VariableType.BOOLEAN_ARRAY: "DISPLAY_STRING_BOOL_ARRAY",
             VariableType.STRING_ARRAY: "DISPLAY_STRING_STRING_ARRAY",
             VariableType.FILE_ARRAY: "DISPLAY_STRING_FILE_ARRAY",
+            VariableType.STRUCT_ARRAY: "DISPLAY_STRING_STRUCT_ARRAY",
             VariableType.UNKNOWN: "DISPLAY_STRING_UNKNOWN",
         }
 
@@ -157,11 +168,12 @@ class VariableType(Enum):
             IntegerArrayValue,
             RealArrayValue,
             StringArrayValue,
+            StructArrayValue,
         )
         from .file_array_value import FileArrayValue
         from .file_value import EMPTY_FILE
         from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
-        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+        from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue, StructValue
 
         class __DefaultValueVisitor(IVariableTypePseudoVisitor[IVariableValue]):
             """Visitor that returns a default value for each type."""
@@ -184,6 +196,9 @@ class VariableType(Enum):
             def visit_file(self) -> IVariableValue:
                 return EMPTY_FILE
 
+            def visit_struct(self) -> IVariableValue:
+                return StructValue()
+
             def visit_int_array(self) -> IVariableValue:
                 return IntegerArrayValue()
 
@@ -198,6 +213,9 @@ class VariableType(Enum):
 
             def visit_file_array(self) -> IVariableValue:
                 return FileArrayValue()
+
+            def visit_struct_array(self) -> IVariableValue:
+                return StructArrayValue()
 
         visitor = __DefaultValueVisitor()
         return vartype_accept(visitor, self)
@@ -245,6 +263,9 @@ class VariableType(Enum):
             def visit_file(self) -> CommonVariableMetadata:
                 return FileMetadata()
 
+            def visit_struct(self) -> CommonVariableMetadata:
+                raise NotImplemented
+
             def visit_int_array(self) -> CommonVariableMetadata:
                 return IntegerArrayMetadata()
 
@@ -259,6 +280,9 @@ class VariableType(Enum):
 
             def visit_file_array(self) -> CommonVariableMetadata:
                 return FileArrayMetadata()
+
+            def visit_struct_array(self) -> CommonVariableMetadata:
+                raise NotImplemented
 
         visitor = __DefaultMetadataVisitor()
         return vartype_accept(visitor, self)

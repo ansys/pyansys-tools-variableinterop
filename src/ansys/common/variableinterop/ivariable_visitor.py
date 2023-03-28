@@ -5,10 +5,16 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+    from .array_values import (
+        BooleanArrayValue,
+        IntegerArrayValue,
+        RealArrayValue,
+        StringArrayValue,
+        StructArrayValue,
+    )
     from .file_array_value import FileArrayValue
     from .file_value import FileValue
-    from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+    from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue, StructValue
 
 T = TypeVar("T")
 
@@ -107,6 +113,36 @@ class IVariableValueVisitor(ABC, Generic[T]):
         Parameters
         ----------
         value The FileValue being visited
+
+        Returns
+        -------
+        The result
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_struct(self, value: StructValue) -> T:
+        """
+        Will be called if accept is called on an StructValue.
+
+        Parameters
+        ----------
+        value The StructValue being visited
+
+        Returns
+        -------
+        The result
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_struct_array(self, value: StructArrayValue) -> T:
+        """
+        Will be called if accept is called on an StructArrayValue.
+
+        Parameters
+        ----------
+        value The StructArrayValue being visited
 
         Returns
         -------
