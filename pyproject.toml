@@ -32,7 +32,7 @@ anyio = "^3.5.0"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
-pyansys_sphinx_theme =  {version="^0.2", optional=true}
+ansys_sphinx_theme =  {version="^0.9", optional=true}
 sphinx-copybutton =  {version="^0.5", optional=true}
 
 codespell = {version="^2.1", optional=true}
@@ -46,7 +46,7 @@ mypy = {version="^0.940", optional=true}
 
 
 [tool.poetry.extras]
-dev = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
-docs = ["Sphinx", "numpydoc", "pyansys_sphinx_theme", "sphinx-copybutton"]
+dev = ["Sphinx", "numpydoc", "ansys_sphinx_theme", "sphinx-copybutton", "codespell", "flake8", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "mypy"]
+docs = ["Sphinx", "numpydoc", "ansys_sphinx_theme", "sphinx-copybutton"]
 style = ["codespell", "flake8"]
 test = ["pytest", "pytest-cov", "pytest-mock"]
