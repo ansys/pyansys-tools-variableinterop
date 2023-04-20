@@ -45,6 +45,7 @@ def test_clone(value: acvi.IVariableValue, is_valid: bool):
     assert type(clone.value) == type(original.value)
     assert clone.value == original.value
     assert clone.is_valid == original.is_valid
+    assert clone == original
 
 
 @pytest.mark.parametrize("value,expected_value", __coerce_cases)

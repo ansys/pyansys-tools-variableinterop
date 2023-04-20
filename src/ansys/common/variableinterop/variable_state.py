@@ -23,6 +23,25 @@ class VariableState:
         self.__value = value
         self.__is_valid = is_valid
 
+    def __eq__(self, other) -> bool:
+        """
+        Check if this object is equal to another object.
+
+        Parameters
+        ----------
+        other: Any
+        The object to compare.
+
+        Returns
+        -------
+        True if the objects are equal, false otherwise.
+        """
+        return (
+            isinstance(other, VariableState)
+            and self.value == other.value
+            and self.is_valid == other.is_valid
+        )
+
     @property
     def value(self) -> IVariableValue:
         """Get the variable value."""
