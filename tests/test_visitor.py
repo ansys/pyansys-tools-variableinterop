@@ -5,8 +5,8 @@ from typing import Any, Type
 import pytest
 from test_utils import _create_exception_context, _test_to_value_visitor
 
-import ansys.common.variableinterop as acvi
-from ansys.common.variableinterop.array_value_conversion import (
+import ansys.tools.variableinterop as acvi
+from ansys.tools.variableinterop.array_value_conversion import (
     __ToBooleanArrayVisitor,
     __ToIntegerArrayVisitor,
     __ToRealArrayVisitor,

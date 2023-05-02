@@ -20,7 +20,7 @@ class FileScope(AbstractContextManager, ABC):
     A file scope helps a program manage disk use for file storage and
     enables it to clean up caches and space in a reliable way.
     `FileValue` instances except for
-    `ansys.common.variableinterop.EMPTY_FILE` should always be created
+    `ansys.tools.variableinterop.EMPTY_FILE` should always be created
     by a `FileScope` instance. `FileValue` instances created by a
     `FileScope` are not valid once the `FileScope` has been closed.
 

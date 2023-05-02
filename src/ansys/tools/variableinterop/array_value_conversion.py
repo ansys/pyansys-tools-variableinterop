@@ -2,24 +2,24 @@
 import numpy as np
 from overrides import overrides
 
-from ansys.common.variableinterop.array_values import (
+from ansys.tools.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
     RealArrayValue,
     StringArrayValue,
 )
-import ansys.common.variableinterop.exceptions as exceptions
-from ansys.common.variableinterop.file_array_value import FileArrayValue
-from ansys.common.variableinterop.file_value import FileValue
-import ansys.common.variableinterop.ivariable_visitor as ivariable_visitor
-from ansys.common.variableinterop.scalar_values import (
+import ansys.tools.variableinterop.exceptions as exceptions
+from ansys.tools.variableinterop.file_array_value import FileArrayValue
+from ansys.tools.variableinterop.file_value import FileValue
+import ansys.tools.variableinterop.ivariable_visitor as ivariable_visitor
+from ansys.tools.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
     RealValue,
     StringValue,
 )
-import ansys.common.variableinterop.variable_type as variable_type
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.tools.variableinterop.variable_type as variable_type
+import ansys.tools.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):

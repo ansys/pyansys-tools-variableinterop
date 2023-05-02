@@ -5,7 +5,7 @@ from typing import Any, TypeVar
 from overrides import overrides
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 
 class TestVisitor(acvi.IVariableMetadataVisitor[str]):

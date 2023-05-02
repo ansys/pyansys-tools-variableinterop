@@ -7,9 +7,9 @@ from typing import Any, Dict, Type, TypeVar
 
 from overrides import overrides
 
-from ansys.common.variableinterop import exceptions
-import ansys.common.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.common.variableinterop.variable_type as variable_type_lib
+from ansys.tools.variableinterop import exceptions
+import ansys.tools.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
+import ansys.tools.variableinterop.variable_type as variable_type_lib
 
 from .variable_value import IVariableValue
 
@@ -120,7 +120,7 @@ class CommonVariableMetadata(ABC):
           upper bound, use upper bound.
         - else no value is valid, use the type's default value.
         """
-        from ansys.common.variableinterop import (
+        from ansys.tools.variableinterop import (
             array_metadata,
             array_values,
             file_array_metadata,
@@ -305,7 +305,7 @@ class CommonVariableMetadata(ABC):
         -------
         Value converted to the appropriate type.
         """
-        from ansys.common.variableinterop import (
+        from ansys.tools.variableinterop import (
             array_value_conversion,
             array_values,
             file_array_value,

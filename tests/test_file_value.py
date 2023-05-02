@@ -8,7 +8,7 @@ from uuid import UUID
 from overrides import overrides
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 test_read_file: Path = Path("in.file")
 test_contents: str = "12345"

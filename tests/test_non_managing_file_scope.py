@@ -6,7 +6,7 @@ from uuid import UUID
 
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 __EMPTY_UUID = UUID(int=0)
 """Convenience variable for an empty UUID."""

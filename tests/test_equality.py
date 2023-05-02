@@ -11,20 +11,20 @@ import numpy as np
 import pytest
 from test_file_value import _TestFileValue
 
-from ansys.common.variableinterop.array_values import (
+from ansys.tools.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
     RealArrayValue,
     StringArrayValue,
 )
-from ansys.common.variableinterop.file_array_value import FileArrayValue
-from ansys.common.variableinterop.scalar_values import (
+from ansys.tools.variableinterop.file_array_value import FileArrayValue
+from ansys.tools.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
     RealValue,
     StringValue,
 )
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.tools.variableinterop.variable_value as variable_value
 
 
 @pytest.mark.parametrize(

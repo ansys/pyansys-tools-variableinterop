@@ -9,7 +9,7 @@ import numpy
 import pytest
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     EMPTY_FILE,
     BooleanArrayValue,
     BooleanValue,

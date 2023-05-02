@@ -349,7 +349,7 @@ class EmptyFileValue(FileValue):
     Represents an empty file value.
 
     Generally speaking, you should not create an instance of this class
-    but instead use ansys.common.variableinterop.EMPTY_FILE.
+    but instead use ansys.tools.variableinterop.EMPTY_FILE.
     """
 
     def __init__(self):
@@ -357,7 +357,7 @@ class EmptyFileValue(FileValue):
         Construct a new instance.
 
         Generally speaking you should not create an instance of this
-        class but instead use ansys.common.variableinterop.EMPTY_FILE.
+        class but instead use ansys.tools.variableinterop.EMPTY_FILE.
         """
         super().__init__(None, None, None, UUID(int=0))
 

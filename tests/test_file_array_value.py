@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy
 from test_file_value import _TestFileValue
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 
 def test_default_construct() -> None:

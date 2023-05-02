@@ -7,7 +7,7 @@ from typing import List, Tuple, Type, TypeVar, Union
 import pytest
 from test_utils import _create_exception_context
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 M = TypeVar(
     "M", acvi.IntegerMetadata, acvi.RealMetadata, acvi.IntegerArrayMetadata, acvi.RealArrayMetadata

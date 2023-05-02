@@ -3,10 +3,10 @@ from datetime import datetime
 
 from ansys_sphinx_theme import pyansys_logo_black
 
-from ansys.common.variableinterop import __version__
+from ansys.tools.variableinterop import __version__
 
 # Project information
-project = "ansys-common-variableinterop"
+project = "pyansys-tools-variableinterop"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__

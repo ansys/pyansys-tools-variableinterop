@@ -2,7 +2,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import BooleanValue, IntegerValue, RealValue, StringValue
+from ansys.tools.variableinterop import BooleanValue, IntegerValue, RealValue, StringValue
 
 
 @pytest.mark.parametrize(

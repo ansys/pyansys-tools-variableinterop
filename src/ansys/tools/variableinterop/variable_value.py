@@ -7,7 +7,7 @@ from typing import Generic, Optional, Tuple, TypeVar
 
 from numpy.typing import NDArray
 
-import ansys.common.variableinterop.variable_type as variable_type_lib
+import ansys.tools.variableinterop.variable_type as variable_type_lib
 
 from .isave_context import ISaveContext
 from .ivariable_visitor import IVariableValueVisitor
