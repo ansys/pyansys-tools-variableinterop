@@ -77,17 +77,17 @@ The standards and the standard implementations in several languages came out of 
 
 Installation
 ------------
-The ``ansys-common-variableinterop`` package currently supports Python
+The ``pyansys-tools-variableinterop`` package currently supports Python
 3.8 through 3.10 on Windows and Linux.
 This package is not currently available on PyPI, but will be when it is
 ready for use.
-At that time you can install ``ansys-common-variableinterop`` with:
+At that time you can install ``pyansys-tools-variableinterop`` with:
 
 .. code::
 
-   pip install ansys-common-variableinterop
+   pip install pyansys-tools-variableinterop
 
-Alternatively, install the latest from `ansys-common-variableinterop GitHub
+Alternatively, install the latest from `pyansys-tools-variableinterop GitHub
 <https://github.com/pyansys/ansys-common-variableinterop>`_ via:
 
 .. code::
@@ -112,7 +112,7 @@ This creates a new virtual environment, which can be activated with
 Documentation
 -------------
 TODO: link to the full sphinx documentation.
-`ansys-common-variableinterop <https://common-variableinterop.docs.pyansys.com/>`_
+`pyansys-tools-variableinterop <https://common-variableinterop.docs.pyansys.com/>`_
 For building documentation, you can run the usual rules provided in the Sphinx Makefile, such as:
 
 .. code::
@@ -138,8 +138,8 @@ Values and metadata can be created like any other Python object:
 
 .. code:: python
 
-   >>> import ansys.common.variableinterop as acvi
-   >>> width = acvi.RealValue(3.1)
+   >>> import ansys.tools.variableinterop as atvi
+   >>> width = atvi.RealValue(3.1)
    >>> width
    3.1
 
@@ -147,7 +147,7 @@ Values and metadata can be created like any other Python object:
    >>> 4 + width
    7.1
 
-   >>> width_metadata = acvi.RealMetadata()
+   >>> width_metadata = atvi.RealMetadata()
    >>> width_metadata.lower_bound = 0.1
    >>> var(width_metadata)
    {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
@@ -166,4 +166,4 @@ The tests can then be run via pytest.
 
 License
 -------
-ansys-common-variableinterop is licensed under the MIT license.
+pyansys-tools-variableinterop is licensed under the MIT license.
