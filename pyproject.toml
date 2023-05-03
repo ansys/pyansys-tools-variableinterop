@@ -10,7 +10,7 @@ readme = "README.rst"
 authors = ["ANSYS, Inc. <ansys.support@ansys.com>"]
 maintainers = ["PyAnsys developers <pyansys.support@ansys.com>"] # You can change the name. The email group works.
 license = "MIT"
-repository = "https://github.com/pyansys/ansys-common-variableinterop"
+repository = "https://github.com/pyansys/pyansys-tools-variableinterop"
 
 # Less than critical but helpful
 classifiers = [

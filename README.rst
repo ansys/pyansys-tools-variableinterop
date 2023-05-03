@@ -88,18 +88,18 @@ At that time you can install ``pyansys-tools-variableinterop`` with:
    pip install pyansys-tools-variableinterop
 
 Alternatively, install the latest from `pyansys-tools-variableinterop GitHub
-<https://github.com/pyansys/ansys-common-variableinterop>`_ via:
+<https://github.com/pyansys/pyansys-tools-variableinterop>`_ via:
 
 .. code::
 
-   pip install git+https://github.com/pyansys/ansys-common-variableinterop.git
+   pip install git+https://github.com/pyansys/pyansys-tools-variableinterop.git
 
 For a local "development" version, install with:
 
 .. code::
 
-   git clone https://github.com/pyansys/ansys-common-variableinterop.git
-   cd ansys-common-variableinterop
+   git clone https://github.com/pyansys/pyansys-tools-variableinterop.git
+   cd pyansys-tools-variableinterop
    pip install poetry
    poetry install -E dev
 
