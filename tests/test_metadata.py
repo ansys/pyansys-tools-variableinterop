@@ -2,21 +2,21 @@ from typing import Any
 
 import pytest
 
-from ansys.common.variableinterop.array_metadata import (
+from ansys.tools.variableinterop.array_metadata import (
     BooleanArrayMetadata,
     IntegerArrayMetadata,
     RealArrayMetadata,
     StringArrayMetadata,
 )
-from ansys.common.variableinterop.file_array_metadata import FileArrayMetadata
-from ansys.common.variableinterop.file_metadata import FileMetadata
-from ansys.common.variableinterop.scalar_metadata import (
+from ansys.tools.variableinterop.file_array_metadata import FileArrayMetadata
+from ansys.tools.variableinterop.file_metadata import FileMetadata
+from ansys.tools.variableinterop.scalar_metadata import (
     BooleanMetadata,
     IntegerMetadata,
     RealMetadata,
     StringMetadata,
 )
-from ansys.common.variableinterop.scalar_values import (
+from ansys.tools.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
     RealValue,

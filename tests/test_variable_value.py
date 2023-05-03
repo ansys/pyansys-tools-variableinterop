@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 __value_cases = [
     pytest.param(acvi.IntegerValue(47), True, id="valid integer"),

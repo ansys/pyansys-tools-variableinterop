@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
     IntegerArrayValue,

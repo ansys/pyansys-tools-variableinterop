@@ -3,10 +3,10 @@ from datetime import datetime
 
 from ansys_sphinx_theme import pyansys_logo_black
 
-from ansys.common.variableinterop import __version__
+from ansys.tools.variableinterop import __version__
 
 # Project information
-project = "ansys-common-variableinterop"
+project = "pyansys-tools-variableinterop"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__
@@ -17,7 +17,7 @@ html_theme = "ansys_sphinx_theme"
 
 # specify the location of your github repo
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/ansys-common-variableinterop",
+    "github_url": "https://github.com/pyansys/pyansys-tools-variableinterop",
     "show_prev_next": False,
 }
 

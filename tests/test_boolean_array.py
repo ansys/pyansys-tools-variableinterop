@@ -2,7 +2,7 @@
 import numpy
 import pytest
 
-from ansys.common.variableinterop.array_values import BooleanArrayValue
+from ansys.tools.variableinterop.array_values import BooleanArrayValue
 
 
 def test_default_construct() -> None:

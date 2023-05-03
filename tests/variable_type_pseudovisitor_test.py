@@ -1,6 +1,6 @@
 import pytest
 
-from ansys.common.variableinterop import IVariableTypePseudoVisitor, VariableType, vartype_accept
+from ansys.tools.variableinterop import IVariableTypePseudoVisitor, VariableType, vartype_accept
 
 
 class TestPseudoVisitor(IVariableTypePseudoVisitor[str]):

@@ -4,7 +4,7 @@ import numpy
 import pytest
 from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
     IntegerArrayValue,

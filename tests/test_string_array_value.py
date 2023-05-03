@@ -2,7 +2,7 @@
 import numpy
 import pytest
 
-from ansys.common.variableinterop import StringArrayValue
+from ansys.tools.variableinterop import StringArrayValue
 
 
 def test_default_construct() -> None:

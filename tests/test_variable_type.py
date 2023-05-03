@@ -2,7 +2,7 @@ from typing import Iterable, Tuple
 
 import pytest
 
-from ansys.common.variableinterop import VariableType
+from ansys.tools.variableinterop import VariableType
 
 
 @pytest.mark.parametrize(
