@@ -3,9 +3,10 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
+from contextlib import AbstractAsyncContextManager, AbstractContextManager
 import json
 from os import PathLike, path
-from typing import Dict, Final, Optional, TypeVar, Union, cast
+from typing import Callable, Dict, Final, Optional, TypeVar, Union, cast
 from uuid import UUID, uuid4
 
 from anyio import Path, open_file
@@ -22,6 +23,40 @@ T = TypeVar("T")
 
 RESOURCE_PARSER = ConfigParser()
 RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
+
+
+class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
+    """
+    Represents the context during which a locally available copy of file value content should exist.
+
+    This is intended for use with an async implementation.
+    """
+
+    @property
+    @abstractmethod
+    def content_path(self) -> str:
+        """Get the local path to the content."""
+
+    @abstractmethod
+    def release_file(self) -> None:
+        """Call this method before exiting to prevent deleting the file on exit."""
+
+
+class LocalFileContentContext(AbstractContextManager, ABC):
+    """
+    Represents the context during which a locally available copy of file value content should exist.
+
+    This is intended for use with a synchronous implementation.
+    """
+
+    @property
+    @abstractmethod
+    def content_path(self) -> str:
+        """Get the local path to the content."""
+
+    @abstractmethod
+    def release_file(self) -> None:
+        """Call this method before exiting to prevent deleting the file on exit."""
 
 
 class FileValue(IVariableValue, ABC):
@@ -217,6 +252,42 @@ class FileValue(IVariableValue, ABC):
             async with await FileWriteStream.from_path(file_name) as out_stream:
                 async for chunk in in_stream:
                     await out_stream.send(chunk)
+
+    async def get_reference_to_actual_content_file_async(
+        self, progress_callback: Callable[[int], None]
+    ) -> AsyncLocalFileContentContext:
+        """
+        Realizes the file contents to a local filesystem if needed.
+
+        Parameters
+        ----------
+        progress_callback : Callable[[int], None]
+            a callback that may be called to indicate progress in realizing the local copy.
+
+        Returns
+        -------
+        AsyncLocalFileContentContext
+            a context manager that, when exited, will delete the local copy
+            if it is a temporary file.
+        """
+
+    async def get_reference_to_actual_content_file(
+        self, progress_callback: Callable[[int], None]
+    ) -> LocalFileContentContext:
+        """
+        Realizes the file contents to a local filesystem if needed.
+
+        Parameters
+        ----------
+        progress_callback : Callable[[int], None]
+             a callback that may be called to indicate progress in realizing the local copy.
+
+        Returns
+        -------
+        LocalFileContentContext
+            a context manager that, when exited, will delete the local copy
+            if it is a temporary file.
+        """
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
