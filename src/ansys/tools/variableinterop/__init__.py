@@ -28,7 +28,7 @@ from .file_array_metadata import FileArrayMetadata
 from .file_array_value import FileArrayValue
 from .file_metadata import FileMetadata
 from .file_scope import FileScope
-from .file_value import EMPTY_FILE, FileValue
+from .file_value import EMPTY_FILE, AsyncLocalFileContentContext, FileValue, LocalFileContentContext
 from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .get_modelcenter_type_for_value import GetModelCenterTypeForValue
 from .isave_context import ILoadContext, ISaveContext
