@@ -3,13 +3,13 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, cast
 from uuid import uuid4
 
 from overrides import overrides
 
 from .file_scope import FileScope
-from .file_value import EMPTY_FILE, FileValue
+from .file_value import EMPTY_FILE, AbstractLocalFileValue, FileValue
 from .isave_context import ILoadContext, ISaveContext
 
 
@@ -29,7 +29,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     their current location on disk as an identifier.
     """
 
-    class NonManagingFileValue(FileValue):
+    class NonManagingFileValue(AbstractLocalFileValue):
         """Implementation of FileValue used by this scope."""
 
         @overrides
@@ -83,9 +83,10 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             raise TypeError("This file scope cannot serialize file values it did not create.")
 
         # Just return the file name.
-        if file_var.actual_content_file_name is None:
+        typed_file_var = cast(NonManagingFileScope.NonManagingFileValue, file_var)
+        if typed_file_var.actual_content_file_name is None:
             return ""
-        return str(file_var.actual_content_file_name)
+        return str(typed_file_var.actual_content_file_name)
 
     @overrides
     def from_api_object(

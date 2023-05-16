@@ -180,18 +180,6 @@ class FileValue(IVariableValue, ABC):
     _DEFAULT_EXT = ".tmp"
 
     @property
-    @abstractmethod
-    def actual_content_file_name(self) -> Optional[PathLike]:
-        """
-        Get a PathLike to the actual file this FileValue wraps.
-
-        Returns
-        -------
-        PathLike to the file.
-        """
-        raise NotImplementedError()
-
-    @property
     def mime_type(self) -> str:
         """
         Get the mimetype of this FileValue.
@@ -303,6 +291,7 @@ class FileValue(IVariableValue, ABC):
                     async for chunk in in_stream:
                         await out_stream.send(chunk)
 
+    @abstractmethod
     async def get_reference_to_actual_content_file_async(
         self, progress_callback: Optional[Callable[[int], None]] = None
     ) -> AsyncLocalFileContentContext:
@@ -320,8 +309,8 @@ class FileValue(IVariableValue, ABC):
             a context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
-        return AlreadyLocalFileContentContext(self.actual_content_file_name)
 
+    @abstractmethod
     def get_reference_to_actual_content_file(
         self, progress_callback: Optional[Callable[[int], None]] = None
     ) -> LocalFileContentContext:
@@ -339,7 +328,6 @@ class FileValue(IVariableValue, ABC):
             a context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
-        return AlreadyLocalFileContentContext(self.actual_content_file_name)
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
@@ -469,7 +457,35 @@ class FileValue(IVariableValue, ABC):
         return ext
 
 
-class EmptyFileValue(FileValue):
+class AbstractLocalFileValue(FileValue, ABC):
+    """A base class for file values where the file contents already exist on the local disk."""
+
+    @property
+    @abstractmethod
+    def actual_content_file_name(self) -> Optional[PathLike]:
+        """
+        Get a PathLike to the actual file this FileValue wraps.
+
+        Returns
+        -------
+        PathLike to the file.
+        """
+        raise NotImplementedError()
+
+    @overrides
+    async def get_reference_to_actual_content_file_async(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> AsyncLocalFileContentContext:
+        return AlreadyLocalFileContentContext(self.actual_content_file_name)
+
+    @overrides
+    def get_reference_to_actual_content_file(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> LocalFileContentContext:
+        return AlreadyLocalFileContentContext(self.actual_content_file_name)
+
+
+class EmptyFileValue(AbstractLocalFileValue):
     """
     Represents an empty file value.
 

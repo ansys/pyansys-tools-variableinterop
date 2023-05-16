@@ -14,7 +14,7 @@ test_read_file: Path = Path("in.file")
 test_contents: str = "12345"
 
 
-class _TestFileValue(acvi.FileValue):
+class _TestFileValue(acvi.AbstractLocalFileValue):
     """A concrete implementation of FileValue used to test its constructor."""
 
     def __init__(
