@@ -38,7 +38,7 @@ class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
         """Get the local path to the content."""
 
     @abstractmethod
-    def release_file(self) -> None:
+    def keep_file_on_exit(self) -> None:
         """Call this method before exiting to prevent deleting the file on exit."""
 
 
@@ -55,7 +55,7 @@ class LocalFileContentContext(AbstractContextManager, ABC):
         """Get the local path to the content."""
 
     @abstractmethod
-    def release_file(self) -> None:
+    def keep_file_on_exit(self) -> None:
         """Call this method before exiting to prevent deleting the file on exit."""
 
 
@@ -70,7 +70,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
     """
 
     @overrides
-    def release_file(self) -> None:
+    def keep_file_on_exit(self) -> None:
         # Since this implementation does not normally delete the file anyway,
         # nothing needs to be done here.
         pass
