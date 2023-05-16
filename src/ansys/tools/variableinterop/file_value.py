@@ -302,6 +302,10 @@ class FileValue(IVariableValue, ABC):
         ----------
         progress_callback : Optional[Callable[[int], None]]
             a callback that may be called to indicate progress in realizing the local copy.
+            The argument will be a percentage between 0 and 100 inclusive that indicates
+            an estimate of the progress made in loading the file.
+            The callback will not necessarily be called at all, and calls for 0% or 100%
+            are not guaranteed, even if other calls occur.
 
         Returns
         -------
@@ -321,6 +325,10 @@ class FileValue(IVariableValue, ABC):
         ----------
         progress_callback : Callable[[int], None]
              a callback that may be called to indicate progress in realizing the local copy.
+            The argument will be a percentage between 0 and 100 inclusive that indicates
+            an estimate of the progress made in loading the file.
+            The callback will not necessarily be called at all, and calls for 0% or 100%
+            are not guaranteed, even if other calls occur.
 
         Returns
         -------
