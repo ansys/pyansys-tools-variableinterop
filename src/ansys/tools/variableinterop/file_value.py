@@ -66,7 +66,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
     Because the file is already hosted and managed locally, there is no need
     to create a new copy. Therefore, this implementation basically does nothing
     but provide a way to abstract away the difference between a locally and remotely
-    file content.
+    hosted file content.
     """
 
     @overrides
