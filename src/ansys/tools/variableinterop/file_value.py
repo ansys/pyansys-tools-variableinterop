@@ -3,9 +3,10 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
+from contextlib import AbstractAsyncContextManager, AbstractContextManager
 import json
 from os import PathLike, path
-from typing import Dict, Final, Optional, TypeVar, Union, cast
+from typing import Callable, Dict, Final, Optional, TypeVar, Union, cast
 from uuid import UUID, uuid4
 
 from anyio import Path, open_file
@@ -22,6 +23,89 @@ T = TypeVar("T")
 
 RESOURCE_PARSER = ConfigParser()
 RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
+
+
+class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
+    """
+    Represents the context during which a locally available copy of file value content should exist.
+
+    This is intended for use with an async implementation.
+    """
+
+    @property
+    @abstractmethod
+    def content_path(self) -> Path:
+        """Get the local path to the content."""
+
+    @abstractmethod
+    def keep_file_on_exit(self) -> None:
+        """Call this method before exiting to prevent deleting the file on exit."""
+
+
+class LocalFileContentContext(AbstractContextManager, ABC):
+    """
+    Represents the context during which a locally available copy of file value content should exist.
+
+    This is intended for use with a synchronous implementation.
+    """
+
+    @property
+    @abstractmethod
+    def content_path(self) -> Path:
+        """Get the local path to the content."""
+
+    @abstractmethod
+    def keep_file_on_exit(self) -> None:
+        """Call this method before exiting to prevent deleting the file on exit."""
+
+
+class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileContentContext):
+    """
+    A default local file context for when the file is already hosted locally.
+
+    Because the file is already hosted and managed locally, there is no need
+    to create a new copy. Therefore, this implementation basically does nothing
+    but provide a way to abstract away the difference between a locally and remotely
+    hosted file content.
+    """
+
+    @overrides
+    def keep_file_on_exit(self) -> None:
+        # Since this implementation does not normally delete the file anyway,
+        # nothing needs to be done here.
+        pass
+
+    def __init__(self, local_content_path: Optional[Path]):
+        """
+        Initialize a new instance.
+
+        Parameters
+        ==========
+        local_content_path : Optional[Path]
+            The path to the local content. None indicates the file value is empty.
+        """
+        self._local_content_path = local_content_path
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """
+        Exit the context.
+
+        This does nothing as no additional temporary file was created.
+        """
+        pass
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        """
+        Asynchronously exit the context.
+
+        This does nothing as no additional temporary file was created.
+        """
+        pass
+
+    @property  # type: ignore
+    @overrides
+    def content_path(self) -> Optional[PathLike]:
+        return self._local_content_path
 
 
 class FileValue(IVariableValue, ABC):
@@ -94,18 +178,6 @@ class FileValue(IVariableValue, ABC):
     CONTENTS_KEY: Final[str] = "contents"
 
     _DEFAULT_EXT = ".tmp"
-
-    @property
-    @abstractmethod
-    def actual_content_file_name(self) -> Optional[PathLike]:
-        """
-        Get a PathLike to the actual file this FileValue wraps.
-
-        Returns
-        -------
-        PathLike to the file.
-        """
-        raise NotImplementedError()
 
     @property
     def mime_type(self) -> str:
@@ -212,11 +284,58 @@ class FileValue(IVariableValue, ABC):
         Path(file_name).open("w").close()
 
         # copy the contents from the actual content file
-        file: Optional[PathLike] = self.actual_content_file_name
-        async with await FileReadStream.from_path(file) as in_stream:
-            async with await FileWriteStream.from_path(file_name) as out_stream:
-                async for chunk in in_stream:
-                    await out_stream.send(chunk)
+        async with await self.get_reference_to_actual_content_file_async() as local_pin:
+            file: Optional[PathLike] = local_pin.content_path
+            async with await FileReadStream.from_path(file) as in_stream:
+                async with await FileWriteStream.from_path(file_name) as out_stream:
+                    async for chunk in in_stream:
+                        await out_stream.send(chunk)
+
+    @abstractmethod
+    async def get_reference_to_actual_content_file_async(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> AsyncLocalFileContentContext:
+        """
+        Realizes the file contents to a local filesystem if needed.
+
+        Parameters
+        ----------
+        progress_callback : Optional[Callable[[int], None]]
+            a callback that may be called to indicate progress in realizing the local copy.
+            The argument will be a percentage between 0 and 100 inclusive that indicates
+            an estimate of the progress made in loading the file.
+            The callback will not necessarily be called at all, and calls for 0% or 100%
+            are not guaranteed, even if other calls occur.
+
+        Returns
+        -------
+        AsyncLocalFileContentContext
+            a context manager that, when exited, will delete the local copy
+            if it is a temporary file.
+        """
+
+    @abstractmethod
+    def get_reference_to_actual_content_file(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> LocalFileContentContext:
+        """
+        Realizes the file contents to a local filesystem if needed.
+
+        Parameters
+        ----------
+        progress_callback : Callable[[int], None]
+             a callback that may be called to indicate progress in realizing the local copy.
+            The argument will be a percentage between 0 and 100 inclusive that indicates
+            an estimate of the progress made in loading the file.
+            The callback will not necessarily be called at all, and calls for 0% or 100%
+            are not guaranteed, even if other calls occur.
+
+        Returns
+        -------
+        LocalFileContentContext
+            a context manager that, when exited, will delete the local copy
+            if it is a temporary file.
+        """
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
@@ -258,10 +377,11 @@ class FileValue(IVariableValue, ABC):
         -------
         The file contents as a string.
         """
-        file: Optional[PathLike] = self.actual_content_file_name
-        async with await open_file(file=file, encoding=encoding) as f:
-            contents = await f.read()
-            return contents
+        async with await self.get_reference_to_actual_content_file_async() as local_pin:
+            file: Optional[PathLike] = local_pin.content_path
+            async with await open_file(file=file, encoding=encoding) as f:
+                contents = await f.read()
+                return contents
 
     @abstractmethod
     def _has_content(self) -> bool:
@@ -296,9 +416,10 @@ class FileValue(IVariableValue, ABC):
 
     def _send_actual_file(self, save_context: ISaveContext) -> str:
         name: Union[PathLike, str] = ""
-        if self.actual_content_file_name is not None:
-            name = cast(PathLike, self.actual_content_file_name)
-        return save_context.save_file(name, str(self.id))
+        with self.get_reference_to_actual_content_file() as local_pin:
+            if local_pin.content_path is not None:
+                name = cast(PathLike, local_pin)
+            return save_context.save_file(name, str(self.id))
 
     def to_api_object(self, save_context: ISaveContext) -> Dict[str, Optional[str]]:
         """
@@ -344,7 +465,73 @@ class FileValue(IVariableValue, ABC):
         return ext
 
 
-class EmptyFileValue(FileValue):
+class LocalFileValue(FileValue, ABC):
+    """
+    A base class for file values where the file contents already exist on the local disk.
+
+    Generally speaking, clients of this library should not attempt to use this class.
+    It is intended for dependents of this library who are attempting to implement a new
+    FileScope type where that FileScope always stores file content on the local disk.
+    Clients are discouraged from attempting to introspect FileValues to determine if they
+    are LocalFileValues for the purpose of getting a path to the locally stored content.
+    Instead, always correctly use FileValue's get_reference_to_actual_content_file,
+    which will allow the code in question to get a local path even for files that are
+    not originally hosted locally. For files that are originally hosted locally,
+    this will not produce an additional copy and instead will give a context manager
+    that will do nothing on enter/exit but still allow access to the actual content
+    path.
+    """
+
+    def __init__(
+        self,
+        original_path: Optional[PathLike],
+        mime_type: Optional[str],
+        encoding: Optional[str],
+        value_id: Optional[UUID],
+        actual_content_file_name: Optional[PathLike],
+    ):
+        """
+        Initialize a new instance.
+
+        Parameters
+        ----------
+        original_path Path to the file to wrap.
+        mime_type Mime type of the file.
+        encoding The encoding of the file.
+        value_id The id that uniquely identifies this file. Auto-generated\
+            if not supplied.
+        actual_content_file_name The path to where the content is actually being stored.
+        """
+        super().__init__(
+            original_path=original_path, encoding=encoding, value_id=value_id, mime_type=mime_type
+        )
+        self.__actual_content_file_name = actual_content_file_name
+
+    @property
+    def actual_content_file_name(self) -> Optional[PathLike]:
+        """
+        Get a PathLike to the actual file this FileValue wraps.
+
+        Returns
+        -------
+        PathLike to the file.
+        """
+        return self.__actual_content_file_name
+
+    @overrides
+    async def get_reference_to_actual_content_file_async(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> AsyncLocalFileContentContext:
+        return AlreadyLocalFileContentContext(self.actual_content_file_name)
+
+    @overrides
+    def get_reference_to_actual_content_file(
+        self, progress_callback: Optional[Callable[[int], None]] = None
+    ) -> LocalFileContentContext:
+        return AlreadyLocalFileContentContext(self.actual_content_file_name)
+
+
+class EmptyFileValue(LocalFileValue):
     """
     Represents an empty file value.
 
@@ -359,7 +546,7 @@ class EmptyFileValue(FileValue):
         Generally speaking you should not create an instance of this
         class but instead use ansys.tools.variableinterop.EMPTY_FILE.
         """
-        super().__init__(None, None, None, UUID(int=0))
+        super().__init__(None, None, None, UUID(int=0), None)
 
     @overrides
     def _has_content(self) -> bool:

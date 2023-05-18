@@ -163,14 +163,14 @@ def test_equality_of_boolean_values(
     "lhs,rhs,expected",
     [
         pytest.param(
-            _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-            _TestFileValue(Path("d"), "e", "f", UUID(int=1)),
+            _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+            _TestFileValue(Path("d"), "e", "f", UUID(int=1), Path("d")),
             True,
             id="Same id",
         ),
         pytest.param(
-            _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-            _TestFileValue(Path("d"), "e", "f", UUID(int=2)),
+            _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+            _TestFileValue(Path("d"), "e", "f", UUID(int=2), Path("d")),
             False,
             id="Different ids",
         ),
@@ -360,14 +360,14 @@ def test_equality_of_boolean_array_values(
         pytest.param(
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
                 ]
             ),
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
                 ]
             ),
             True,
@@ -376,14 +376,14 @@ def test_equality_of_boolean_array_values(
         pytest.param(
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
                 ]
             ),
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=2)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=2), Path("a")),
                 ]
             ),
             False,

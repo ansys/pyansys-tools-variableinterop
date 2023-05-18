@@ -3,13 +3,13 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, cast
 from uuid import uuid4
 
 from overrides import overrides
 
 from .file_scope import FileScope
-from .file_value import EMPTY_FILE, FileValue
+from .file_value import EMPTY_FILE, FileValue, LocalFileValue
 from .isave_context import ILoadContext, ISaveContext
 
 
@@ -29,7 +29,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     their current location on disk as an identifier.
     """
 
-    class NonManagingFileValue(FileValue):
+    class NonManagingFileValue(LocalFileValue):
         """Implementation of FileValue used by this scope."""
 
         @overrides
@@ -50,16 +50,17 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             value_id The id that uniquely identifies this file. Auto-generated\
                 if not supplied.
             """
-            super().__init__(to_read, mime_type, encoding, uuid4())
+            super().__init__(
+                original_path=to_read,
+                mime_type=mime_type,
+                encoding=encoding,
+                value_id=uuid4(),
+                actual_content_file_name=to_read,
+            )
 
         @overrides
         def _send_actual_file(self, save_context: ISaveContext) -> str:
             return save_context.save_file(str(self.actual_content_file_name), None)
-
-        @property  # type: ignore
-        @overrides
-        def actual_content_file_name(self) -> Optional[PathLike]:
-            return self._original_path
 
     @overrides
     def read_from_file(
@@ -83,9 +84,10 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             raise TypeError("This file scope cannot serialize file values it did not create.")
 
         # Just return the file name.
-        if file_var.actual_content_file_name is None:
+        typed_file_var = cast(NonManagingFileScope.NonManagingFileValue, file_var)
+        if typed_file_var.actual_content_file_name is None:
             return ""
-        return str(file_var.actual_content_file_name)
+        return str(typed_file_var.actual_content_file_name)
 
     @overrides
     def from_api_object(

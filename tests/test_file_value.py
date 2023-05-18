@@ -14,7 +14,7 @@ test_read_file: Path = Path("in.file")
 test_contents: str = "12345"
 
 
-class _TestFileValue(acvi.FileValue):
+class _TestFileValue(acvi.LocalFileValue):
     """A concrete implementation of FileValue used to test its constructor."""
 
     def __init__(
@@ -23,14 +23,10 @@ class _TestFileValue(acvi.FileValue):
         mime_type: Optional[str],
         encoding: Optional[str],
         value_id: Optional[UUID],
+        actual_content_file_name: Optional[PathLike],
     ):
-        super().__init__(original_path, mime_type, encoding, value_id)
+        super().__init__(original_path, mime_type, encoding, value_id, actual_content_file_name)
         self._has_content_override: bool = False
-
-    @property  # type: ignore
-    @overrides
-    def actual_content_file_name(self) -> Optional[PathLike]:
-        return test_read_file
 
     def set_content_override(self) -> "_TestFileValue":
         """
@@ -167,7 +163,11 @@ def test_constructor(
 
     # Execute
     sut: _TestFileValue = _TestFileValue(
-        specified_orig_path, specified_mime_type, specified_encoding, specified_value_id
+        specified_orig_path,
+        specified_mime_type,
+        specified_encoding,
+        specified_value_id,
+        test_read_file,
     )
 
     # Verify
@@ -187,7 +187,7 @@ def test_base_serialization():
     """Verify that the base serialization routine works."""
     # Setup
     sut: _TestFileValue = _TestFileValue(
-        "/path/to/orig/file", "text/testfile", "Shift-JIS", __TEST_UUID
+        "/path/to/orig/file", "text/testfile", "Shift-JIS", __TEST_UUID, test_read_file
     )
 
     # Execute
@@ -217,13 +217,13 @@ def test_empty_file_value():
     [
         pytest.param(acvi.EMPTY_FILE, "<empty file>", id="empty"),
         pytest.param(
-            _TestFileValue(None, "application/bytestream", None, None).set_content_override(),
+            _TestFileValue(None, "application/bytestream", None, None, None).set_content_override(),
             "<file read from unknown location>",
             id="nonempty, no original path",
         ),
         pytest.param(
             _TestFileValue(
-                Path("file_path_here"), "application/bytestream", None, None
+                Path("file_path_here"), "application/bytestream", None, None, None
             ).set_content_override(),
             "<file read from file_path_here>",
             id="has content and original path",
@@ -259,7 +259,7 @@ def test_to_display_string(sut: acvi.FileValue, expected_result: str):
 )
 def test_get_extension(orig_path: Optional[Path], expected_result: str):
     # Setup
-    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None)
+    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None, test_read_file)
 
     # Execute
     result: str = sut.get_extension()
@@ -281,7 +281,7 @@ async def test_get_contents(encoding: Optional[str]):
     # Setup
     test_read_file.write_text(test_contents)
     try:
-        file = _TestFileValue(None, None, encoding, None)
+        file = _TestFileValue(None, None, encoding, None, test_read_file)
 
         # SUT
         result: str = await file.get_contents(encoding)
@@ -306,7 +306,7 @@ async def test_write_file(encoding: Optional[str]):
     test_read_file.write_text(test_contents, encoding)
     out_file = Path("out.file")
     try:
-        file = _TestFileValue(None, None, encoding, None)
+        file = _TestFileValue(None, None, encoding, None, test_read_file)
 
         # SUT
         await file.write_file(out_file)
