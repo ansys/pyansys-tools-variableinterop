@@ -30,10 +30,10 @@ from .file_metadata import FileMetadata
 from .file_scope import FileScope
 from .file_value import (
     EMPTY_FILE,
-    AbstractLocalFileValue,
     AsyncLocalFileContentContext,
     FileValue,
     LocalFileContentContext,
+    LocalFileValue,
 )
 from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .get_modelcenter_type_for_value import GetModelCenterTypeForValue

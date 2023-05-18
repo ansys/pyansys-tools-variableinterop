@@ -465,11 +465,49 @@ class FileValue(IVariableValue, ABC):
         return ext
 
 
-class AbstractLocalFileValue(FileValue, ABC):
-    """A base class for file values where the file contents already exist on the local disk."""
+class LocalFileValue(FileValue, ABC):
+    """
+    A base class for file values where the file contents already exist on the local disk.
+
+    Generally speaking, clients of this library should not attempt to use this class.
+    It is intended for dependents of this library who are attempting to implement a new
+    FileScope type where that FileScope always stores file content on the local disk.
+    Clients are discouraged from attempting to introspect FileValues to determine if they
+    are LocalFileValues for the purpose of getting a path to the locally stored content.
+    Instead, always correctly use FileValue's get_reference_to_actual_content_file,
+    which will allow the code in question to get a local path even for files that are
+    not originally hosted locally. For files that are originally hosted locally,
+    this will not produce an additional copy and instead will give a context manager
+    that will do nothing on enter/exit but still allow access to the actual content
+    path.
+    """
+
+    def __init__(
+        self,
+        original_path: Optional[PathLike],
+        mime_type: Optional[str],
+        encoding: Optional[str],
+        value_id: Optional[UUID],
+        actual_content_file_name: Optional[PathLike],
+    ):
+        """
+        Initialize a new instance.
+
+        Parameters
+        ----------
+        original_path Path to the file to wrap.
+        mime_type Mime type of the file.
+        encoding The encoding of the file.
+        value_id The id that uniquely identifies this file. Auto-generated\
+            if not supplied.
+        actual_content_file_name The path to where the content is actually being stored.
+        """
+        super().__init__(
+            original_path=original_path, encoding=encoding, value_id=value_id, mime_type=mime_type
+        )
+        self.__actual_content_file_name = actual_content_file_name
 
     @property
-    @abstractmethod
     def actual_content_file_name(self) -> Optional[PathLike]:
         """
         Get a PathLike to the actual file this FileValue wraps.
@@ -478,7 +516,7 @@ class AbstractLocalFileValue(FileValue, ABC):
         -------
         PathLike to the file.
         """
-        raise NotImplementedError()
+        return self.__actual_content_file_name
 
     @overrides
     async def get_reference_to_actual_content_file_async(
@@ -493,7 +531,7 @@ class AbstractLocalFileValue(FileValue, ABC):
         return AlreadyLocalFileContentContext(self.actual_content_file_name)
 
 
-class EmptyFileValue(AbstractLocalFileValue):
+class EmptyFileValue(LocalFileValue):
     """
     Represents an empty file value.
 
@@ -508,7 +546,7 @@ class EmptyFileValue(AbstractLocalFileValue):
         Generally speaking you should not create an instance of this
         class but instead use ansys.tools.variableinterop.EMPTY_FILE.
         """
-        super().__init__(None, None, None, UUID(int=0))
+        super().__init__(None, None, None, UUID(int=0), None)
 
     @overrides
     def _has_content(self) -> bool:
