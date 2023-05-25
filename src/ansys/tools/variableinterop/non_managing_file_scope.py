@@ -1,8 +1,8 @@
 """Definition of NonManagingFileScope."""
 from __future__ import annotations
 
-from os import PathLike
 import os
+from os import PathLike
 from pathlib import Path
 from typing import Dict, Optional, Union, cast
 from uuid import uuid4

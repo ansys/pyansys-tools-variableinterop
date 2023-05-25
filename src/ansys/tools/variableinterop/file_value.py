@@ -118,7 +118,7 @@ class FileValue(IVariableValue, ABC):
         mime_type: Optional[str],
         encoding: Optional[str],
         value_id: Optional[UUID],
-        file_size: Optional[int]
+        file_size: Optional[int],
     ):
         """
         Construct a new FileValue.
@@ -243,8 +243,8 @@ class FileValue(IVariableValue, ABC):
     @property
     def file_size(self) -> Optional[int]:
         """
-        Gets the size of the file in bytes if known.
-        
+        Get the size of the file in bytes if known.
+
         Returns
         -------
         The size of the file in bytes.
@@ -473,7 +473,7 @@ class FileValue(IVariableValue, ABC):
         if self._file_encoding:
             obj[FileValue.ENCODING_KEY] = self._file_encoding
         if not (self._size is None):
-            obj[FileValue.SIZE_KEY] = self._size
+            obj[FileValue.SIZE_KEY] = str(self._size)
         return obj
 
     # TODO: Async get_contents
@@ -534,7 +534,11 @@ class LocalFileValue(FileValue, ABC):
         actual_content_file_name The path to where the content is actually being stored.
         """
         super().__init__(
-            original_path=original_path, encoding=encoding, value_id=value_id, mime_type=mime_type, file_size=file_size
+            original_path=original_path,
+            encoding=encoding,
+            value_id=value_id,
+            mime_type=mime_type,
+            file_size=file_size,
         )
         self.__actual_content_file_name = actual_content_file_name
 
