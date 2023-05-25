@@ -232,8 +232,8 @@ def test_base_serialization():
     assert loaded.get(acvi.FileValue.ORIGINAL_FILENAME_KEY) == "/path/to/orig/file"
     assert loaded.get(acvi.FileValue.MIMETYPE_KEY) == "text/testfile"
     assert loaded.get(acvi.FileValue.ENCODING_KEY) == "Shift-JIS"
-    #TODO: Because a dict[str, str] is used, this number gets converted to a string in JSON, 
-    # which violates JSON best practices. Might want to consider changing the code structure to 
+    # TODO: Because a dict[str, str] is used, this number gets converted to a string in JSON,
+    # which violates JSON best practices. Might want to consider changing the code structure to
     # support int here.
     assert loaded.get(acvi.FileValue.SIZE_KEY) == "10"
 
