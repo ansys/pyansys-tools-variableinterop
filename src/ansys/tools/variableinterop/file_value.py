@@ -298,6 +298,12 @@ class FileValue(IVariableValue, ABC):
         """
         Realizes the file contents to a local filesystem if needed.
 
+        The FileValue is intended to represent an immutable value. The file
+        returned by this call may point to a cached or even the original file. Callers
+        must not modify the file on disk or undefined behavior, including class 3 errors,
+        may occur. If the caller needs to modify the file, consider using
+        write_file, or copying the file before modifying it.
+
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]]
@@ -320,6 +326,12 @@ class FileValue(IVariableValue, ABC):
     ) -> LocalFileContentContext:
         """
         Realizes the file contents to a local filesystem if needed.
+
+        The FileValue is intended to represent an immutable value. The file
+        returned by this call may point to a cached or even the original file. Callers
+        must not modify the file on disk or undefined behavior, including class 3 errors,
+        may occur. If the caller needs to modify the file, consider using
+        write_file, or copying the file before modifying it.
 
         Parameters
         ----------
