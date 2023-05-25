@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from os import PathLike
+import os
 from pathlib import Path
 from typing import Dict, Optional, Union, cast
 from uuid import uuid4
@@ -50,11 +51,20 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             value_id The id that uniquely identifies this file. Auto-generated\
                 if not supplied.
             """
+            size: Optional[int] = None
+            # TODO: The tests use a lot of non-existent files, so this prevents
+            # it from crashing in those cases. This may not be what we want in an API
+            # though? Probably would be better to not let you create a FileValue to a
+            # non-existent file?
+            if os.path.isfile(to_read):
+                st = os.stat(to_read)
+                size = st.st_size
             super().__init__(
                 original_path=to_read,
                 mime_type=mime_type,
                 encoding=encoding,
                 value_id=uuid4(),
+                file_size=size,
                 actual_content_file_name=to_read,
             )
 

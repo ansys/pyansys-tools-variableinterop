@@ -23,9 +23,10 @@ class _TestFileValue(acvi.LocalFileValue):
         mime_type: Optional[str],
         encoding: Optional[str],
         value_id: Optional[UUID],
+        file_size: Optional[int],
         actual_content_file_name: Optional[PathLike],
     ):
-        super().__init__(original_path, mime_type, encoding, value_id, actual_content_file_name)
+        super().__init__(original_path, mime_type, encoding, value_id, file_size, actual_content_file_name)
         self._has_content_override: bool = False
 
     def set_content_override(self) -> "_TestFileValue":
@@ -73,7 +74,8 @@ __EMPTY_UUID = UUID(int=0)
             "specified_orig_path,expected_orig_path,",
             "specified_mime_type,expected_mime_type,",
             "specified_encoding,expected_encoding,",
-            "specified_value_id,expected_value_id",
+            "specified_value_id,expected_value_id,",
+            "specified_size,expected_size",
         )
     ),
     [
@@ -86,6 +88,8 @@ __EMPTY_UUID = UUID(int=0)
             "Shift-JIS",
             __TEST_UUID,
             __TEST_UUID,
+            10,
+            10,
             id="all arguments specified",
         ),
         pytest.param(
@@ -97,6 +101,8 @@ __EMPTY_UUID = UUID(int=0)
             "Shift-JIS",
             __TEST_UUID,
             __TEST_UUID,
+            10,
+            10,
             id="no original path",
         ),
         pytest.param(
@@ -108,6 +114,8 @@ __EMPTY_UUID = UUID(int=0)
             "Shift-JIS",
             __TEST_UUID,
             __TEST_UUID,
+            10,
+            10,
             id="no mimetype",
         ),
         pytest.param(
@@ -119,6 +127,8 @@ __EMPTY_UUID = UUID(int=0)
             None,
             __TEST_UUID,
             __TEST_UUID,
+            10,
+            10,
             id="no encoding",
         ),
         pytest.param(
@@ -130,7 +140,22 @@ __EMPTY_UUID = UUID(int=0)
             "Shift-JIS",
             None,
             None,
+            10,
+            10,
             id="no UUID",
+        ),
+        pytest.param(
+            "/path/to/orig/file",
+            "/path/to/orig/file",
+            "text/testfile",
+            "text/testfile",
+            "Shift-JIS",
+            "Shift-JIS",
+            __TEST_UUID,
+            __TEST_UUID,
+            None,
+            None,
+            id="all arguments specified",
         ),
     ],
 )
@@ -143,6 +168,8 @@ def test_constructor(
     expected_encoding: Optional[str],
     specified_value_id: Optional[UUID],
     expected_value_id: Optional[UUID],
+    specified_size: Optional[int],
+    expected_size: Optional[int],
 ) -> None:
     """
     Verify that the constructor works correctly.
@@ -158,6 +185,8 @@ def test_constructor(
     specified_value_id the UUID to pass to the constructor
     expected_value_id the expected to find in the id property
                      (None causes the test to expect a random UUID).
+    specified_size the file size to pass to the constructor
+    expected_size the expected file size to find
     """
     # Setup
 
@@ -167,6 +196,7 @@ def test_constructor(
         specified_mime_type,
         specified_encoding,
         specified_value_id,
+        specified_size,
         test_read_file,
     )
 
@@ -174,6 +204,7 @@ def test_constructor(
     assert sut.mime_type == expected_mime_type
     assert sut.original_file_name == expected_orig_path
     assert sut.file_encoding == expected_encoding
+    assert sut.file_size == expected_size
     if expected_value_id is not None:
         assert sut.id == expected_value_id
     else:
@@ -187,7 +218,7 @@ def test_base_serialization():
     """Verify that the base serialization routine works."""
     # Setup
     sut: _TestFileValue = _TestFileValue(
-        "/path/to/orig/file", "text/testfile", "Shift-JIS", __TEST_UUID, test_read_file
+        "/path/to/orig/file", "text/testfile", "Shift-JIS", __TEST_UUID, 10, test_read_file
     )
 
     # Execute
@@ -199,6 +230,7 @@ def test_base_serialization():
     assert loaded.get(acvi.FileValue.ORIGINAL_FILENAME_KEY) == "/path/to/orig/file"
     assert loaded.get(acvi.FileValue.MIMETYPE_KEY) == "text/testfile"
     assert loaded.get(acvi.FileValue.ENCODING_KEY) == "Shift-JIS"
+    assert loaded.get(acvi.FileValue.SIZE_KEY) == 10
 
 
 def test_empty_file_value():
@@ -217,13 +249,13 @@ def test_empty_file_value():
     [
         pytest.param(acvi.EMPTY_FILE, "<empty file>", id="empty"),
         pytest.param(
-            _TestFileValue(None, "application/bytestream", None, None, None).set_content_override(),
+            _TestFileValue(None, "application/bytestream", None, None, None, None).set_content_override(),
             "<file read from unknown location>",
             id="nonempty, no original path",
         ),
         pytest.param(
             _TestFileValue(
-                Path("file_path_here"), "application/bytestream", None, None, None
+                Path("file_path_here"), "application/bytestream", None, None, None, None
             ).set_content_override(),
             "<file read from file_path_here>",
             id="has content and original path",
@@ -259,7 +291,7 @@ def test_to_display_string(sut: acvi.FileValue, expected_result: str):
 )
 def test_get_extension(orig_path: Optional[Path], expected_result: str):
     # Setup
-    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None, test_read_file)
+    sut: acvi.FileValue = _TestFileValue(orig_path, None, None, None, None, test_read_file)
 
     # Execute
     result: str = sut.get_extension()
@@ -281,7 +313,7 @@ async def test_get_contents(encoding: Optional[str]):
     # Setup
     test_read_file.write_text(test_contents)
     try:
-        file = _TestFileValue(None, None, encoding, None, test_read_file)
+        file = _TestFileValue(None, None, encoding, None, None, test_read_file)
 
         # SUT
         result: str = await file.get_contents(encoding)
@@ -306,7 +338,7 @@ async def test_write_file(encoding: Optional[str]):
     test_read_file.write_text(test_contents, encoding)
     out_file = Path("out.file")
     try:
-        file = _TestFileValue(None, None, encoding, None, test_read_file)
+        file = _TestFileValue(None, None, encoding, None, None, test_read_file)
 
         # SUT
         await file.write_file(out_file)

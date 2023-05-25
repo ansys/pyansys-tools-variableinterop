@@ -26,9 +26,9 @@ def test_construct_1d():
         values=[
             acvi.EMPTY_FILE,
             _TestFileValue(
-                "/test/file.bin", "application/bytestream", None, None, Path("/test/file.bin")
+                "/test/file.bin", "application/bytestream", None, None, None, Path("/test/file.bin")
             ),
-            _TestFileValue("/test/file.htm", "text/html", "UTF-8", None, Path("/test/file.htm")),
+            _TestFileValue("/test/file.htm", "text/html", "UTF-8", None, None, Path("/test/file.htm")),
         ]
     )
 
@@ -50,9 +50,9 @@ def test_to_display_string():
     sut: acvi.FileArrayValue = acvi.FileArrayValue(
         values=[
             acvi.EMPTY_FILE,
-            _TestFileValue(None, "application/bytestream", None, None, None).set_content_override(),
+            _TestFileValue(None, "application/bytestream", None, None, None, None).set_content_override(),
             _TestFileValue(
-                Path("file_path_here"), "application/bytestream", None, None, Path("file_path_here")
+                Path("file_path_here"), "application/bytestream", None, None, None, Path("file_path_here")
             ).set_content_override(),
         ]
     )
