@@ -195,6 +195,9 @@ def test_array_to_api_str():
 
 def test_array_to_api_str_2d():
 
+    # TODO: This test does not test the size parameter because the files tested
+    # do not really exist.
+
     # Setup
     with acvi.NonManagingFileScope() as sut_scope:
         sut_values: acvi.FileArrayValue = acvi.FileArrayValue(

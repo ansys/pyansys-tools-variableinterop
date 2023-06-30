@@ -118,6 +118,7 @@ class FileValue(IVariableValue, ABC):
         mime_type: Optional[str],
         encoding: Optional[str],
         value_id: Optional[UUID],
+        file_size: Optional[int],
     ):
         """
         Construct a new FileValue.
@@ -129,12 +130,14 @@ class FileValue(IVariableValue, ABC):
         encoding The encoding of the file.
         value_id The id that uniquely identifies this file. Auto-generated\
             if not supplied.
+        file_size The size of the file in bytes, if known.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
         self._file_encoding: Optional[str] = encoding
         self._original_path: Optional[PathLike] = original_path
         self._bom: str = ""
+        self._size: Optional[int] = file_size
 
     @overrides
     def __eq__(self, other):
@@ -176,6 +179,8 @@ class FileValue(IVariableValue, ABC):
     ENCODING_KEY: Final[str] = "encoding"
 
     CONTENTS_KEY: Final[str] = "contents"
+
+    SIZE_KEY: Final[str] = "size"
 
     _DEFAULT_EXT = ".tmp"
 
@@ -234,6 +239,17 @@ class FileValue(IVariableValue, ABC):
         The UUID that identifies this value.
         """
         return self._id
+
+    @property
+    def file_size(self) -> Optional[int]:
+        """
+        Get the size of the file in bytes if known.
+
+        Returns
+        -------
+        The size of the file in bytes.
+        """
+        return self._size
 
     @staticmethod
     def read_bom(filename: str) -> str:
@@ -456,6 +472,8 @@ class FileValue(IVariableValue, ABC):
             obj[FileValue.MIMETYPE_KEY] = self._mime_type
         if self._file_encoding:
             obj[FileValue.ENCODING_KEY] = self._file_encoding
+        if not (self._size is None):
+            obj[FileValue.SIZE_KEY] = str(self._size)
         return obj
 
     # TODO: Async get_contents
@@ -500,6 +518,7 @@ class LocalFileValue(FileValue, ABC):
         mime_type: Optional[str],
         encoding: Optional[str],
         value_id: Optional[UUID],
+        file_size: Optional[int],
         actual_content_file_name: Optional[PathLike],
     ):
         """
@@ -515,7 +534,11 @@ class LocalFileValue(FileValue, ABC):
         actual_content_file_name The path to where the content is actually being stored.
         """
         super().__init__(
-            original_path=original_path, encoding=encoding, value_id=value_id, mime_type=mime_type
+            original_path=original_path,
+            encoding=encoding,
+            value_id=value_id,
+            mime_type=mime_type,
+            file_size=file_size,
         )
         self.__actual_content_file_name = actual_content_file_name
 
@@ -558,7 +581,7 @@ class EmptyFileValue(LocalFileValue):
         Generally speaking you should not create an instance of this
         class but instead use ansys.tools.variableinterop.EMPTY_FILE.
         """
-        super().__init__(None, None, None, UUID(int=0), None)
+        super().__init__(None, None, None, UUID(int=0), None, None)
 
     @overrides
     def _has_content(self) -> bool:
