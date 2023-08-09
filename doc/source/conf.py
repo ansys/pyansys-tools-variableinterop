@@ -1,5 +1,6 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
+import os
 
 from ansys_sphinx_theme import pyansys_logo_black
 
@@ -10,6 +11,7 @@ project = "pyansys-tools-variableinterop"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__
+cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 
 # use the default pyansys logo
 html_logo = pyansys_logo_black

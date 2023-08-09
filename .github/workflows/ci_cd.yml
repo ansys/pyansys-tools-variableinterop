@@ -8,13 +8,20 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+      
+
 env:
+  DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
   MAIN_PYTHON_VERSION: '3.10'
   PACKAGE_NAME: 'pyansys-tools-variableinterop'
+  PACKAGE_NAMESPACE: 'ansys.tools.variableinterop'
 
 jobs:
-  style:
-    name: Code style
+  code-style:
+    name: "Code style"
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys code style checks
@@ -23,7 +30,7 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
   doc-style:
-    name: Documentation Style Check
+    name: "Documentation Style Check"
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys documentation style checks
@@ -32,9 +39,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   smoke-tests:
-    name: Build and Smoke tests
+    name: "Build and Smoke tests"
     runs-on: ${{ matrix.os }}
-    needs: [style]
+    needs: [code-style]
     strategy:
       fail-fast: false
       matrix:
@@ -75,11 +82,11 @@ jobs:
 
       - name: "Unit testing requirements installation"
         run: |
-          pip install -e .[tests]
+          pip install .[tests]
 
-      - name: Setup locale for tests
-        run: |
-          sudo locale-gen de_DE.UTF-8
+      # - name: Setup locale for tests
+      #   run: |
+      #     sudo locale-gen de_DE.UTF-8
 
       - name: "Unit testing"
         run: |
@@ -101,26 +108,39 @@ jobs:
           path: ./remote.xml
 
   doc-build:
-    name: Build Documentation
+    name: "Documentation building"
     runs-on: ubuntu-latest
     needs: [doc-style]
     steps:
-      - uses: actions/checkout@v2
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
+      
+      - name: Create Python venv
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\Activate.ps1
+  
+      - name: "Unit testing requirements installation"
+        run: |
+          pip install .[doc]
+      
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v4
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           checkout: false
+          skip-install: true
           sphinxopts: -j auto
 
 
   package:
     name: Package library
-    needs: [doc-build,build-test]
+    needs: [doc-build, build-test]
     runs-on: ubuntu-latest
     steps:
       - name: Build library source and wheel artifacts
@@ -139,11 +159,8 @@ jobs:
       - name: "Deploy the latest documentation"
         uses: ansys/actions/doc-deploy-dev@v4
         with:
-            cname: ${{ steps.deployment.outputs.page_url }}
-            token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     name: "Release project to public PyPI and GitHub"
