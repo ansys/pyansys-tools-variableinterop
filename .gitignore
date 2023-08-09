@@ -1,8 +1,7 @@
 # This is an example .gitignore and may need to be adapted per
 # project.
 
-# Compiled source #
-###################
+# Compiled source
 *.pyc
 *.pyd
 *.c
@@ -12,8 +11,19 @@
 *.cache
 .pytest_cache/
 
-# OS generated files #
-######################
+# Environments
+.env
+.venv*
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# vscode
+.vscode
+
+# OS generated files
 .fuse_hidden*
 *~
 *swp
@@ -27,8 +37,7 @@ flycheck*
 # Old files #
 _old/
 
-# Pip generated folders #
-#########################
+# Pip generated folders
 *.egg-info/
 build/
 dist/
