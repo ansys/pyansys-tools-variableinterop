@@ -10,7 +10,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: '3.10'
-  PACKAGE_NAME: 'ansys-geometry-core'
+  PACKAGE_NAME: 'ansys-tools-variableinterop'
 
 jobs:
   style:
