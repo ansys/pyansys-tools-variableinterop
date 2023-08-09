@@ -18,9 +18,17 @@ class VariableType(Enum):
     UNKNOWN = 0
     """If the type is unknown."""
     INTEGER = 1
-    """Integer values. These are stored as 64 bit signed integers"""
+    """
+    Integer values.
+
+    These are stored as 64 bit signed integers
+    """
     REAL = 2
-    """Real values. These are stored as 64 bit floating point numbers"""
+    """
+    Real values.
+
+    These are stored as 64 bit floating point numbers
+    """
     BOOLEAN = 3
     """Boolean values."""
     STRING = 4
@@ -28,17 +36,36 @@ class VariableType(Enum):
     FILE = 5
     """File values."""
     INTEGER_ARRAY = 6
-    """An array of integer values. These are stored as 64 bit signed integers. Multidimensional
-    arrays are supported."""
+    """
+    An array of integer values.
+
+    These are stored as 64 bit signed integers. Multidimensional arrays are supported.
+    """
     REAL_ARRAY = 7
-    """An array of real values. These are stored as 64 bit floating point numbers. Multidimensional
-        arrays are supported."""
+    """
+    An array of real values.
+
+    These are stored as 64 bit floating point numbers. Multidimensional arrays are
+    supported.
+    """
     BOOLEAN_ARRAY = 8
-    """An array of boolean values. Multidimensional arrays are supported."""
+    """
+    An array of boolean values.
+
+    Multidimensional arrays are supported.
+    """
     STRING_ARRAY = 9
-    """An array of string values. Multidimensional arrays are supported."""
+    """
+    An array of string values.
+
+    Multidimensional arrays are supported.
+    """
     FILE_ARRAY = 10
-    """An array of file values. Multidimensional arrays are supported."""
+    """
+    An array of file values.
+
+    Multidimensional arrays are supported.
+    """
 
     @property
     def associated_type_name(self) -> str:
@@ -85,7 +112,8 @@ class VariableType(Enum):
         """
 
         class __IterableKeyDict(Dict[Union[Iterable, str], Any]):
-            """Dict that can initialize with iterable keys and give each value its own entry."""
+            """Dict that can initialize with iterable keys and give each value its own
+            entry."""
 
             def __init__(self, d_: Dict[Union[Iterable, str], VariableType]):
                 def __br():

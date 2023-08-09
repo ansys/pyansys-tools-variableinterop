@@ -14,10 +14,10 @@ class ISaveContext(AbstractContextManager, ABC):
     """
     An abstraction for a save medium.
 
-    In order to separate the concerns of being able to save large associated content in other
-    transfer mediums, this interface was defined which allows out of bound data to be transferred.
-    Examples include saving to a ZIP file, or using an SCP side-channel on an SSH connection to send
-    files or other large data.
+    In order to separate the concerns of being able to save large associated content in
+    other transfer mediums, this interface was defined which allows out of bound data to
+    be transferred. Examples include saving to a ZIP file, or using an SCP side-channel
+    on an SSH connection to send files or other large data.
     """
 
     @overrides

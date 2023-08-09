@@ -1,13 +1,11 @@
-"""
-Unit tests for array_value_conversion
-"""
+"""Unit tests for array_value_conversion."""
 from typing import Type
 
 import pytest
-from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 import ansys.tools.variableinterop as acvi
 import ansys.tools.variableinterop.array_value_conversion as array_value_conversion
+from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 
 @pytest.mark.parametrize(

@@ -9,7 +9,8 @@ class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
     """
     A pseudovisitor implementation that checks whether the visited type is an array.
 
-    True is returned if the visited type is an array type, and false is returned otherwise.
+    True is returned if the visited type is an array type, and false is returned
+    otherwise.
     """
 
     @overrides

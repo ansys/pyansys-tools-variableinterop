@@ -17,7 +17,6 @@ def escape_string(unescaped: str) -> str:
     Returns
     -------
     The string with the specified characters escaped.
-
     """
     return (
         unescaped.replace("\\", r"\\")
@@ -33,9 +32,9 @@ __unescape_map: Dict[str, str] = {"n": "\n", "r": "\r", "t": "\t", "0": "\0"}
 """
 This map contains characters escaped by escape_string that require special handling.
 
-Note that some of the characters actually escaped by escape_string are not present in this map.
-In those cases, the correct unescaping behavior is to insert the character after the backslash
-unchanged (backslash and double-quote).
+Note that some of the characters actually escaped by escape_string are not present in
+this map. In those cases, the correct unescaping behavior is to insert the character
+after the backslash unchanged (backslash and double-quote).
 """
 
 
@@ -58,7 +57,6 @@ def unescape_string(escaped: str) -> str:
     Returns
     -------
     The string with the escape sequences undone.
-
     """
     unescaped: List[str] = []
     str_index: int = 0

@@ -1,11 +1,10 @@
 """
 Provides a variable type pseudo-visitor that parses values from strings.
 
-The pseudo-visitor is constructed with the string to parse, then accepted
-by the appropriate variable type. When visiting, it attempts to parse
-the string into the visited type. See the pseudo-visitor interface
-definition for more information as to why this pattern is beneficial
-compared to bare switch statements.
+The pseudo-visitor is constructed with the string to parse, then accepted by the
+appropriate variable type. When visiting, it attempts to parse the string into the
+visited type. See the pseudo-visitor interface definition for more information as to why
+this pattern is beneficial compared to bare switch statements.
 """
 import json
 from typing import Optional
@@ -21,7 +20,8 @@ from .variable_value import IVariableValue
 
 class APIStringToValueVisitor(IVariableTypePseudoVisitor):
     """
-    A pseudo-visitor for the variable type enum that produces variable values from strings.
+    A pseudo-visitor for the variable type enum that produces variable values from
+    strings.
 
     The actual type generated is determined by the type that accepts this visitor.
     """
@@ -57,7 +57,6 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Raises
         ------
         NotImplementedError always
-
         """
         raise NotImplementedError("Cannot create values with unknown type.")
 

@@ -2,7 +2,6 @@ from typing import Any, Type
 
 import numpy
 import pytest
-from test_utils import _create_exception_context
 
 from ansys.tools.variableinterop import (
     BooleanValue,
@@ -12,6 +11,7 @@ from ansys.tools.variableinterop import (
     StringValue,
     to_integer_value,
 )
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -55,7 +55,8 @@ from ansys.tools.variableinterop import (
 def test_construct(
     arg: Any, expect_equality: numpy.int64, expect_exception: Type[BaseException]
 ) -> None:
-    """Verify that __init__ for IntegerValue correctly instantiates the superclass data."""
+    """Verify that __init__ for IntegerValue correctly instantiates the superclass
+    data."""
     with _create_exception_context(expect_exception):
         instance = IntegerValue(arg)
 

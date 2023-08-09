@@ -25,7 +25,8 @@ class IVariableValue(ABC):
     @abstractmethod
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         """
-        Invoke the visitor pattern of this object using the passed in visitor implementation.
+        Invoke the visitor pattern of this object using the passed in visitor
+        implementation.
 
         Parameters
         ----------
@@ -83,7 +84,11 @@ class IVariableValue(ABC):
 
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
-    """Interface that defines common behavior for array types. Inherits ``IVariableValue``."""
+    """
+    Interface that defines common behavior for array types.
+
+    Inherits ``IVariableValue``.
+    """
 
     def get_lengths(self) -> Tuple[int]:
         """

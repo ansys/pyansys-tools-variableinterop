@@ -34,12 +34,12 @@ repos:
   - id: codespell
     args: ["--ignore-words", "doc/styles/Vocab/ANSYS/accept.txt"]
 
-- repo: https://github.com/pycqa/pydocstyle
-  rev: 6.3.0
-  hooks:
-  - id: pydocstyle
-    additional_dependencies: [tomli]
-    exclude: "tests/"
+# - repo: https://github.com/pycqa/pydocstyle
+#   rev: 6.3.0
+#   hooks:
+#   - id: pydocstyle
+#     additional_dependencies: [tomli]
+#     exclude: "tests/"
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0

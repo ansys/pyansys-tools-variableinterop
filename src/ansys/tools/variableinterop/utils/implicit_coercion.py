@@ -30,12 +30,13 @@ __TYPE_MAPPINGS = {
     np.str_: StringValue,
 }
 """
-This map applies when coercing scalar values to a method argument type hinted as IVariableValue.
+This map applies when coercing scalar values to a method argument type hinted as
+IVariableValue.
 
-It is used to determine the specific implementation of IVariableValue that should be generated
-from the argument's actual runtime value.
-The type of the actual runtime argument value is the key in the dictionary,
-and the value is the specific IVariableValue implementation that should be used.
+It is used to determine the specific implementation of IVariableValue that should be
+generated from the argument's actual runtime value. The type of the actual runtime
+argument value is the key in the dictionary, and the value is the specific
+IVariableValue implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
@@ -50,12 +51,13 @@ __ARR_TYPE_MAPPINGS = {
     np.str_: StringArrayValue,
 }
 """
-This map applies when coercing ndarray values to a method argument type hinted as IVariableValue.
+This map applies when coercing ndarray values to a method argument type hinted as
+IVariableValue.
 
-It is used to determine the specific implementation of IVariableValue that should be generated
-from the argument's actual runtime value.
-The dtype of the actual ndarray value at runtime is the key in the dictionary,
-and the value is the specific IVariableValue implementation that should be used.
+It is used to determine the specific implementation of IVariableValue that should be
+generated from the argument's actual runtime value. The dtype of the actual ndarray
+value at runtime is the key in the dictionary, and the value is the specific
+IVariableValue implementation that should be used.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
@@ -98,9 +100,9 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
 """
 Rules for implicitly coercing scalar values to a specific IVariableValue implementation.
 
-This map is used to determine whether the coercion is allowed.
-The IVariableValue implementation type is the key. The value is a list of all types that may be
-implicitly coerced to that type.
+This map is used to determine whether the coercion is allowed. The IVariableValue
+implementation type is the key. The value is a list of all types that may be implicitly
+coerced to that type.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
@@ -112,10 +114,10 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
 """
 Rules for implicitly coercing array values to a specific IVariableValue implementation.
 
-The map is used to determine whether the coercion is allowed.
-The IVariableValue implementation type is the key. NumPy ndarrays with their dtype set to any of
-the items in the value list are allowed to be implicitly coerced to the type represented by
-the key.
+The map is used to determine whether the coercion is allowed. The IVariableValue
+implementation type is the key. NumPy ndarrays with their dtype set to any of the items
+in the value list are allowed to be implicitly coerced to the type represented by the
+key.
 """
 
 
@@ -142,9 +144,9 @@ def _is_optional(arg_type: type) -> bool:
 
 def _get_optional_type(arg_type: type) -> type:
     """
-    If _is_optional(arg_type) returns true, this function will return \
-    the type argument to Optional[x]. If _is_optional(arg_type) returns \
-    false, this function's behavior is undeclared.
+    If _is_optional(arg_type) returns true, this function will return \ the type
+    argument to Optional[x]. If _is_optional(arg_type) returns \ false, this function's
+    behavior is undeclared.
 
     Parameters
     ----------
@@ -296,9 +298,8 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
 def implicit_coerce(func):
     """
-    Use to decorate functions that use the PEP 484 typing system to try \
-    and coerce any arguments that accept IVariableValue or any derived \
-    type into an acceptable value.
+    Use to decorate functions that use the PEP 484 typing system to try \ and coerce any
+    arguments that accept IVariableValue or any derived \ type into an acceptable value.
 
     Parameters
     ----------

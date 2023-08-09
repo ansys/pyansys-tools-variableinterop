@@ -27,7 +27,8 @@ RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
     """
-    Represents the context during which a locally available copy of file value content should exist.
+    Represents the context during which a locally available copy of file value content
+    should exist.
 
     This is intended for use with an async implementation.
     """
@@ -44,7 +45,8 @@ class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
 
 class LocalFileContentContext(AbstractContextManager, ABC):
     """
-    Represents the context during which a locally available copy of file value content should exist.
+    Represents the context during which a locally available copy of file value content
+    should exist.
 
     This is intended for use with a synchronous implementation.
     """
@@ -63,10 +65,9 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
     """
     A default local file context for when the file is already hosted locally.
 
-    Because the file is already hosted and managed locally, there is no need
-    to create a new copy. Therefore, this implementation basically does nothing
-    but provide a way to abstract away the difference between a locally and remotely
-    hosted file content.
+    Because the file is already hosted and managed locally, there is no need to create a
+    new copy. Therefore, this implementation basically does nothing but provide a way to
+    abstract away the difference between a locally and remotely hosted file content.
     """
 
     @overrides
@@ -109,8 +110,12 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
 
 
 class FileValue(IVariableValue, ABC):
-    """Abstract base class for a file variable. To create instances, \
-    use a `FileScope`."""
+    """
+    Abstract base class for a file variable.
+
+    To create instances, \
+    use a `FileScope`.
+    """
 
     def __init__(
         self,
@@ -254,8 +259,7 @@ class FileValue(IVariableValue, ABC):
     @staticmethod
     def read_bom(filename: str) -> str:
         """
-        Open a file for reading and detects a byte order mark at the \
-        beginning.
+        Open a file for reading and detects a byte order mark at the \ beginning.
 
         Parameters
         ----------
@@ -497,19 +501,20 @@ class FileValue(IVariableValue, ABC):
 
 class LocalFileValue(FileValue, ABC):
     """
-    A base class for file values where the file contents already exist on the local disk.
+    A base class for file values where the file contents already exist on the local
+    disk.
 
-    Generally speaking, clients of this library should not attempt to use this class.
-    It is intended for dependents of this library who are attempting to implement a new
+    Generally speaking, clients of this library should not attempt to use this class. It
+    is intended for dependents of this library who are attempting to implement a new
     FileScope type where that FileScope always stores file content on the local disk.
-    Clients are discouraged from attempting to introspect FileValues to determine if they
-    are LocalFileValues for the purpose of getting a path to the locally stored content.
-    Instead, always correctly use FileValue's get_reference_to_actual_content_file,
-    which will allow the code in question to get a local path even for files that are
-    not originally hosted locally. For files that are originally hosted locally,
-    this will not produce an additional copy and instead will give a context manager
-    that will do nothing on enter/exit but still allow access to the actual content
-    path.
+    Clients are discouraged from attempting to introspect FileValues to determine if
+    they are LocalFileValues for the purpose of getting a path to the locally stored
+    content. Instead, always correctly use FileValue's
+    get_reference_to_actual_content_file, which will allow the code in question to get a
+    local path even for files that are not originally hosted locally. For files that are
+    originally hosted locally, this will not produce an additional copy and instead will
+    give a context manager that will do nothing on enter/exit but still allow access to
+    the actual content path.
     """
 
     def __init__(
@@ -570,16 +575,16 @@ class EmptyFileValue(LocalFileValue):
     """
     Represents an empty file value.
 
-    Generally speaking, you should not create an instance of this class
-    but instead use ansys.tools.variableinterop.EMPTY_FILE.
+    Generally speaking, you should not create an instance of this class but instead use
+    ansys.tools.variableinterop.EMPTY_FILE.
     """
 
     def __init__(self):
         """
         Construct a new instance.
 
-        Generally speaking you should not create an instance of this
-        class but instead use ansys.tools.variableinterop.EMPTY_FILE.
+        Generally speaking you should not create an instance of this class but instead
+        use ansys.tools.variableinterop.EMPTY_FILE.
         """
         super().__init__(None, None, None, UUID(int=0), None, None)
 

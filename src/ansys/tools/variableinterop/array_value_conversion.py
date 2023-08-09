@@ -95,7 +95,6 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
     -------
     BooleanArrayValue
     The value as a BooleanArrayValue.
-
     """
     return other.accept(__ToBooleanArrayVisitor())
 
@@ -173,7 +172,6 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
     -------
     IntegerArrayValue
     The value as a IntegerArrayValue.
-
     """
     return other.accept(__ToIntegerArrayVisitor())
 
@@ -251,7 +249,6 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     -------
     RealArrayValue
     The value as a RealArrayValue.
-
     """
     return other.accept(__ToRealArrayVisitor())
 
@@ -329,6 +326,5 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
     -------
     StringArrayValue
     The value as a StringArrayValue.
-
     """
     return other.accept(__ToStringArrayVisitor())

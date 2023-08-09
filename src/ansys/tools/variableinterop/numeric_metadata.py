@@ -27,7 +27,8 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
     @overrides
     def equals(self, other: Any) -> bool:
-        """Determine if a given metadata is equal to this metadata.
+        """
+        Determine if a given metadata is equal to this metadata.
 
         Parameters
         ----------

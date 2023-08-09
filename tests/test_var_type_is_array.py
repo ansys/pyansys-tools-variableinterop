@@ -21,7 +21,7 @@ import ansys.tools.variableinterop as acvi
 )
 def test_var_type_is_array(vartype: acvi.VariableType, expected_result: bool) -> None:
     """
-    Test whether the var_type_is_array method actually works
+    Test whether the var_type_is_array method actually works.
 
     Parameters
     ----------

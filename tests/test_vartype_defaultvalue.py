@@ -2,9 +2,9 @@
 from typing import Type
 
 import pytest
-from test_utils import _create_exception_context
 
 import ansys.tools.variableinterop as interop
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(

@@ -2,7 +2,6 @@
 
 import numpy as np
 import pytest
-from test_utils import _create_exception_context
 
 from ansys.tools.variableinterop import (
     BooleanArrayValue,
@@ -16,6 +15,7 @@ from ansys.tools.variableinterop import (
     StringValue,
     ValueDeserializationUnsupportedException,
 )
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -426,9 +426,7 @@ def test_converting_from_a_string_array(
 
 
 def test_converting_file_value():
-    """
-    Verifies that attempting to deserialize a file value always fails.
-    """
+    """Verifies that attempting to deserialize a file value always fails."""
     visitor = FromFormattedStringVisitor("any string", "locale ignored")
 
     with _create_exception_context(ValueDeserializationUnsupportedException):
@@ -436,9 +434,7 @@ def test_converting_file_value():
 
 
 def test_converting_file_array_value():
-    """
-    Verifies that attempting to deserialize a file value always fails.
-    """
+    """Verifies that attempting to deserialize a file value always fails."""
     visitor = FromFormattedStringVisitor("any string", "locale ignored")
 
     with _create_exception_context(ValueDeserializationUnsupportedException):

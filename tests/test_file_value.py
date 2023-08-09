@@ -32,10 +32,8 @@ class _TestFileValue(acvi.LocalFileValue):
         self._has_content_override: bool = False
 
     def set_content_override(self) -> "_TestFileValue":
-        """
-        Causes this instance to report it has content regardless
-        of how it was constructed.
-        """
+        """Causes this instance to report it has content regardless of how it was
+        constructed."""
         self._has_content_override = True
         return self
 

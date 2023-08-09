@@ -8,7 +8,7 @@
 .. toctree::
    :hidden:
    :maxdepth: 3
-    
+
    self
    class_documentation
 

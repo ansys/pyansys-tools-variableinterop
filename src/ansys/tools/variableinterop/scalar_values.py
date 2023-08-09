@@ -22,26 +22,23 @@ class BooleanValue(IVariableValue):
     """
     Wrapper around a boolean value.
 
-    This type is treated by Python as if it were any other boolean type such as numpy.bool_
-    or builtins.bool.
+    This type is treated by Python as if it were any other boolean type such as
+    numpy.bool_ or builtins.bool.
     """
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
-        """Convert a numpy int64 to a bool value per interchange \
-        specifications."""
+        """Convert a numpy int64 to a bool value per interchange \ specifications."""
         return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
-        """Convert an int to a bool value per interchange \
-        specifications."""
+        """Convert an int to a bool value per interchange \ specifications."""
         return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
-        """Convert a float value to a bool per interchange \
-        specifications."""
+        """Convert a float value to a bool per interchange \ specifications."""
         return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
@@ -52,10 +49,8 @@ class BooleanValue(IVariableValue):
         "n": False,
         "false": False,
     }
-    """
-    A mapping of acceptable normalized values for API string conversion
-    to their corresponding bool value.
-    """
+    """A mapping of acceptable normalized values for API string conversion to their
+    corresponding bool value."""
 
     @staticmethod
     def str_to_bool(val: str) -> bool:
@@ -320,16 +315,16 @@ class IntegerValue(np.int64, IVariableValue):
     """
     Wrapper around an integer value.
 
-    In Python IntegerValue is implemented by extending NumPy's int64 type. This means that
-    they will decay naturally into numpy.int64 objects when using NumPy's arithmetic
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards. For
-    example, when converting from real to integer, the value will be floored instead of
-    rounded. If you want the variable interop standard conversions, use the to_real_value
-    function on this class to get a RealValue, which will be rounded according to the
-    variable interop standards and decomposes naturally into a numpy.float64. Other conversions
-    to analogous Python or NumPy types are identical between the variable interop standards
-    and the default Python / NumPy behavior.
+    In Python IntegerValue is implemented by extending NumPy's int64 type. This means
+    that they will decay naturally into numpy.int64 objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    which may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value will be
+    floored instead of rounded. If you want the variable interop standard conversions,
+    use the to_real_value function on this class to get a RealValue, which will be
+    rounded according to the variable interop standards and decomposes naturally into a
+    numpy.float64. Other conversions to analogous Python or NumPy types are identical
+    between the variable interop standards and the default Python / NumPy behavior.
     """
 
     @overrides
@@ -442,14 +437,14 @@ class RealValue(np.float64, IVariableValue):
     """
     Wrapper around a real value.
 
-    In Python RealValue is implemented by extending NumPy's float64 type. This means that
-    they will decay naturally into numpy.float64 objects when using NumPy's arithmetic
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use to_int_value() to get
-    an IntegerValue with variable interop standard rounding (away from zero). IntegerValue
-    decomposes naturally to numpy.int64.
+    In Python RealValue is implemented by extending NumPy's float64 type. This means
+    that they will decay naturally into numpy.float64 objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    which may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value will be
+    floored instead of rounded. If you want the variable interop standard conversions,
+    use to_int_value() to get an IntegerValue with variable interop standard rounding
+    (away from zero). IntegerValue decomposes naturally to numpy.int64.
     """
 
     def __new__(cls, arg: Any = 0.0):
@@ -470,24 +465,22 @@ class RealValue(np.float64, IVariableValue):
     """
     This is the canonical API string representation for infinity.
 
-    from_api_string will accept other values provided they are
-    unambiguously infinity.
+    from_api_string will accept other values provided they are unambiguously infinity.
     """
 
     __CANONICAL_NEG_INF = "-Infinity"
     """
     This is the canonical API string representation for negative infinity.
 
-    from_api_string will accept other values provided they are
-    unambiguously negative infinity.
+    from_api_string will accept other values provided they are unambiguously negative
+    infinity.
     """
 
     __CANONICAL_NAN = "NaN"
     """
     This is the canonical API string representation for NaN.
 
-    from_api_string will accept other values provided they are
-    unambiguously NaN.
+    from_api_string will accept other values provided they are unambiguously NaN.
     """
 
     @overrides
@@ -571,14 +564,14 @@ class StringValue(np.str_, IVariableValue):
     """
     Wrapper around a string value.
 
-    In Python IntegerValue is implemented by extending NumPy's str_ type. This means that
-    they will decay naturally into numpy.str_ objects when used with other types
+    In Python IntegerValue is implemented by extending NumPy's str_ type. This means
+    that they will decay naturally into numpy.str_ objects when used with other types
     operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards. For
-    example, when converting from string to integer, values parseable as a floating-point number
-    are rejected instead of parsed as such and rounded.
-    If you want the variable interop standard conversions, use the from_api_string method
-    on any given variable interop type to get an instance of that type, which should decompose
+    slightly different from the behaviors specified in the variable interop standards.
+    For example, when converting from string to integer, values parseable as a floating-
+    point number are rejected instead of parsed as such and rounded. If you want the
+    variable interop standard conversions, use the from_api_string method on any given
+    variable interop type to get an instance of that type, which should decompose
     naturally to the analogous NumPy type.
     """
 

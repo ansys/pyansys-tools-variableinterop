@@ -9,8 +9,7 @@ from .variable_value import IVariableValue
 
 def from_formatted_string(var_type: VariableType, source: str, locale_name: str) -> IVariableValue:
     """
-    Convert a value formatted to a specific locale back into an \
-    IVariableValue.
+    Convert a value formatted to a specific locale back into an \ IVariableValue.
 
     Parameters
     ----------

@@ -39,9 +39,8 @@ all_metadata_types = [
 
 def assert_equals(metadata1, metadata2) -> None:
     """
-    Tests whether passed metadata objects are equal using __eq__
-    and __ne__ operators and specifying each object both, as lhs and rhs
-    operand.
+    Tests whether passed metadata objects are equal using __eq__ and __ne__ operators
+    and specifying each object both, as lhs and rhs operand.
 
     Parameters
     ----------
@@ -63,9 +62,8 @@ def assert_equals(metadata1, metadata2) -> None:
 
 def assert_are_not_equal(metadata1, metadata2) -> None:
     """
-    Tests whether passed metadata objects are not equal using __eq__
-    and __ne__ operators and specifying each object both, as lhs and rhs
-    operand.
+    Tests whether passed metadata objects are not equal using __eq__ and __ne__
+    operators and specifying each object both, as lhs and rhs operand.
 
     Parameters
     ----------
@@ -87,7 +85,8 @@ def assert_are_not_equal(metadata1, metadata2) -> None:
 
 @pytest.mark.parametrize("type_name", all_metadata_types)
 def test_equals_empty(type_name: str) -> None:
-    """Tests whether empty metadata objects of the same type are equal.
+    """
+    Tests whether empty metadata objects of the same type are equal.
 
     Parameters
     ----------
@@ -105,8 +104,7 @@ def test_equals_empty(type_name: str) -> None:
 
 def test_different_metadata_types_are_not_equal() -> None:
     """
-    Tests whether empty metadata objects of different type are not
-    equal.
+    Tests whether empty metadata objects of different type are not equal.
 
     Returns
     -------
@@ -120,8 +118,8 @@ def test_different_metadata_types_are_not_equal() -> None:
 @pytest.mark.parametrize("type_name", all_metadata_types)
 def test_equals_same_description(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same description are equal.
+    Tests whether metadata objects of the same type and having the same description are
+    equal.
 
     Parameters
     ----------
@@ -142,8 +140,8 @@ def test_equals_same_description(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", all_metadata_types)
 def test_equals_different_description(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different descriptions are not equal.
+    Tests whether metadata objects of the same type and having different descriptions
+    are not equal.
 
     Parameters
     ----------
@@ -165,8 +163,8 @@ def test_equals_different_description(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", all_metadata_types)
 def test_equals_same_custom_metadata(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same custom_metadata are equal.
+    Tests whether metadata objects of the same type and having the same custom_metadata
+    are equal.
 
     Parameters
     ----------
@@ -189,8 +187,8 @@ def test_equals_same_custom_metadata(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", all_metadata_types)
 def test_equals_different_custom_metadata(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different custom_metadata are not equal.
+    Tests whether metadata objects of the same type and having different custom_metadata
+    are not equal.
 
     Parameters
     ----------
@@ -223,8 +221,7 @@ numeric_metadata_types = [
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
 def test_equals_same_units(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same units are equal.
+    Tests whether metadata objects of the same type and having the same units are equal.
 
     Parameters
     ----------
@@ -247,8 +244,8 @@ def test_equals_same_units(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
 def test_equals_different_units(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different units are not equal.
+    Tests whether metadata objects of the same type and having different units are not
+    equal.
 
     Parameters
     ----------
@@ -271,8 +268,8 @@ def test_equals_different_units(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
 def test_equals_same_display_format(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same display format are equal.
+    Tests whether metadata objects of the same type and having the same display format
+    are equal.
 
     Parameters
     ----------
@@ -297,8 +294,8 @@ def test_equals_same_display_format(type_name: str) -> None:
 @pytest.mark.parametrize("type_name", numeric_metadata_types)
 def test_equals_different_display_format(type_name: str) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different display format are not equal.
+    Tests whether metadata objects of the same type and having different display format
+    are not equal.
 
     Parameters
     ----------
@@ -348,8 +345,8 @@ def test_equals_different_display_format(type_name: str) -> None:
 )
 def test_equals_same_bound(type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same bound value are equal.
+    Tests whether metadata objects of the same type and having the same bound value are
+    equal.
 
     Parameters
     ----------
@@ -395,8 +392,8 @@ def test_equals_same_bound(type_name: str, bound: str, value1: Any, value2: Any)
 )
 def test_equals_different_bound(type_name: str, bound: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different bound values are not equal.
+    Tests whether metadata objects of the same type and having different bound values
+    are not equal.
 
     Parameters
     ----------
@@ -438,8 +435,8 @@ def test_equals_different_bound(type_name: str, bound: str, value1: Any, value2:
 )
 def test_equals_same_enumerated_values(type_name: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same enumerated_values value are equal.
+    Tests whether metadata objects of the same type and having the same
+    enumerated_values value are equal.
 
     Parameters
     ----------
@@ -481,8 +478,8 @@ def test_equals_same_enumerated_values(type_name: str, value1: Any, value2: Any)
 )
 def test_equals_different_enumerated_values(type_name: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different enumerated_values value are not equal.
+    Tests whether metadata objects of the same type and having different
+    enumerated_values value are not equal.
 
     Parameters
     ----------
@@ -523,8 +520,8 @@ def test_equals_different_enumerated_values(type_name: str, value1: Any, value2:
 )
 def test_equals_same_enumerated_aliases(type_name: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    the same enumerated_values value are equal.
+    Tests whether metadata objects of the same type and having the same
+    enumerated_values value are equal.
 
     Parameters
     ----------
@@ -564,8 +561,8 @@ def test_equals_same_enumerated_aliases(type_name: str, value1: Any, value2: Any
 )
 def test_equals_different_enumerated_aliases(type_name: str, value1: Any, value2: Any) -> None:
     """
-    Tests whether metadata objects of the same type and having
-    different enumerated_values value are not equal.
+    Tests whether metadata objects of the same type and having different
+    enumerated_values value are not equal.
 
     Parameters
     ----------

@@ -13,8 +13,8 @@ from .variable_value import IVariableValue
 
 
 class __ToBooleanVisitor(IVariableValueVisitor[bool]):
-    """An IVariableValueVisitor which returns a bool equivalent of the \
-    object visited."""
+    """An IVariableValueVisitor which returns a bool equivalent of the \ object
+    visited."""
 
     @overrides
     def visit_boolean(self, value: "BooleanValue") -> bool:

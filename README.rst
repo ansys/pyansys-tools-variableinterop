@@ -10,8 +10,8 @@ all products that optionally choose to participate.
 
 **Work in Progress**
 
-This library is a work in progress and has not been released yet. 
-It still has unfinished documentation and APIs are not guaranteed 
+This library is a work in progress and has not been released yet.
+It still has unfinished documentation and APIs are not guaranteed
 to be stable yet.
 
 Characteristics
@@ -35,7 +35,7 @@ Characteristics of this library include:
   operations to the existing data types. It is extremely hard to make both possible at the same
   time. This library uses the `visitor pattern <https://en.wikipedia.org/wiki/Visitor_pattern>`_ to
   make it easy and reliable to add and reuse
-  new operations with compile-time semantics. 
+  new operations with compile-time semantics.
 - In trade, adding new datatypes is not easy
 - Most commonly re-used metadata strongly defined. Generic dictionary provided for custom metadata
 
@@ -138,18 +138,25 @@ Values and metadata can be created like any other Python object:
 
 .. code:: python
 
-   >>> import ansys.tools.variableinterop as atvi
-   >>> width = atvi.RealValue(3.1)
-   >>> width
-   3.1
+   import ansys.tools.variableinterop as atvi
+
+   width = atvi.RealValue(3.1)
+   width
+.. code:: out
+
+    3.1
+
+.. code:: python
 
    # Standard python operations should work seamlessly
-   >>> 4 + width
-   7.1
+   print(4 + width)
 
-   >>> width_metadata = atvi.RealMetadata()
-   >>> width_metadata.lower_bound = 0.1
-   >>> var(width_metadata)
+   width_metadata = atvi.RealMetadata()
+   width_metadata.lower_bound = 0.1
+   var(width_metadata)
+.. code:: out
+
+   7.1
    {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
 
 
@@ -157,7 +164,7 @@ Testing
 -------
 Dependencies required for testing can be installed via:
 
-.. code::
+.. code:: bash
 
     poetry install -E test
 

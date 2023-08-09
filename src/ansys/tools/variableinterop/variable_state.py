@@ -49,7 +49,11 @@ class VariableState:
 
     @property
     def is_valid(self) -> bool:
-        """Get the validity flag. True indicates the value is valid."""
+        """
+        Get the validity flag.
+
+        True indicates the value is valid.
+        """
         return self.__is_valid
 
     @property
@@ -57,8 +61,7 @@ class VariableState:
         """
         Get the variable value.
 
-        VariableValueInvalidError is raised if the variable value is
-        not valid.
+        VariableValueInvalidError is raised if the variable value is not valid.
         """
         if self.__is_valid:
             return self.__value

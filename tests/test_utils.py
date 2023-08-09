@@ -8,17 +8,15 @@ import ansys.tools.variableinterop as acvi
 
 @contextmanager
 def _dummy_context():
-    """
-    A dummy context that does nothing so we can always use a with
-    statement, even if one isn't needed.
-    """
+    """A dummy context that does nothing so we can always use a with statement, even if
+    one isn't needed."""
     yield None
 
 
 def _create_exception_context(expect_exception: Optional[Type[BaseException]]):
     """
-    Creates an object to use in a with block that will test for expect_exception
-    to be thrown, or does nothing if expect_exception is None.
+    Creates an object to use in a with block that will test for expect_exception to be
+    thrown, or does nothing if expect_exception is None.
 
     Parameters
     ----------

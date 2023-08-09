@@ -95,7 +95,7 @@ jobs:
 
       - name: Build HTML
         run: |
-          make -C doc html 
+          make -C doc html
           # Add back in to previous line once documentation is cleaned up: SPHINXOPTS="-W"
 
       - name: Upload Pages Artifact
@@ -117,13 +117,13 @@ jobs:
 #          path: doc/build/latex/*.pdf
 #          retention-days: 7
 
-  Deploy-Pages: 
+  Deploy-Pages:
     if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: docs 
+    needs: docs
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

@@ -11,11 +11,10 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     """
     Interface definition for variable type pseudo-visitor.
 
-    This interface defines a "pseudo-visitor" for the possible values
-    of VariableType. Although this pattern ultimately requires
-    the use of a single "switch-statement equivalent" (see the
-    __accept_map below) it confines said switch to a single instance,
-    and allows it to essentially be reused with mypy "typesafety."
+    This interface defines a "pseudo-visitor" for the possible values of VariableType.
+    Although this pattern ultimately requires the use of a single "switch-statement
+    equivalent" (see the __accept_map below) it confines said switch to a single
+    instance, and allows it to essentially be reused with mypy "typesafety."
     """
 
     @abstractmethod
@@ -275,10 +274,10 @@ __accept_map: Dict["VariableType", Callable[["IVariableTypePseudoVisitor[T]"], T
     VariableType.FILE_ARRAY: __accept_file_array,
 }
 """
-A map of the variable types to the actual
-"accept" implementations that correspond to them.
-This allows Python to quickly and correctly find the right accept
-implementation.
+A map of the variable types to the actual "accept" implementations that correspond to
+them.
+
+This allows Python to quickly and correctly find the right accept implementation.
 """
 
 

@@ -11,8 +11,8 @@ class LocaleUtils:
     @staticmethod
     def perform_safe_locale_action(locale_name: str, action: Callable) -> Any:
         """
-        Switches to the correct locale, performs the specified action, \
-        and then switches back safely.
+        Switches to the correct locale, performs the specified action, \ and then
+        switches back safely.
 
         Parameters
         ----------

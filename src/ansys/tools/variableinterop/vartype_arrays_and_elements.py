@@ -1,4 +1,5 @@
-"""Defines functions for determining the correct array type for a scalar type and vice-versa."""
+"""Defines functions for determining the correct array type for a scalar type and vice-
+versa."""
 
 from typing import Optional
 
@@ -90,8 +91,9 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
 
 
 def to_array_type(vartype: VariableType) -> VariableType:
-    """Given a VariableType, find the corresponding array type, if one \
-    exists. Otherwise, ValueError is raised.
+    """
+    Given a VariableType, find the corresponding array type, if one \ exists. Otherwise,
+    ValueError is raised.
 
     Parameters
     ----------
@@ -104,7 +106,6 @@ def to_array_type(vartype: VariableType) -> VariableType:
     Raises
     ------
     ValueError if the specified type does not have a corresponding array type.
-
     """
     result: Optional[VariableType] = vartype_accept(__ScalarToArrayPseudoVisitor(), vartype)
 
@@ -131,7 +132,6 @@ def get_element_type(vartype: VariableType) -> VariableType:
     Raises
     ------
     ValueError if the specified type does not have a corresponding element type.
-
     """
     result: Optional[VariableType] = vartype_accept(__ElementTypePseudoVisitor(), vartype)
 
