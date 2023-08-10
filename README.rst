@@ -99,7 +99,6 @@ version of the project with:
    pip install -e .
 
 
-
 Documentation
 -------------
 

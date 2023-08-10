@@ -3,3 +3,5 @@ Ansys
 ansys
 API
 api
+Interop
+PyAnsys Tools Variable Interop
