@@ -106,6 +106,6 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         disp_str: str = ArrayToFromStringUtil.value_to_string(
-            self, lambda elem: np.asscalar(elem).to_display_string(locale_name)
+            self, lambda elem: np.ndarray.item(elem).to_display_string(locale_name)
         )
         return disp_str
