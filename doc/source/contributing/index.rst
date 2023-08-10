@@ -81,27 +81,26 @@ For building documentation, you can run the usual rules provided in the Sphinx M
 
 .. tab-set::
 
-      .. tab-item:: Linux
-        :sync: linux
+    .. tab-item:: Linux
+      :sync: linux
 
-        ::
+      ::
 
-          make -C doc/ html && your_browser_name doc/build/html/index.html
+        make -C doc/ html && your_browser_name doc/build/html/index.html
 
-      .. tab-item:: macOS
-        :sync: macos
+    .. tab-item:: macOS
+      :sync: macos
 
-        ::
+      ::
 
-          make -C doc/ html && your_browser_name doc/build/html/index.html
+        make -C doc/ html && your_browser_name doc/build/html/index.html
 
-      .. tab-item:: Windows
-        :sync: windows
+    .. tab-item:: Windows
+      :sync: windows
 
-        ::
-
-          .\doc\make.bat html
-          .\doc\build\html\index.html
+      ::
+        .\doc\make.bat html
+        .\doc\build\html\index.html
 
 
 Post issues
