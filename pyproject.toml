@@ -3,6 +3,7 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
+# Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "pyansys-tools-variableinterop"
 version = "0.1.dev0"
 description = "Optional variable specifications for interoperability between languages and capabilities"
@@ -21,10 +22,6 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-]
-
-packages = [
-    { include = "ansys", from = "src" },
 ]
 
 dependencies = [
@@ -48,13 +45,13 @@ tests = [
     "pytest-mock==3.11.1",
 ]
 
+[tool.flit.module]
+name = "ansys.tools.variableinterop"
+
 [project.urls]
 Source = "https://github.com/ansys/pyansys-tools-variableinterop"
 Issues = "https://github.com/ansys/pyansys-tools-variableinterop/issues"
 Discussions = "https://github.com/ansys/pyansys-tools-variableinterop/discussions"
-
-[tool.flit.module]
-name = "ansys.tools.variableinterop"
 
 [tool.black]
 line-length = 100

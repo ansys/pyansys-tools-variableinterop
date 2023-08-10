@@ -14,5 +14,5 @@ try:
 except ModuleNotFoundError:
     import importlib_metadata
 
-__version__ = importlib_metadata.version("ansys.tools.variableinterop")
+__version__ = importlib_metadata.version("pyansys-tools-variableinterop")
 """ansys.tools.variableinterop version."""
