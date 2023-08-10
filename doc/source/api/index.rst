@@ -1,6 +1,5 @@
-*****************
-API Documentation
-*****************
+API documentation
+=================
 
 .. autosummary::
    :toctree: _autosummary/
