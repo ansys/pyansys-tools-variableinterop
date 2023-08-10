@@ -26,7 +26,7 @@ Alternatively, install the latest version from `pyansys-tools-variableinterop Gi
 
    pip install git+https://github.com/pyansys/pyansys-tools-variableinterop.git
 
-For a local development version, you can create a new virtual environment: 
+For a local development version, you can create a new virtual environment:
 
 .. code:: bash
 
@@ -58,7 +58,7 @@ It can be activated with:
           .\.venv\Scripts\activate
 
 
-You can then install the developement version of the project:
+You can then install the development version of the project:
 
 .. code::
 
@@ -124,9 +124,9 @@ Build documentation
 
 To build the PyAnsys Tools Variable Interop documentation locally, in the root directory of the repository,
 run these commands::
-    
+
     pip install .[doc]
-    .\doc\make.bat html 
+    .\doc\make.bat html
 
 Testing
 -------

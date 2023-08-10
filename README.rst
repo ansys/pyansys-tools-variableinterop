@@ -89,7 +89,7 @@ Alternatively, install the latest version from `pyansys-tools-variableinterop Gi
    pip install git+https://github.com/pyansys/pyansys-tools-variableinterop.git
 
 
-For a local development version, you can install the developement
+For a local development version, you can install the development
 version of the project with:
 
 .. code::

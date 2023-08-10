@@ -22,7 +22,7 @@ For developers
 Installing the ``pyansys-tools-variableinterop`` package in developer mode allows
 you to modify the source and enhance it.
 
-You can refer to the 
+You can refer to the
 
 Style and testing
 -----------------
