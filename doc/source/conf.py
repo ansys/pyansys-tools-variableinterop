@@ -2,7 +2,7 @@
 from datetime import datetime
 import os
 
-from ansys_sphinx_theme import pyansys_logo_black
+from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 
 from ansys.tools.variableinterop import __version__
 
@@ -12,22 +12,53 @@ copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
+switcher_version = get_version_match(__version__)
 
-# use the default pyansys logo
+# Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
+html_favicon = ansys_favicon
 html_theme = "ansys_sphinx_theme"
+html_short_title = html_title = "PyAnsys Tools Variable Interop"
 
 # specify the location of your github repo
 html_theme_options = {
     "github_url": "https://github.com/pyansys/pyansys-tools-variableinterop",
+    "check_switcher": False,
     "show_prev_next": False,
+    "show_breadcrumbs": True,
+    "collapse_navigation": True,
+    "use_edit_page_button": True,
+    "additional_breadcrumbs": [
+        ("PyAnsys", "https://docs.pyansys.com/"),
+    ],
+    "icon_links": [
+        {
+            "name": "Support",
+            "url": "https://github.com/ansys/pyansys-math/discussions",
+            "icon": "fa fa-comment fa-fw",
+        },
+    ],
+    "switcher": {
+        "json_url": f"https://{cname}/versions.json",
+        "version_match": switcher_version,
+    },
+}
+
+html_context = {
+    "display_github": True,  # Integrate GitHub
+    "github_user": "ansys",
+    "github_repo": "pyansys-tools-variableinterop",
+    "github_version": "main",
+    "doc_path": "doc/source",
 }
 
 # Sphinx extensions
 extensions = [
+    "notfound.extension",  # for the not found page.
+    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "numpydoc",
+    "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
 ]
@@ -45,6 +76,7 @@ intersphinx_mapping = {
 
 # numpydoc configuration
 numpydoc_show_class_members = False
+numpydoc_class_members_toctree = False
 numpydoc_xref_param_type = True
 
 # Consider enabling numpydoc validation. See:
