@@ -78,7 +78,7 @@ jobs:
       - name: Create Python venv
         run: |
           python -m venv .venv
-          venv/bin/activate
+          .venv/bin/activate
 
       - name: "Unit testing requirements installation"
         run: |
@@ -123,7 +123,7 @@ jobs:
       - name: Create Python venv
         run: |
           python -m venv .venv
-          venv/bin/activate
+          .venv/bin/activate
 
       - name: "Unit testing requirements installation"
         run: |
