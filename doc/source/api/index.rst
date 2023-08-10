@@ -5,7 +5,6 @@ API Documentation
 .. autosummary::
    :toctree: _autosummary/
 
-   ansys.tools.variableinterop
    ansys.tools.variableinterop.BooleanArrayMetadata
    ansys.tools.variableinterop.BooleanArrayValue
    ansys.tools.variableinterop.BooleanMetadata

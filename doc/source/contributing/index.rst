@@ -99,6 +99,7 @@ For building documentation, you can run the usual rules provided in the Sphinx M
       :sync: windows
 
       ::
+
         .\doc\make.bat html
         .\doc\build\html\index.html
 

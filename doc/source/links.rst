@@ -1,5 +1,13 @@
+.. #Pyansys
+.. _pyansys: https://docs.pyansys.com/dev/
+.. _pyansys_core: pyansys.core@ansys.com
+
 .. #PyAnsys Tools Variable Interop related
 .. _pyansys-tools-variableinterop_issues: https://github.com/ansys/pyansys-tools-variableinterop/issues
+
+.. #PyAnsys Developer Guide
+.. _dev_guide_pyansys: https://dev.docs.pyansys.com/
+.. _dev_guide_contributing: https://dev.docs.pyansys.com/how-to/contributing.html
 
 .. # Other tools
 .. _black: https://github.com/psf/black
