@@ -11,7 +11,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-      
+
 
 env:
   DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
@@ -119,16 +119,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      
+
       - name: Create Python venv
         run: |
           python -m venv .venv
           .\.venv\Scripts\Activate.ps1
-  
+
       - name: "Unit testing requirements installation"
         run: |
           pip install .[doc]
-      
+
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v4
         with:
