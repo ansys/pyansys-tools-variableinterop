@@ -131,6 +131,7 @@ The tests can then be run via pytest with:
 
     pytest -v
 
+
 Usage
 -----
 Values and metadata can be created like any other Python object:
@@ -141,22 +142,41 @@ Values and metadata can be created like any other Python object:
 
    width = atvi.RealValue(3.1)
    width
-.. code:: out
 
-    3.1
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+      3.1
+
 
 .. code:: python
 
    # Standard python operations should work seamlessly
-   print(4 + width)
+   4 + width
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+      7.1
+
+
+.. code:: python
 
    width_metadata = atvi.RealMetadata()
    width_metadata.lower_bound = 0.1
    var(width_metadata)
-.. code:: out
 
-   7.1
-   {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+      7.1
+      {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
 
 
 License
