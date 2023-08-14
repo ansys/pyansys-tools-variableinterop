@@ -22,7 +22,7 @@ html_short_title = html_title = "PyAnsys Tools Variable Interop"
 
 # specify the location of your github repo
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/pyansys-tools-variableinterop",
+    "github_url": "https://github.com/ansys/pyansys-tools-variableinterop",
     "check_switcher": False,
     "show_prev_next": False,
     "show_breadcrumbs": True,
@@ -56,11 +56,12 @@ html_context = {
 extensions = [
     "notfound.extension",  # for the not found page.
     "numpydoc",
-    "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
     "sphinx_copybutton",
-    "sphinx.ext.coverage",
     "sphinx_design",
+    "sphinx.ext.autodoc",
+    'sphinx.ext.autosectionlabel',
+    "sphinx.ext.autosummary",
+    "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
 ]
 
@@ -79,6 +80,7 @@ intersphinx_mapping = {
 numpydoc_show_class_members = False
 numpydoc_class_members_toctree = False
 numpydoc_xref_param_type = True
+autosectionlabel_prefix_document = True
 
 # Consider enabling numpydoc validation. See:
 # https://numpydoc.readthedocs.io/en/latest/validation.html#

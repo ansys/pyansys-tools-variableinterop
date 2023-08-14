@@ -125,7 +125,7 @@ jobs:
           python -m venv .venv
           .venv/bin/activate
 
-      - name: "Unit testing requirements installation"
+      - name: "Documentation requirements installation"
         run: |
           pip install .[doc]
 

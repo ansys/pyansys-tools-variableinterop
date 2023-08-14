@@ -1,3 +1,5 @@
+.. _ref_contribute:
+
 Contribute
 ==========
 
@@ -20,11 +22,11 @@ You can install ``pyansys-tools-variableinterop`` with:
    pip install pyansys-tools-variableinterop
 
 Alternatively, install the latest version from `pyansys-tools-variableinterop GitHub
-<https://github.com/pyansys/pyansys-tools-variableinterop>`_ via:
+<https://github.com/ansys/pyansys-tools-variableinterop>`_ via:
 
 .. code::
 
-   pip install git+https://github.com/pyansys/pyansys-tools-variableinterop.git
+   pip install git+https://github.com/ansys/pyansys-tools-variableinterop.git
 
 For a local development version, you can create a new virtual environment:
 
@@ -62,7 +64,7 @@ You can then install the development version of the project:
 
 .. code::
 
-   git clone https://github.com/pyansys/pyansys-tools-variableinterop.git
+   git clone https://github.com/ansys/pyansys-tools-variableinterop.git
    cd pyansys-tools-variableinterop
    pip install -e .
 
