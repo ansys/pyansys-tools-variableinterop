@@ -34,7 +34,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "Support",
-            "url": "https://github.com/ansys/pyansys-math/discussions",
+            "url": "https://github.com/ansys/pyansys-tools-variableinterop/discussions",
             "icon": "fa fa-comment fa-fw",
         },
     ],

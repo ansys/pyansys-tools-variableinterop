@@ -8,7 +8,7 @@ name = "pyansys-tools-variableinterop"
 version = "0.1.dev0"
 description = "Optional variable specifications for interoperability between languages and capabilities"
 readme = "README.rst"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = {file = "LICENSE"}
 authors = [{name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"}]
 maintainers = [{name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"}]
