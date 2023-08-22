@@ -106,7 +106,8 @@ def __valid_toint_id_gen(orig_val: RealValue) -> str:
 
     Returns
     -------
-    a suitable ID for the test
+    str
+        a suitable ID for the test
     """
     return str(orig_val)
 

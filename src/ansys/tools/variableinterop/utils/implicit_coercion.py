@@ -7,7 +7,7 @@ import functools
 import inspect
 from typing import Any, Dict, List, Optional, Union, get_type_hints
 
-import numpy as np
+import numpy
 
 from ..array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from ..exceptions import _error
@@ -16,18 +16,18 @@ from ..variable_value import CommonArrayValue, IVariableValue
 
 __TYPE_MAPPINGS = {
     int: IntegerValue,
-    np.int8: IntegerValue,
-    np.int16: IntegerValue,
-    np.int32: IntegerValue,
-    np.int64: IntegerValue,
+    numpy.int8: IntegerValue,
+    numpy.int16: IntegerValue,
+    numpy.int32: IntegerValue,
+    numpy.int64: IntegerValue,
     float: RealValue,
-    np.float16: RealValue,
-    np.float32: RealValue,
-    np.float64: RealValue,
+    numpy.float16: RealValue,
+    numpy.float32: RealValue,
+    numpy.float64: RealValue,
     bool: BooleanValue,
-    np.bool_: BooleanValue,
+    numpy.bool_: BooleanValue,
     str: StringValue,
-    np.str_: StringValue,
+    numpy.str_: StringValue,
 }
 """
 This map applies when coercing scalar values to a method argument type hinted as
@@ -40,15 +40,15 @@ IVariableValue implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
-    np.int8: IntegerArrayValue,
-    np.int16: IntegerArrayValue,
-    np.int32: IntegerArrayValue,
-    np.int64: IntegerArrayValue,
-    np.float16: RealArrayValue,
-    np.float32: RealArrayValue,
-    np.float64: RealArrayValue,
-    np.bool_: BooleanArrayValue,
-    np.str_: StringArrayValue,
+    numpy.int8: IntegerArrayValue,
+    numpy.int16: IntegerArrayValue,
+    numpy.int32: IntegerArrayValue,
+    numpy.int64: IntegerArrayValue,
+    numpy.float16: RealArrayValue,
+    numpy.float32: RealArrayValue,
+    numpy.float64: RealArrayValue,
+    numpy.bool_: BooleanArrayValue,
+    numpy.str_: StringArrayValue,
 }
 """
 This map applies when coercing ndarray values to a method argument type hinted as
@@ -64,36 +64,36 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     IntegerValue: [
         int,
         Decimal,
-        np.int8,
-        np.int16,
-        np.int32,
-        np.int64,
+        numpy.int8,
+        numpy.int16,
+        numpy.int32,
+        numpy.int64,
         bool,
-        np.bool_,
+        numpy.bool_,
         BooleanValue,
     ],
     RealValue: [
         float,
-        np.float16,
-        np.float32,
-        np.float64,
+        numpy.float16,
+        numpy.float32,
+        numpy.float64,
         bool,
-        np.bool_,
+        numpy.bool_,
         BooleanValue,
     ],
-    BooleanValue: [bool, np.bool_],
+    BooleanValue: [bool, numpy.bool_],
     StringValue: [
         int,
-        np.integer,
+        numpy.integer,
         IntegerValue,
         bool,
-        np.bool_,
+        numpy.bool_,
         BooleanValue,
         float,
-        np.inexact,
+        numpy.inexact,
         RealValue,
         str,
-        np.str_,
+        numpy.str_,
         StringValue,
     ],
 }
@@ -106,10 +106,10 @@ coerced to that type.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
-    IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
-    RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
-    BooleanArrayValue: [np.bool_],
-    StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
+    IntegerArrayValue: [numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.bool_],
+    RealArrayValue: [numpy.float16, numpy.float32, numpy.float64, numpy.bool_],
+    BooleanArrayValue: [numpy.bool_],
+    StringArrayValue: [numpy.integer, numpy.inexact, numpy.bool_, numpy.str_],
 }
 """
 Rules for implicitly coercing array values to a specific IVariableValue implementation.
@@ -132,7 +132,8 @@ def _is_optional(arg_type: type) -> bool:
 
     Returns
     -------
-    ``True`` if the argument passed in is Optional[x] for some x.
+    bool
+        ``True`` if the argument passed in is Optional[x] for some x.
     """
     return (
         hasattr(arg_type, "__origin__")
@@ -144,9 +145,9 @@ def _is_optional(arg_type: type) -> bool:
 
 def _get_optional_type(arg_type: type) -> type:
     """
-    If _is_optional(arg_type) returns true, this function will return \ the type
-    argument to Optional[x]. If _is_optional(arg_type) returns \ false, this function's
-    behavior is undeclared.
+    If _is_optional(arg_type) returns true, this function will return the type argument
+    to Optional[x]. If _is_optional(arg_type) returns false, this function's behavior is
+    undeclared.
 
     Parameters
     ----------
@@ -193,7 +194,7 @@ def _specific_implicit_coerce_allowed(
 
 
 def __numpy_array_dtype(arg: Any) -> Optional[type]:
-    if isinstance(arg, np.ndarray):
+    if isinstance(arg, numpy.ndarray):
         return arg.dtype.type
     else:
         return None
@@ -256,9 +257,10 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
     Returns
     -------
-    The converted object
+    Any
+        The converted object
 
-    Throws
+    Raises
     ------
     TypeError if the argument cannot be converted to the supplied type
     """
@@ -296,10 +298,10 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     return arg
 
 
-def implicit_coerce(func):
+def implicit_coerce(func) -> Any:
     """
-    Use to decorate functions that use the PEP 484 typing system to try \ and coerce any
-    arguments that accept IVariableValue or any derived \ type into an acceptable value.
+    Use to decorate functions that use the PEP 484 typing system to try and coerce any
+    arguments that accept IVariableValue or any derived type into an acceptable value.
 
     Parameters
     ----------
@@ -307,7 +309,8 @@ def implicit_coerce(func):
 
     Returns
     -------
-    The wrapper function
+    Any
+        The wrapper function
     """
     assert inspect.isfunction(func), "Decorator must be used on functions"
     signature = inspect.signature(func)

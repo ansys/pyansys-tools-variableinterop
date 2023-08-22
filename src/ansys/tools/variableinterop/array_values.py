@@ -6,7 +6,7 @@ import functools
 import locale
 from typing import Optional, TypeVar
 
-import numpy as np
+import numpy
 from numpy.typing import ArrayLike
 from overrides import overrides
 
@@ -22,7 +22,7 @@ from .variable_value import CommonArrayValue
 T = TypeVar("T")
 
 
-class BooleanArrayValue(CommonArrayValue[np.bool_]):
+class BooleanArrayValue(CommonArrayValue[numpy.bool_]):
     """
     Array of boolean values.
 
@@ -34,19 +34,19 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return np.array(values, dtype=np.bool_).view(cls)
+            return numpy.array(values, dtype=numpy.bool_).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.bool_).view(cls)
+            return super().__new__(cls, shape=shape_, dtype=numpy.bool_).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.bool_).view(cls)
+            return numpy.zeros(shape=(), dtype=numpy.bool_).view(cls)
 
     @overrides
     def __eq__(self, other) -> bool:
-        return np.array_equal(self, other)
+        return numpy.array_equal(self, other)
 
     @overrides
     def clone(self) -> BooleanArrayValue:
-        return np.copy(self).view(BooleanArrayValue)
+        return numpy.copy(self).view(BooleanArrayValue)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -63,9 +63,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            A RealArrayValue with the same values converted to real.
         """
-        return self.astype(np.float64).view(RealArrayValue)
+        return self.astype(numpy.float64).view(RealArrayValue)
 
     def to_integer_array_value(self) -> IntegerArrayValue:
         """
@@ -73,9 +74,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        An IntegerArrayValue with the same values converted to int.
+        IntegerArrayValue
+            An IntegerArrayValue with the same values converted to int.
         """
-        return self.astype(np.int64).view(IntegerArrayValue)
+        return self.astype(numpy.int64).view(IntegerArrayValue)
 
     def to_string_array_value(self) -> StringArrayValue:
         """
@@ -83,9 +85,10 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            A StringArrayValue with the same values converted to string.
         """
-        return self.astype(np.str_).view(StringArrayValue)
+        return self.astype(numpy.str_).view(StringArrayValue)
 
     @overrides
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
@@ -124,7 +127,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         pass
 
 
-class IntegerArrayValue(CommonArrayValue[np.int64]):
+class IntegerArrayValue(CommonArrayValue[numpy.int64]):
     """
     Array of integer values.
 
@@ -141,19 +144,19 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return np.array(values, dtype=np.int64).view(cls)
+            return numpy.array(values, dtype=numpy.int64).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.int64).view(cls)
+            return super().__new__(cls, shape=shape_, dtype=numpy.int64).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.int64).view(cls)
+            return numpy.zeros(shape=(), dtype=numpy.int64).view(cls)
 
     @overrides
     def __eq__(self, other):
-        return np.array_equal(self, other)
+        return numpy.array_equal(self, other)
 
     @overrides
     def clone(self) -> IntegerArrayValue:
-        return np.copy(self).view(IntegerArrayValue)
+        return numpy.copy(self).view(IntegerArrayValue)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -164,15 +167,16 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def variable_type(self) -> VariableType:
         return VariableType.INTEGER_ARRAY
 
-    def to_boolean_array_value(self):
+    def to_boolean_array_value(self) -> BooleanArrayValue:
         """
         Convert this value to a BooleanArrayValue.
 
         Returns
         -------
-        A BooleanArrayValue with the same values converted to bool.
+        BooleanArrayValue
+            A BooleanArrayValue with the same values converted to bool.
         """
-        return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
+        return numpy.vectorize(numpy.bool_)(self).view(BooleanArrayValue)
 
     def to_real_array_value(self) -> RealArrayValue:
         """
@@ -180,9 +184,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            A RealArrayValue with the same values converted to real.
         """
-        return self.astype(np.float64).view(RealArrayValue)
+        return self.astype(numpy.float64).view(RealArrayValue)
 
     def to_string_array_value(self) -> StringArrayValue:
         """
@@ -190,9 +195,10 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            A StringArrayValue with the same values converted to string.
         """
-        return self.astype(np.str_).view(StringArrayValue)
+        return self.astype(numpy.str_).view(StringArrayValue)
 
     @overrides
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
@@ -230,7 +236,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         return api_string
 
 
-class RealArrayValue(CommonArrayValue[np.float64]):
+class RealArrayValue(CommonArrayValue[numpy.float64]):
     """
     Array of real values.
 
@@ -247,19 +253,19 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return np.array(values, dtype=np.float64).view(cls)
+            return numpy.array(values, dtype=numpy.float64).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.float64).view(cls)
+            return super().__new__(cls, shape=shape_, dtype=numpy.float64).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.float64).view(cls)
+            return numpy.zeros(shape=(), dtype=numpy.float64).view(cls)
 
     @overrides
     def __eq__(self, other: RealArrayValue) -> bool:
-        return np.array_equal(self, other)
+        return numpy.array_equal(self, other)
 
     @overrides
     def clone(self) -> RealArrayValue:
-        return np.copy(self).view(RealArrayValue)
+        return numpy.copy(self).view(RealArrayValue)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -270,29 +276,31 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def variable_type(self) -> VariableType:
         return VariableType.REAL_ARRAY
 
-    def to_boolean_array_value(self):
+    def to_boolean_array_value(self) -> BooleanArrayValue:
         """
         Convert this value to a BooleanArrayValue.
 
         Returns
         -------
-        A BooleanArrayValue with the same values converted to bool.
+        BooleanArrayValue
+            A BooleanArrayValue with the same values converted to bool.
         """
-        return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
+        return numpy.vectorize(numpy.bool_)(self).view(BooleanArrayValue)
 
-    def to_integer_array_value(self):
+    def to_integer_array_value(self) -> IntegerArrayValue:
         """
         Convert this value to an IntegerArrayValue.
 
         Returns
         -------
-        An IntegerArrayValue with the same values converted to int.
+        IntegerArrayValue
+            An IntegerArrayValue with the same values converted to int.
         """
 
-        def away_from_zero(x: np.float64) -> np.int64:
-            return np.int64(Decimal(x).to_integral(ROUND_HALF_UP))
+        def away_from_zero(x: numpy.float64) -> numpy.int64:
+            return numpy.int64(Decimal(x).to_integral(ROUND_HALF_UP))
 
-        return np.vectorize(away_from_zero)(self).astype(np.int64).view(IntegerArrayValue)
+        return numpy.vectorize(away_from_zero)(self).astype(numpy.int64).view(IntegerArrayValue)
 
     def to_string_array_value(self) -> StringArrayValue:
         """
@@ -300,9 +308,10 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            A StringArrayValue with the same values converted to string.
         """
-        return self.astype(np.str_).view(StringArrayValue)
+        return self.astype(numpy.str_).view(StringArrayValue)
 
     @overrides
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
@@ -334,7 +343,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        def parse_real_element(elem: np.float64) -> str:
+        def parse_real_element(elem: numpy.float64) -> str:
             value: str = RealValue(elem).to_display_string(locale_name)
 
             # Old form arrays (without quotes around each item) do not work for languages where ','
@@ -353,7 +362,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         return api_string
 
 
-class StringArrayValue(CommonArrayValue[np.str_]):
+class StringArrayValue(CommonArrayValue[numpy.str_]):
     """
     Array of string values.
 
@@ -365,19 +374,19 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return np.array(values, dtype=np.str_).view(cls)
+            return numpy.array(values, dtype=numpy.str_).view(cls)
         elif shape_ is not None:
-            return super().__new__(cls, shape=shape_, dtype=np.str_).view(cls)
+            return super().__new__(cls, shape=shape_, dtype=numpy.str_).view(cls)
         else:
-            return np.zeros(shape=(), dtype=np.str_).view(cls)
+            return numpy.zeros(shape=(), dtype=numpy.str_).view(cls)
 
     @overrides
     def __eq__(self, other):
-        return np.array_equal(self, other)
+        return numpy.array_equal(self, other)
 
     @overrides
     def clone(self) -> StringArrayValue:
-        return np.copy(self).view(StringArrayValue)
+        return numpy.copy(self).view(StringArrayValue)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -396,7 +405,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         -------
         A RealArrayValue with the same values converted to real.
         """
-        return self.astype(np.float64).view(RealArrayValue)
+        return self.astype(numpy.float64).view(RealArrayValue)
 
     def to_boolean_array_value(self) -> BooleanArrayValue:
         """
@@ -407,7 +416,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         BooleanArrayValue
             A BooleanArrayValue with the same values converted to bool.
         """
-        return np.vectorize(BooleanValue.str_to_bool)(self).view(BooleanArrayValue)
+        return numpy.vectorize(BooleanValue.str_to_bool)(self).view(BooleanArrayValue)
 
     def to_integer_array_value(self) -> IntegerArrayValue:
         """

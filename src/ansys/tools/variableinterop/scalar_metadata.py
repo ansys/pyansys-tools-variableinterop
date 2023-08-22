@@ -75,7 +75,8 @@ class IntegerMetadata(NumericMetadata):
 
         Returns
         -------
-        The lower bound, or None if no lower bound is specified.
+        Optional[IntegerValue]
+            The lower bound, or None if no lower bound is specified.
         """
         return self._lower_bound
 
@@ -99,7 +100,8 @@ class IntegerMetadata(NumericMetadata):
 
         Returns
         -------
-        The upper bound, or None if no upper bound is specified.
+        Optional[IntegerValue]
+            The upper bound, or None if no upper bound is specified.
         """
         return self._upper_bound
 
@@ -115,9 +117,11 @@ class IntegerMetadata(NumericMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[IntegerValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -128,8 +132,8 @@ class IntegerMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[IntegerValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -139,9 +143,11 @@ class IntegerMetadata(NumericMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -152,8 +158,8 @@ class IntegerMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -208,7 +214,8 @@ class RealMetadata(NumericMetadata):
 
         Returns
         -------
-        The lower bound, or None if no lower bound is specified.
+        Optional[RealValue]
+            The lower bound, or None if no lower bound is specified.
         """
         return self._lower_bound
 
@@ -232,7 +239,8 @@ class RealMetadata(NumericMetadata):
 
         Returns
         -------
-        The upper bound, or None if no upper bound is specified.
+        Optional[RealValue]
+            The upper bound, or None if no upper bound is specified.
         """
         return self._upper_bound
 
@@ -248,9 +256,11 @@ class RealMetadata(NumericMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[RealValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -261,8 +271,8 @@ class RealMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[RealValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -272,9 +282,11 @@ class RealMetadata(NumericMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -285,8 +297,8 @@ class RealMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -331,9 +343,11 @@ class StringMetadata(CommonVariableMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[StringValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -344,8 +358,8 @@ class StringMetadata(CommonVariableMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[StringValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -355,9 +369,11 @@ class StringMetadata(CommonVariableMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -368,8 +384,8 @@ class StringMetadata(CommonVariableMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 

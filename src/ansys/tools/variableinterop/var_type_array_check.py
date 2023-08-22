@@ -64,10 +64,12 @@ def var_type_is_array(vartype: VariableType) -> bool:
 
     Parameters
     ----------
-    vartype the variable type of interest
+    vartype : VariableType
+        the variable type of interest
 
     Returns
     -------
-    True if the specified variable type is an array type, false otherwise.
+    bool
+        True if the specified variable type is an array type, false otherwise.
     """
     return vartype_accept(_VarTypeIsArrayVisitor(), vartype)

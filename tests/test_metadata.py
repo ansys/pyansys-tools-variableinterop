@@ -49,7 +49,7 @@ def assert_equals(metadata1, metadata2) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     assert metadata1 is not metadata2
     assert metadata1.equals(metadata2)
@@ -72,7 +72,7 @@ def assert_are_not_equal(metadata1, metadata2) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     assert metadata1 is not metadata2
     assert not metadata1.equals(metadata2)
@@ -94,7 +94,7 @@ def test_equals_empty(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -108,7 +108,7 @@ def test_different_metadata_types_are_not_equal() -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata1 = IntegerMetadata()
     metadata2 = RealMetadata()
@@ -127,7 +127,7 @@ def test_equals_same_description(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -149,7 +149,7 @@ def test_equals_different_description(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -172,7 +172,7 @@ def test_equals_same_custom_metadata(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -196,7 +196,7 @@ def test_equals_different_custom_metadata(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -229,7 +229,7 @@ def test_equals_same_units(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -253,7 +253,7 @@ def test_equals_different_units(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -277,7 +277,7 @@ def test_equals_same_display_format(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()
@@ -303,7 +303,7 @@ def test_equals_different_display_format(type_name: str) -> None:
 
     Returns
     -------
-    nothing
+    None
     """
     metadata_type = globals()[type_name]
     metadata1 = metadata_type()

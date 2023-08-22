@@ -66,7 +66,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        An IntegerValue with a value determined by the specified string.
+        IntegerValue
+            An IntegerValue with a value determined by the specified string.
         """
         return IntegerValue.from_api_string(self._source)
 
@@ -76,7 +77,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A RealValue with a value determined by the specified string.
+        RealValue
+            A RealValue with a value determined by the specified string.
         """
         return RealValue.from_api_string(self._source)
 

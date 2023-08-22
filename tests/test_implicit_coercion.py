@@ -172,7 +172,7 @@ def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[Base
 
     Returns
     -------
-    nothing
+    None
     """
     sut = Impl()
     with _create_exception_context(expect_exception):
@@ -192,7 +192,8 @@ def accept_real_value(value: RealValue) -> RealValue:
 
     Returns
     -------
-    The value passed to it
+    RealValue
+        The value passed to it
     """
     return value
 
@@ -208,7 +209,8 @@ def accept_real_array_value(value: RealArrayValue) -> RealArrayValue:
 
     Returns
     -------
-    The value passed to it
+    RealArrayValue
+        The value passed to it
     """
     return value
 
@@ -224,7 +226,8 @@ def accept_integer_value(value: IntegerValue) -> IntegerValue:
 
     Returns
     -------
-    The value passed to it
+    IntegerValue
+        The value passed to it
     """
     return value
 
@@ -240,7 +243,8 @@ def accept_integer_array_value(value: IntegerArrayValue) -> IntegerArrayValue:
 
     Returns
     -------
-    The value passed to it
+    IntegerArrayValue
+        The value passed to it
     """
     return value
 
@@ -256,13 +260,14 @@ def accept_boolean_value(value: BooleanValue) -> BooleanValue:
 
     Returns
     -------
-    The value passed to it
+    BooleanValue
+        The value passed to it
     """
     return value
 
 
 @implicit_coerce
-def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
+def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanArrayValue:
     """
     Test function that accepts a BooleanArrayValue.
 
@@ -272,7 +277,8 @@ def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
 
     Returns
     -------
-    The value passed to it
+    BooleanArrayValue
+        The value passed to it
     """
     return value
 
@@ -288,7 +294,8 @@ def accept_string_value(value: StringValue) -> StringValue:
 
     Returns
     -------
-    The value passed to it
+    StringValue
+        The value passed to it
     """
     return value
 
@@ -304,7 +311,8 @@ def accept_string_array_value(value: StringArrayValue) -> StringArrayValue:
 
     Returns
     -------
-    The value passed to it
+    StringArrayValue
+        The value passed to it
     """
     return value
 
@@ -360,7 +368,7 @@ def test_coerce_real_value(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = accept_real_value(source)

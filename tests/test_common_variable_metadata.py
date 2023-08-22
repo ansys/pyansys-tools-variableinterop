@@ -34,7 +34,8 @@ def get_test_num_meta(
 
     Returns
     -------
-    Newly constructed test metadata with the given property values.
+    M
+        Newly constructed test metadata with the given property values.
     """
     meta = meta_type()
     if lower is not None:
@@ -98,7 +99,8 @@ def get_test_str_meta(
 
     Returns
     -------
-    Newly constructed test metadata with the given property values.
+    S
+        Newly constructed test metadata with the given property values.
     """
     meta = meta_type()
     meta.enumerated_values = list(map(lambda i: value_type(i), enums))

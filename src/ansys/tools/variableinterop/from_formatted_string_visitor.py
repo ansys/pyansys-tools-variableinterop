@@ -4,7 +4,7 @@ from __future__ import annotations
 import distutils.util
 import locale
 
-import numpy as np
+import numpy
 from overrides import overrides
 
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
@@ -19,7 +19,7 @@ from .variable_value import IVariableValue
 class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
     """Converts a string formatted for a locale to a IVariableValue."""
 
-    def __init__(self, value: np.str_, locale_name: str):
+    def __init__(self, value: numpy.str_, locale_name: str):
         """Initialize the object."""
         self._value = value
         self._locale_name = locale_name
@@ -32,20 +32,20 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
     def visit_int(self) -> IntegerValue:
         # We need to use atof and then convert to int, as atoi does not support scientific notation
         result: IntegerValue = LocaleUtils.perform_safe_locale_action(
-            self._locale_name, lambda: np.int64(locale.atof(self._value))
+            self._locale_name, lambda: numpy.int64(locale.atof(self._value))
         )
         return result
 
     @overrides
     def visit_real(self) -> RealValue:
-        result: np.str_ = LocaleUtils.perform_safe_locale_action(
+        result: numpy.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: locale.atof(self._value)
         )
         return result
 
     @overrides
     def visit_boolean(self) -> BooleanValue:
-        result: np.str_ = LocaleUtils.perform_safe_locale_action(
+        result: numpy.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: bool(distutils.util.strtobool(self._value))
         )
         return result

@@ -25,7 +25,8 @@ def _create_exception_context(expect_exception: Optional[Type[BaseException]]):
 
     Returns
     -------
-    A context to use in a with block that will validate the expected exception.
+    Optional[Type[BaseException]]
+        A context to use in a with block that will validate the expected exception.
     """
     if expect_exception is not None:
         return pytest.raises(expect_exception)

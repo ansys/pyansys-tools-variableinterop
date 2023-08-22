@@ -92,20 +92,23 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
 
 def to_array_type(vartype: VariableType) -> VariableType:
     """
-    Given a VariableType, find the corresponding array type, if one \ exists. Otherwise,
+    Given a VariableType, find the corresponding array type, if one exists. Otherwise,
     ValueError is raised.
 
     Parameters
     ----------
-    vartype the variable type of interest.
+    vartype : VariableType
+        The variable type of interest.
 
     Returns
     -------
-    The corresponding array type.
+    VariableType
+        The corresponding array type.
 
     Raises
     ------
-    ValueError if the specified type does not have a corresponding array type.
+    ValueError
+        If the specified type does not have a corresponding array type.
     """
     result: Optional[VariableType] = vartype_accept(__ScalarToArrayPseudoVisitor(), vartype)
 
@@ -123,15 +126,18 @@ def get_element_type(vartype: VariableType) -> VariableType:
 
     Parameters
     ----------
-    vartype the variable type of interest.
+    vartype : VariableType
+        The variable type of interest.
 
     Returns
     -------
-    The corresponding element type.
+    VariableType
+        The corresponding element type.
 
     Raises
     ------
-    ValueError if the specified type does not have a corresponding element type.
+    ValueError
+        If the specified type does not have a corresponding element type.
     """
     result: Optional[VariableType] = vartype_accept(__ElementTypePseudoVisitor(), vartype)
 

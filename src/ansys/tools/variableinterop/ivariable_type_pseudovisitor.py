@@ -24,7 +24,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -35,7 +36,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -46,7 +48,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -57,7 +60,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -68,7 +72,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -79,7 +84,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -90,7 +96,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -101,7 +108,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -112,7 +120,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -123,7 +132,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -134,7 +144,8 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        A result as documented by the implementing class.
+        T
+            A result as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -145,7 +156,8 @@ def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_unknown()
 
@@ -156,7 +168,8 @@ def __accept_int(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_int()
 
@@ -167,7 +180,8 @@ def __accept_real(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_real()
 
@@ -178,7 +192,8 @@ def __accept_boolean(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_boolean()
 
@@ -189,7 +204,8 @@ def __accept_string(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_string()
 
@@ -200,7 +216,8 @@ def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_file()
 
@@ -211,7 +228,8 @@ def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_int_array()
 
@@ -222,7 +240,8 @@ def __accept_real_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_real_array()
 
@@ -233,7 +252,8 @@ def __accept_boolean_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
     Returns
     -------
-    The visitor's result.
+    T
+        The visitor's result.
     """
     return visitor.visit_bool_array()
 
@@ -287,12 +307,15 @@ def vartype_accept(visitor: "IVariableTypePseudoVisitor[T]", var_type: VariableT
 
     Parameters
     ----------
-    visitor the visitor to accept
-    var_type the type the visitor should visit
+    visitor : T
+        the visitor to accept
+    var_type : VariableType
+        the type the visitor should visit
 
     Returns
     -------
-    The result provided by the visitor.
+    T
+        The result provided by the visitor.
     """
     if var_type in __accept_map:
         # If the type is in the enum mapping, run

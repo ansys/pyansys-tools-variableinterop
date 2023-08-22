@@ -30,7 +30,7 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        visitor
+        visitor : IVariableValueVisitor
             The visitor object to call
 
         Returns
@@ -72,7 +72,7 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        locale_name
+        locale_name : str
             The locale to format in.
 
         Returns

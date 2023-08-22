@@ -12,11 +12,13 @@ def escape_string(unescaped: str) -> str:
 
     Parameters
     ----------
-    unescaped the unescaped string.
+    unescaped : str
+        the unescaped string.
 
     Returns
     -------
-    The string with the specified characters escaped.
+    str
+        The string with the specified characters escaped.
     """
     return (
         unescaped.replace("\\", r"\\")
@@ -52,11 +54,13 @@ def unescape_string(escaped: str) -> str:
 
     Parameters
     ----------
-    escaped the string with escape sequences
+    escaped : str
+        the string with escape sequences
 
     Returns
     -------
-    The string with the escape sequences undone.
+    str
+        The string with the escape sequences undone.
     """
     unescaped: List[str] = []
     str_index: int = 0

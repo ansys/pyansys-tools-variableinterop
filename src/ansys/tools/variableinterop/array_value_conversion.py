@@ -1,5 +1,5 @@
 """Definition of array value visitors."""
-import numpy as np
+import numpy
 from overrides import overrides
 
 from ansys.tools.variableinterop.array_values import (
@@ -65,7 +65,7 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> BooleanArrayValue:
-        return np.copy(value).view(BooleanArrayValue)
+        return numpy.copy(value).view(BooleanArrayValue)
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> BooleanArrayValue:
@@ -94,7 +94,7 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
     Returns
     -------
     BooleanArrayValue
-    The value as a BooleanArrayValue.
+        The value as a BooleanArrayValue.
     """
     return other.accept(__ToBooleanArrayVisitor())
 
@@ -134,7 +134,7 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerArrayValue:
-        return np.copy(value).view(IntegerArrayValue)
+        return numpy.copy(value).view(IntegerArrayValue)
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> IntegerArrayValue:
@@ -171,7 +171,7 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
     Returns
     -------
     IntegerArrayValue
-    The value as a IntegerArrayValue.
+        The value as a IntegerArrayValue.
     """
     return other.accept(__ToIntegerArrayVisitor())
 
@@ -215,7 +215,7 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> RealArrayValue:
-        return np.copy(value).view(RealArrayValue)
+        return numpy.copy(value).view(RealArrayValue)
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> RealArrayValue:
@@ -248,7 +248,7 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     Returns
     -------
     RealArrayValue
-    The value as a RealArrayValue.
+        The value as a RealArrayValue.
     """
     return other.accept(__ToRealArrayVisitor())
 
@@ -300,7 +300,7 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> StringArrayValue:
-        return np.copy(value).view(StringArrayValue)
+        return numpy.copy(value).view(StringArrayValue)
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> StringArrayValue:
@@ -325,6 +325,6 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
     Returns
     -------
     StringArrayValue
-    The value as a StringArrayValue.
+        The value as a StringArrayValue.
     """
     return other.accept(__ToStringArrayVisitor())

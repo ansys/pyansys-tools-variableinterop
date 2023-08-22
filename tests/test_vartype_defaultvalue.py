@@ -54,7 +54,7 @@ def test_default_value(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result: interop.IVariableValue = source.get_default_value()

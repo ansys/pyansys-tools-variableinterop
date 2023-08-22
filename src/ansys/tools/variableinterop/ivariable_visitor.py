@@ -35,7 +35,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -50,7 +51,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -65,7 +67,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -80,7 +83,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -95,7 +99,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -110,7 +115,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result
+        T
+            The result
         """
         raise NotImplementedError
 
@@ -125,7 +131,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -140,7 +147,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -155,7 +163,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError
 
@@ -170,6 +179,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Returns
         -------
-        The result
+        T
+            The result
         """
         raise NotImplementedError

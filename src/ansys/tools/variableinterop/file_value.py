@@ -196,7 +196,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The mimetype of the file.
+        str
+            The mimetype of the file.
         """
         return self._mime_type
 
@@ -207,7 +208,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The original filename.
+        Optional[PathLike]
+            The original filename.
         """
         return self._original_path
 
@@ -218,7 +220,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The file's extension.
+        str
+            The file's extension.
         """
         # TODO: Implement
         raise NotImplementedError()
@@ -230,7 +233,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The file's encoding.
+        Optional[str]
+            The file's encoding.
         """
         return self._file_encoding
 
@@ -241,7 +245,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The UUID that identifies this value.
+        UUID
+            The UUID that identifies this value.
         """
         return self._id
 
@@ -259,7 +264,7 @@ class FileValue(IVariableValue, ABC):
     @staticmethod
     def read_bom(filename: str) -> str:
         """
-        Open a file for reading and detects a byte order mark at the \ beginning.
+        Open a file for reading and detects a byte order mark at the beginning.
 
         Parameters
         ----------
@@ -355,8 +360,8 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Callable[[int], None]
-             a callback that may be called to indicate progress in realizing the local copy.
+        progress_callback : Optional[Callable[[int], None]]
+            a callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback will not necessarily be called at all, and calls for 0% or 100%

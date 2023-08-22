@@ -29,7 +29,7 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         a = acvi.IntegerValue(cons_arg)
@@ -57,7 +57,7 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = left + right
@@ -92,7 +92,7 @@ def test_integer_value_sub(left: Any, right: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = left - right

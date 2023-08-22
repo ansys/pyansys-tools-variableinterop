@@ -13,8 +13,10 @@ def _error(name: str, *args: object) -> str:
 
     Parameters
     ----------
-    name Name of the string in the properties file
-    args Optional formatting arguments
+    name : str
+        Name of the string in the properties file
+    *args : object
+        Optional formatting arguments
 
     Returns
     -------
@@ -26,7 +28,7 @@ def _error(name: str, *args: object) -> str:
 
 
 class IncompatibleTypesException(BaseException):
-    """Exception raised when attempting to convert from one \ IVariableValue to an
+    """Exception raised when attempting to convert from one IVariableValue to an
     incompatible type."""
 
     def __init__(
@@ -37,9 +39,12 @@ class IncompatibleTypesException(BaseException):
         """
         Construct exception.
 
-        :param from_type a VariableType or a string identifying the type converting
-        from. :param to_type a VariableType or a string identifying the type converting
-        to.
+        Parameters
+        ----------
+        from_type : Union[VariableType, str]
+            a VariableType or a string identifying the type converting from.
+        to_type : Union[VariableType, str]
+            a VariableType or a string identifying the type converting to.
         """
         self.from_type: Optional[VariableType]
         self.from_type_str: str
@@ -62,7 +67,7 @@ class IncompatibleTypesException(BaseException):
 
 
 class FormatException(BaseException):
-    """Exception raised when attempting to create an IVariableValue \ from a string that
+    """Exception raised when attempting to create an IVariableValue from a string that
     is incorrectly formatted."""
 
     def __init__(self):

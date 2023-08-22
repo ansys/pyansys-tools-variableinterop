@@ -104,7 +104,7 @@ class CommonVariableMetadata(ABC):
 
     def get_default_value(self) -> IVariableValue:
         """
-        Get default value that should be used for variable describe \ by this metadata.
+        Get default value that should be used for variable describe by this metadata.
 
         The metadata may have set lower bound, upper bounds or
         enumerated values which restricts what are possible valid
@@ -292,7 +292,7 @@ class CommonVariableMetadata(ABC):
 
     def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
-        Convert the value of the given variable value to the \ appropriate type for this
+        Convert the value of the given variable value to the appropriate type for this
         meta data.
 
         Parameters

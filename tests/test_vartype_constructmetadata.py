@@ -57,7 +57,7 @@ def test_construct_variable_metadata(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result: interop.CommonVariableMetadata = source.construct_variable_metadata()

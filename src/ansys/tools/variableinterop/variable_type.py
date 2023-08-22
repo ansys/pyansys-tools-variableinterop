@@ -178,7 +178,8 @@ class VariableType(Enum):
 
         Returns
         -------
-        A new value object whose type matches this type.
+        IVariableValue
+            A new value object whose type matches this type.
         """
         from .array_values import (
             BooleanArrayValue,
@@ -238,7 +239,8 @@ class VariableType(Enum):
 
         Returns
         -------
-        A new metadata object whose type matches this type.
+        CommonVariableMetadata
+            A new metadata object whose type matches this type.
         """
         from .array_metadata import (
             BooleanArrayMetadata,
