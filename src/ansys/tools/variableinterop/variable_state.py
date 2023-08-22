@@ -29,12 +29,13 @@ class VariableState:
 
         Parameters
         ----------
-        other: Any
-        The object to compare.
+        other : Any
+            The object to compare.
 
         Returns
         -------
-        True if the objects are equal, false otherwise.
+        bool
+            True if the objects are equal, false otherwise.
         """
         return (
             isinstance(other, VariableState)

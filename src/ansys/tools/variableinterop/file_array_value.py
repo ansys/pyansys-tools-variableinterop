@@ -82,13 +82,17 @@ class FileArrayValue(CommonArrayValue[FileValue]):
 
         Parameters
         ----------
-        value The value to use.
-        context The load context to initialize the value with.
-        scope The scope to initialize the value in.
+        value : Any
+            The value to use.
+        context : ILoadContext
+            The load context to initialize the value with.
+        scope : FileScope
+            The scope to initialize the value in.
 
         Returns
         -------
-        A new FileArrayValue initialized from value.
+        FileArrayValue
+            A new FileArrayValue initialized from value.
         """
         if isinstance(value, list):
             # Define a function for transforming individual API objects to elements.
@@ -106,6 +110,8 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         disp_str: str = ArrayToFromStringUtil.value_to_string(
-            self, lambda elem: numpy.ndarray.item(elem).to_display_string(locale_name)
+            # TODO: asscalar was deprecated, item breaks the jagged array test
+            self,
+            lambda elem: numpy.ndarray.item(elem).to_display_string(locale_name),
         )
         return disp_str

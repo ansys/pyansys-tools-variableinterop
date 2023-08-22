@@ -4,22 +4,20 @@ from __future__ import annotations
 from decimal import ROUND_HALF_UP, Decimal
 import functools
 import locale
-from typing import Optional, TypeVar
+from typing import Optional
 
 import numpy
 from numpy.typing import ArrayLike
 from overrides import overrides
 
 from .isave_context import ISaveContext
-from .ivariable_visitor import IVariableValueVisitor
+from .ivariable_visitor import IVariableValueVisitor, T
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .utils.locale_utils import LocaleUtils
 from .utils.string_escaping import escape_string, unescape_string
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue
-
-T = TypeVar("T")
 
 
 class BooleanArrayValue(CommonArrayValue[numpy.bool_]):
@@ -403,7 +401,8 @@ class StringArrayValue(CommonArrayValue[numpy.str_]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            A RealArrayValue with the same values converted to real.
         """
         return self.astype(numpy.float64).view(RealArrayValue)
 

@@ -141,13 +141,14 @@ class CommonVariableMetadata(ABC):
                 metadata: scalar_metadata.StringMetadata,
             ) -> scalar_values.StringValue:
                 """
-                For given StringMetadata, use enumerated values to\ get the default
-                value to use for the associated\ variable.
+                For given StringMetadata, use enumerated values to get the default value
+                to use for the associated variable.
 
                 Parameters
                 ----------
                 metadata : StringMetadata
                     Metadata to use to generate default value.
+
                 Returns
                 -------
                 StringValue
@@ -165,14 +166,14 @@ class CommonVariableMetadata(ABC):
             @staticmethod
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
-                For a numeric metadata (i.e. IntegerMetadata or\ RealMetadata) get the
+                For a numeric metadata (i.e. IntegerMetadata or RealMetadata) get the
                 default value to use.
 
                 Parameters
                 ----------
-                metadata : IntegerMetadata or RealMetadata.
+                metadata : M
                     Metadata to use to generate default value.
-                type_ : IntegerValue or RealValue
+                type_ : Type[T]
                     Type of the default value to generate.
 
                 Returns
@@ -293,7 +294,7 @@ class CommonVariableMetadata(ABC):
     def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
         Convert the value of the given variable value to the appropriate type for this
-        meta data.
+        metadata.
 
         Parameters
         ----------
@@ -302,7 +303,8 @@ class CommonVariableMetadata(ABC):
 
         Returns
         -------
-        Value converted to the appropriate type.
+        IVariableValue
+            Value converted to the appropriate type.
         """
         from ansys.tools.variableinterop import (
             array_value_conversion,

@@ -45,11 +45,12 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
 
             Parameters
             ----------
-            original_path Path to the file to wrap.
-            mime_type Mime type of the file.
-            encoding The encoding of the file.
-            value_id The id that uniquely identifies this file. Auto-generated\
-                if not supplied.
+            to_read : PathLike
+                Path to the file to wrap.
+            mime_type : Optional[str]
+                Mime type of the file.
+            encoding : Optional[str]
+                The encoding of the file.
             """
             size: Optional[int] = None
             # TODO: The tests use a lot of non-existent files, so this prevents
@@ -84,11 +85,13 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
 
         Parameters
         ----------
-        file_var TODO
+        file_var : FileValue
+            TODO
 
         Returns
         -------
-        TODO
+        str
+            TODO
         """
         if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")

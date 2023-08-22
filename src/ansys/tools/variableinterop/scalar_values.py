@@ -3,19 +3,17 @@ from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import Any, Dict, Optional, TypeVar, cast
+from typing import Any, Dict, Optional, cast
 
 import numpy
 from overrides import overrides
 
 from .exceptions import IncompatibleTypesException
 from .isave_context import ISaveContext
-from .ivariable_visitor import IVariableValueVisitor
+from .ivariable_visitor import IVariableValueVisitor, T
 from .utils.locale_utils import LocaleUtils
 from .variable_type import VariableType
 from .variable_value import IVariableValue
-
-T = TypeVar("T")
 
 
 class BooleanValue(IVariableValue):
@@ -343,7 +341,7 @@ class IntegerValue(numpy.int64, IVariableValue):
 
         Parameters
         ----------
-        arg
+        arg : Any
             The argument from which to construct this instance.
         """
 
@@ -455,7 +453,7 @@ class RealValue(numpy.float64, IVariableValue):
 
         Parameters
         ----------
-        arg
+        arg : Any
             The argument from which to construct this instance.
         """
         if isinstance(arg, BooleanValue):

@@ -81,7 +81,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         Initialize a new instance.
 
         Parameters
-        ==========
+        ----------
         local_content_path : Optional[Path]
             The path to the local content. None indicates the file value is empty.
         """
@@ -113,8 +113,7 @@ class FileValue(IVariableValue, ABC):
     """
     Abstract base class for a file variable.
 
-    To create instances, \
-    use a `FileScope`.
+    To create instances, use a `FileScope`.
     """
 
     def __init__(
@@ -130,12 +129,16 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        original_path Path to the file to wrap.
-        mime_type Mime type of the file.
-        encoding The encoding of the file.
-        value_id The id that uniquely identifies this file. Auto-generated\
-            if not supplied.
-        file_size The size of the file in bytes, if known.
+        original_path : Optional[PathLike]
+            Path to the file to wrap.
+        mime_type : Optional[str]
+            Mime type of the file.
+        encoding : Optional[str]
+            The encoding of the file.
+        value_id : Optional[UUID]
+            The id that uniquely identifies this file. Auto-generated if not supplied.
+        file_size : Optional[int]
+            The size of the file in bytes, if known.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
@@ -257,7 +260,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The size of the file in bytes.
+        Optional[int]
+            The size of the file in bytes.
         """
         return self._size
 
@@ -274,9 +278,8 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         str
-            If the file contains a BOM, an appropriate encoding will be
-            returned. If the file does not contain a BOM, 'None' is
-            returned.
+            If the file contains a BOM, an appropriate encoding will be returned.
+            If the file does not contain a BOM, 'None' is returned.
         """
         with open(filename, "rb") as f:
             bom = f.read(4)
@@ -299,11 +302,12 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        file_name PathLike to the file to create.
+        file_name : PathLike
+            Path to the file to create.
 
         Returns
         -------
-        None.
+        None
         """
         # make the file
         Path(file_name).open("w").close()
@@ -381,12 +385,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        mimetype The file's mimetype.
+        mimetype : str
+            The file's mimetype.
 
         Returns
         -------
-        True if the mimetype starts with text or is application/json,
-        False otherwise.
+        Optional[bool]
+            True if the mimetype starts with text or is application/json, False otherwise.
         """
         return str(mimetype).startswith("text/") or str(mimetype).startswith("application/json")
 
@@ -397,8 +402,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        True if the mimetype starts with text or is application/json,
-        False otherwise.
+        bool
+            True if the mimetype starts with text or is application/json, False otherwise.
         """
         return FileValue.is_text_based_static(self.mime_type)
 
@@ -408,11 +413,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        encoding The encoding to use when reading.
+        encoding : Optional[str]
+            The encoding to use when reading.
 
         Returns
         -------
-        The file contents as a string.
+        str
+            The file contents as a string.
         """
         async with await self.get_reference_to_actual_content_file_async() as local_pin:
             file: Optional[PathLike] = local_pin.content_path
@@ -423,14 +430,14 @@ class FileValue(IVariableValue, ABC):
     @abstractmethod
     def _has_content(self) -> bool:
         """
-        Check whether or not this file value has content.
+        Check whether this file value has content.
 
-        This information is used to decide whether or not to pass
-        the file value to the file store.
+        This information is used to decide whether to pass the file value to the file store.
 
         Returns
         -------
-        True if there is content, false otherwise.
+        bool
+            True if there is content, false otherwise.
         """
 
     @overrides
@@ -440,11 +447,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        save_context The save context to use.
+        context : Optional[ISaveContext]
+            The save context to use.
 
         Returns
         -------
-        A string appropriate for use in files and APIs.
+        str
+            A string appropriate for use in files and APIs.
         """
         if context is None:
             raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
@@ -464,11 +473,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        save_context The save context used for the conversion.
+        save_context : ISaveContext
+            The save context used for the conversion.
 
         Returns
         -------
-        API object that matches this FileValue.
+        Dict[str, Optional[str]]
+            API object that matches this FileValue.
         """
         obj: Dict[str, Optional[str]] = {}
         if self._has_content():
@@ -492,9 +503,11 @@ class FileValue(IVariableValue, ABC):
         Get the file extension of the file value held, if known, including the period.
 
         If the file extension is not known, ".tmp" is returned.
+
         Returns
         -------
-        The file extension of the file value held if known, otherwise, ".tmp"
+        str
+            The file extension of the file value held if known, otherwise, ".tmp"
         """
         ext: str = FileValue._DEFAULT_EXT
         if isinstance(self._original_path, PathLike):
@@ -536,12 +549,16 @@ class LocalFileValue(FileValue, ABC):
 
         Parameters
         ----------
-        original_path Path to the file to wrap.
-        mime_type Mime type of the file.
-        encoding The encoding of the file.
-        value_id The id that uniquely identifies this file. Auto-generated\
-            if not supplied.
-        actual_content_file_name The path to where the content is actually being stored.
+        original_path : Optional[PathLike]
+            Path to the file to wrap.
+        mime_type : Optional[str]
+            Mime type of the file.
+        encoding : Optional[str]
+            The encoding of the file.
+        value_id : Optional[UUID]
+            The id that uniquely identifies this file. Auto-generated if not supplied.
+        actual_content_file_name : Optional[PathLike]
+            The path to where the content is actually being stored.
         """
         super().__init__(
             original_path=original_path,
@@ -559,7 +576,8 @@ class LocalFileValue(FileValue, ABC):
 
         Returns
         -------
-        PathLike to the file.
+        Optional[PathLike]
+            PathLike to the file.
         """
         return self.__actual_content_file_name
 

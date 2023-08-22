@@ -42,15 +42,17 @@ class ISaveContext(AbstractContextManager, ABC):
 
         Parameters
         ----------
-        source the file on disk to send or include in the save.
-        content_id If a unique ID is already known for the file, include it here.
+        source : Union[PathLike, str]
+            The file on disk to send or include in the save.
+        content_id : Optional[str]
+            If a unique ID is already known for the file, include it here.
             If it is not provided, one will be generated and returned.
-            This ID can be used with an equivalent
-            ILoadContext to load the contents on deserialize.
+            This ID can be used with an equivalent ILoadContext to load the contents on deserialize.
 
         Returns
         -------
-        If an id was provided, returns that ID, otherwise generates one and returns it.
+        str
+            If an id was provided, returns that ID, otherwise generates one and returns it.
         """
         ...
 

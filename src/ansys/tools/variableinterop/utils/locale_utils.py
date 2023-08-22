@@ -16,7 +16,10 @@ class LocaleUtils:
 
         Parameters
         ----------
-        action The action to perform.
+        locale_name: str
+            The name of the locale in which to perform the action.
+        action : Callable
+            The action to perform.
 
         Returns
         -------

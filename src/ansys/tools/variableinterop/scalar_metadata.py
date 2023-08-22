@@ -1,18 +1,16 @@
 """Definition of scalar metadata types."""
 from __future__ import annotations
 
-from typing import Any, List, Optional, TypeVar
+from typing import Any, List, Optional
 
 from overrides import overrides
 
 from .common_variable_metadata import CommonVariableMetadata
-from .ivariablemetadata_visitor import IVariableMetadataVisitor
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .numeric_metadata import NumericMetadata
 from .scalar_values import IntegerValue, RealValue, StringValue
 from .utils.implicit_coercion import implicit_coerce
 from .variable_type import VariableType
-
-T = TypeVar("T")
 
 
 class BooleanMetadata(CommonVariableMetadata):

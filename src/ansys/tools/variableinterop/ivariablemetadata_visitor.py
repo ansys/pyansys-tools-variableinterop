@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 
 T = TypeVar("T")
+"""Bruh."""
 
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
@@ -36,7 +37,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : IntegerMetadata
             The IntegerMetadata being visited
 
         Returns
@@ -53,7 +54,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : RealMetadata
             The RealMetadata being visited
 
         Returns
@@ -70,7 +71,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : BooleanMetadata
             The BooleanMetadata being visited
 
         Returns
@@ -87,7 +88,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : StringMetadata
             The StringMetadata being visited
 
         Returns
@@ -98,13 +99,14 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_file(self, metadata: FileMetadata):
+    def visit_file(self, metadata: FileMetadata) -> T:
         """
         Will be called if accept is called on a FileMetadata.
 
         Parameters
         ----------
-        metadata The FileMetadata being visited
+        metadata : FileMetadata
+            The FileMetadata being visited
 
         Returns
         -------
@@ -120,7 +122,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : IntegerArrayMetadata
             The IntegerArrayMetaData being visited.
 
         Returns
@@ -137,7 +139,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : RealArrayMetadata
             The RealArrayMetaData being visited.
 
         Returns
@@ -154,7 +156,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : BooleanArrayMetadata
             The BooleanArrayMetaData being visited.
 
         Returns
@@ -171,7 +173,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
+        metadata : StringArrayMetadata
             The StringArrayMetaData being visited.
 
         Returns
@@ -182,16 +184,18 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def visit_file_array(self, metadata: FileArrayMetadata):
+    def visit_file_array(self, metadata: FileArrayMetadata) -> T:
         """
         Will be called if accept is called on a FileArrayMetadata.
 
         Parameters
         ----------
-        metadata The FileArrayMetadata being visited
+        metadata : FileArrayMetadata
+            The FileArrayMetadata being visited
 
         Returns
         -------
-        The result.
+        T
+            The result.
         """
         raise NotImplementedError

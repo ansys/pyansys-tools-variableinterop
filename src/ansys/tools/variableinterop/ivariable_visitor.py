@@ -31,7 +31,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The IntegerValue being visited.
+        value : IntegerValue
+            The IntegerValue being visited.
 
         Returns
         -------
@@ -47,7 +48,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The RealValue being visited.
+        value : RealValue
+            The RealValue being visited.
 
         Returns
         -------
@@ -63,7 +65,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The BooleanValue being visited.
+        value : BooleanValue
+            The BooleanValue being visited.
 
         Returns
         -------
@@ -79,7 +82,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The StringValue being visited.
+        value : StringValue
+            The StringValue being visited.
 
         Returns
         -------
@@ -95,7 +99,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The IntegerArrayValue being visited.
+        value : IntegerArrayValue
+            The IntegerArrayValue being visited.
 
         Returns
         -------
@@ -111,7 +116,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The FileValue being visited
+        value : FileValue
+            The FileValue being visited
 
         Returns
         -------
@@ -127,7 +133,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The RealArrayValue being visited.
+        value : RealArrayValue
+            The RealArrayValue being visited.
 
         Returns
         -------
@@ -143,7 +150,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The BooleanArrayValue being visited.
+        value : BooleanArrayValue
+            The BooleanArrayValue being visited.
 
         Returns
         -------
@@ -159,7 +167,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The StringArrayValue being visited.
+        value : StringArrayValue
+            The StringArrayValue being visited.
 
         Returns
         -------
@@ -175,7 +184,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The FileArrayValue being visited
+        value : FileArrayValue
+            The FileArrayValue being visited
 
         Returns
         -------

@@ -13,14 +13,17 @@ def from_formatted_string(var_type: VariableType, source: str, locale_name: str)
 
     Parameters
     ----------
-    var_type The type of variable to convert to.
-    source The string to convert.
-    locale_name The locale the string was formatted in.
+    var_type : VariableType
+        The type of variable to convert to.
+    source : str
+        The string to convert.
+    locale_name : str
+        The locale the string was formatted in.
 
     Returns
     -------
-    An IVariableValue of the specified type whose value matches the
-    given string.
+    IVariableValue
+        An IVariableValue of the specified type whose value matches the given string.
     """
     generator: FromFormattedStringVisitor = FromFormattedStringVisitor(
         unicode_(source), locale_name

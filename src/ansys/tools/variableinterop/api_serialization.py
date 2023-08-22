@@ -25,7 +25,8 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
 
         Parameters
         ----------
-        save_context Tge save context to use for conversion.
+        save_context : Optional[ISaveContext]
+            The save context to use for conversion.
         """
         self._save_context = save_context
 
@@ -115,8 +116,8 @@ def from_api_string(
     Returns
     -------
     IVariableValue
-    An implementation of IVariableValue of the correct type with a value parsed
-    from the specified string.
+        An implementation of IVariableValue of the correct type with a value parsed from the
+        specified string.
     """
     generator: APIStringToValueVisitor = APIStringToValueVisitor(source, fscope, load_context)
     result: IVariableValue = vartype_accept(generator, var_type)

@@ -12,10 +12,10 @@ from typing import Optional
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .file_array_value import FileArrayValue
 from .file_scope import FileScope
+from .file_value import FileValue
 from .isave_context import ILoadContext
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
-from .variable_value import IVariableValue
 
 
 class APIStringToValueVisitor(IVariableTypePseudoVisitor):
@@ -37,13 +37,20 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Parameters
         ----------
-        source the string from which values should be parsed
+        source : str
+            the string from which values should be parsed
+        fscope : Optional[FileScope]
+            The file scope to use to deserialize file variables. May be None if file variables
+            are not needed.
+        save_context : Optional[ILoadContext], optional
+            The save context to read file contents from. May be None if file variables are
+            not needed.
         """
         self._source: str = source
         self._scope: Optional[FileScope] = fscope
         self._save_context: Optional[ILoadContext] = save_context
 
-    def visit_unknown(self):
+    def visit_unknown(self) -> None:
         """
         Visit the UNKNOWN variable type.
 
@@ -52,11 +59,13 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        Never returns; always raises NotImplementedError
+        None
+            Never returns; always raises NotImplementedError
 
         Raises
         ------
-        NotImplementedError always
+        NotImplementedError
+            Always.
         """
         raise NotImplementedError("Cannot create values with unknown type.")
 
@@ -88,7 +97,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A BooleanValue with a value determined by the specified string.
+        BooleanValue
+            A BooleanValue with a value determined by the specified string.
         """
         return BooleanValue.from_api_string(self._source)
 
@@ -98,17 +108,19 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A StringValue with a value determined by the specified string.
+        StringValue
+            A StringValue with a value determined by the specified string.
         """
         return StringValue.from_api_string(self._source)
 
-    def visit_file(self) -> IVariableValue:
+    def visit_file(self) -> FileValue:
         """
         Produce a FileValue from the API string format.
 
         Returns
         -------
-        A FileValue with a value determined by the specified string.
+        FileValue
+            A FileValue with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
@@ -123,7 +135,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        An IntegerArrayValue with a value determined by the specified string.
+        IntegerArrayValue
+            An IntegerArrayValue with a value determined by the specified string.
         """
         return IntegerArrayValue.from_api_string(self._source)
 
@@ -133,7 +146,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A RealArrayValue with a value determined by the specified string.
+        RealArrayValue
+            A RealArrayValue with a value determined by the specified string.
         """
         return RealArrayValue.from_api_string(self._source)
 
@@ -143,7 +157,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A BooleanArrayValue with a value determined by the specified string.
+        BooleanArrayValue
+            A BooleanArrayValue with a value determined by the specified string.
         """
         return BooleanArrayValue.from_api_string(self._source)
 
@@ -153,17 +168,19 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
         Returns
         -------
-        A StringArrayValue with a value determined by the specified string.
+        StringArrayValue
+            A StringArrayValue with a value determined by the specified string.
         """
         return StringArrayValue.from_api_string(self._source)
 
-    def visit_file_array(self) -> IVariableValue:
+    def visit_file_array(self) -> FileArrayValue:
         """
         Produce a FileArrayValue from the API string format.
 
         Returns
         -------
-        A FileArrayValue with a value determined by the specified string.
+        FileArrayValue
+            A FileArrayValue with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(

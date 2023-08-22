@@ -251,9 +251,10 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
     Parameters
     ----------
-    arg The object to attempt to convert
-    arg_type The type of object to convert to. Must be IVariableValue \
-        or something derived from it.
+    arg : Any
+        The object to attempt to convert
+    arg_type : type
+        The type of object to convert to. Must be IVariableValue or something derived from it.
 
     Returns
     -------
@@ -262,7 +263,8 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
     Raises
     ------
-    TypeError if the argument cannot be converted to the supplied type
+    TypeError
+        If the argument cannot be converted to the supplied type
     """
     if _is_optional(arg_type):
         if arg is None:
@@ -298,19 +300,20 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     return arg
 
 
-def implicit_coerce(func) -> Any:
+def implicit_coerce(func: Any) -> Any:
     """
     Use to decorate functions that use the PEP 484 typing system to try and coerce any
     arguments that accept IVariableValue or any derived type into an acceptable value.
 
     Parameters
     ----------
-    func The function to decorate
+    func : Any
+        The function to decorate.
 
     Returns
     -------
     Any
-        The wrapper function
+        The wrapper function.
     """
     assert inspect.isfunction(func), "Decorator must be used on functions"
     signature = inspect.signature(func)

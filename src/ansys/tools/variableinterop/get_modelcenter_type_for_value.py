@@ -16,7 +16,8 @@ class GetModelCenterTypeForValue:
 
         Parameters
         ----------
-        value The value for which to get the type.
+        value : IVariableValue
+            The value for which to get the type.
 
         Returns
         -------

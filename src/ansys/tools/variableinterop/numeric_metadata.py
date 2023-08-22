@@ -2,14 +2,12 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, TypeVar
+from typing import Any
 
 from overrides import overrides
 
 from .common_variable_metadata import CommonVariableMetadata
-from .ivariablemetadata_visitor import IVariableMetadataVisitor
-
-T = TypeVar("T")
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 
 
 class NumericMetadata(CommonVariableMetadata, ABC):
@@ -32,11 +30,13 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
         Parameters
         ----------
-        metadata Metadata to compare this object to.
+        other : Any
+            Object to compare this object to.
 
         Returns
         -------
-        True if metadata objects are equal, false otherwise.
+        bool
+            True if objects are equal, false otherwise.
         """
         equal: bool = (
             isinstance(other, NumericMetadata)
