@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 
 T = TypeVar("T")
-"""Bruh."""
 
 
 class IVariableMetadataVisitor(ABC, Generic[T]):

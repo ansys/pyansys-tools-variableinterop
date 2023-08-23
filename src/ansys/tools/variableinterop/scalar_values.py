@@ -21,7 +21,7 @@ class BooleanValue(IVariableValue):
     Wrapper around a boolean value.
 
     This type is treated by Python as if it were any other boolean type such as
-    numpy.bool_ or builtins.bool.
+    numpy.bool\_ or a built-in bool.
     """
 
     @staticmethod
@@ -68,12 +68,14 @@ class BooleanValue(IVariableValue):
         """
         Construct a BooleanValue from various source types.
 
-        Supported types include:
-        None: Constructs a False BooleanValue
-        bool or numpy.bool_: Constructs a BooleanValue with the given
-            Boolean value.
-        IVariableValue: Constructs a BooleanValue per the specification
-        Others: raises an exception
+        Parameters
+        ----------
+        source : object
+            Supported types include:
+            None: Constructs a False BooleanValue
+            bool or numpy.bool\_: Constructs a BooleanValue with the given Boolean value.
+            IVariableValue: Constructs a BooleanValue per the specification
+            Others: raises an exception
         """
         self.__value: numpy.bool_
         if source is None:
@@ -564,8 +566,8 @@ class StringValue(numpy.str_, IVariableValue):
     """
     Wrapper around a string value.
 
-    In Python IntegerValue is implemented by extending NumPy's str_ type. This means
-    that they will decay naturally into numpy.str_ objects when used with other types
+    In Python IntegerValue is implemented by extending NumPy's str\_ type. This means
+    that they will decay naturally into numpy.str\_ objects when used with other types
     operators. It also means that they inherit many of the numpy behaviors, which may be
     slightly different from the behaviors specified in the variable interop standards.
     For example, when converting from string to integer, values parseable as a floating-

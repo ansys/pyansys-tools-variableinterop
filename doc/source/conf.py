@@ -56,24 +56,20 @@ html_context = {
 extensions = [
     "notfound.extension",  # for the not found page.
     "numpydoc",
-    "sphinx_copybutton",
-    "sphinx_design",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
+    "sphinx.ext.autosectionlabel",
     "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
+    "sphinx_copybutton",
+    "sphinx_design",
 ]
 
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
-    # kept here as an example
-    # "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
-    # "numpy": ("https://numpy.org/devdocs", None),
-    # "matplotlib": ("https://matplotlib.org/stable", None),
-    # "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
-    # "pyvista": ("https://docs.pyvista.org/", None),
+    "numpy": ("https://numpy.org/devdocs", None),
+    "anyio": ("https://anyio.readthedocs.io/en/stable/", None),
 }
 
 # numpydoc configuration
@@ -97,9 +93,30 @@ numpydoc_validation_checks = {
     "SS04",  # Summary contains heading whitespaces
     # "SS05", # Summary must start with infinitive verb, not third person
     "RT02",  # The first line of the Returns section should contain only the
-    # type, unless multiple values are being returned"
+    # type, unless multiple values are being returned
 }
 
+var_value_regex_prefix = "ansys\.tools\.variableinterop\..*Value\."
+numpydoc_validation_exclude = {
+    # Ignore methods inherited from numpy with doc errors
+    var_value_regex_prefix + "astype",
+    var_value_regex_prefix + "copy",
+    var_value_regex_prefix + "dot",
+    var_value_regex_prefix + "tobytes",
+    var_value_regex_prefix + "tostring",
+    var_value_regex_prefix + "T",
+    var_value_regex_prefix + "nbytes",
+    var_value_regex_prefix + "real",
+    var_value_regex_prefix + "shape",
+    var_value_regex_prefix + "strides",
+    var_value_regex_prefix + "conj",
+    var_value_regex_prefix + "denominator",
+    var_value_regex_prefix + "numerator",
+    "numpy\._typing\._array_like\.SupportsArray",
+    "numpy\._typing\._nested_sequence\._NestedSequence",
+    # Ignore importlib missing docstrings
+    "ansys\.tools\.variableinterop\.importlib_metadata\..*",
+}
 
 # static path
 html_static_path = ["_static"]

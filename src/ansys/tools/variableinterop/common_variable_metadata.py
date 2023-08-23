@@ -45,7 +45,7 @@ class CommonVariableMetadata(ABC):
         Returns
         -------
         bool
-            ``True`` if metadata objects are equal, false otherwise.
+            ``True`` if metadata objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, CommonVariableMetadata)

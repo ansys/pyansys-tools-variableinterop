@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
     "anyio>=3.5",
     "numpy>=1.20.3",
-    "overrides>=6.1",
+    "overrides>=7.4",
 ]
 
 
