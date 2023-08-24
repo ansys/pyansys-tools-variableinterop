@@ -336,7 +336,7 @@ class FileValue(IVariableValue, ABC):
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]]
-            a callback that may be called to indicate progress in realizing the local copy.
+            A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback will not necessarily be called at all, and calls for 0% or 100%
@@ -345,7 +345,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         AsyncLocalFileContentContext
-            a context manager that, when exited, will delete the local copy
+            A context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
 
@@ -365,7 +365,7 @@ class FileValue(IVariableValue, ABC):
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]]
-            a callback that may be called to indicate progress in realizing the local copy.
+            A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback will not necessarily be called at all, and calls for 0% or 100%
@@ -374,7 +374,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         LocalFileContentContext
-            a context manager that, when exited, will delete the local copy
+            A context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
 

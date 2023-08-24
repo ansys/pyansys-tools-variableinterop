@@ -45,19 +45,45 @@ class FileScope(AbstractContextManager, ABC):
 
     @abstractmethod
     def close(self) -> None:
-        """TODO."""
+        """Close the file scope, cleaning up any files it contains."""
         ...
 
     @abstractmethod
     def read_from_file(
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
     ) -> FileValue:
-        """TODO."""
+        """
+        Read the contents of a file and create a new FileValue backed by a file in this
+        scope.
+
+        Parameters
+        ----------
+        to_read : PathLike
+            Path to the file to read.
+        mime_type : Optional[str]
+            Mime type of the file.
+        encoding : Optional[str]
+            The encoding of the file.
+
+        Returns
+        -------
+        FileValue
+            A new FileValue with the contents of the specified file, backed by this scope.
+        """
         ...
 
     @abstractmethod
     def from_api_object(
         self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
     ) -> FileValue:
-        """TODO."""
+        """
+        Create a FileScope from a map of API strings.
+
+        Parameters
+        ----------
+        api_object : Dict[str, Optional[str]]
+            Map of API strings that define the scope.
+        load_context : ILoadContext
+            The load context to read file contents from.
+        """
         ...

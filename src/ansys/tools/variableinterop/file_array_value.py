@@ -26,11 +26,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
 
     In Python FileArrayValue is implemented by extending NumPy's ndarray type. This
     means that they will decay naturally into numpy.ndarray objects when using numpy's
-    array operators. It also means that they inherit many of the numpy behaviors, which
-    may be slightly different from the behaviors specified in the variable interop
-    standards. For example, when converting from real to integer, the value will be
-    floored instead of rounded. If you want the variable interop standard conversions,
-    use xxxx (TODO)
+    array operators.
     """
 
     @overrides

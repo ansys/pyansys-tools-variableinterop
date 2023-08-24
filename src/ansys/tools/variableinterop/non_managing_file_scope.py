@@ -81,17 +81,17 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
 
     def to_api_string_file_store(self, file_var: FileValue) -> str:
         """
-        TODO.
+        Serialize a FileValue in this scope to an API string.
 
         Parameters
         ----------
         file_var : FileValue
-            TODO
+            The FileValue to serialize.
 
         Returns
         -------
         str
-            TODO
+            An API string representing the value.
         """
         if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")

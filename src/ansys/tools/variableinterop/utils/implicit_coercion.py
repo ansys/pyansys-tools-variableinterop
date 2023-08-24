@@ -174,6 +174,8 @@ def _specific_implicit_coerce_allowed(
         The target type of the argument (the type declared on the method).
     actual_arg_type : type
         The actual type of the argument (the type of the actual object being passed).
+    ruleset : Dict[type, List[type]]
+        A map of types to allowed coercion types.
 
     Returns
     -------
@@ -264,7 +266,7 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     Raises
     ------
     TypeError
-        If the argument cannot be converted to the supplied type
+        If the argument cannot be converted to the supplied type.
     """
     if _is_optional(arg_type):
         if arg is None:

@@ -3,6 +3,8 @@ versa."""
 
 from typing import Optional
 
+from overrides import overrides
+
 from .exceptions import _error
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
 from .variable_type import VariableType
@@ -15,36 +17,47 @@ class __ScalarToArrayPseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableT
     Provides None if the visited type has no array type or is an array.
     """
 
+    @overrides
     def visit_unknown(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int(self) -> Optional[VariableType]:
         return VariableType.INTEGER_ARRAY
 
+    @overrides
     def visit_real(self) -> Optional[VariableType]:
         return VariableType.REAL_ARRAY
 
+    @overrides
     def visit_boolean(self) -> Optional[VariableType]:
         return VariableType.BOOLEAN_ARRAY
 
+    @overrides
     def visit_string(self) -> Optional[VariableType]:
         return VariableType.STRING_ARRAY
 
+    @overrides
     def visit_file(self) -> Optional[VariableType]:
         return VariableType.FILE_ARRAY
 
+    @overrides
     def visit_int_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_real_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_bool_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_string_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_file_array(self) -> Optional[VariableType]:
         return None
 
@@ -56,36 +69,47 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
     Provides None if the visited type is not an array.
     """
 
+    @overrides
     def visit_unknown(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_real(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_boolean(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_string(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_file(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int_array(self) -> Optional[VariableType]:
         return VariableType.INTEGER
 
+    @overrides
     def visit_real_array(self) -> Optional[VariableType]:
         return VariableType.REAL
 
+    @overrides
     def visit_bool_array(self) -> Optional[VariableType]:
         return VariableType.BOOLEAN
 
+    @overrides
     def visit_string_array(self) -> Optional[VariableType]:
         return VariableType.STRING
 
+    @overrides
     def visit_file_array(self) -> Optional[VariableType]:
         return VariableType.FILE
 

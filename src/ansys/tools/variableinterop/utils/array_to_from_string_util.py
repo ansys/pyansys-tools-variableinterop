@@ -11,7 +11,7 @@ from ..variable_value import CommonArrayValue, IVariableValue
 
 
 class ArrayToFromStringUtil:
-    """Utility methods for converting CommonValueArrays to/from string \
+    """Utility methods for converting CommonValueArrays to/from string
     representations."""
 
     # Regular Expression pattern, as a string, of an array value with the optional curly braces.
@@ -36,8 +36,8 @@ class ArrayToFromStringUtil:
         """
         Convert an array value to a string representation of it.
 
-        stringify_action allows converting the value arbitrarily, so
-        both API and display strings can use this method.
+        stringify_action allows converting the value arbitrarily, so both API and display strings
+        can use this method.
 
         Parameters
         ----------
@@ -69,16 +69,16 @@ class ArrayToFromStringUtil:
         """
         Convert a string into a CommonValueArray object.
 
-        valueify_action allows converting the value arbitrarily, so
-        both API and display strings can use this method.
+        valueify_action allows converting the value arbitrarily, so both API and display strings
+        can use this method.
 
         Parameters
         ----------
         value : str
             The string value to parse.
         create_action : Callable[[Any], CommonArrayValue]
-            An action that takes either a shape or a list of initial values, and creates \
-            a new array of the correct type.
+            An action that takes either a shape or a list of initial values, and creates a new
+            array of the correct type.
         valueify_action : Callable[[str], IVariableValue]
             The action used to parse each individual value to the correct type.
 
