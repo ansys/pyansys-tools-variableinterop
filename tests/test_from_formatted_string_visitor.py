@@ -299,7 +299,9 @@ def test_converting_from_an_integer_array(
         ),
     ],
 )
-def test_converting_from_a_real_array(value: str, locale_value: str, expected: RealArrayValue) -> None:
+def test_converting_from_a_real_array(
+    value: str, locale_value: str, expected: RealArrayValue
+) -> None:
     """
     Verifies the conversion of various strings to RealArrayValues.
 
