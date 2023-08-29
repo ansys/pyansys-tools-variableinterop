@@ -116,7 +116,7 @@ numpydoc_validation_exclude = {
     "numpy\._typing\._nested_sequence\._NestedSequence",
     # Ignore importlib missing docstrings
     "ansys\.tools\.variableinterop\.importlib_metadata\..*",
-    "ansys\.tools\.variableinterop\..*__init__.py",
+    "ansys\.tools\.variableinterop\..*\.__init__.py",
 }
 
 # static path
