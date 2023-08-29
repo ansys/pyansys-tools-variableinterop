@@ -84,9 +84,9 @@ jobs:
         run: |
           pip install .[tests]
 
-      # - name: Setup locale for tests
-      #   run: |
-      #     sudo locale-gen de_DE.UTF-8
+      - name: Setup locale for tests
+        run: |
+          sudo locale-gen de_DE.UTF-8
 
       - name: "Unit testing"
         run: |
