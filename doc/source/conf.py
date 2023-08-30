@@ -67,8 +67,8 @@ extensions = [
 
 # Intersphinx mapping
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/dev", None),
-    "numpy": ("https://numpy.org/devdocs", None),
+    "python": ("https://docs.python.org/3", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
     "anyio": ("https://anyio.readthedocs.io/en/stable/", None),
 }
 
@@ -117,8 +117,6 @@ numpydoc_validation_exclude = {
     # Ignore importlib missing docstrings
     "ansys\.tools\.variableinterop\.importlib_metadata\..*",
     "ansys\.tools\.variableinterop\..*\.__init__",
-    "ansys\.tools\.variableinterop\.variable_state\..*\.__init__",
-    "ansys\.tools\.variableinterop\.var_type_array_check\..*\.__init__",
 }
 
 # static path
