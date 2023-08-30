@@ -117,6 +117,8 @@ numpydoc_validation_exclude = {
     # Ignore importlib missing docstrings
     "ansys\.tools\.variableinterop\.importlib_metadata\..*",
     "ansys\.tools\.variableinterop\..*\.__init__",
+    "ansys\.tools\.variableinterop\.variable_state\..*\.__init__",
+    "ansys\.tools\.variableinterop\.var_type_array_check\..*\.__init__",
 }
 
 # static path
