@@ -3,6 +3,7 @@
 .. _pyansys_core: pyansys.core@ansys.com
 
 .. #PyAnsys Tools Variable Interop related
+.. _pyansys-tools-variableinterop_repo: https://github.com/ansys/pyansys-tools-variableinterop/
 .. _pyansys-tools-variableinterop_issues: https://github.com/ansys/pyansys-tools-variableinterop/issues
 
 .. #PyAnsys Developer Guide

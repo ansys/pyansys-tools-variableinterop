@@ -154,5 +154,5 @@ with open("links.rst") as f:
     rst_epilog += f.read()
 
 linkcheck_ignore = [
-    "https://github.com/ansys/pyansys-tools-variableinterop*",  # this site is private
+    "https://github.com/ansys/pyansys-tools-variableinterop/*",  # this site is private
 ]
