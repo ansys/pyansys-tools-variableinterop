@@ -103,9 +103,7 @@ class BooleanValue(IVariableValue):
             ),
         ):
             self.__value = np.bool_(source != 0)
-        elif isinstance(
-            source, (float, np.half, np.float16, np.single, np.double, np.longdouble)
-        ):
+        elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value = np.bool_(source != 0.0)
         else:
             raise IncompatibleTypesException(type(source).__name__, VariableType.BOOLEAN)
