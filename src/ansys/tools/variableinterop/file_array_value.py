@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, Optional, TypeVar, cast
 
-import numpy
+import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
@@ -32,12 +32,12 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     @overrides
     def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
         if values is not None:
-            return numpy.array(values, dtype=FileValue).view(cls)
+            return np.array(values, dtype=FileValue).view(cls)
         return super().__new__(cls, shape=shape_, dtype=FileValue).view(cls)
 
     @overrides
     def __eq__(self, other):
-        return numpy.array_equal(self, other)
+        return np.array_equal(self, other)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -69,7 +69,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         def elem_to_api_obj(item: FileValue) -> Dict[str, Optional[str]]:
             return item.to_api_object(cast(ISaveContext, context))
 
-        return json.dumps(numpy.vectorize(elem_to_api_obj)(self).tolist())
+        return json.dumps(np.vectorize(elem_to_api_obj)(self).tolist())
 
     @staticmethod
     def from_api_object(value: Any, context: ILoadContext, scope: FileScope) -> FileArrayValue:
@@ -99,7 +99,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
                     raise TypeError(_error("ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
-            return FileArrayValue(values=numpy.vectorize(api_obj_to_elem)(numpy.asarray(value)))
+            return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value)))
         else:
             raise ValueError("The serialized value was not deserialized as a list.")
 
@@ -108,6 +108,6 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         disp_str: str = ArrayToFromStringUtil.value_to_string(
             # TODO: asscalar was deprecated, item breaks the jagged array test
             self,
-            lambda elem: numpy.ndarray.item(elem).to_display_string(locale_name),
+            lambda elem: np.ndarray.item(elem).to_display_string(locale_name),
         )
         return disp_str

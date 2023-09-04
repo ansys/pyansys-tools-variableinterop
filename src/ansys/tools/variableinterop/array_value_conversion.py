@@ -1,5 +1,5 @@
 """Definition of array value visitors."""
-import numpy
+import numpy as np
 from overrides import overrides
 
 from ansys.tools.variableinterop.array_values import (
@@ -65,7 +65,7 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> BooleanArrayValue:
-        return numpy.copy(value).view(BooleanArrayValue)
+        return np.copy(value).view(BooleanArrayValue)
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> BooleanArrayValue:
@@ -134,7 +134,7 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerArrayValue:
-        return numpy.copy(value).view(IntegerArrayValue)
+        return np.copy(value).view(IntegerArrayValue)
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> IntegerArrayValue:
@@ -215,7 +215,7 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> RealArrayValue:
-        return numpy.copy(value).view(RealArrayValue)
+        return np.copy(value).view(RealArrayValue)
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> RealArrayValue:
@@ -300,7 +300,7 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> StringArrayValue:
-        return numpy.copy(value).view(StringArrayValue)
+        return np.copy(value).view(StringArrayValue)
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> StringArrayValue:

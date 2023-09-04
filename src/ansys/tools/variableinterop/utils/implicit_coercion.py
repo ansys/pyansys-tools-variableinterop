@@ -7,7 +7,7 @@ import functools
 import inspect
 from typing import Any, Dict, List, Optional, Union, get_type_hints
 
-import numpy
+import numpy as np
 
 from ..array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from ..exceptions import _error
@@ -16,18 +16,18 @@ from ..variable_value import CommonArrayValue, IVariableValue
 
 __TYPE_MAPPINGS = {
     int: IntegerValue,
-    numpy.int8: IntegerValue,
-    numpy.int16: IntegerValue,
-    numpy.int32: IntegerValue,
-    numpy.int64: IntegerValue,
+    np.int8: IntegerValue,
+    np.int16: IntegerValue,
+    np.int32: IntegerValue,
+    np.int64: IntegerValue,
     float: RealValue,
-    numpy.float16: RealValue,
-    numpy.float32: RealValue,
-    numpy.float64: RealValue,
+    np.float16: RealValue,
+    np.float32: RealValue,
+    np.float64: RealValue,
     bool: BooleanValue,
-    numpy.bool_: BooleanValue,
+    np.bool_: BooleanValue,
     str: StringValue,
-    numpy.str_: StringValue,
+    np.str_: StringValue,
 }
 """
 This map applies when coercing scalar values to a method argument type hinted as
@@ -40,15 +40,15 @@ IVariableValue implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
-    numpy.int8: IntegerArrayValue,
-    numpy.int16: IntegerArrayValue,
-    numpy.int32: IntegerArrayValue,
-    numpy.int64: IntegerArrayValue,
-    numpy.float16: RealArrayValue,
-    numpy.float32: RealArrayValue,
-    numpy.float64: RealArrayValue,
-    numpy.bool_: BooleanArrayValue,
-    numpy.str_: StringArrayValue,
+    np.int8: IntegerArrayValue,
+    np.int16: IntegerArrayValue,
+    np.int32: IntegerArrayValue,
+    np.int64: IntegerArrayValue,
+    np.float16: RealArrayValue,
+    np.float32: RealArrayValue,
+    np.float64: RealArrayValue,
+    np.bool_: BooleanArrayValue,
+    np.str_: StringArrayValue,
 }
 """
 This map applies when coercing ndarray values to a method argument type hinted as
@@ -64,36 +64,36 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     IntegerValue: [
         int,
         Decimal,
-        numpy.int8,
-        numpy.int16,
-        numpy.int32,
-        numpy.int64,
+        np.int8,
+        np.int16,
+        np.int32,
+        np.int64,
         bool,
-        numpy.bool_,
+        np.bool_,
         BooleanValue,
     ],
     RealValue: [
         float,
-        numpy.float16,
-        numpy.float32,
-        numpy.float64,
+        np.float16,
+        np.float32,
+        np.float64,
         bool,
-        numpy.bool_,
+        np.bool_,
         BooleanValue,
     ],
-    BooleanValue: [bool, numpy.bool_],
+    BooleanValue: [bool, np.bool_],
     StringValue: [
         int,
-        numpy.integer,
+        np.integer,
         IntegerValue,
         bool,
-        numpy.bool_,
+        np.bool_,
         BooleanValue,
         float,
-        numpy.inexact,
+        np.inexact,
         RealValue,
         str,
-        numpy.str_,
+        np.str_,
         StringValue,
     ],
 }
@@ -106,10 +106,10 @@ coerced to that type.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
-    IntegerArrayValue: [numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.bool_],
-    RealArrayValue: [numpy.float16, numpy.float32, numpy.float64, numpy.bool_],
-    BooleanArrayValue: [numpy.bool_],
-    StringArrayValue: [numpy.integer, numpy.inexact, numpy.bool_, numpy.str_],
+    IntegerArrayValue: [np.int8, np.int16, np.int32, np.int64, np.bool_],
+    RealArrayValue: [np.float16, np.float32, np.float64, np.bool_],
+    BooleanArrayValue: [np.bool_],
+    StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
 }
 """
 Rules for implicitly coercing array values to a specific IVariableValue implementation.
@@ -196,7 +196,7 @@ def _specific_implicit_coerce_allowed(
 
 
 def __numpy_array_dtype(arg: Any) -> Optional[type]:
-    if isinstance(arg, numpy.ndarray):
+    if isinstance(arg, np.ndarray):
         return arg.dtype.type
     else:
         return None

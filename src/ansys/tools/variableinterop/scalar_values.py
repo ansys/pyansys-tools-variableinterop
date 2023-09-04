@@ -5,7 +5,7 @@ from decimal import ROUND_HALF_UP, Decimal
 import locale
 from typing import Any, Dict, Optional, cast
 
-import numpy
+import numpy as np
 from overrides import overrides
 
 from .exceptions import IncompatibleTypesException
@@ -25,7 +25,7 @@ class BooleanValue(IVariableValue):
     """
 
     @staticmethod
-    def int64_to_bool(val: numpy.int64) -> bool:
+    def int64_to_bool(val: np.int64) -> bool:
         """Convert a numpy int64 to a bool value per interchange specifications."""
         return bool(val != 0)
 
@@ -77,36 +77,36 @@ class BooleanValue(IVariableValue):
             IVariableValue: Constructs a BooleanValue per the specification
             Others: raises an exception
         """
-        self.__value: numpy.bool_
+        self.__value: np.bool_
         if source is None:
-            self.__value = numpy.False_
-        elif isinstance(source, (bool, numpy.bool_)):
-            self.__value = numpy.bool_(source)
+            self.__value = np.False_
+        elif isinstance(source, (bool, np.bool_)):
+            self.__value = np.bool_(source)
         elif isinstance(source, IVariableValue):
             from ansys.tools.variableinterop.scalar_value_conversion import to_boolean_value
 
-            self.__value = numpy.bool_(to_boolean_value(source))
+            self.__value = np.bool_(to_boolean_value(source))
         elif isinstance(
             source,
             (
                 int,
-                numpy.byte,
-                numpy.ubyte,
-                numpy.short,
-                numpy.ushort,
-                numpy.intc,
-                numpy.uintc,
-                numpy.int_,
-                numpy.uint,
-                numpy.longlong,
-                numpy.ulonglong,
+                np.byte,
+                np.ubyte,
+                np.short,
+                np.ushort,
+                np.intc,
+                np.uintc,
+                np.int_,
+                np.uint,
+                np.longlong,
+                np.ulonglong,
             ),
         ):
-            self.__value = numpy.bool_(source != 0)
+            self.__value = np.bool_(source != 0)
         elif isinstance(
-            source, (float, numpy.half, numpy.float16, numpy.single, numpy.double, numpy.longdouble)
+            source, (float, np.half, np.float16, np.single, np.double, np.longdouble)
         ):
-            self.__value = numpy.bool_(source != 0.0)
+            self.__value = np.bool_(source != 0.0)
         else:
             raise IncompatibleTypesException(type(source).__name__, VariableType.BOOLEAN)
 
@@ -304,13 +304,13 @@ class BooleanValue(IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: numpy.str_ = LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%s", self)
         )
         return result
 
 
-class IntegerValue(numpy.int64, IVariableValue):
+class IntegerValue(np.int64, IVariableValue):
     """
     Wrapper around an integer value.
 
@@ -426,13 +426,13 @@ class IntegerValue(numpy.int64, IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: numpy.str_ = LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%G", self)
         )
         return result
 
 
-class RealValue(numpy.float64, IVariableValue):
+class RealValue(np.float64, IVariableValue):
     """
     Wrapper around a real value.
 
@@ -497,13 +497,13 @@ class RealValue(numpy.float64, IVariableValue):
 
     @overrides
     def __str__(self) -> str:
-        if numpy.isnan(self):
+        if np.isnan(self):
             return RealValue.__CANONICAL_NAN
-        if numpy.isposinf(self):
+        if np.isposinf(self):
             return RealValue.__CANONICAL_INF
-        if numpy.isneginf(self):
+        if np.isneginf(self):
             return RealValue.__CANONICAL_NEG_INF
-        return numpy.float64.__str__(self)
+        return np.float64.__str__(self)
 
     @staticmethod
     def from_api_string(value: str) -> RealValue:
@@ -553,13 +553,13 @@ class RealValue(numpy.float64, IVariableValue):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-        result: numpy.str_ = LocaleUtils.perform_safe_locale_action(
+        result: np.str_ = LocaleUtils.perform_safe_locale_action(
             locale_name, lambda: locale.format_string("%.15G", self)
         )
         return result
 
 
-class StringValue(numpy.str_, IVariableValue):
+class StringValue(np.str_, IVariableValue):
     """
     Wrapper around a string value.
 

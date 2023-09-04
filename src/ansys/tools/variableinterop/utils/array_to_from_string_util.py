@@ -3,7 +3,7 @@ from math import prod
 import re
 from typing import Any, Callable, List, Match, Optional, Tuple
 
-import numpy
+import numpy as np
 from numpy.typing import NDArray
 
 from ..exceptions import FormatException
@@ -55,7 +55,7 @@ class ArrayToFromStringUtil:
         # Specify bounds for arrays of more than 1d:
         if value.ndim > 1:
             api_string = "bounds[" + ",".join(map(str, value.shape)) + "]{"
-        api_string += ",".join(map(stringify_action, numpy.nditer(value, flags=["refs_ok"])))
+        api_string += ",".join(map(stringify_action, np.nditer(value, flags=["refs_ok"])))
         if value.ndim > 1:
             api_string += "}"
         return api_string
@@ -117,7 +117,7 @@ class ArrayToFromStringUtil:
             if comma_after_last_value == ",":
                 raise FormatException
             # create the array from the values
-            array = create_action(numpy.reshape(converted_list, lengths).tolist())
+            array = create_action(np.reshape(converted_list, lengths).tolist())
 
         else:  # No bounds
             match = re.search(
