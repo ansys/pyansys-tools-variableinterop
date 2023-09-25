@@ -99,7 +99,9 @@ class FileArrayValue(CommonArrayValue[FileValue]):
                     raise TypeError(_error("ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
-            return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value, dtype="object")))
+            return FileArrayValue(
+                values=np.vectorize(api_obj_to_elem)(np.asarray(value, dtype="object"))
+            )
         else:
             raise ValueError("The serialized value was not deserialized as a list.")
 
