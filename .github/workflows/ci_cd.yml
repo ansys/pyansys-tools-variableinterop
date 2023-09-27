@@ -17,7 +17,6 @@ env:
   DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
   MAIN_PYTHON_VERSION: '3.10'
   PACKAGE_NAME: 'pyansys-tools-variableinterop'
-  PACKAGE_NAMESPACE: 'ansys.tools.variableinterop'
 
 jobs:
   code-style:
