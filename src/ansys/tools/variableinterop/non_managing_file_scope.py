@@ -47,9 +47,9 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             ----------
             to_read : PathLike
                 Path to the file to wrap.
-            mime_type : Optional[str]
+            mime_type : str, optional
                 Mime type of the file.
-            encoding : Optional[str]
+            encoding : str, optional
                 The encoding of the file.
             """
             size: Optional[int] = None

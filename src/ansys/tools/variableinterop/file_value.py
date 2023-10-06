@@ -82,7 +82,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
 
         Parameters
         ----------
-        local_content_path : Optional[Path]
+        local_content_path : Path, optional
             The path to the local content. None indicates the file value is empty.
         """
         self._local_content_path = local_content_path
@@ -129,15 +129,15 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        original_path : Optional[PathLike]
+        original_path : PathLike, optional
             Path to the file to wrap.
-        mime_type : Optional[str]
+        mime_type : str, optional
             Mime type of the file.
-        encoding : Optional[str]
+        encoding : str, optional
             The encoding of the file.
-        value_id : Optional[UUID]
+        value_id : UUID, optional
             The id that uniquely identifies this file. Auto-generated if not supplied.
-        file_size : Optional[int]
+        file_size : int, optional
             The size of the file in bytes, if known.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
@@ -260,7 +260,7 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        Optional[int]
+        int, optional
             The size of the file in bytes.
         """
         return self._size
@@ -335,7 +335,7 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Optional[Callable[[int], None]]
+        progress_callback : Callable[[int], None], optional
             A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
@@ -364,7 +364,7 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Optional[Callable[[int], None]]
+        progress_callback : Callable[[int], None], optional
             A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
@@ -413,7 +413,7 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        encoding : Optional[str]
+        encoding : str, optional
             The encoding to use when reading.
 
         Returns
@@ -447,7 +447,7 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        context : Optional[ISaveContext]
+        context : ISaveContext, optional
             The save context to use.
 
         Returns
@@ -549,15 +549,15 @@ class LocalFileValue(FileValue, ABC):
 
         Parameters
         ----------
-        original_path : Optional[PathLike]
+        original_path : PathLike, optional
             Path to the file to wrap.
-        mime_type : Optional[str]
+        mime_type : str, optional
             Mime type of the file.
-        encoding : Optional[str]
+        encoding : str, optional
             The encoding of the file.
-        value_id : Optional[UUID]
+        value_id : UUID, optional
             The id that uniquely identifies this file. Auto-generated if not supplied.
-        actual_content_file_name : Optional[PathLike]
+        actual_content_file_name : PathLike, optional
             The path to where the content is actually being stored.
         """
         super().__init__(

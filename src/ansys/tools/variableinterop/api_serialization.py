@@ -25,7 +25,7 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
 
         Parameters
         ----------
-        save_context : Optional[ISaveContext]
+        save_context : ISaveContext, optional
             The save context to use for conversion.
         """
         self._save_context = save_context
@@ -79,7 +79,7 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     ----------
     value : IVariableValue
         The value to convert to an API string.
-    save_context : Optional[ISaveContext], optional
+    save_context : ISaveContext, optional
         The save context. This may be omitted in cases where you do not wish to support
         file values.
 
@@ -106,10 +106,10 @@ def from_api_string(
         The variable type to generate.
     source : str
         The source string.
-    fscope : Optional[FileScope], optional
+    fscope : FileScope, optional
         The file scope to use to deserialize file variables. May be None if file variables
         are not needed.
-    load_context : Optional[ILoadContext], optional
+    load_context : ILoadContext, optional
         The load context to read file contents from. May be None if file variables are
         not needed.
 

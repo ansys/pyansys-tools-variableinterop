@@ -39,10 +39,10 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         ----------
         source : str
             the string from which values should be parsed
-        fscope : Optional[FileScope]
+        fscope : FileScope, optional
             The file scope to use to deserialize file variables. May be None if file variables
             are not needed.
-        save_context : Optional[ILoadContext], optional
+        save_context : ILoadContext, optional
             The save context to read file contents from. May be None if file variables are
             not needed.
         """

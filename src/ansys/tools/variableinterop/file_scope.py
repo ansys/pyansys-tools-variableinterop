@@ -60,9 +60,9 @@ class FileScope(AbstractContextManager, ABC):
         ----------
         to_read : PathLike
             Path to the file to read.
-        mime_type : Optional[str]
+        mime_type : str, optional
             Mime type of the file.
-        encoding : Optional[str]
+        encoding : str, optional
             The encoding of the file.
 
         Returns
