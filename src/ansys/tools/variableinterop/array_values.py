@@ -24,8 +24,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """
     Array of boolean values.
 
-    In Python, a BooleanArrayValue is implemented by extending NumPy's ndarray type. This
-    means that they decay naturally into numpy.ndarray objects when using numpy's
+    In Python, a BooleanArrayValue is implemented by extending NumPy's ndarray type.
+    This means that they decay naturally into numpy.ndarray objects when using numpy's
     array operators.
     """
 
