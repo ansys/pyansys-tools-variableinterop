@@ -15,7 +15,8 @@ T = TypeVar("T")
 
 class IVariableValueVisitor(ABC, Generic[T]):
     """
-    The interface to be implemented to instantiate the visitor pattern.
+    Defines the interface to be implemented to use the visitor pattern with variable
+    values.
 
     Pass an instance to IVariableValue.accept().
     """

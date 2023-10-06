@@ -16,7 +16,7 @@ T = TypeVar("T")
 
 
 class IVariableValue(ABC):
-    """Interface that defines the common behavior between variable types."""
+    """Defines an interface for the common behavior among all variable types."""
 
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""

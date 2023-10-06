@@ -23,7 +23,7 @@ import ansys.tools.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
-    """Visitor pattern to call conversion methods to BooleanArrayValue."""
+    """Visits variable values and converts to ``BooleanArrayValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> BooleanArrayValue:
@@ -100,7 +100,8 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
 
 
 class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
-    """Visitor pattern to call conversion methods to IntegerArrayValue."""
+    """Visits variable values and converts them to ``IntegerArrayValue`` when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerArrayValue:
@@ -177,7 +178,7 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
 
 
 class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
-    """Visitor pattern to call conversion methods to RealArrayValue."""
+    """Visits variable values and converts them to ``RealArrayValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealArrayValue:
@@ -254,7 +255,8 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
 
 
 class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
-    """Visitor pattern to call conversion methods to StringArrayValue."""
+    """Visits variable values and converts them to ``StringArrayValue`` when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringArrayValue:

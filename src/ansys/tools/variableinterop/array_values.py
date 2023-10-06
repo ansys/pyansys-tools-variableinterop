@@ -22,7 +22,7 @@ from .variable_value import CommonArrayValue
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """
-    Array of boolean values.
+    Stores a value of boolean array type.
 
     In Python, a BooleanArrayValue is implemented by extending NumPy's ndarray type.
     This means that they decay naturally into numpy.ndarray objects when using numpy's
@@ -127,7 +127,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
 class IntegerArrayValue(CommonArrayValue[np.int64]):
     """
-    Array of integer values.
+    Stores a value of integer array type.
 
     In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This
     means that they will decay naturally into numpy.ndarray objects when using numpy's
@@ -236,7 +236,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
 class RealArrayValue(CommonArrayValue[np.float64]):
     """
-    Array of real values.
+    Stores a value of real array type.
 
     In Python RealArrayValue is implemented by extending NumPy's ndarray type. This
     means that they will decay naturally into numpy.ndarray objects when using numpy's
@@ -362,7 +362,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
 class StringArrayValue(CommonArrayValue[np.str_]):
     """
-    Array of string values.
+    Stores a value of string array type.
 
     In Python StringArrayValue is implemented by extending NumPy's ndarray type. This
     means that they will decay naturally into numpy.ndarray objects when using numpy's

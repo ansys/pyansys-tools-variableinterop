@@ -7,7 +7,7 @@ from .variable_type import VariableType
 
 class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
     """
-    A pseudovisitor implementation that checks whether the visited type is an array.
+    Determines whether the visited variable type is an array.
 
     True is returned if the visited type is an array type, and false is returned
     otherwise.

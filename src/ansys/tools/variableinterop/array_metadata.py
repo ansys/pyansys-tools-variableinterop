@@ -7,7 +7,7 @@ from .variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):
-    """Metadata for BooleanArrayValue."""
+    """Provides metadata for a variable with value type BooleanArrayValue."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -20,7 +20,7 @@ class BooleanArrayMetadata(BooleanMetadata):
 
 
 class IntegerArrayMetadata(IntegerMetadata):
-    """Metadata for IntegerArrayValue."""
+    """Provides metadata for a variable with value type IntegerArrayValue."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -33,7 +33,7 @@ class IntegerArrayMetadata(IntegerMetadata):
 
 
 class RealArrayMetadata(RealMetadata):
-    """Metadata for RealArrayValue."""
+    """Provides metadata for a variable with value type RealArrayValue."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -46,7 +46,7 @@ class RealArrayMetadata(RealMetadata):
 
 
 class StringArrayMetadata(StringMetadata):
-    """Metadata for StringArrayValue."""
+    """Provides metadata for a variable with value type StringArrayValue."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:

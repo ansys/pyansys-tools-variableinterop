@@ -9,7 +9,7 @@ T = TypeVar("T")
 
 class IVariableTypePseudoVisitor(ABC, Generic[T]):
     """
-    Interface definition for variable type pseudo-visitor.
+    Defines an interface for variable type pseudo-visitors.
 
     This interface defines a "pseudo-visitor" for the possible values of VariableType.
     Although this pattern ultimately requires the use of a single "switch-statement

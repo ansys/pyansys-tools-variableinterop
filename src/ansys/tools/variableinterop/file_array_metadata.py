@@ -7,7 +7,7 @@ from .variable_type import VariableType
 
 
 class FileArrayMetadata(FileMetadata):
-    """Metadata for VariableType.FILE_ARRAY."""
+    """Provides metadata for variables of type file array."""
 
     @property  # type: ignore
     @overrides

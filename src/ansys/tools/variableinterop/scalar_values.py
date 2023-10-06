@@ -18,7 +18,7 @@ from .variable_value import IVariableValue
 
 class BooleanValue(IVariableValue):
     """
-    Wrapper around a boolean value.
+    Stores a value for a variable of type boolean.
 
     This type is treated by Python as if it were any other boolean type such as
     numpy.bool\_ or a built-in bool.
@@ -310,7 +310,7 @@ class BooleanValue(IVariableValue):
 
 class IntegerValue(np.int64, IVariableValue):
     """
-    Wrapper around an integer value.
+    Stores a value for a variable of type integer.
 
     In Python IntegerValue is implemented by extending NumPy's int64 type. This means
     that they will decay naturally into numpy.int64 objects when using NumPy's
@@ -432,7 +432,7 @@ class IntegerValue(np.int64, IVariableValue):
 
 class RealValue(np.float64, IVariableValue):
     """
-    Wrapper around a real value.
+    Stores a value for a variable of type real.
 
     In Python RealValue is implemented by extending NumPy's float64 type. This means
     that they will decay naturally into numpy.float64 objects when using NumPy's
@@ -559,7 +559,7 @@ class RealValue(np.float64, IVariableValue):
 
 class StringValue(np.str_, IVariableValue):
     """
-    Wrapper around a string value.
+    Stores a value for a variable of type file.
 
     In Python IntegerValue is implemented by extending NumPy's str\_ type. This means
     that they will decay naturally into numpy.str\_ objects when used with other types

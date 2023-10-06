@@ -11,7 +11,7 @@ from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 
 
 class NumericMetadata(CommonVariableMetadata, ABC):
-    """Generic base class for all numeric metadata implementations."""
+    """Provides a generic base for all numeric metadata implementations."""
 
     @overrides
     def __init__(self) -> None:

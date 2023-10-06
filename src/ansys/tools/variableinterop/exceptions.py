@@ -28,8 +28,7 @@ def _error(name: str, *args: object) -> str:
 
 
 class IncompatibleTypesException(BaseException):
-    """Exception raised when attempting to convert from one IVariableValue to an
-    incompatible type."""
+    """Indicates that the types used in a conversion are incompatible."""
 
     def __init__(
         self,
@@ -67,8 +66,8 @@ class IncompatibleTypesException(BaseException):
 
 
 class FormatException(BaseException):
-    """Exception raised when attempting to create an IVariableValue from a string that
-    is incorrectly formatted."""
+    """Indicates that the string used to create a variable value was incorrectly
+    formatted."""
 
     def __init__(self):
         """Construct exception."""
@@ -77,7 +76,7 @@ class FormatException(BaseException):
 
 
 class ValueDeserializationUnsupportedException(Exception):
-    """Exception raised when deserializing a value is not allowed."""
+    """Indicates that deserializing a value is not allowed."""
 
     def __init__(self, message: str):
         """Construct a new instance."""

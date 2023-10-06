@@ -22,7 +22,7 @@ T = TypeVar("T")
 
 class FileArrayValue(CommonArrayValue[FileValue]):
     """
-    Array of file values.
+    Stores a value of file array type.
 
     In Python FileArrayValue is implemented by extending NumPy's ndarray type. This
     means that they will decay naturally into numpy.ndarray objects when using numpy's

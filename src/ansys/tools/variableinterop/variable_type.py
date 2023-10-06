@@ -9,7 +9,7 @@ from .variable_value import IVariableValue
 
 
 class VariableType(Enum):
-    """Enumeration listing the possible variable types."""
+    """Provides an enumeration of the possible variable types."""
 
     # When editing this enumeration,
     # be sure to also update the IVariableTypePseudoVisitor

@@ -13,8 +13,7 @@ from .variable_value import IVariableValue
 
 
 class __ToBooleanVisitor(IVariableValueVisitor[bool]):
-    """An IVariableValueVisitor which returns a bool equivalent of the object
-    visited."""
+    """Converts visited values to ``BooleanValue`` when possible."""
 
     @overrides
     def visit_boolean(self, value: "BooleanValue") -> bool:
@@ -79,7 +78,7 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
 
 class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
-    """This visitor implementation converts the visited value to a RealValue."""
+    """Converts visited values to ``IntegerValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerValue:
@@ -144,7 +143,7 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
 
 
 class __ToRealVisitor(IVariableValueVisitor[RealValue]):
-    """This visitor implementation converts the visited value to a RealValue."""
+    """Converts visited values to ``RealValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealValue:
@@ -209,7 +208,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
 
 class __ToStringVisitor(IVariableValueVisitor[StringValue]):
-    """This visitor implementation converts the visited value to a StringValue."""
+    """Converts visited values to ``StringValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringValue:

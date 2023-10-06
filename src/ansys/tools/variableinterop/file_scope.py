@@ -15,7 +15,7 @@ from .isave_context import ILoadContext
 
 class FileScope(AbstractContextManager, ABC):
     """
-    Abstract base class that represents a file scope.
+    Provides an abstract base for file scopes.
 
     A file scope helps a program manage disk use for file storage and
     enables it to clean up caches and space in a reliable way.

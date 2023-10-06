@@ -13,7 +13,7 @@ T = TypeVar("T")
 
 
 class FileMetadata(CommonVariableMetadata):
-    """Common metadata for VariableType.FILE."""
+    """Provides metadata for a variable of file type."""
 
     @overrides
     def __eq__(self, other):

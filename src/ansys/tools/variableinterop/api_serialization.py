@@ -17,7 +17,7 @@ from .variable_value import IVariableValue
 
 
 class ToAPIStringVisitor(IVariableValueVisitor[str]):
-    """Visitor to convert values to an API string."""
+    """Visits values and converts them to an API string."""
 
     def __init__(self, save_context: Optional[ISaveContext]):
         """

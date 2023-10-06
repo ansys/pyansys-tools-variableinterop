@@ -19,12 +19,8 @@ from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
 
 class APIStringToValueVisitor(IVariableTypePseudoVisitor):
-    """
-    A pseudo-visitor for the variable type enum that produces variable values from
-    strings.
-
-    The actual type generated is determined by the type that accepts this visitor.
-    """
+    """Visits variable type enumeration values, producing a variable value from a
+    string."""
 
     def __init__(
         self,

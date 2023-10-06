@@ -14,7 +14,7 @@ from .variable_type import VariableType
 
 
 class BooleanMetadata(CommonVariableMetadata):
-    """Common metadata for VariableType.BOOLEAN and VariableType.BOOLEAN_ARRAY."""
+    """Provides metadata for variables of boolean and boolean array type."""
 
     @overrides
     def __eq__(self, other):
@@ -36,7 +36,7 @@ class BooleanMetadata(CommonVariableMetadata):
 
 
 class IntegerMetadata(NumericMetadata):
-    """Common metadata for VariableType.INTEGER and VariableType.INTEGER_ARRAY."""
+    """Provides metadata for variables of integer and integer array type."""
 
     @overrides
     def __init__(self) -> None:
@@ -175,7 +175,7 @@ class IntegerMetadata(NumericMetadata):
 
 
 class RealMetadata(NumericMetadata):
-    """Common metadata for VariableType.REAL and VariableType.REAL_ARRAY."""
+    """Provides metadata for variables of type real and real array."""
 
     @overrides
     def __init__(self) -> None:

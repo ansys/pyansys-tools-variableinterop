@@ -16,7 +16,7 @@ from .variable_value import IVariableValue
 
 class CommonVariableMetadata(ABC):
     """
-    Common metadata for variables.
+    Provides metadata common to all variables.
 
     It may be that many uses have additional metadata, but this core set is defined by
     the Ansys Interoperability Guidelines. It allows a common understanding between

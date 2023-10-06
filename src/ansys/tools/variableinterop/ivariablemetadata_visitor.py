@@ -20,7 +20,8 @@ T = TypeVar("T")
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
     """
-    The interface to be implemented to instantiate the visitor pattern.
+    Defines the interface to be implemented to use the visitor pattern with variable
+    metadata.
 
     Pass an instance to CommonVariableMetadata.accept().
     """

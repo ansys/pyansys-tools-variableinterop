@@ -63,7 +63,7 @@ class LocalFileContentContext(AbstractContextManager, ABC):
 
 class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileContentContext):
     """
-    A default local file context for when the file is already hosted locally.
+    Provides a default local file context for when the file is already hosted locally.
 
     Because the file is already hosted and managed locally, there is no need to create a
     new copy. Therefore, this implementation basically does nothing but provide a way to
@@ -111,7 +111,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
 
 class FileValue(IVariableValue, ABC):
     """
-    Abstract base class for a file variable.
+    Provides an abstract base class for file value implementations.
 
     To create instances, use a `FileScope`.
     """

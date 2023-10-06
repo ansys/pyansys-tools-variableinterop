@@ -16,7 +16,7 @@ from .isave_context import ILoadContext, ISaveContext
 
 class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     """
-    A simple file scope implementation that performs no management.
+    Provides a simple file scope implementation that performs no management.
 
     This file scope that allows you to create `FileValue` instances that are backed by arbitrary
     preexisting files on disk. It is up to the caller to ensure that the file remains in place

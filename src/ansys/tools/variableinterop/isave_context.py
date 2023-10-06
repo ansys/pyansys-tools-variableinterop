@@ -12,7 +12,7 @@ from overrides import overrides
 
 class ISaveContext(AbstractContextManager, ABC):
     """
-    An abstraction for a save medium.
+    Defines an abstraction for a save medium.
 
     In order to separate the concerns of being able to save large associated content in
     other transfer mediums, this interface was defined which allows out of bound data to
@@ -78,7 +78,7 @@ class ISaveContext(AbstractContextManager, ABC):
 
 class ILoadContext(AbstractContextManager, ABC):
     """
-    An abstraction for a load medium.
+    Defines an abstraction for a load medium.
 
     In order to separate the concerns of being able to save large associated content in
     other transfer mediums, this interface was defined which allows out of bound data to
