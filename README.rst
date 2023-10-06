@@ -31,12 +31,12 @@ Characteristics of this library include:
   time. This library uses the `visitor pattern <https://en.wikipedia.org/wiki/Visitor_pattern>`_ to
   make it easy and reliable to add and reuse
   new operations with compile-time semantics.
-- In trade, adding new datatypes is not easy
-- Most commonly re-used metadata strongly defined. Generic dictionary provided for custom metadata
+- In trade, adding new datatypes is not easy.
+- Most commonly re-used metadata is strongly defined. A generic dictionary is provided for custom metadata.
 
 Top level items
 ---------------
-The top level items in this package are:
+Descriptions follow of the top-level items in this package:
 
 * The base metadata type that all variable types extend is
   CommonVariableMetadata. Metadata is defined as the information
@@ -51,8 +51,8 @@ The top level items in this package are:
 
 Project background
 ------------------
-After 20 years of working on integration problems a holistic review was performed around the
-concept of a variable in some legacy codebases. No less than 2 dozen classes that represent a
+After 20 years of work on integration problems a holistic review was performed around the
+concept of a variable in some legacy codebases. No less than two dozen classes that represent a
 variable were found. There were many more switch statements where one datatype needed to be
 converted to another. This inconsistency brings about the following problems:
 
@@ -73,7 +73,7 @@ The standards and the standard implementations in several languages came out of 
 Installation
 ------------
 The ``pyansys-tools-variableinterop`` package currently supports Python
-3.8 through 3.11 on Windows, MacOS and Linux.
+3.8 through 3.11 on Windows, MacOS, and Linux.
 
 You can install ``pyansys-tools-variableinterop`` with:
 
@@ -89,8 +89,7 @@ Alternatively, install the latest version from `pyansys-tools-variableinterop Gi
    pip install git+https://github.com/ansys/pyansys-tools-variableinterop
 
 
-For a local development version, you can install the development
-version of the project with:
+To install a local development version of the project, run this code:
 
 .. code::
 
@@ -102,7 +101,7 @@ version of the project with:
 Documentation
 -------------
 
-Install the required dependencies for the documentation with:
+Install the required dependencies for the documentation with this command:
 
 .. code:: bash
 
@@ -118,13 +117,13 @@ Install the required dependencies for the documentation with:
 
 Testing
 -------
-Dependencies required for testing can be installed via:
+Dependencies required for testing can be installed with this command:
 
 .. code:: bash
 
     pip install .[tests]
 
-The tests can then be run via pytest with:
+The tests can then be run via pytest with this command:
 
 .. code:: bash
 

@@ -6,7 +6,7 @@ Installation
 
 Two installation modes of the ``pyansys-tools-variableinterop`` package are provided: user and developer.
 
-User installation
+For users
 ^^^^^^^^^^^^^^^^^
 
 Install the latest release for use with this command:
@@ -22,7 +22,7 @@ For developers
 Installing the ``pyansys-tools-variableinterop`` package in developer mode allows
 you to modify the source and enhance it.
 
-You can refer to the :ref:`ref_contribute` section.
+For procedural information, see :ref:`ref_contribute`.
 
 Style and testing
 -----------------

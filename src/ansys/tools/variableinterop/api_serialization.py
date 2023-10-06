@@ -116,7 +116,7 @@ def from_api_string(
     Returns
     -------
     IVariableValue
-        An implementation of IVariableValue of the correct type with a value parsed from the
+        Implementation of ``IVariableValue`` of the correct type with a value parsed from the
         specified string.
     """
     generator: APIStringToValueVisitor = APIStringToValueVisitor(source, fscope, load_context)

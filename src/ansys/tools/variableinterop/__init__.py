@@ -3,7 +3,7 @@ This library contains definitions of the basic variables, types, metadata, and v
 intended to provide interoperability between all products that optionally choose to
 participate.
 
-See the high level project documentation with examples and installation instructions at
+See the high-level project documentation with examples and installation instructions at
 `
 http://variableinterop.docs.pyansys.com
 <http://variableinterop.docs.pyansys.com>`_.

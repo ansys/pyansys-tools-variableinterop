@@ -60,7 +60,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         None
-            Never returns; always raises NotImplementedError
+            Never returns; always raises NotImplementedError.
 
         Raises
         ------

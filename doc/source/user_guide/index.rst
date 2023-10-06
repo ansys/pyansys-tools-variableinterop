@@ -3,7 +3,7 @@ User guide
 
 Usage
 -----
-Values and metadata can be created like any other Python object:
+You can create values and metadata like any other Python object:
 
 .. code:: python
 
