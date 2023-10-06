@@ -3,7 +3,7 @@ Provides a variable type pseudo-visitor that parses values from strings.
 
 The pseudo-visitor is constructed with the string to parse, then accepted by the
 appropriate variable type. When visiting, it attempts to parse the string into the
-visited type. See the pseudo-visitor interface definition for more information as to why
+visited type. See ``IVariableTypePseudoVisitor`` for more information as to why
 this pattern is beneficial compared to bare switch statements.
 """
 import json
