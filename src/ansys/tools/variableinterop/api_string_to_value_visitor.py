@@ -34,13 +34,13 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Parameters
         ----------
         source : str
-            the string from which values should be parsed
+            String that values should be parsed from.
         fscope : FileScope, optional
-            The file scope to use to deserialize file variables. May be None if file variables
-            are not needed.
+            File scope to use to deserialize file variables. The value may be ``None`` if file
+            variables.
         save_context : ILoadContext, optional
-            The save context to read file contents from. May be None if file variables are
-            not needed.
+            Save context to read file contents from. The value may be ``None`` if file variables
+            are not needed.
         """
         self._source: str = source
         self._scope: Optional[FileScope] = fscope
