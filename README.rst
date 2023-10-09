@@ -34,7 +34,7 @@ Characteristics of this library include:
 - In trade, adding new datatypes is not easy.
 - Most commonly re-used metadata is strongly defined. A generic dictionary is provided for custom metadata.
 
-Top level items
+Top-level items
 ---------------
 Descriptions follow of the top-level items in this package:
 
