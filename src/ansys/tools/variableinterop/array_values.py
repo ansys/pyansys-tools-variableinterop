@@ -238,14 +238,14 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     """
     Stores a value of real array type.
 
-    In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type. This
-    means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
     array operators. It also means that they inherit many of the NumPy behaviors, which
     may be slightly different from the behaviors specified in the variable interop
     standards. For example, when converting from real to integer, the value is
     floored instead of rounded. If you want the variable interop standard conversions,
-    call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the resulting
-    ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
+    call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the
+    resulting ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
     """
 
     @overrides
@@ -364,8 +364,8 @@ class StringArrayValue(CommonArrayValue[np.str_]):
     """
     Stores a ``StringArrayValue`` type.
 
-    In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type. This
-    means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
     array operators.
     """
 

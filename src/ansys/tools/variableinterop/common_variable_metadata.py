@@ -20,8 +20,8 @@ class CommonVariableMetadata(ABC):
 
     It may be that many uses have additional metadata, but this core set is defined by
     Ansys interoperability guidelines, which allow a common understanding between
-    products of some high-use properties. These guidelines do not exclude defining additional or
-    more specific metadata as needed.
+    products of some high-use properties. These guidelines do not exclude defining
+    additional or more specific metadata as needed.
     """
 
     def __init__(self) -> None:
@@ -104,7 +104,8 @@ class CommonVariableMetadata(ABC):
 
     def get_default_value(self) -> IVariableValue:
         """
-        Get the default value that should be used for a variable described by this metadata.
+        Get the default value that should be used for a variable described by this
+        metadata.
 
         The metadata may have set the lower bounds, upper bounds, or
         enumerated values that restrict what are possible valid
@@ -141,8 +142,8 @@ class CommonVariableMetadata(ABC):
                 metadata: scalar_metadata.StringMetadata,
             ) -> scalar_values.StringValue:
                 """
-                For the given ``StringMetadata`` value, use enumerated values to get the default value
-                to use for the associated variable.
+                For the given ``StringMetadata`` value, use enumerated values to get the
+                default value to use for the associated variable.
 
                 Parameters
                 ----------
@@ -166,8 +167,8 @@ class CommonVariableMetadata(ABC):
             @staticmethod
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
-                For a numeric metadata (``IntegerMetadata`` or ``RealMetadata`` type), get the
-                default value to use.
+                For a numeric metadata (``IntegerMetadata`` or ``RealMetadata`` type),
+                get the default value to use.
 
                 Parameters
                 ----------

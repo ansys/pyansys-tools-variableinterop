@@ -24,8 +24,8 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     """
     Stores a ``FileArrayValue`` type.
 
-    In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type. This
-    means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
     array operators.
     """
 

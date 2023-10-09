@@ -152,7 +152,7 @@ PyAnsys Tools Variable Interop follows the PEP8 standard as outlined in the `PyA
 <dev_guide_pyansys_>`_ and implements style checking using
 `pre-commit <pre-commit_>`_.
 
-To ensure your code meets minimum code styling standards, run thse commands:
+To ensure your code meets minimum code styling standards, run these commands:
 
 .. code:: console
 
