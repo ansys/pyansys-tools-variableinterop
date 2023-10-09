@@ -15,7 +15,6 @@ API documentation
    FileArrayMetadata
    FileMetadata
    FileScope
-   FileValue
    FromFormattedStringVisitor
    ILoadContext
    ISaveContext
