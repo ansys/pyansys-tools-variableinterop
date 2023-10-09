@@ -3,8 +3,8 @@ Provides a variable type pseudo-visitor that parses values from strings.
 
 The pseudo-visitor is constructed with the string to parse, then accepted by the
 appropriate variable type. When visiting, it attempts to parse the string into the
-visited type. See ``IVariableTypePseudoVisitor`` for more information as to why
-this pattern is beneficial compared to bare switch statements.
+visited type. For more information on why this pattern is better than bare switch
+statements, see ``IVariableTypePseudoVisitor``.
 """
 import json
 from typing import Optional
@@ -36,11 +36,11 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         source : str
             String that values should be parsed from.
         fscope : FileScope, optional
-            File scope to use to deserialize file variables. The value may be ``None`` if file
-            variables.
+            File scope to use to deserialize file variables. If file variables are
+            not needed, the value may be ``None``.
         save_context : ILoadContext, optional
-            Save context to read file contents from. The value may be ``None`` if file variables
-            are not needed.
+            Save context to read file contents from. If file variables are
+            not needed, the value may be ``None``.
         """
         self._source: str = source
         self._scope: Optional[FileScope] = fscope
@@ -56,7 +56,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         None
-            Never returns; always raises NotImplementedError.
+            Never returns; always raises ``NotImplementedError``.
 
         Raises
         ------
@@ -72,7 +72,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         IntegerValue
-            An IntegerValue with a value determined by the specified string.
+            ``IntegerValue`` with a value determined by the specified string.
         """
         return IntegerValue.from_api_string(self._source)
 
@@ -83,7 +83,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         RealValue
-            A RealValue with a value determined by the specified string.
+            ``RealValue`` with a value determined by the specified string.
         """
         return RealValue.from_api_string(self._source)
 
@@ -94,7 +94,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         BooleanValue
-            A BooleanValue with a value determined by the specified string.
+            ``BooleanValue`` with a value determined by the specified string.
         """
         return BooleanValue.from_api_string(self._source)
 
@@ -105,18 +105,18 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         StringValue
-            A StringValue with a value determined by the specified string.
+            ``StringValue`` with a value determined by the specified string.
         """
         return StringValue.from_api_string(self._source)
 
     def visit_file(self) -> FileValue:
         """
-        Produce a FileValue from the API string format.
+        Produce a ``FileValue`` from the API string format.
 
         Returns
         -------
         FileValue
-            A FileValue with a value determined by the specified string.
+            ``FileValue`` with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
@@ -132,7 +132,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         IntegerArrayValue
-            An IntegerArrayValue with a value determined by the specified string.
+            ``IntegerArrayValue`` with a value determined by the specified string.
         """
         return IntegerArrayValue.from_api_string(self._source)
 
@@ -143,7 +143,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         RealArrayValue
-            A RealArrayValue with a value determined by the specified string.
+            ``RealArrayValue`` with a value determined by the specified string.
         """
         return RealArrayValue.from_api_string(self._source)
 
@@ -154,7 +154,7 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         BooleanArrayValue
-            A BooleanArrayValue with a value determined by the specified string.
+            ``BooleanArrayValue`` with a value determined by the specified string.
         """
         return BooleanArrayValue.from_api_string(self._source)
 
@@ -165,18 +165,18 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         Returns
         -------
         StringArrayValue
-            A StringArrayValue with a value determined by the specified string.
+            ``StringArrayValue`` with a value determined by the specified string.
         """
         return StringArrayValue.from_api_string(self._source)
 
     def visit_file_array(self) -> FileArrayValue:
         """
-        Produce a FileArrayValue from the API string format.
+        Produce a ``FileArrayValue`` from the API string format.
 
         Returns
         -------
         FileArrayValue
-            A FileArrayValue with a value determined by the specified string.
+            ``FileArrayValue`` with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(

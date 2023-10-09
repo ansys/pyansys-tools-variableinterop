@@ -9,14 +9,14 @@ from .variable_type import VariableType
 
 def _error(name: str, *args: object) -> str:
     """
-    Return a formatted error string from strings.properties.
+    Return a formatted error string from the ``strings.properties`` object.
 
     Parameters
     ----------
     name : str
-        Name of the string in the properties file
+        Name of the string in the properties file.
     *args : object
-        Optional formatting arguments
+        Optional formatting arguments.
 
     Returns
     -------
@@ -41,9 +41,9 @@ class IncompatibleTypesException(BaseException):
         Parameters
         ----------
         from_type : Union[VariableType, str]
-            a VariableType or a string identifying the type converting from.
+            ``VariableType`` or string identifying the type to convert from.
         to_type : Union[VariableType, str]
-            a VariableType or a string identifying the type converting to.
+            ``VariableType`` or string identifying the type to convert to.
         """
         self.from_type: Optional[VariableType]
         self.from_type_str: str

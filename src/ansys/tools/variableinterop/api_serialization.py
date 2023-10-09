@@ -78,7 +78,7 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     Parameters
     ----------
     value : IVariableValue
-        The value to convert to an API string.
+        Value to convert to an API string.
     save_context : ISaveContext, optional
         The save context. This may be omitted in cases where you do not wish to support
         file values.
@@ -103,15 +103,15 @@ def from_api_string(
     Parameters
     ----------
     var_type : VariableType
-        The variable type to generate.
+        Variable type to generate.
     source : str
-        The source string.
+       Source string.
     fscope : FileScope, optional
         The file scope to use to deserialize file variables. May be None if file variables
         are not needed.
     load_context : ILoadContext, optional
-        The load context to read file contents from. May be None if file variables are
-        not needed.
+        Load context to read file contents from. If file variables are
+        not needed, the value can be ``None``.
 
     Returns
     -------

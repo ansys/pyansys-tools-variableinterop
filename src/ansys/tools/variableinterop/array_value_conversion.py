@@ -23,7 +23,7 @@ import ansys.tools.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
-    """Visits variable values and converts to ``BooleanArrayValue`` when possible."""
+    """Visits variable values and converts to a ``BooleanArrayValue`` type when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> BooleanArrayValue:
@@ -94,7 +94,7 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
     Returns
     -------
     BooleanArrayValue
-        The value as a BooleanArrayValue.
+        Value as a ``BooleanArrayValue`` type.
     """
     return other.accept(__ToBooleanArrayVisitor())
 
@@ -249,13 +249,13 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     Returns
     -------
     RealArrayValue
-        The value as a RealArrayValue.
+        Value as an ``RealArrayValue`` type.
     """
     return other.accept(__ToRealArrayVisitor())
 
 
 class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
-    """Visits variable values and converts them to ``StringArrayValue`` when
+    """Visits variable values and converts them to ``StringArrayValue`` types when
     possible."""
 
     @overrides
@@ -327,6 +327,6 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
     Returns
     -------
     StringArrayValue
-        The value as a StringArrayValue.
+        Value as a ``StringArrayValue`` type.
     """
     return other.accept(__ToStringArrayVisitor())

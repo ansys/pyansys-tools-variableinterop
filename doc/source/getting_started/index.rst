@@ -50,14 +50,14 @@ For building documentation, you can run the usual rules provided in the
 Distributing
 ------------
 
-If you would like to create either source or wheel files, start by installing
-the building requirements:
+If you would like to create either source or wheel files, start by running this
+command to install the building requirements:
 
 .. code:: bash
 
     python -m pip install -e .[doc,tests]
 
-Then, execute these commands:
+Then, run these commands:
 
     .. code:: bash
 

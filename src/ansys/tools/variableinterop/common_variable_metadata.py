@@ -19,8 +19,8 @@ class CommonVariableMetadata(ABC):
     Provides metadata common to all variables.
 
     It may be that many uses have additional metadata, but this core set is defined by
-    the Ansys Interoperability Guidelines. It allows a common understanding between
-    products of some high-use properties. It does not exclude defining additional or
+    Ansys interoperability guidelines, which allow a common understanding between
+    products of some high-use properties. These guidelines do not exclude defining additional or
     more specific metadata as needed.
     """
 
@@ -104,10 +104,10 @@ class CommonVariableMetadata(ABC):
 
     def get_default_value(self) -> IVariableValue:
         """
-        Get default value that should be used for variable describe by this metadata.
+        Get the default value that should be used for a variable described by this metadata.
 
-        The metadata may have set lower bound, upper bounds or
-        enumerated values which restricts what are possible valid
+        The metadata may have set the lower bounds, upper bounds, or
+        enumerated values that restrict what are possible valid
         values. This method will select a valid default value.
 
         - If the type's default value (e.g. 0 or empty string) is a
@@ -141,13 +141,13 @@ class CommonVariableMetadata(ABC):
                 metadata: scalar_metadata.StringMetadata,
             ) -> scalar_values.StringValue:
                 """
-                For given StringMetadata, use enumerated values to get the default value
+                For the given ``StringMetadata`` value, use enumerated values to get the default value
                 to use for the associated variable.
 
                 Parameters
                 ----------
                 metadata : StringMetadata
-                    Metadata to use to generate default value.
+                    Metadata to use to generate the default value.
 
                 Returns
                 -------
@@ -166,13 +166,13 @@ class CommonVariableMetadata(ABC):
             @staticmethod
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
-                For a numeric metadata (i.e. IntegerMetadata or RealMetadata) get the
+                For a numeric metadata (``IntegerMetadata`` or ``RealMetadata`` type), get the
                 default value to use.
 
                 Parameters
                 ----------
                 metadata : M
-                    Metadata to use to generate default value.
+                    Metadata to use to generate the default value.
                 type_ : Type[T]
                     Type of the default value to generate.
 

@@ -77,13 +77,13 @@ class FileScope(AbstractContextManager, ABC):
         self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
     ) -> FileValue:
         """
-        Create a FileScope from a map of API strings.
+        Create a ``FileScope`` from a map of API strings.
 
         Parameters
         ----------
         api_object : Dict[str, Optional[str]]
             Map of API strings that define the scope.
         load_context : ILoadContext
-            The load context to read file contents from.
+            Load context to read the file contents from.
         """
         ...

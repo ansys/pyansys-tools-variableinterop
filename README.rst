@@ -51,7 +51,7 @@ Descriptions follow of the top-level items in this package:
 
 Project background
 ------------------
-After 20 years of work on integration problems a holistic review was performed around the
+After 20 years of work on integration problems, a holistic review was performed around the
 concept of a variable in some legacy codebases. No less than two dozen classes that represent a
 variable were found. There were many more switch statements where one datatype needed to be
 converted to another. This inconsistency brings about the following problems:
@@ -117,13 +117,13 @@ Install the required dependencies for the documentation with this command:
 
 Testing
 -------
-Dependencies required for testing can be installed with this command:
+Install the dependencies required for testing with this command:
 
 .. code:: bash
 
     pip install .[tests]
 
-The tests can then be run via pytest with this command:
+Run the tests via ``pytest`` with this command:
 
 .. code:: bash
 

@@ -15,7 +15,7 @@ Installation
 The ``pyansys-tools-variableinterop`` package currently supports Python
 3.8 through 3.11 on Windows, MacOS and Linux.
 
-You can install ``pyansys-tools-variableinterop`` with:
+You can install ``pyansys-tools-variableinterop`` with this command:
 
 .. code::
 
@@ -28,13 +28,13 @@ Alternatively, install the latest version from `pyansys-tools-variableinterop Gi
 
    pip install git+https://github.com/ansys/pyansys-tools-variableinterop
 
-For a local development version, you can create a new virtual environment:
+For a local development version, you can create a new virtual environment with this command:
 
 .. code:: bash
 
     python -m venv .venv
 
-It can be activated with:
+You can then activate the virtual environment with the command appropriate for your operating system:
 
 .. tab-set::
 
@@ -60,7 +60,7 @@ It can be activated with:
           .\.venv\Scripts\activate
 
 
-You can then install the development version of the project:
+Next, install the development version of the project with these commands:
 
 .. code::
 
@@ -72,14 +72,14 @@ You can then install the development version of the project:
 Documentation
 -------------
 
-Install the required dependencies for the documentation with:
+Install the required dependencies for the documentation with this command:
 
 .. code::
 
     pip install .[doc]
 
 
-For building documentation, you can run the usual rules provided in the Sphinx Makefile, such as:
+For building documentation, you run the usual rules provided in the Sphinx Makefile for your operating system:
 
 .. tab-set::
 
@@ -132,13 +132,13 @@ run these commands::
 
 Testing
 -------
-Dependencies required for testing can be installed via:
+You can install the dependencies required for testing with this command:
 
 .. code:: bash
 
     pip install .[tests]
 
-The tests can then be run via pytest with:
+You can then run the tests via ``pytest`` with this command:
 
 .. code:: bash
 
@@ -152,21 +152,21 @@ PyAnsys Tools Variable Interop follows the PEP8 standard as outlined in the `PyA
 <dev_guide_pyansys_>`_ and implements style checking using
 `pre-commit <pre-commit_>`_.
 
-To ensure your code meets minimum code styling standards, run this code:
+To ensure your code meets minimum code styling standards, run thse commands:
 
 .. code:: console
 
   pip install pre-commit
   pre-commit run --all-files
 
-You can also install this as a pre-commit hook by running this code:
+You can also install this as a pre-commit hook by running this command:
 
 .. code:: console
 
   pre-commit install
 
 
-This way, it's not possible for you to push code that fails the style checks
+This way, it's not possible for you to push code that fails the style checks:
 
 .. code:: text
 

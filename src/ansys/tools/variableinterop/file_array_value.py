@@ -22,10 +22,10 @@ T = TypeVar("T")
 
 class FileArrayValue(CommonArrayValue[FileValue]):
     """
-    Stores a value of file array type.
+    Stores a ``FileArrayValue`` type.
 
-    In Python FileArrayValue is implemented by extending NumPy's ndarray type. This
-    means that they will decay naturally into numpy.ndarray objects when using numpy's
+    In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type. This
+    means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
     array operators.
     """
 
@@ -79,16 +79,16 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         Parameters
         ----------
         value : Any
-            The value to use.
+            Value to use.
         context : ILoadContext
-            The load context to initialize the value with.
+            Load context to initialize the value with.
         scope : FileScope
-            The scope to initialize the value in.
+            Scope to initialize the value in.
 
         Returns
         -------
         FileArrayValue
-            A new FileArrayValue initialized from value.
+            New ``FileArrayValue`` initialized from the value.
         """
         if isinstance(value, list):
             # Define a function for transforming individual API objects to elements.

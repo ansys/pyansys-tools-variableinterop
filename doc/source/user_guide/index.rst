@@ -22,7 +22,7 @@ You can create values and metadata like any other Python object:
 
 .. code:: python
 
-   # Standard python operations should work seamlessly
+   # Standard Python operations should work seamlessly
    4 + width
 
 
