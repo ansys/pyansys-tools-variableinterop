@@ -261,7 +261,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         int, optional
-            The size of the file in bytes.
+            Size of the file in bytes.
         """
         return self._size
 
