@@ -23,8 +23,7 @@ import ansys.tools.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
-    """Visits variable values and converts to a ``BooleanArrayValue`` type when
-    possible."""
+    """Visits variable values and converts to a ``BooleanArrayValue`` type when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> BooleanArrayValue:

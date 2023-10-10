@@ -53,7 +53,7 @@ class FileScope(AbstractContextManager, ABC):
         self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
     ) -> FileValue:
         """
-        Read the contents of a file and create a new FileValue backed by a file in this
+        Read the contents of a file and create a new ``FileValue`` backed by a file in this
         scope.
 
         Parameters
@@ -68,7 +68,7 @@ class FileScope(AbstractContextManager, ABC):
         Returns
         -------
         FileValue
-            A new FileValue with the contents of the specified file, backed by this scope.
+            New ``FileValue`` with the contents of the specified file, backed by this scope.
         """
         ...
 
