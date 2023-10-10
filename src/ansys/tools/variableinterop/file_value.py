@@ -249,7 +249,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         UUID
-            The UUID that identifies this value.
+            UUID that identifies this value.
         """
         return self._id
 
