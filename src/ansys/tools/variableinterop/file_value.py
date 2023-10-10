@@ -136,8 +136,8 @@ class FileValue(IVariableValue, ABC):
         encoding : str, optional
             Encoding of the file.
         value_id : UUID, optional
-            ID that uniquely identifies this file. If this value is not supplied, it is automatically
-            generated.
+            ID that uniquely identifies this file. If this value is not supplied, it is
+            automatically generated.
         file_size : int, optional
             Size of the file in bytes, if known.
         """
@@ -202,7 +202,6 @@ class FileValue(IVariableValue, ABC):
         -------
            str
             Mime type of the file.
-
         """
         return self._mime_type
 
@@ -236,10 +235,7 @@ class FileValue(IVariableValue, ABC):
         """
         Get the encoding of the file.
 
-        Returns
-            Encoding of the file.
-        Optional[str]
-            Encoding of the file.
+        Returns     Encoding of the file. Optional[str]     Encoding of the file.
         """
         return self._file_encoding
 
