@@ -278,7 +278,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         str
-            If the file contains a BOM, an appropriate encoding will be returned.
+            If the file contains a BOM, an appropriate encoding is returned.
             If the file does not contain a BOM, ``None`` is returned.
         """
         with open(filename, "rb") as f:
