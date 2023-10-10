@@ -268,7 +268,7 @@ class FileValue(IVariableValue, ABC):
     @staticmethod
     def read_bom(filename: str) -> str:
         """
-        Open a file for reading and detects a byte order mark at the beginning.
+        Open a file for reading and detect a byte order mark at the beginning.
 
         Parameters
         ----------
