@@ -237,7 +237,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         Optional[str]
-            The file's encoding.
+            Encoding of the file.
         """
         return self._file_encoding
 
