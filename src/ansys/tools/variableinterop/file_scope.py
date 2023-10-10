@@ -63,7 +63,7 @@ class FileScope(AbstractContextManager, ABC):
         mime_type : str, optional
             Mime type of the file.
         encoding : str, optional
-            The encoding of the file.
+            Encoding of the file.
 
         Returns
         -------

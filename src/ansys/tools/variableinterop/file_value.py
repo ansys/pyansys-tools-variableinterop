@@ -111,9 +111,9 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
 
 class FileValue(IVariableValue, ABC):
     """
-    Provides an abstract base class for file value implementations.
+    Provides an abstract base class for ``FileValue`` implementations.
 
-    To create instances, use a `FileScope`.
+    To create instances, use the ``FileScope`` class.
     """
 
     def __init__(
@@ -134,11 +134,12 @@ class FileValue(IVariableValue, ABC):
         mime_type : str, optional
             Mime type of the file.
         encoding : str, optional
-            The encoding of the file.
+            Encoding of the file.
         value_id : UUID, optional
-            The id that uniquely identifies this file. Auto-generated if not supplied.
+            ID that uniquely identifies this file. If this value is not supplied, it is automatically
+            generated.
         file_size : int, optional
-            The size of the file in bytes, if known.
+            Size of the file in bytes, if known.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
@@ -199,8 +200,9 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        str
-            The mimetype of the file.
+           str
+            Mime type of the file.
+
         """
         return self._mime_type
 
@@ -212,7 +214,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         Optional[PathLike]
-            The original filename.
+            Original filename.
         """
         return self._original_path
 
@@ -224,7 +226,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         str
-            The file's extension.
+            Extension of the file.
         """
         # TODO: Implement
         raise NotImplementedError()
@@ -235,7 +237,7 @@ class FileValue(IVariableValue, ABC):
         Get the encoding of the file.
 
         Returns
-        -------
+            Encoding of the file.
         Optional[str]
             Encoding of the file.
         """
