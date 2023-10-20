@@ -7,7 +7,7 @@ Installation
 Two installation modes of the ``pyansys-tools-variableinterop`` package are provided: user and developer.
 
 For users
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^
 
 Install the latest release for use with this command:
 
