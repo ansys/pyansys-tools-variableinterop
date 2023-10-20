@@ -22,8 +22,8 @@ class IVariableValueVisitor(ABC, Generic[T]):
     """
 
     # Single dispatch would make this prettier, but doesn't work with
-    #  class methods until 3.8:
-    #  https://docs.python.org/3/library/functools.html#functools.singledispatch
+    # class methods until 3.8:
+    # https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
     def visit_integer(self, value: IntegerValue) -> T:
