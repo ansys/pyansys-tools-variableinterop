@@ -23,7 +23,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     Defines the interface to be implemented to use the visitor pattern with variable
     metadata.
 
-    Pass an instance to CommonVariableMetadata.accept().
+    Pass an instance to :meth:``CommonVariableMetadata.accept()``.
     """
 
     # Single dispatch would make this prettier, but doesn't work with
