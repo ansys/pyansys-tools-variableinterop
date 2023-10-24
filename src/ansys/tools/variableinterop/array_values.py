@@ -84,7 +84,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         Returns
         -------
         StringArrayValue
-            ``StringArrayValue`` type with the same values converted to a string.
+            ``StringArrayValue`` type with the same values converted to strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -194,7 +194,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
         Returns
         -------
         StringArrayValue
-            ``StringArrayValue`` type with the same values converted to a string.
+            ``StringArrayValue`` object converted to an array of strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
