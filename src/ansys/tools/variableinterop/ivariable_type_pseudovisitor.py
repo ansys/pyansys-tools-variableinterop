@@ -157,7 +157,7 @@ def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_unknown()
 
@@ -169,7 +169,7 @@ def __accept_int(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_int()
 
@@ -181,7 +181,7 @@ def __accept_real(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_real()
 
@@ -193,7 +193,7 @@ def __accept_boolean(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_boolean()
 
@@ -205,7 +205,7 @@ def __accept_string(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_string()
 
@@ -217,7 +217,7 @@ def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_file()
 
@@ -229,7 +229,7 @@ def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_int_array()
 
@@ -241,7 +241,7 @@ def __accept_real_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_real_array()
 
@@ -253,7 +253,7 @@ def __accept_boolean_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     Returns
     -------
     T
-        The visitor's result.
+        Visitor's result.
     """
     return visitor.visit_bool_array()
 
