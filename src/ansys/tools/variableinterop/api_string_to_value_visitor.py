@@ -4,7 +4,7 @@ Provides a variable type pseudo-visitor that parses values from strings.
 The pseudo-visitor is constructed with the string to parse, then accepted by the
 appropriate variable type. When visiting, it attempts to parse the string into the
 visited type. For more information on why this pattern is better than bare switch
-statements, see ``IVariableTypePseudoVisitor``.
+statements, see :class:``IVariableTypePseudoVisitor``.
 """
 import json
 from typing import Optional
