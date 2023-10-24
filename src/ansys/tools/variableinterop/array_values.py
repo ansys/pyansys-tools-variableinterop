@@ -408,7 +408,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to a BooleanArrayValue.
+        Convert this value to a ``BooleanArrayValue`` type.
 
         Returns
         -------
