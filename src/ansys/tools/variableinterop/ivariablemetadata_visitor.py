@@ -38,7 +38,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : IntegerMetadata
-            The IntegerMetadata being visited
+            ``IntegerMetadata`` object being visited.
 
         Returns
         -------
@@ -55,7 +55,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : RealMetadata
-            The RealMetadata being visited
+            ``RealMetadata`` object being visited.
 
         Returns
         -------
@@ -72,7 +72,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : BooleanMetadata
-            The BooleanMetadata being visited
+            ``BooleanMetadata`` object being visited.
 
         Returns
         -------
@@ -89,7 +89,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : StringMetadata
-            The StringMetadata being visited
+            ``StringMetadata`` object being visited.
 
         Returns
         -------
@@ -106,7 +106,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : FileMetadata
-            The FileMetadata being visited
+            ``FileMetadata`` object being visited.
 
         Returns
         -------
@@ -123,7 +123,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : IntegerArrayMetadata
-            The IntegerArrayMetaData being visited.
+            ``IntegerArrayMetadata`` object being visited.
 
         Returns
         -------
@@ -140,7 +140,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : RealArrayMetadata
-            The RealArrayMetaData being visited.
+            ``RealArrayMetaData`` object being visited.
 
         Returns
         -------
@@ -157,7 +157,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : BooleanArrayMetadata
-            The BooleanArrayMetaData being visited.
+            ``BooleanArrayMetaData`` object being visited.
 
         Returns
         -------
@@ -174,7 +174,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : StringArrayMetadata
-            The StringArrayMetaData being visited.
+            ``StringArrayMetaData`` object being visited.
 
         Returns
         -------
@@ -191,7 +191,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         Parameters
         ----------
         metadata : FileArrayMetadata
-            The FileArrayMetadata being visited
+            ``FileArrayMetadata`` object being visited
 
         Returns
         -------
