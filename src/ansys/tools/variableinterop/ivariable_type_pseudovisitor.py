@@ -315,7 +315,7 @@ def vartype_accept(visitor: "IVariableTypePseudoVisitor[T]", var_type: VariableT
     Returns
     -------
     T
-        The result provided by the visitor.
+        Visitor's result.
     """
     if var_type in __accept_map:
         # If the type is in the enum mapping, run
