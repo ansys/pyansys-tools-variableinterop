@@ -77,7 +77,7 @@ class FileScope(AbstractContextManager, ABC):
         self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
     ) -> FileValue:
         """
-        Create a ``FileScope`` from a map of API strings.
+        Create a ``FileScope`` object from a map of API strings.
 
         Parameters
         ----------
