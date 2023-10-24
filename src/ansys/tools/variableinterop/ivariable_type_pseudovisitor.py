@@ -11,10 +11,10 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     """
     Defines an interface for variable type pseudo-visitors.
 
-    This interface defines a "pseudo-visitor" for the possible values of VariableType.
+    This interface defines a "pseudo-visitor" for possible ``VariableType`` values.
     Although this pattern ultimately requires the use of a single "switch-statement
-    equivalent" (see the __accept_map below) it confines said switch to a single
-    instance, and allows it to essentially be reused with mypy "typesafety."
+    equivalent" (see the following ``__accept_map`` below) it confines the said switch to a single
+    instance, and allows it to essentially be reused with `mypy` "typesafety."
     """
 
     @abstractmethod
