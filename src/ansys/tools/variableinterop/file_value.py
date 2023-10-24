@@ -83,7 +83,7 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         Parameters
         ----------
         local_content_path : Path, optional
-            The path to the local content. None indicates the file value is empty.
+            Path to the local content. The default is ``None``, which indicates the file value is empty.
         """
         self._local_content_path = local_content_path
 
