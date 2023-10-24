@@ -25,8 +25,8 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
     def __init__(
         self,
         source: str,
-        fscope: Optional[FileScope],
-        save_context: Optional[ILoadContext],
+        fscope: Optional[FileScope] = None,
+        save_context: Optional[ILoadContext] = None,
     ):
         """
         Create a new instance of this class.
@@ -35,12 +35,12 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         ----------
         source : str
             String that values should be parsed from.
-        fscope : FileScope, optional
+        fscope : Optional[FileScope], optional
             File scope to use to deserialize file variables. If file variables are
-            not needed, the value may be ``None``.
-        save_context : ILoadContext, optional
+            not needed, the value may be ``None``, which is the default.
+        save_context : Optional[ILoadContext], optional
             Save context to read file contents from. If file variables are
-            not needed, the value may be ``None``.
+            not needed, the value may be ``None``, which is the default.
         """
         self._source: str = source
         self._scope: Optional[FileScope] = fscope

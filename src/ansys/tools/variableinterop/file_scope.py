@@ -50,7 +50,7 @@ class FileScope(AbstractContextManager, ABC):
 
     @abstractmethod
     def read_from_file(
-        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
+        self, to_read: PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None
     ) -> FileValue:
         """
         Read the contents of a file and create a new ``FileValue`` object backed by a
@@ -60,10 +60,12 @@ class FileScope(AbstractContextManager, ABC):
         ----------
         to_read : PathLike
             Path to the file to read.
-        mime_type : str, optional
-            Mime type of the file.
-        encoding : str, optional
-            Encoding of the file.
+        mime_type : Optional[str], optional
+            MIME type of the file. The default is `None`, which indicates that the file
+            does not have a MIME type or it is not known.
+        encoding : Optional[str], optional
+            Encoding of the file. The default is `None`, which indicates that the file
+            does not have a text encoding (for example, because it is a binary file.)
 
         Returns
         -------

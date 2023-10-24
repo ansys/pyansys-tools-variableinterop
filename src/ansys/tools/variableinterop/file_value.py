@@ -76,13 +76,13 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         # nothing needs to be done here.
         pass
 
-    def __init__(self, local_content_path: Optional[Path]):
+    def __init__(self, local_content_path: Optional[Path] = None):
         """
         Initialize a new instance.
 
         Parameters
         ----------
-        local_content_path : Path, optional
+        local_content_path : Optional[Path], optional
             Path to the local content. The default is ``None``, which indicates the file value is
             empty.
         """
@@ -130,19 +130,19 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        original_path : PathLike, optional
+        original_path : Optional[PathLike], optional
             Path to the file to wrap. The default is `None`, which indicates that the original file
             path is not known or does not exist.
-        mime_type : str, optional
+        mime_type : Optional[str], optional
             MIME type of the file. The default is `None`, which indicates that the file value does
             not have a MIME type.
-        encoding : str, optional
+        encoding : Optional[str], optional
             Encoding of the file. The default is `None`, which indicates that the file value does
             not have a text encoding (for example, if it is a binary file).
-        value_id : UUID, optional
+        value_id : Optional[UUID], optional
             ID that uniquely identifies this file. If this value is not supplied, or if the default
             value of `None` is provided, it is automatically generated.
-        file_size : int, optional
+        file_size : Optional[int], optional
             Size of the file in bytes, if known. The default value is `None`, which indicates that
             the file size is not known. Note that a size of `None` does not indicate that the file
             is of size zero.
@@ -264,8 +264,9 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        int, optional
-            Size of the file in bytes.
+        Optional[int]
+            Size of the file in bytes. ``None`` indicates that the file size is not known,
+            not necessarily that it is zero.
         """
         return self._size
 
@@ -339,12 +340,14 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Callable[[int], None], optional
+        progress_callback : Optional[Callable[[int], None]], optional
             Callback that may be called to indicate progress in realizing the local copy.
             The argument is a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback might not necessarily be called at all.
             are not guaranteed, even if other calls occur.
+            The default is ``None``, in which case this method makes no attempt
+            to report its progress.
 
         Returns
         -------
@@ -368,12 +371,14 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Callable[[int], None], optional
+        progress_callback : Optional[Callable[[int], None]], optional
             A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback will not necessarily be called at all, and calls for 0% or 100%
             are not guaranteed, even if other calls occur.
+            The default is ``None``, in which case this method makes no attempt
+            to report its progress.
 
         Returns
         -------
@@ -411,14 +416,15 @@ class FileValue(IVariableValue, ABC):
         """
         return FileValue.is_text_based_static(self.mime_type)
 
-    async def get_contents(self, encoding: Optional[str]) -> str:
+    async def get_contents(self, encoding: Optional[str] = None) -> str:
         """
         Read the file's contents as a string.
 
         Parameters
         ----------
-        encoding : str, optional
+        encoding : Optional[str], optional
             The encoding to use when reading.
+            The default is `None`, in which case the current locale's encoding is used.
 
         Returns
         -------
@@ -451,8 +457,9 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        context : ISaveContext, optional
-            The save context to use.
+        context : Optional[ISaveContext], optional
+            The save context to use. The default value is `None`,
+            in which case file values are not supported.
 
         Returns
         -------
@@ -541,28 +548,34 @@ class LocalFileValue(FileValue, ABC):
 
     def __init__(
         self,
-        original_path: Optional[PathLike],
-        mime_type: Optional[str],
-        encoding: Optional[str],
-        value_id: Optional[UUID],
-        file_size: Optional[int],
-        actual_content_file_name: Optional[PathLike],
+        original_path: Optional[PathLike] = None,
+        mime_type: Optional[str] = None,
+        encoding: Optional[str] = None,
+        value_id: Optional[UUID] = None,
+        file_size: Optional[int] = None,
+        actual_content_file_name: Optional[PathLike] = None,
     ):
         """
         Initialize a new instance.
 
         Parameters
         ----------
-        original_path : PathLike, optional
-            Path to the file to wrap.
-        mime_type : str, optional
-            Mime type of the file.
-        encoding : str, optional
-            The encoding of the file.
-        value_id : UUID, optional
-            The id that uniquely identifies this file. Auto-generated if not supplied.
-        actual_content_file_name : PathLike, optional
-            The path to where the content is actually being stored.
+        original_path : Optional[PathLike], optional
+            Path to the file to wrap. The default is `None`, which indicates that the original file
+            path is not known or does not exist.
+        mime_type : Optional[str], optional
+            MIME type of the file. The default is `None`, which indicates that the file value does
+            not have a MIME type.
+        encoding : Optional[str], optional
+            Encoding of the file. The default is `None`, which indicates that the file value does
+            not have a text encoding (for example, if it is a binary file).
+        value_id : Optional[UUID], optional
+            ID that uniquely identifies this file. If this value is not supplied, or if the default
+            value of `None` is provided, it is automatically generated.
+        file_size : Optional[int], optional
+            Size of the file in bytes, if known. The default value is `None`, which indicates that
+            the file size is not known. Note that a size of `None` does not indicate that the file
+            is of size zero.
         """
         super().__init__(
             original_path=original_path,

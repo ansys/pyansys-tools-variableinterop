@@ -38,7 +38,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             return bool(self._original_path)
 
         def __init__(
-            self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
+            self, to_read: PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None
         ) -> None:
             """
             Construct a new NonManagingFileValue.
@@ -47,10 +47,12 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             ----------
             to_read : PathLike
                 Path to the file to wrap.
-            mime_type : str, optional
-                Mime type of the file.
-            encoding : str, optional
-                The encoding of the file.
+            mime_type : Optional[str], optional
+                MIME type of the file. The default value is `None`, which indicates that the MIME
+                type is not known or the file does not have one.
+            encoding : Optional[str], optional
+                The text encoding of the file. The default value is `None`, which indicates that the
+                file does not have a known text encoding (for example, because it is a binary file).
             """
             size: Optional[int] = None
             # TODO: The tests use a lot of non-existent files, so this prevents
