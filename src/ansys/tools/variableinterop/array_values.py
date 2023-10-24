@@ -84,7 +84,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         Returns
         -------
         StringArrayValue
-            A StringArrayValue with the same values converted to string.
+            ``StringArrayValue`` type with the same values converted to a string.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -98,7 +98,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
     @staticmethod
     def from_api_string(value: str) -> BooleanArrayValue:
         """
-        Convert API-formatted string to a ``BooleanArrayValue`` type.
+        Convert an API-formatted string to a ``BooleanArrayValue`` type.
 
         Parameters
         ----------
@@ -208,7 +208,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     @staticmethod
     def from_api_string(value: str) -> IntegerArrayValue:
         """
-        Convert API-formatted string to an ``IntegerArrayValue`` value.
+        Convert an API-formatted string to an ``IntegerArrayValue`` value.
 
         Parameters
         ----------

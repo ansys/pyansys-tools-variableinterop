@@ -14,10 +14,10 @@ class ISaveContext(AbstractContextManager, ABC):
     """
     Defines an abstraction for a save medium.
 
-    In order to separate the concerns of being able to save large associated content in
-    other transfer mediums, this interface was defined which allows out of bound data to
-    be transferred. Examples include saving to a ZIP file, or using an SCP side-channel
-    on an SSH connection to send files or other large data.
+    To separate the concerns of being able to save large associated content in
+    other transfer mediums, this interface was defined. It allows out-of-bound data to
+    be transferred. Examples include saving to a ZIP file or using an SCP side-channel
+    on an SSH connection to send files or other large data objects.
     """
 
     @overrides
@@ -43,16 +43,16 @@ class ISaveContext(AbstractContextManager, ABC):
         Parameters
         ----------
         source : Union[PathLike, str]
-            The file on disk to send or include in the save.
+            File on disk to send or include in the save.
         content_id : str, optional
-            If a unique ID is already known for the file, include it here.
-            If it is not provided, one will be generated and returned.
+            Unique ID if it already known for this file.
+            If an ID is not provided, one is generated and returned.
             This ID can be used with an equivalent ILoadContext to load the contents on deserialize.
 
         Returns
         -------
         str
-            If an id was provided, returns that ID, otherwise generates one and returns it.
+            ID, either the one provided or the one otherwise generated.
         """
         ...
 
@@ -67,7 +67,7 @@ class ISaveContext(AbstractContextManager, ABC):
 
     @abstractmethod
     def flush(self) -> None:
-        """Flush any changes in the context to the underlying stream/file/etc."""
+        """Flush any changes in the context to the underlying stream or file."""
         ...
 
     @abstractmethod
@@ -80,10 +80,10 @@ class ILoadContext(AbstractContextManager, ABC):
     """
     Defines an abstraction for a load medium.
 
-    In order to separate the concerns of being able to save large associated content in
-    other transfer mediums, this interface was defined which allows out of bound data to
+    To separate the concerns of being able to save large associated content in
+    other transfer mediums, this interface was defined. It allows out-of-bound data to
     be transferred. Examples include saving to a ZIP file, or using an SCP side-channel
-    on an SSH connection to send files or other large data.
+    on an SSH connection to send files or other large data objects.
     """
 
     @overrides
@@ -101,9 +101,9 @@ class ILoadContext(AbstractContextManager, ABC):
         """
         Load a file from the load medium.
 
-        Note, it is up to the ILoadContext implementation to decide how or when to send the actual
-        data. Some ILoadContexts may merely collect metadata as part of this call and actually
-        send the data on flush.
+        The ``ILoadContext`` implementation decides how or when to send the actual
+        data. Some ``ILoadContexts`` implementations may merely collect metadata as
+        part of this call and actually send the data on flush.
 
         Parameters
         ----------
@@ -125,7 +125,7 @@ class ILoadContext(AbstractContextManager, ABC):
 
     @abstractmethod
     def flush(self) -> None:
-        """Flush any changes in the context to the underlying stream/file/etc."""
+        """Flush any changes in the context to the underlying stream or file."""
         ...
 
     @abstractmethod

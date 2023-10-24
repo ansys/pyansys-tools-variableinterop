@@ -25,7 +25,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -37,7 +37,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -49,7 +49,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -297,7 +297,7 @@ __accept_map: Dict["VariableType", Callable[["IVariableTypePseudoVisitor[T]"], T
 A map of the variable types to the actual "accept" implementations that correspond to
 them.
 
-This allows Python to quickly and correctly find the right accept implementation.
+This allows Python to quickly and correctly find the right "accept" implementation.
 """
 
 
@@ -308,9 +308,9 @@ def vartype_accept(visitor: "IVariableTypePseudoVisitor[T]", var_type: VariableT
     Parameters
     ----------
     visitor : T
-        the visitor to accept
+        Visitor to accept.
     var_type : VariableType
-        the type the visitor should visit
+        Type that the visitor should visit.
 
     Returns
     -------

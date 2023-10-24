@@ -7,7 +7,7 @@ from .variable_value import IVariableValue
 
 class GetModelCenterTypeForValue:
     """Provides a static method for getting the corresponding ModelCenter type for an
-    IVariableValue."""
+    ``IVariableValue``."""
 
     @staticmethod
     def get_modelcenter_type(value: IVariableValue) -> str:
@@ -17,12 +17,12 @@ class GetModelCenterTypeForValue:
         Parameters
         ----------
         value : IVariableValue
-            The value for which to get the type.
+            Value to get the type for.
 
         Returns
         -------
         str
-            The corresponding ModelCenter type string.
+            Corresponding ``ModelCenter`` type string.
         """
         generator = GetModelCenterTypeForValue._GetModelCenterTypeVisitor()
         result: str = vartype_accept(generator, value.variable_type)

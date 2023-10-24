@@ -179,7 +179,7 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
 
 
 class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
-    """Visits variable values and converts them to ``RealArrayValue`` when possible."""
+    """Visits variable values and converts them to ``RealArrayValue`` types when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealArrayValue:

@@ -38,7 +38,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
