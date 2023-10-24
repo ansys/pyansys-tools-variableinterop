@@ -7,7 +7,7 @@ from .variable_value import IVariableValue
 
 class GetModelCenterTypeForValue:
     """Provides a static method for getting the corresponding ModelCenter type for an
-    ``IVariableValue``."""
+    ``IVariableValue`` object."""
 
     @staticmethod
     def get_modelcenter_type(value: IVariableValue) -> str:
