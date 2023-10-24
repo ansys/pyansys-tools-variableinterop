@@ -4,20 +4,22 @@ from __future__ import annotations
 from decimal import ROUND_HALF_UP, Decimal
 import functools
 import locale
-from typing import Optional
+from typing import Optional, TypeVar
 
 import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
 from .isave_context import ISaveContext
-from .ivariable_visitor import IVariableValueVisitor, T
+from .ivariable_visitor import IVariableValueVisitor
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .utils.locale_utils import LocaleUtils
 from .utils.string_escaping import escape_string, unescape_string
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue
+
+T = TypeVar("T")
 
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
