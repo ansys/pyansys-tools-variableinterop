@@ -83,7 +83,8 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         Parameters
         ----------
         local_content_path : Path, optional
-            Path to the local content. The default is ``None``, which indicates the file value is empty.
+            Path to the local content. The default is ``None``, which indicates the file value is
+            empty.
         """
         self._local_content_path = local_content_path
 
@@ -118,11 +119,11 @@ class FileValue(IVariableValue, ABC):
 
     def __init__(
         self,
-        original_path: Optional[PathLike],
-        mime_type: Optional[str],
-        encoding: Optional[str],
-        value_id: Optional[UUID],
-        file_size: Optional[int],
+        original_path: Optional[PathLike] = None,
+        mime_type: Optional[str] = None,
+        encoding: Optional[str] = None,
+        value_id: Optional[UUID] = None,
+        file_size: Optional[int] = None,
     ):
         """
         Construct a new FileValue.
@@ -130,16 +131,21 @@ class FileValue(IVariableValue, ABC):
         Parameters
         ----------
         original_path : PathLike, optional
-            Path to the file to wrap.
+            Path to the file to wrap. The default is `None`, which indicates that the original file
+            path is not known or does not exist.
         mime_type : str, optional
-            Mime type of the file.
+            MIME type of the file. The default is `None`, which indicates that the file value does
+            not have a MIME type.
         encoding : str, optional
-            Encoding of the file.
+            Encoding of the file. The default is `None`, which indicates that the file value does
+            not have a text encoding (for example, if it is a binary file).
         value_id : UUID, optional
-            ID that uniquely identifies this file. If this value is not supplied, it is
-            automatically generated.
+            ID that uniquely identifies this file. If this value is not supplied, or if the default
+            value of `None` is provided, it is automatically generated.
         file_size : int, optional
-            Size of the file in bytes, if known.
+            Size of the file in bytes, if known. The default value is `None`, which indicates that
+            the file size is not known. Note that a size of `None` does not indicate that the file
+            is of size zero.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
