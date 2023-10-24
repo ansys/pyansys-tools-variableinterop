@@ -61,7 +61,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -73,7 +73,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -85,7 +85,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -97,7 +97,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -109,7 +109,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -121,7 +121,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -133,7 +133,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 
@@ -145,7 +145,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         Returns
         -------
         T
-            A result as documented by the implementing class.
+            Result, as documented by the implementing class.
         """
         raise NotImplementedError
 

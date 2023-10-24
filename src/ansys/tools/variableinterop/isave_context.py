@@ -14,10 +14,10 @@ class ISaveContext(AbstractContextManager, ABC):
     """
     Defines an abstraction for a save medium.
 
-    To separate the concerns of being able to save large associated content in
-    other transfer mediums, this interface was defined. It allows out-of-bound data to
-    be transferred. Examples include saving to a ZIP file or using an SCP side-channel
-    on an SSH connection to send files or other large data objects.
+    To separate the concerns of being able to save large associated content in other
+    transfer mediums, this interface was defined. It allows out-of-bound data to be
+    transferred. Examples include saving to a ZIP file or using an SCP side-channel on
+    an SSH connection to send files or other large data objects.
     """
 
     @overrides
@@ -80,10 +80,10 @@ class ILoadContext(AbstractContextManager, ABC):
     """
     Defines an abstraction for a load medium.
 
-    To separate the concerns of being able to save large associated content in
-    other transfer mediums, this interface was defined. It allows out-of-bound data to
-    be transferred. Examples include saving to a ZIP file, or using an SCP side-channel
-    on an SSH connection to send files or other large data objects.
+    To separate the concerns of being able to save large associated content in other
+    transfer mediums, this interface was defined. It allows out-of-bound data to be
+    transferred. Examples include saving to a ZIP file, or using an SCP side-channel on
+    an SSH connection to send files or other large data objects.
     """
 
     @overrides

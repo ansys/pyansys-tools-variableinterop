@@ -76,7 +76,7 @@ class CommonVariableMetadata(ABC):
         Returns
         -------
         T
-            The results of the visitor invocation.
+            Results of the visitor invocation.
         """
         raise NotImplementedError
 
