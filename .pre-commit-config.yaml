@@ -50,10 +50,10 @@ repos:
   - id: trailing-whitespace
 
 - repo: https://github.com/ansys/pre-commit-hooks
-  rev: v0.1.2
+  rev: v0.1.2 # `strings.properties` needs to be manually updated
   hooks:
     - id: add-license-headers
-      args: ["--loc", "./"]
+      exclude: "src/ansys/tools/variableinterop/strings.properties"
 
 # this validates our github workflow files
 - repo: https://github.com/python-jsonschema/check-jsonschema
