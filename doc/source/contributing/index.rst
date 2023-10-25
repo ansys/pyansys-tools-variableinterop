@@ -13,16 +13,16 @@ The following contribution information is specific to PyAnsys Tools Variable Int
 Installation
 ------------
 The ``pyansys-tools-variableinterop`` package currently supports Python
-3.9 through 3.12 on Windows, MacOS and Linux.
+3.9 through 3.12 on Windows, MacOS, and Linux.
 
-You can install ``pyansys-tools-variableinterop`` with this command:
+You can install the ``pyansys-tools-variableinterop`` package with this command:
 
 .. code::
 
    pip install pyansys-tools-variableinterop
 
 Alternatively, install the latest version from `pyansys-tools-variableinterop GitHub
-<pyansys-tools-variableinterop_repo_>`_ via:
+<pyansys-tools-variableinterop_repo_>`_ with this command:
 
 .. code::
 
@@ -148,8 +148,8 @@ You can then run the tests via ``pytest`` with this command:
 Adhere to code style
 --------------------
 
-PyAnsys Tools Variable Interop follows the PEP8 standard as outlined in the `PyAnsys Developer's Guide
-<dev_guide_pyansys_>`_ and implements style checking using
+PyAnsys Tools Variable Interop follows the PEP8 standard as indicated in the `PyAnsys Developer's Guide
+<dev_guide_pyansys_pep8_>`_ and implements style checking using
 `pre-commit <pre-commit_>`_.
 
 To ensure your code meets minimum code styling standards, run these commands:

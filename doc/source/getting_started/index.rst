@@ -33,20 +33,6 @@ However, this does not guarantee that your project is being tested in an isolate
 environment, which is why you might consider using `tox`_.
 
 
-Documentation
--------------
-
-For building documentation, you can run the usual rules provided in the
-`Sphinx`_ Makefile:
-
-.. code:: bash
-
-    python -m pip install .[doc]
-    make -C doc/ html
-
-    # subsequently open the documentation with (under Linux):
-    your_browser_name doc/html/index.html
-
 Distributing
 ------------
 
