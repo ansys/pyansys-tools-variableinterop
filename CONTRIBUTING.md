@@ -11,5 +11,4 @@ Further information about contributing to PyAnsys Tools Variable Interop
 can be found in [Contributing].
 
 [Contributing]: https://dev.docs.pyansys.com/how-to/contributing.html
-[Contributing]: https://variableinterop.docs.pyansys.com/dev/contributing.html
 

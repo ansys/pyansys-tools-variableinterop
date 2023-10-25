@@ -1,10 +1,10 @@
 # Contributors
 
-## Project Lead
+## Project lead
 
 * [](https://github.com/)
 
-## Individual Contributors
+## Individual contributors
 
 * [Mark Koninckx](https://github.com/phx-mkoninckx)
 * [Michel Pascale](https://github.com/phx-mpascale)
