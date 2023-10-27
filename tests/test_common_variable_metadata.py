@@ -1,13 +1,10 @@
-"""
-Unit tests of the methods on
-common_variable_metadata.CommonVariableMetadata.
-"""
+"""Unit tests of the methods on common_variable_metadata.CommonVariableMetadata."""
 from typing import List, Tuple, Type, TypeVar, Union
 
 import pytest
-from test_utils import _create_exception_context
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
+from test_utils import _create_exception_context
 
 M = TypeVar(
     "M", acvi.IntegerMetadata, acvi.RealMetadata, acvi.IntegerArrayMetadata, acvi.RealArrayMetadata
@@ -19,8 +16,8 @@ def get_test_num_meta(
     meta_type: Type[M], value_type: Type, lower: N = None, upper: N = None, enums: List[N] = None
 ) -> M:
     """
-    Get a test meta_type object with optional lower and/or upper
-    #bounds, and optional enumerated values.
+    Get a test meta_type object with optional lower and/or upper #bounds, and optional
+    enumerated values.
 
     Parameters
     ----------
@@ -37,7 +34,8 @@ def get_test_num_meta(
 
     Returns
     -------
-    Newly constructed test metadata with the given property values.
+    M
+        Newly constructed test metadata with the given property values.
     """
     meta = meta_type()
     if lower is not None:
@@ -52,32 +50,32 @@ def get_test_num_meta(
 def get_test_int_meta(
     lower: int = None, upper: int = None, enums: List[int] = None
 ) -> acvi.IntegerMetadata:
-    """Get a test IntegerMetadata with optional lower and/or upper
-    bounds, and optional enumerated values."""
+    """Get a test IntegerMetadata with optional lower and/or upper bounds, and optional
+    enumerated values."""
     return get_test_num_meta(acvi.IntegerMetadata, acvi.IntegerValue, lower, upper, enums)
 
 
 def get_test_real_meta(
     lower: float = None, upper: float = None, enums: List[float] = None
 ) -> acvi.RealMetadata:
-    """Get a test RealMetadata with optional lower and/or upper
-    bounds, and optional enumerated values."""
+    """Get a test RealMetadata with optional lower and/or upper bounds, and optional
+    enumerated values."""
     return get_test_num_meta(acvi.RealMetadata, acvi.RealValue, lower, upper, enums)
 
 
 def get_test_int_array_meta(
     lower: int = None, upper: int = None, enums: List[int] = None
 ) -> acvi.IntegerArrayMetadata:
-    """Get a test IntegerArrayMetadata with optional lower and/or
-    upper bounds, and optional enumerated values."""
+    """Get a test IntegerArrayMetadata with optional lower and/or upper bounds, and
+    optional enumerated values."""
     return get_test_num_meta(acvi.IntegerArrayMetadata, acvi.IntegerValue, lower, upper, enums)
 
 
 def get_test_real_array_meta(
     lower: float = None, upper: float = None, enums: List[float] = None
 ) -> acvi.RealArrayMetadata:
-    """Get a test RealArrayMetadata with optional lower and/or
-    upper bounds, and optional enumerated values."""
+    """Get a test RealArrayMetadata with optional lower and/or upper bounds, and
+    optional enumerated values."""
     return get_test_num_meta(acvi.RealArrayMetadata, acvi.RealValue, lower, upper, enums)
 
 
@@ -101,7 +99,8 @@ def get_test_str_meta(
 
     Returns
     -------
-    Newly constructed test metadata with the given property values.
+    S
+        Newly constructed test metadata with the given property values.
     """
     meta = meta_type()
     meta.enumerated_values = list(map(lambda i: value_type(i), enums))
@@ -255,11 +254,15 @@ get_default_value_tests: List[Tuple[str, acvi.CommonVariableMetadata, acvi.IVari
     ("Boolean[]", acvi.BooleanArrayMetadata(), acvi.BooleanArrayValue([])),
     ("File[]", acvi.FileArrayMetadata(), acvi.FileArrayValue([])),
 ]
-"""List of test cases for meta.get_default_values. Each entry is a tuple
+"""
+List of test cases for meta.get_default_values.
+
+Each entry is a tuple
 containing in order:
 * identifier: a string to aid in identifying a unit test.
 * source: a test metadata object to call get_default_values on.
-* expected: the expected return value from get_default_values call."""
+* expected: the expected return value from get_default_values call.
+"""
 
 
 @pytest.mark.parametrize("_,source,expected", get_default_value_tests)
@@ -267,8 +270,8 @@ def test_meta_get_default_value(
     _: str, source: acvi.CommonVariableMetadata, expected: acvi.IVariableValue
 ) -> None:
     """
-    Tests the CommonVariableMetadata.get_default_value() on all child
-    types of CommonVariableMetadata.
+    Tests the CommonVariableMetadata.get_default_value() on all child types of
+    CommonVariableMetadata.
 
     Parameters
     ----------
@@ -813,7 +816,6 @@ def test_runtime_convert(
         expected_exception = expected
         expected_value = None
     with _create_exception_context(expected_exception):
-
         # SUT
         result = meta.runtime_convert(source)
 

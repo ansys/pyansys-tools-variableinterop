@@ -2,7 +2,7 @@
 import numpy
 import pytest
 
-from ansys.common.variableinterop.array_values import BooleanArrayValue
+from ansys.tools.variableinterop.array_values import BooleanArrayValue
 
 
 def test_default_construct() -> None:
@@ -85,7 +85,7 @@ def test_to_api_string(source: BooleanArrayValue, expected_result: str) -> None:
 )
 def test_from_api_string_valid(source: str, expected_result: BooleanArrayValue) -> None:
     """
-    Verify that valid cases work on BooleanArrayValue.from_api_string
+    Verify that valid cases work on BooleanArrayValue.from_api_string.
 
     Parameters
     ----------

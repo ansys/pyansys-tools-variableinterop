@@ -4,9 +4,8 @@ from typing import Any, Optional, Tuple, Type
 
 import numpy
 import pytest
-from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
     IntegerArrayValue,
@@ -18,10 +17,11 @@ from ansys.common.variableinterop import (
     StringValue,
     implicit_coerce,
 )
+from test_utils import _create_exception_context
 
 
 class IDummy(ABC):
-    """Example interface that accepts variable types"""
+    """Example interface that accepts variable types."""
 
     @abstractmethod
     def variable_argument(self, value: IVariableValue) -> IVariableValue:
@@ -29,7 +29,7 @@ class IDummy(ABC):
 
 
 class Impl(ABC):
-    """Test implementation that just returns what it gets sent"""
+    """Test implementation that just returns what it gets sent."""
 
     @implicit_coerce
     def variable_argument(self, value: IVariableValue) -> IVariableValue:
@@ -37,7 +37,7 @@ class Impl(ABC):
 
 
 class NotConvertible:
-    """Test object that can't be converted to an IVariableValue"""
+    """Test object that can't be converted to an IVariableValue."""
 
     pass
 
@@ -162,7 +162,7 @@ class NotConvertible:
 )
 def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[BaseException]) -> None:
     """
-    Tests implicit_coerce decorator
+    Tests implicit_coerce decorator.
 
     Parameters
     ----------
@@ -172,7 +172,7 @@ def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[Base
 
     Returns
     -------
-    nothing
+    None
     """
     sut = Impl()
     with _create_exception_context(expect_exception):
@@ -184,7 +184,7 @@ def test_coerce(source: Any, expect: IVariableValue, expect_exception: Type[Base
 @implicit_coerce
 def accept_real_value(value: RealValue) -> RealValue:
     """
-    Test function that accepts a RealValue
+    Test function that accepts a RealValue.
 
     Parameters
     ----------
@@ -192,7 +192,8 @@ def accept_real_value(value: RealValue) -> RealValue:
 
     Returns
     -------
-    The value passed to it
+    RealValue
+        The value passed to it
     """
     return value
 
@@ -200,7 +201,7 @@ def accept_real_value(value: RealValue) -> RealValue:
 @implicit_coerce
 def accept_real_array_value(value: RealArrayValue) -> RealArrayValue:
     """
-    Test function that accepts a RealValue
+    Test function that accepts a RealValue.
 
     Parameters
     ----------
@@ -208,7 +209,8 @@ def accept_real_array_value(value: RealArrayValue) -> RealArrayValue:
 
     Returns
     -------
-    The value passed to it
+    RealArrayValue
+        The value passed to it
     """
     return value
 
@@ -216,7 +218,7 @@ def accept_real_array_value(value: RealArrayValue) -> RealArrayValue:
 @implicit_coerce
 def accept_integer_value(value: IntegerValue) -> IntegerValue:
     """
-    Test function that accepts an IntegerValue
+    Test function that accepts an IntegerValue.
 
     Parameters
     ----------
@@ -224,7 +226,8 @@ def accept_integer_value(value: IntegerValue) -> IntegerValue:
 
     Returns
     -------
-    The value passed to it
+    IntegerValue
+        The value passed to it
     """
     return value
 
@@ -232,7 +235,7 @@ def accept_integer_value(value: IntegerValue) -> IntegerValue:
 @implicit_coerce
 def accept_integer_array_value(value: IntegerArrayValue) -> IntegerArrayValue:
     """
-    Test function that accepts an IntegerArrayValue
+    Test function that accepts an IntegerArrayValue.
 
     Parameters
     ----------
@@ -240,7 +243,8 @@ def accept_integer_array_value(value: IntegerArrayValue) -> IntegerArrayValue:
 
     Returns
     -------
-    The value passed to it
+    IntegerArrayValue
+        The value passed to it
     """
     return value
 
@@ -248,7 +252,7 @@ def accept_integer_array_value(value: IntegerArrayValue) -> IntegerArrayValue:
 @implicit_coerce
 def accept_boolean_value(value: BooleanValue) -> BooleanValue:
     """
-    Test function that accepts a BooleanValue
+    Test function that accepts a BooleanValue.
 
     Parameters
     ----------
@@ -256,15 +260,16 @@ def accept_boolean_value(value: BooleanValue) -> BooleanValue:
 
     Returns
     -------
-    The value passed to it
+    BooleanValue
+        The value passed to it
     """
     return value
 
 
 @implicit_coerce
-def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
+def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanArrayValue:
     """
-    Test function that accepts a BooleanArrayValue
+    Test function that accepts a BooleanArrayValue.
 
     Parameters
     ----------
@@ -272,7 +277,8 @@ def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
 
     Returns
     -------
-    The value passed to it
+    BooleanArrayValue
+        The value passed to it
     """
     return value
 
@@ -280,7 +286,7 @@ def accept_boolean_array_value(value: BooleanArrayValue) -> BooleanValue:
 @implicit_coerce
 def accept_string_value(value: StringValue) -> StringValue:
     """
-    Test function that accepts a StringValue
+    Test function that accepts a StringValue.
 
     Parameters
     ----------
@@ -288,7 +294,8 @@ def accept_string_value(value: StringValue) -> StringValue:
 
     Returns
     -------
-    The value passed to it
+    StringValue
+        The value passed to it
     """
     return value
 
@@ -296,7 +303,7 @@ def accept_string_value(value: StringValue) -> StringValue:
 @implicit_coerce
 def accept_string_array_value(value: StringArrayValue) -> StringArrayValue:
     """
-    Test function that accepts a StringArrayValue
+    Test function that accepts a StringArrayValue.
 
     Parameters
     ----------
@@ -304,7 +311,8 @@ def accept_string_array_value(value: StringArrayValue) -> StringArrayValue:
 
     Returns
     -------
-    The value passed to it
+    StringArrayValue
+        The value passed to it
     """
     return value
 
@@ -349,7 +357,8 @@ def test_coerce_real_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept RealValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    RealValue.
 
     Parameters
     ----------
@@ -359,7 +368,7 @@ def test_coerce_real_value(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = accept_real_value(source)
@@ -439,7 +448,8 @@ def test_coerce_real_array_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept RealValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    RealValue.
 
     Parameters
     ----------
@@ -515,7 +525,8 @@ def test_coerce_integer_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept IntegerValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    IntegerValue.
 
     Parameters
     ----------
@@ -604,7 +615,8 @@ def test_coerce_integer_array_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept IntegerArrayValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    IntegerArrayValue.
 
     Parameters
     ----------
@@ -664,7 +676,8 @@ def test_coerce_string_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept StringValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    StringValue.
 
     Parameters
     ----------
@@ -771,7 +784,8 @@ def test_coerce_string_array_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept StringValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    StringValue.
 
     Parameters
     ----------
@@ -823,7 +837,8 @@ def test_coerce_boolean_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept BooleanValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    BooleanValue.
 
     Parameters
     ----------
@@ -873,7 +888,8 @@ def test_coerce_boolean_array_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept BooleanValue
+    Tests implicit_coerce decorator when calling a function declared to accept
+    BooleanValue.
 
     Parameters
     ----------
@@ -932,7 +948,8 @@ def test_coerce_optional_real_value(
     source: Any, expect: IVariableValue, expect_exception: Type[BaseException]
 ) -> None:
     """
-    Tests implicit_coerce decorator when calling a function declared to accept Optional[RealValue]
+    Tests implicit_coerce decorator when calling a function declared to accept
+    Optional[RealValue]
 
     Parameters
     ----------
@@ -955,7 +972,7 @@ def accept_with_multiple_args(
     bogus: NotConvertible, value1: RealValue, value2: IVariableValue
 ) -> Tuple[RealValue, IVariableValue]:
     """
-    Test function that accepts a RealValue
+    Test function that accepts a RealValue.
 
     Parameters
     ----------
@@ -970,7 +987,7 @@ def accept_with_multiple_args(
 
 def test_coerce_multiple_args() -> None:
     """
-    Tests implicit_coerce decorator when multiple values to be converted
+    Tests implicit_coerce decorator when multiple values to be converted.
 
     Parameters
     ----------
@@ -1006,7 +1023,6 @@ def test_no_coerce_no_copy(arg: IVariableValue) -> None:
     Parameters
     ----------
     arg the argument to pass to the decorated function
-
     """
     # Setup
     sut = Impl()

@@ -3,15 +3,15 @@
 from typing import Any, Type
 
 import pytest
-from test_utils import _create_exception_context, _test_to_value_visitor
 
-import ansys.common.variableinterop as acvi
-from ansys.common.variableinterop.array_value_conversion import (
+import ansys.tools.variableinterop as acvi
+from ansys.tools.variableinterop.array_value_conversion import (
     __ToBooleanArrayVisitor,
     __ToIntegerArrayVisitor,
     __ToRealArrayVisitor,
     __ToStringArrayVisitor,
 )
+from test_utils import _create_exception_context, _test_to_value_visitor
 
 
 class TestVisitor(acvi.IVariableValueVisitor[str]):
@@ -130,8 +130,8 @@ def test_to_real_array_visitor(
     expected_result: acvi.RealArrayValue,
     expected_exception: Type[BaseException],
 ):
-    """Verify that ToRealArrayVisitor gets the expected result, or that the expected exception is
-    raised."""
+    """Verify that ToRealArrayVisitor gets the expected result, or that the expected
+    exception is raised."""
 
     with _create_exception_context(expected_exception):
         instance = __ToRealArrayVisitor()
@@ -207,10 +207,8 @@ def test_to_boolean_array_visitor(
     expected_result: acvi.BooleanArrayValue,
     expected_exception: Type[BaseException],
 ):
-    """
-    Verify that ToBooleanArrayVisitor gets the expected result, or that the expected exception is
-    raised.
-    """
+    """Verify that ToBooleanArrayVisitor gets the expected result, or that the expected
+    exception is raised."""
     _test_to_value_visitor(
         value, expected_result, expected_exception, __ToBooleanArrayVisitor, acvi.BooleanArrayValue
     )
@@ -270,10 +268,8 @@ def test_to_integer_array_visitor(
     expected_result: acvi.IntegerArrayValue,
     expected_exception: Type[Exception],
 ):
-    """
-    Verify that ToIntegerArrayVisitor gets the expected result, or that the expected exception is
-    raised.
-    """
+    """Verify that ToIntegerArrayVisitor gets the expected result, or that the expected
+    exception is raised."""
     _test_to_value_visitor(
         value, expected_result, expected_exception, __ToIntegerArrayVisitor, acvi.IntegerArrayValue
     )
@@ -325,10 +321,8 @@ def test_to_string_array_visitor(
     expected_result: acvi.StringArrayValue,
     expected_exception: Type[Exception],
 ):
-    """
-    Verify that ToStringArrayVisitor gets the expected result, or that the expected exception is
-    raised.
-    """
+    """Verify that ToStringArrayVisitor gets the expected result, or that the expected
+    exception is raised."""
     _test_to_value_visitor(
         value, expected_result, expected_exception, __ToStringArrayVisitor, acvi.StringArrayValue
     )

@@ -2,9 +2,9 @@ from typing import Any, Type
 
 import numpy as np
 import pytest
-from test_utils import _create_exception_context
 
-from ansys.common import variableinterop as acvi
+from ansys.tools import variableinterop as acvi
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -20,7 +20,8 @@ from ansys.common import variableinterop as acvi
 )
 def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseException]) -> None:
     """
-    Tests that the IntegerValue constructor behaves as expected
+    Tests that the IntegerValue constructor behaves as expected.
+
     Parameters
     ----------
     cons_arg The argument to pass to the constructor
@@ -28,7 +29,7 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         a = acvi.IntegerValue(cons_arg)
@@ -45,8 +46,8 @@ def test_integer_value_constructor(cons_arg: Any, expect_exception: Type[BaseExc
 )
 def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseException]) -> None:
     """
-    Tests that adding IntegerValue objects together works, and generally
-    degrades into numpy objects.
+    Tests that adding IntegerValue objects together works, and generally degrades into
+    numpy objects.
 
     Parameters
     ----------
@@ -56,7 +57,7 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = left + right
@@ -80,8 +81,8 @@ def test_integer_value_add(left: Any, right: Any, expect_exception: Type[BaseExc
 )
 def test_integer_value_sub(left: Any, right: Any, expect_exception: Type[BaseException]) -> None:
     """
-    Tests that subtraction of IntegerValue works and generally degrades into
-    a numpy int64.
+    Tests that subtraction of IntegerValue works and generally degrades into a numpy
+    int64.
 
     Parameters
     ----------
@@ -91,7 +92,7 @@ def test_integer_value_sub(left: Any, right: Any, expect_exception: Type[BaseExc
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result = left - right

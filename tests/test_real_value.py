@@ -2,9 +2,8 @@ from typing import Any, Type
 
 import numpy
 import pytest
-from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanValue,
     IntegerValue,
     IVariableValue,
@@ -12,6 +11,7 @@ from ansys.common.variableinterop import (
     StringValue,
     to_real_value,
 )
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -97,8 +97,8 @@ def test_construct(
 
 def __valid_toint_id_gen(orig_val: RealValue) -> str:
     """
-    Generate an ID for the parameterized tests for converting
-    RealValues to IntegerValues when the conversion is valid.
+    Generate an ID for the parameterized tests for converting RealValues to
+    IntegerValues when the conversion is valid.
 
     Parameters
     ----------
@@ -106,7 +106,8 @@ def __valid_toint_id_gen(orig_val: RealValue) -> str:
 
     Returns
     -------
-    a suitable ID for the test
+    str
+        a suitable ID for the test
     """
     return str(orig_val)
 

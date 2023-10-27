@@ -2,9 +2,8 @@ from typing import Type
 
 import numpy
 import pytest
-from test_utils import _create_exception_context
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
     IntegerArrayValue,
@@ -17,6 +16,7 @@ from ansys.common.variableinterop import (
     VariableType,
     from_api_string,
 )
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -392,8 +392,8 @@ def test_from_api_string_valid(
     var_type: VariableType, source: str, expected_result: IVariableValue
 ) -> None:
     """
-    Verify that the static IVariableValue.from_api_string correctly produces values
-    from valid input.
+    Verify that the static IVariableValue.from_api_string correctly produces values from
+    valid input.
 
     Parameters
     ----------
@@ -478,7 +478,7 @@ def test_from_api_string_invalid(
     var_type: VariableType, source: str, expected_exception: Type[BaseException]
 ) -> None:
     """
-    Verify that from_api_string raises the expected exception in
+    Verify that from_api_string raises the expected exception in.
 
     Parameters
     ----------

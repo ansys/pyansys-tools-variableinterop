@@ -2,7 +2,7 @@ from typing import Optional
 
 import pytest
 
-from ansys.common.variableinterop import (
+from ansys.tools.variableinterop import (
     BooleanArrayValue,
     BooleanValue,
     GetModelCenterTypeForValue,
@@ -16,8 +16,8 @@ from ansys.common.variableinterop import (
     StringValue,
     VariableType,
 )
-from ansys.common.variableinterop import ivariable_visitor as ivariable_visitor
-from ansys.common.variableinterop import variable_type as variable_type_lib
+from ansys.tools.variableinterop import ivariable_visitor as ivariable_visitor
+from ansys.tools.variableinterop import variable_type as variable_type_lib
 
 
 class TestUnknownValue(IVariableValue):
@@ -61,8 +61,7 @@ class TestUnknownValue(IVariableValue):
 )
 def test_get_modelcenter_type_for_value(value: IVariableValue, expected: str) -> None:
     """
-    Verifies the correct ModelCenter type string is returned for each \
-    IVariableValue.
+    Verifies the correct ModelCenter type string is returned for each IVariableValue.
 
     Parameters
     ----------

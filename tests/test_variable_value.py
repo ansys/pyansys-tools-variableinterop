@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 __value_cases = [
     pytest.param(acvi.IntegerValue(47), True, id="valid integer"),
@@ -45,6 +45,7 @@ def test_clone(value: acvi.IVariableValue, is_valid: bool):
     assert type(clone.value) == type(original.value)
     assert clone.value == original.value
     assert clone.is_valid == original.is_valid
+    assert clone == original
 
 
 @pytest.mark.parametrize("value,expected_value", __coerce_cases)

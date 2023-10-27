@@ -2,7 +2,7 @@
 import numpy
 import pytest
 
-from ansys.common.variableinterop import RealArrayValue
+from ansys.tools.variableinterop import RealArrayValue
 
 
 def test_default_construct() -> None:
@@ -78,7 +78,7 @@ def test_to_api_string(source: RealArrayValue, expected_result: str) -> None:
 )
 def test_from_api_string_valid(source: str, expected_result: RealArrayValue) -> None:
     """
-    Verify that valid cases work on RealArrayValue.from_api_string
+    Verify that valid cases work on RealArrayValue.from_api_string.
 
     Parameters
     ----------

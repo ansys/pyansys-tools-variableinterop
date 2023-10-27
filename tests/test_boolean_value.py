@@ -2,9 +2,9 @@ from typing import Any, Callable, List, Tuple, Type, Union
 
 import numpy as np
 import pytest
-from test_utils import _create_exception_context
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
+from test_utils import _create_exception_context
 
 # region bool-ness
 
@@ -15,14 +15,12 @@ boolean_types: List[Type] = [bool, np.bool_, acvi.BooleanValue]
 """List of "Boolean" types to test."""
 
 boolean_values: List[bool] = [True, False]
-"""List of "Boolean" values to test"""
+"""List of "Boolean" values to test."""
 
 
 def cross_types(source: List[Tuple[Any, ...]]):
-    """
-    Given a list of test tuples, build a list where for each test
-    given there is one test for each type in boolean_types.
-    """
+    """Given a list of test tuples, build a list where for each test given there is one
+    test for each type in boolean_types."""
     r = []
     for test in source:
         for type_ in boolean_types:
@@ -40,11 +38,15 @@ unary_tests: List[Tuple[Any, ...]] = [
     ("bool", False, lambda a: bool(a), False),
     # ~
 ]
-"""List of unary operation tests. Each tuple is in the order:
-    identifier, value, operator, expected"""
+"""
+List of unary operation tests.
+
+Each tuple is in the order:
+identifier, value, operator, expected
+"""
 
 unary_boolean_types_tests = cross_types(unary_tests)
-"""List of unary operation test for each boolean type under test"""
+"""List of unary operation test for each boolean type under test."""
 
 
 @pytest.mark.parametrize("_,type_,value,operator,expected", unary_boolean_types_tests)
@@ -56,9 +58,8 @@ def test_boolean_unary_operators(
     expected: bool,
 ):
     """
-    Testing of unary operators against the different Boolean types to
-    see what bool and numpy.bool_ do and to see if BooleanValue is
-    consistent with numpy.bool_.
+    Testing of unary operators against the different Boolean types to see what bool and
+    numpy.bool_ do and to see if BooleanValue is consistent with numpy.bool_.
 
     Parameters
     ----------
@@ -228,9 +229,8 @@ def test_boolean_binary_operators_same_types(
     bv_expected: Union[acvi.BooleanValue, Exception],
 ):
     """
-    Testing of binary operators against the different Boolean types to
-    see what bool and numpy.bool_ do and to see if BooleanValue is
-    consistent with numpy.bool_.
+    Testing of binary operators against the different Boolean types to see what bool and
+    numpy.bool_ do and to see if BooleanValue is consistent with numpy.bool_.
 
     Parameters
     ----------
@@ -270,7 +270,6 @@ def test_boolean_binary_operators_same_types(
         if type_ is acvi.BooleanValue and bv_expected is not None:
             expected = bv_expected
     try:
-
         # SUT
         result = operator(operand1, operand2)
     except BaseException as ex:
@@ -324,7 +323,8 @@ def test_boolean_binary_operators_same_types(
     ],
 )
 def test_construct(arg: Any, expect_equality: bool, expect_exception: Type[BaseException]) -> None:
-    """Verify that __init__ for BooleanValue correctly instantiates the superclass data"""
+    """Verify that __init__ for BooleanValue correctly instantiates the superclass
+    data."""
     with _create_exception_context(expect_exception):
         instance: acvi.BooleanValue = acvi.BooleanValue(arg)
         assert instance == expect_equality
@@ -427,9 +427,7 @@ def test_to_api_string(source: acvi.BooleanValue, expected_result: str) -> None:
     ],
 )
 def test_to_real_value(source: acvi.BooleanValue, expected_result: str) -> None:
-    """
-    Verify that conversion to RealValue works correctly.
-    """
+    """Verify that conversion to RealValue works correctly."""
     result: acvi.RealValue = source.to_real_value()
 
     # Verify

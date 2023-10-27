@@ -1,30 +1,30 @@
 """
 Unit tests for checking equality of IVariableValues.
 
-For most types equality handling is gained for free by extending the
-numpy types, so these tests are just verifying that is working correctly.
+For most types equality handling is gained for free by extending the numpy types, so
+these tests are just verifying that is working correctly.
 """
 from pathlib import Path
 from uuid import UUID
 
 import numpy as np
 import pytest
-from test_file_value import _TestFileValue
 
-from ansys.common.variableinterop.array_values import (
+from ansys.tools.variableinterop.array_values import (
     BooleanArrayValue,
     IntegerArrayValue,
     RealArrayValue,
     StringArrayValue,
 )
-from ansys.common.variableinterop.file_array_value import FileArrayValue
-from ansys.common.variableinterop.scalar_values import (
+from ansys.tools.variableinterop.file_array_value import FileArrayValue
+from ansys.tools.variableinterop.scalar_values import (
     BooleanValue,
     IntegerValue,
     RealValue,
     StringValue,
 )
-import ansys.common.variableinterop.variable_value as variable_value
+import ansys.tools.variableinterop.variable_value as variable_value
+from test_file_value import _TestFileValue
 
 
 @pytest.mark.parametrize(
@@ -163,14 +163,14 @@ def test_equality_of_boolean_values(
     "lhs,rhs,expected",
     [
         pytest.param(
-            _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-            _TestFileValue(Path("d"), "e", "f", UUID(int=1)),
+            _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+            _TestFileValue(Path("d"), "e", "f", UUID(int=1), 10, Path("d")),
             True,
             id="Same id",
         ),
         pytest.param(
-            _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-            _TestFileValue(Path("d"), "e", "f", UUID(int=2)),
+            _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+            _TestFileValue(Path("d"), "e", "f", UUID(int=2), 10, Path("d")),
             False,
             id="Different ids",
         ),
@@ -360,14 +360,14 @@ def test_equality_of_boolean_array_values(
         pytest.param(
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
                 ]
             ),
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
                 ]
             ),
             True,
@@ -376,14 +376,14 @@ def test_equality_of_boolean_array_values(
         pytest.param(
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
                 ]
             ),
             FileArrayValue(
                 values=[
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=1)),
-                    _TestFileValue(Path("a"), "b", "c", UUID(int=2)),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=1), 10, Path("a")),
+                    _TestFileValue(Path("a"), "b", "c", UUID(int=2), 10, Path("a")),
                 ]
             ),
             False,

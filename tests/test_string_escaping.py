@@ -1,6 +1,6 @@
 import pytest
 
-import ansys.common.variableinterop as acvi
+import ansys.tools.variableinterop as acvi
 
 
 @pytest.mark.parametrize(
@@ -15,7 +15,6 @@ import ansys.common.variableinterop as acvi
     ],
 )
 def test_escape_string(unescaped: str, expected_output: str):
-
     output: str = acvi.escape_string(unescaped)
 
     assert isinstance(output, str)
@@ -37,7 +36,6 @@ def test_escape_string(unescaped: str, expected_output: str):
     ],
 )
 def test_unescape_string(escaped: str, expected_output: str):
-
     output: str = acvi.unescape_string(escaped)
 
     assert isinstance(output, str)
