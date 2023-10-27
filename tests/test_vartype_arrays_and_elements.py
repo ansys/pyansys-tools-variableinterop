@@ -1,7 +1,7 @@
 import pytest
-from test_utils import _create_exception_context
 
 import ansys.tools.variableinterop as acvi
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -22,7 +22,6 @@ def test_to_array_type(vartype: acvi.VariableType, expected_result: acvi.Variabl
     ----------
     vartype the variable type to submit
     expected_result the expected result
-
     """
     # Execute
     result: acvi.VariableType = acvi.to_array_type(vartype)
@@ -51,7 +50,6 @@ def test_to_array_type_invalid(vartype: acvi.VariableType) -> None:
     ----------
     vartype the variable type to submit
     expected_exception the expected exception
-
     """
     with _create_exception_context(ValueError):
         acvi.to_array_type(vartype)
@@ -75,7 +73,6 @@ def test_get_element_type(vartype: acvi.VariableType, expected_result: acvi.Vari
     ----------
     vartype the variable type to submit
     expected_result the expected result
-
     """
     # Execute
     result: acvi.VariableType = acvi.get_element_type(vartype)
@@ -104,7 +101,6 @@ def test_get_element_type_invalid(vartype: acvi.VariableType) -> None:
     ----------
     vartype the variable type to submit
     expected_exception the expected exception
-
     """
     with _create_exception_context(ValueError):
         acvi.get_element_type(vartype)

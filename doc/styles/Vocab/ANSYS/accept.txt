@@ -1,0 +1,9 @@
+ANSYS
+Ansys
+ansys
+API
+api
+Interop
+Makefile
+PyAnsys Tools Variable Interop
+pytest

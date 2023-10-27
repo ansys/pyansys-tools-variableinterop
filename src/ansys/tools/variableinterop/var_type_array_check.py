@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Provides a function that allows checking whether a variable type is an array type."""
 from overrides import overrides
 
@@ -7,9 +28,10 @@ from .variable_type import VariableType
 
 class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
     """
-    A pseudovisitor implementation that checks whether the visited type is an array.
+    Determines whether the visited variable type is an array.
 
-    True is returned if the visited type is an array type, and false is returned otherwise.
+    True is returned if the visited type is an array type, and false is returned
+    otherwise.
     """
 
     @overrides
@@ -63,10 +85,12 @@ def var_type_is_array(vartype: VariableType) -> bool:
 
     Parameters
     ----------
-    vartype the variable type of interest
+    vartype : VariableType
+        the variable type of interest
 
     Returns
     -------
-    True if the specified variable type is an array type, false otherwise.
+    bool
+        True if the specified variable type is an array type, false otherwise.
     """
     return vartype_accept(_VarTypeIsArrayVisitor(), vartype)

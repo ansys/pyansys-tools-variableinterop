@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of FileArrayValue."""
 from __future__ import annotations
 
@@ -21,14 +42,12 @@ T = TypeVar("T")
 
 
 class FileArrayValue(CommonArrayValue[FileValue]):
-    """Array of file values.
+    """
+    Stores a ``FileArrayValue`` type.
 
-    In Python FileArrayValue is implemented by extending NumPy's ndarray type. This means that
-    they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use xxxx (TODO)
+    In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    array operators.
     """
 
     @overrides
@@ -80,16 +99,19 @@ class FileArrayValue(CommonArrayValue[FileValue]):
 
         Parameters
         ----------
-        value The value to use.
-        context The load context to initialize the value with.
-        scope The scope to initialize the value in.
+        value : Any
+            Value to use.
+        context : ILoadContext
+            Load context to initialize the value with.
+        scope : FileScope
+            Scope to initialize the value in.
 
         Returns
         -------
-        A new FileArrayValue initialized from value.
+        FileArrayValue
+            New ``FileArrayValue`` initialized from the value.
         """
         if isinstance(value, list):
-
             # Define a function for transforming individual API objects to elements.
             def api_obj_to_elem(item: Any) -> FileValue:
                 if isinstance(item, dict):
@@ -98,13 +120,17 @@ class FileArrayValue(CommonArrayValue[FileValue]):
                     raise TypeError(_error("ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
-            return FileArrayValue(values=np.vectorize(api_obj_to_elem)(np.asarray(value)))
+            return FileArrayValue(
+                values=np.vectorize(api_obj_to_elem)(np.asarray(value, dtype="object"))
+            )
         else:
             raise ValueError("The serialized value was not deserialized as a list.")
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
         disp_str: str = ArrayToFromStringUtil.value_to_string(
-            self, lambda elem: np.asscalar(elem).to_display_string(locale_name)
+            # TODO: asscalar was deprecated, item breaks the jagged array test
+            self,
+            lambda elem: np.ndarray.item(elem).to_display_string(locale_name),
         )
         return disp_str

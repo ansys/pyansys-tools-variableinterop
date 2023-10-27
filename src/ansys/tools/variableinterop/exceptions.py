@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Custom Exception types."""
 
 from configparser import ConfigParser
@@ -8,12 +29,15 @@ from .variable_type import VariableType
 
 
 def _error(name: str, *args: object) -> str:
-    """Return a formatted error string from strings.properties.
+    """
+    Return a formatted error string from the ``strings.properties`` object.
 
     Parameters
     ----------
-    name Name of the string in the properties file
-    args Optional formatting arguments
+    name : str
+        Name of the string in the properties file.
+    *args : object
+        Optional formatting arguments.
 
     Returns
     -------
@@ -25,8 +49,7 @@ def _error(name: str, *args: object) -> str:
 
 
 class IncompatibleTypesException(BaseException):
-    """Exception raised when attempting to convert from one \
-    IVariableValue to an incompatible type."""
+    """Indicates that the types used in a conversion are incompatible."""
 
     def __init__(
         self,
@@ -36,8 +59,12 @@ class IncompatibleTypesException(BaseException):
         """
         Construct exception.
 
-        :param from_type a VariableType or a string identifying the type converting from.
-        :param to_type a VariableType or a string identifying the type converting to.
+        Parameters
+        ----------
+        from_type : Union[VariableType, str]
+            ``VariableType`` or string identifying the type to convert from.
+        to_type : Union[VariableType, str]
+            ``VariableType`` or string identifying the type to convert to.
         """
         self.from_type: Optional[VariableType]
         self.from_type_str: str
@@ -60,8 +87,8 @@ class IncompatibleTypesException(BaseException):
 
 
 class FormatException(BaseException):
-    """Exception raised when attempting to create an IVariableValue \
-    from a string that is incorrectly formatted."""
+    """Indicates that the string used to create a variable value was incorrectly
+    formatted."""
 
     def __init__(self):
         """Construct exception."""
@@ -70,7 +97,7 @@ class FormatException(BaseException):
 
 
 class ValueDeserializationUnsupportedException(Exception):
-    """Exception raised when deserializing a value is not allowed."""
+    """Indicates that deserializing a value is not allowed."""
 
     def __init__(self, message: str):
         """Construct a new instance."""

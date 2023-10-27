@@ -1,6 +1,30 @@
-"""Defines functions for determining the correct array type for a scalar type and vice-versa."""
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+"""Defines functions for determining the correct array type for a scalar type and vice-
+versa."""
 
 from typing import Optional
+
+from overrides import overrides
 
 from .exceptions import _error
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
@@ -14,36 +38,47 @@ class __ScalarToArrayPseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableT
     Provides None if the visited type has no array type or is an array.
     """
 
+    @overrides
     def visit_unknown(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int(self) -> Optional[VariableType]:
         return VariableType.INTEGER_ARRAY
 
+    @overrides
     def visit_real(self) -> Optional[VariableType]:
         return VariableType.REAL_ARRAY
 
+    @overrides
     def visit_boolean(self) -> Optional[VariableType]:
         return VariableType.BOOLEAN_ARRAY
 
+    @overrides
     def visit_string(self) -> Optional[VariableType]:
         return VariableType.STRING_ARRAY
 
+    @overrides
     def visit_file(self) -> Optional[VariableType]:
         return VariableType.FILE_ARRAY
 
+    @overrides
     def visit_int_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_real_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_bool_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_string_array(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_file_array(self) -> Optional[VariableType]:
         return None
 
@@ -55,56 +90,70 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
     Provides None if the visited type is not an array.
     """
 
+    @overrides
     def visit_unknown(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_real(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_boolean(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_string(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_file(self) -> Optional[VariableType]:
         return None
 
+    @overrides
     def visit_int_array(self) -> Optional[VariableType]:
         return VariableType.INTEGER
 
+    @overrides
     def visit_real_array(self) -> Optional[VariableType]:
         return VariableType.REAL
 
+    @overrides
     def visit_bool_array(self) -> Optional[VariableType]:
         return VariableType.BOOLEAN
 
+    @overrides
     def visit_string_array(self) -> Optional[VariableType]:
         return VariableType.STRING
 
+    @overrides
     def visit_file_array(self) -> Optional[VariableType]:
         return VariableType.FILE
 
 
 def to_array_type(vartype: VariableType) -> VariableType:
-    """Given a VariableType, find the corresponding array type, if one \
-    exists. Otherwise, ValueError is raised.
+    """
+    Given a VariableType, find the corresponding array type, if one exists. Otherwise,
+    ValueError is raised.
 
     Parameters
     ----------
-    vartype the variable type of interest.
+    vartype : VariableType
+        The variable type of interest.
 
     Returns
     -------
-    The corresponding array type.
+    VariableType
+        The corresponding array type.
 
     Raises
     ------
-    ValueError if the specified type does not have a corresponding array type.
-
+    ValueError
+        If the specified type does not have a corresponding array type.
     """
     result: Optional[VariableType] = vartype_accept(__ScalarToArrayPseudoVisitor(), vartype)
 
@@ -122,16 +171,18 @@ def get_element_type(vartype: VariableType) -> VariableType:
 
     Parameters
     ----------
-    vartype the variable type of interest.
+    vartype : VariableType
+        The variable type of interest.
 
     Returns
     -------
-    The corresponding element type.
+    VariableType
+        The corresponding element type.
 
     Raises
     ------
-    ValueError if the specified type does not have a corresponding element type.
-
+    ValueError
+        If the specified type does not have a corresponding element type.
     """
     result: Optional[VariableType] = vartype_accept(__ElementTypePseudoVisitor(), vartype)
 

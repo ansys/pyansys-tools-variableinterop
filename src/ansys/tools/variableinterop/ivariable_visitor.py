@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of IVariableValueVisitor."""
 from __future__ import annotations
 
@@ -15,14 +36,15 @@ T = TypeVar("T")
 
 class IVariableValueVisitor(ABC, Generic[T]):
     """
-    The interface to be implemented to instantiate the visitor pattern.
+    Defines the interface to be implemented to use the visitor pattern with variable
+    values.
 
     Pass an instance to IVariableValue.accept().
     """
 
     # Single dispatch would make this prettier, but doesn't work with
-    #  class methods until 3.8:
-    #  https://docs.python.org/3/library/functools.html#functools.singledispatch
+    # class methods until 3.8:
+    # https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
     def visit_integer(self, value: IntegerValue) -> T:
@@ -31,11 +53,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The IntegerValue being visited.
+        value : IntegerValue
+            ``IntegerValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -46,11 +70,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The RealValue being visited.
+        value : RealValue
+            ``RealValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -61,11 +87,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The BooleanValue being visited.
+        value : BooleanValue
+            ``BooleanValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -76,11 +104,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The StringValue being visited.
+        value : StringValue
+            ``StringValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -91,11 +121,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The IntegerArrayValue being visited.
+        value : IntegerArrayValue
+            ``IntegerArrayValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -106,11 +138,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The FileValue being visited
+        value : FileValue
+            ``FileValue`` object being visited
 
         Returns
         -------
-        The result
+        T
+            Result
         """
         raise NotImplementedError
 
@@ -121,11 +155,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The RealArrayValue being visited.
+        value : RealArrayValue
+            ``RealArrayValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -136,11 +172,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The BooleanArrayValue being visited.
+        value : BooleanArrayValue
+            ``BooleanArrayValue`` being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -151,11 +189,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The StringArrayValue being visited.
+        value : StringArrayValue
+            ``StringArrayValue`` object being visited.
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError
 
@@ -166,10 +206,12 @@ class IVariableValueVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        value The FileArrayValue being visited
+        value : FileArrayValue
+            ``FileArrayValue`` object being visited.
 
         Returns
         -------
-        The result
+        T
+            Result.
         """
         raise NotImplementedError

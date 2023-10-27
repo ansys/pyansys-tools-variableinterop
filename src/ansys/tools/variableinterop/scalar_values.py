@@ -1,47 +1,63 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of all scalar value implementations of IVariableValue."""
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import Any, Dict, Optional, TypeVar, cast
+from typing import Any, Dict, Optional, cast
 
 import numpy as np
 from overrides import overrides
 
 from .exceptions import IncompatibleTypesException
 from .isave_context import ISaveContext
-from .ivariable_visitor import IVariableValueVisitor
+from .ivariable_visitor import IVariableValueVisitor, T
 from .utils.locale_utils import LocaleUtils
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 
-T = TypeVar("T")
-
 
 class BooleanValue(IVariableValue):
     """
-    Wrapper around a boolean value.
+    Stores a value for a variable of type boolean.
 
-    This type is treated by Python as if it were any other boolean type such as numpy.bool_
-    or builtins.bool.
+    This type is treated by Python as if it were any other boolean type such as
+    numpy.bool\_ or a built-in bool.
     """
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
-        """Convert a numpy int64 to a bool value per interchange \
-        specifications."""
+        """Convert a numpy int64 to a bool value per interchange specifications."""
         return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
-        """Convert an int to a bool value per interchange \
-        specifications."""
+        """Convert an int to a bool value per interchange specifications."""
         return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
-        """Convert a float value to a bool per interchange \
-        specifications."""
+        """Convert a float value to a bool per interchange specifications."""
         return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
@@ -52,10 +68,8 @@ class BooleanValue(IVariableValue):
         "n": False,
         "false": False,
     }
-    """
-    A mapping of acceptable normalized values for API string conversion
-    to their corresponding bool value.
-    """
+    """A mapping of acceptable normalized values for API string conversion to their
+    corresponding bool value."""
 
     @staticmethod
     def str_to_bool(val: str) -> bool:
@@ -75,12 +89,14 @@ class BooleanValue(IVariableValue):
         """
         Construct a BooleanValue from various source types.
 
-        Supported types include:
-        None: Constructs a False BooleanValue
-        bool or numpy.bool_: Constructs a BooleanValue with the given
-            Boolean value.
-        IVariableValue: Constructs a BooleanValue per the specification
-        Others: raises an exception
+        Parameters
+        ----------
+        source : object
+            Supported types include:
+            None: Constructs a False BooleanValue
+            bool or numpy.bool\_: Constructs a BooleanValue with the given Boolean value.
+            IVariableValue: Constructs a BooleanValue per the specification
+            Others: raises an exception
         """
         self.__value: np.bool_
         if source is None:
@@ -248,9 +264,6 @@ class BooleanValue(IVariableValue):
         Convert a given BooleanValue to a RealValue.
 
         True is converted to 1.0 and False is converted to 0.0
-        (Note: this is temporarily a static until we can get the
-        non-numpy64-bool derived version working, since there's currently no way to actually have
-        a BooleanValue instance at the moment).
 
         Returns
         -------
@@ -318,18 +331,18 @@ class BooleanValue(IVariableValue):
 
 class IntegerValue(np.int64, IVariableValue):
     """
-    Wrapper around an integer value.
+    Stores a value for a variable of type integer.
 
-    In Python IntegerValue is implemented by extending NumPy's int64 type. This means that
-    they will decay naturally into numpy.int64 objects when using NumPy's arithmetic
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards. For
-    example, when converting from real to integer, the value will be floored instead of
-    rounded. If you want the variable interop standard conversions, use the to_real_value
-    function on this class to get a RealValue, which will be rounded according to the
-    variable interop standards and decomposes naturally into a numpy.float64. Other conversions
-    to analogous Python or NumPy types are identical between the variable interop standards
-    and the default Python / NumPy behavior.
+    In Python IntegerValue is implemented by extending NumPy's int64 type. This means
+    that they will decay naturally into numpy.int64 objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    which may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value will be
+    floored instead of rounded. If you want the variable interop standard conversions,
+    use the to_real_value function on this class to get a RealValue, which will be
+    rounded according to the variable interop standards and decomposes naturally into a
+    numpy.float64. Other conversions to analogous Python or NumPy types are identical
+    between the variable interop standards and the default Python / NumPy behavior.
     """
 
     @overrides
@@ -346,7 +359,7 @@ class IntegerValue(np.int64, IVariableValue):
 
         Parameters
         ----------
-        arg
+        arg : Any
             The argument from which to construct this instance.
         """
 
@@ -440,16 +453,16 @@ class IntegerValue(np.int64, IVariableValue):
 
 class RealValue(np.float64, IVariableValue):
     """
-    Wrapper around a real value.
+    Stores a value for a variable of type real.
 
-    In Python RealValue is implemented by extending NumPy's float64 type. This means that
-    they will decay naturally into numpy.float64 objects when using NumPy's arithmetic
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, use to_int_value() to get
-    an IntegerValue with variable interop standard rounding (away from zero). IntegerValue
-    decomposes naturally to numpy.int64.
+    In Python RealValue is implemented by extending NumPy's float64 type. This means
+    that they will decay naturally into numpy.float64 objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    which may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value will be
+    floored instead of rounded. If you want the variable interop standard conversions,
+    use to_int_value() to get an IntegerValue with variable interop standard rounding
+    (away from zero). IntegerValue decomposes naturally to numpy.int64.
     """
 
     def __new__(cls, arg: Any = 0.0):
@@ -458,7 +471,7 @@ class RealValue(np.float64, IVariableValue):
 
         Parameters
         ----------
-        arg
+        arg : Any
             The argument from which to construct this instance.
         """
         if isinstance(arg, BooleanValue):
@@ -470,24 +483,22 @@ class RealValue(np.float64, IVariableValue):
     """
     This is the canonical API string representation for infinity.
 
-    from_api_string will accept other values provided they are
-    unambiguously infinity.
+    from_api_string will accept other values provided they are unambiguously infinity.
     """
 
     __CANONICAL_NEG_INF = "-Infinity"
     """
     This is the canonical API string representation for negative infinity.
 
-    from_api_string will accept other values provided they are
-    unambiguously negative infinity.
+    from_api_string will accept other values provided they are unambiguously negative
+    infinity.
     """
 
     __CANONICAL_NAN = "NaN"
     """
     This is the canonical API string representation for NaN.
 
-    from_api_string will accept other values provided they are
-    unambiguously NaN.
+    from_api_string will accept other values provided they are unambiguously NaN.
     """
 
     @overrides
@@ -569,16 +580,16 @@ class RealValue(np.float64, IVariableValue):
 
 class StringValue(np.str_, IVariableValue):
     """
-    Wrapper around a string value.
+    Stores a value for a variable of type file.
 
-    In Python IntegerValue is implemented by extending NumPy's str_ type. This means that
-    they will decay naturally into numpy.str_ objects when used with other types
+    In Python IntegerValue is implemented by extending NumPy's str\_ type. This means
+    that they will decay naturally into numpy.str\_ objects when used with other types
     operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards. For
-    example, when converting from string to integer, values parseable as a floating-point number
-    are rejected instead of parsed as such and rounded.
-    If you want the variable interop standard conversions, use the from_api_string method
-    on any given variable interop type to get an instance of that type, which should decompose
+    slightly different from the behaviors specified in the variable interop standards.
+    For example, when converting from string to integer, values parseable as a floating-
+    point number are rejected instead of parsed as such and rounded. If you want the
+    variable interop standard conversions, use the from_api_string method on any given
+    variable interop type to get an instance of that type, which should decompose
     naturally to the analogous NumPy type.
     """
 

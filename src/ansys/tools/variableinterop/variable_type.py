@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of VariableType."""
 from __future__ import annotations
 
@@ -9,7 +30,7 @@ from .variable_value import IVariableValue
 
 
 class VariableType(Enum):
-    """Enumeration listing the possible variable types."""
+    """Provides an enumeration of the possible variable types."""
 
     # When editing this enumeration,
     # be sure to also update the IVariableTypePseudoVisitor
@@ -18,9 +39,17 @@ class VariableType(Enum):
     UNKNOWN = 0
     """If the type is unknown."""
     INTEGER = 1
-    """Integer values. These are stored as 64 bit signed integers"""
+    """
+    Integer values.
+
+    These are stored as 64 bit signed integers
+    """
     REAL = 2
-    """Real values. These are stored as 64 bit floating point numbers"""
+    """
+    Real values.
+
+    These are stored as 64 bit floating point numbers
+    """
     BOOLEAN = 3
     """Boolean values."""
     STRING = 4
@@ -28,17 +57,36 @@ class VariableType(Enum):
     FILE = 5
     """File values."""
     INTEGER_ARRAY = 6
-    """An array of integer values. These are stored as 64 bit signed integers. Multidimensional
-    arrays are supported."""
+    """
+    An array of integer values.
+
+    These are stored as 64 bit signed integers. Multidimensional arrays are supported.
+    """
     REAL_ARRAY = 7
-    """An array of real values. These are stored as 64 bit floating point numbers. Multidimensional
-        arrays are supported."""
+    """
+    An array of real values.
+
+    These are stored as 64 bit floating point numbers. Multidimensional arrays are
+    supported.
+    """
     BOOLEAN_ARRAY = 8
-    """An array of boolean values. Multidimensional arrays are supported."""
+    """
+    An array of boolean values.
+
+    Multidimensional arrays are supported.
+    """
     STRING_ARRAY = 9
-    """An array of string values. Multidimensional arrays are supported."""
+    """
+    An array of string values.
+
+    Multidimensional arrays are supported.
+    """
     FILE_ARRAY = 10
-    """An array of file values. Multidimensional arrays are supported."""
+    """
+    An array of file values.
+
+    Multidimensional arrays are supported.
+    """
 
     @property
     def associated_type_name(self) -> str:
@@ -85,7 +133,8 @@ class VariableType(Enum):
         """
 
         class __IterableKeyDict(Dict[Union[Iterable, str], Any]):
-            """Dict that can initialize with iterable keys and give each value its own entry."""
+            """Dict that can initialize with iterable keys and give each value its own
+            entry."""
 
             def __init__(self, d_: Dict[Union[Iterable, str], VariableType]):
                 def __br():
@@ -150,7 +199,8 @@ class VariableType(Enum):
 
         Returns
         -------
-        A new value object whose type matches this type.
+        IVariableValue
+            A new value object whose type matches this type.
         """
         from .array_values import (
             BooleanArrayValue,
@@ -210,7 +260,8 @@ class VariableType(Enum):
 
         Returns
         -------
-        A new metadata object whose type matches this type.
+        CommonVariableMetadata
+            A new metadata object whose type matches this type.
         """
         from .array_metadata import (
             BooleanArrayMetadata,

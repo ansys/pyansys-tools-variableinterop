@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of ToAPIStringVisitor."""
 from typing import Optional
 
@@ -17,7 +38,7 @@ from .variable_value import IVariableValue
 
 
 class ToAPIStringVisitor(IVariableValueVisitor[str]):
-    """Visitor to convert values to an API string."""
+    """Visits values and converts them to an API string."""
 
     def __init__(self, save_context: Optional[ISaveContext]):
         """
@@ -25,7 +46,9 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
 
         Parameters
         ----------
-        save_context Tge save context to use for conversion.
+        save_context : Optional[ISaveContext], optional
+            Save context to use for conversion. This may be omitted in cases where you do not wish
+             to support file values. context to use for conversion. The default value is ``None``.
         """
         self._save_context = save_context
 
@@ -77,10 +100,10 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     Parameters
     ----------
     value : IVariableValue
-        The value to convert to an API string.
+        Value to convert to an API string.
     save_context : Optional[ISaveContext], optional
-        The save context. This may be omitted in cases where you do not wish to support
-        file values.
+        Save context to use for conversion. This may be omitted in cases where you do not wish
+        to support file values. The default value is ``None``.
 
     Returns
     -------
@@ -102,21 +125,21 @@ def from_api_string(
     Parameters
     ----------
     var_type : VariableType
-        The variable type to generate.
+        Variable type to generate.
     source : str
-        The source string.
+       Source string.
     fscope : Optional[FileScope], optional
-        The file scope to use to deserialize file variables. May be None if file variables
-        are not needed.
+        The file scope to use to deserialize file variables. May be ``None`` if file variables
+        are not needed, which is the default.
     load_context : Optional[ILoadContext], optional
-        The load context to read file contents from. May be None if file variables are
-        not needed.
+        Load context to read file contents from. If file variables are
+        not needed, the value can be ``None``, which is the default.
 
     Returns
     -------
     IVariableValue
-    An implementation of IVariableValue of the correct type with a value parsed
-    from the specified string.
+        Implementation of ``IVariableValue`` of the correct type with a value parsed from the
+        specified string.
     """
     generator: APIStringToValueVisitor = APIStringToValueVisitor(source, fscope, load_context)
     result: IVariableValue = vartype_accept(generator, var_type)

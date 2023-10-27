@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of FileValue."""
 from __future__ import annotations
 
@@ -27,7 +48,8 @@ RESOURCE_PARSER.read(path.join(path.dirname(__file__), "strings.properties"))
 
 class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
     """
-    Represents the context during which a locally available copy of file value content should exist.
+    Represents the context during which a locally available copy of file value content
+    should exist.
 
     This is intended for use with an async implementation.
     """
@@ -44,7 +66,8 @@ class AsyncLocalFileContentContext(AbstractAsyncContextManager, ABC):
 
 class LocalFileContentContext(AbstractContextManager, ABC):
     """
-    Represents the context during which a locally available copy of file value content should exist.
+    Represents the context during which a locally available copy of file value content
+    should exist.
 
     This is intended for use with a synchronous implementation.
     """
@@ -61,12 +84,11 @@ class LocalFileContentContext(AbstractContextManager, ABC):
 
 class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileContentContext):
     """
-    A default local file context for when the file is already hosted locally.
+    Provides a default local file context for when the file is already hosted locally.
 
-    Because the file is already hosted and managed locally, there is no need
-    to create a new copy. Therefore, this implementation basically does nothing
-    but provide a way to abstract away the difference between a locally and remotely
-    hosted file content.
+    Because the file is already hosted and managed locally, there is no need to create a
+    new copy. Therefore, this implementation basically does nothing but provide a way to
+    abstract away the difference between a locally and remotely hosted file content.
     """
 
     @overrides
@@ -75,14 +97,15 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         # nothing needs to be done here.
         pass
 
-    def __init__(self, local_content_path: Optional[Path]):
+    def __init__(self, local_content_path: Optional[Path] = None):
         """
         Initialize a new instance.
 
         Parameters
-        ==========
-        local_content_path : Optional[Path]
-            The path to the local content. None indicates the file value is empty.
+        ----------
+        local_content_path : Optional[Path], optional
+            Path to the local content. The default is ``None``, which indicates the file value is
+            empty.
         """
         self._local_content_path = local_content_path
 
@@ -109,28 +132,41 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
 
 
 class FileValue(IVariableValue, ABC):
-    """Abstract base class for a file variable. To create instances, \
-    use a `FileScope`."""
+    """
+    Provides an abstract base class for ``FileValue`` implementations.
+
+    To create instances, use the ``FileScope`` class.
+    """
 
     def __init__(
         self,
-        original_path: Optional[PathLike],
-        mime_type: Optional[str],
-        encoding: Optional[str],
-        value_id: Optional[UUID],
-        file_size: Optional[int],
+        original_path: Optional[PathLike] = None,
+        mime_type: Optional[str] = None,
+        encoding: Optional[str] = None,
+        value_id: Optional[UUID] = None,
+        file_size: Optional[int] = None,
     ):
         """
         Construct a new FileValue.
 
         Parameters
         ----------
-        original_path Path to the file to wrap.
-        mime_type Mime type of the file.
-        encoding The encoding of the file.
-        value_id The id that uniquely identifies this file. Auto-generated\
-            if not supplied.
-        file_size The size of the file in bytes, if known.
+        original_path : Optional[PathLike], optional
+            Path to the file to wrap. The default is `None`, which indicates that the original file
+            path is not known or does not exist.
+        mime_type : Optional[str], optional
+            MIME type of the file. The default is `None`, which indicates that the file value does
+            not have a MIME type.
+        encoding : Optional[str], optional
+            Encoding of the file. The default is `None`, which indicates that the file value does
+            not have a text encoding (for example, if it is a binary file).
+        value_id : Optional[UUID], optional
+            ID that uniquely identifies this file. If this value is not supplied, or if the default
+            value of `None` is provided, it is automatically generated.
+        file_size : Optional[int], optional
+            Size of the file in bytes, if known. The default value is `None`, which indicates that
+            the file size is not known. Note that a size of `None` does not indicate that the file
+            is of size zero.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
@@ -191,7 +227,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The mimetype of the file.
+           str
+            Mime type of the file.
         """
         return self._mime_type
 
@@ -202,7 +239,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The original filename.
+        Optional[PathLike]
+            Original filename.
         """
         return self._original_path
 
@@ -213,7 +251,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The file's extension.
+        str
+            Extension of the file.
         """
         # TODO: Implement
         raise NotImplementedError()
@@ -223,9 +262,7 @@ class FileValue(IVariableValue, ABC):
         """
         Get the encoding of the file.
 
-        Returns
-        -------
-        The file's encoding.
+        Returns     Encoding of the file. Optional[str]     Encoding of the file.
         """
         return self._file_encoding
 
@@ -236,7 +273,8 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The UUID that identifies this value.
+        UUID
+            UUID that identifies this value.
         """
         return self._id
 
@@ -247,15 +285,16 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        The size of the file in bytes.
+        Optional[int]
+            Size of the file in bytes. ``None`` indicates that the file size is not known,
+            not necessarily that it is zero.
         """
         return self._size
 
     @staticmethod
     def read_bom(filename: str) -> str:
         """
-        Open a file for reading and detects a byte order mark at the \
-        beginning.
+        Open a file for reading and detect a byte order mark at the beginning.
 
         Parameters
         ----------
@@ -265,9 +304,8 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         str
-            If the file contains a BOM, an appropriate encoding will be
-            returned. If the file does not contain a BOM, 'None' is
-            returned.
+            If the file contains a BOM, an appropriate encoding is returned.
+            If the file does not contain a BOM, ``None`` is returned.
         """
         with open(filename, "rb") as f:
             bom = f.read(4)
@@ -290,11 +328,12 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        file_name PathLike to the file to create.
+        file_name : PathLike
+            Path to the file to create.
 
         Returns
         -------
-        None.
+        None
         """
         # make the file
         Path(file_name).open("w").close()
@@ -322,17 +361,19 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Optional[Callable[[int], None]]
-            a callback that may be called to indicate progress in realizing the local copy.
-            The argument will be a percentage between 0 and 100 inclusive that indicates
+        progress_callback : Optional[Callable[[int], None]], optional
+            Callback that may be called to indicate progress in realizing the local copy.
+            The argument is a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
-            The callback will not necessarily be called at all, and calls for 0% or 100%
+            The callback might not necessarily be called at all.
             are not guaranteed, even if other calls occur.
+            The default is ``None``, in which case this method makes no attempt
+            to report its progress.
 
         Returns
         -------
         AsyncLocalFileContentContext
-            a context manager that, when exited, will delete the local copy
+            A context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
 
@@ -351,17 +392,19 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        progress_callback : Callable[[int], None]
-             a callback that may be called to indicate progress in realizing the local copy.
+        progress_callback : Optional[Callable[[int], None]], optional
+            A callback that may be called to indicate progress in realizing the local copy.
             The argument will be a percentage between 0 and 100 inclusive that indicates
             an estimate of the progress made in loading the file.
             The callback will not necessarily be called at all, and calls for 0% or 100%
             are not guaranteed, even if other calls occur.
+            The default is ``None``, in which case this method makes no attempt
+            to report its progress.
 
         Returns
         -------
         LocalFileContentContext
-            a context manager that, when exited, will delete the local copy
+            A context manager that, when exited, will delete the local copy
             if it is a temporary file.
         """
 
@@ -372,12 +415,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        mimetype The file's mimetype.
+        mimetype : str
+            The file's mimetype.
 
         Returns
         -------
-        True if the mimetype starts with text or is application/json,
-        False otherwise.
+        Optional[bool]
+            True if the mimetype starts with text or is application/json, False otherwise.
         """
         return str(mimetype).startswith("text/") or str(mimetype).startswith("application/json")
 
@@ -388,22 +432,25 @@ class FileValue(IVariableValue, ABC):
 
         Returns
         -------
-        True if the mimetype starts with text or is application/json,
-        False otherwise.
+        bool
+            True if the mimetype starts with text or is application/json, False otherwise.
         """
         return FileValue.is_text_based_static(self.mime_type)
 
-    async def get_contents(self, encoding: Optional[str]) -> str:
+    async def get_contents(self, encoding: Optional[str] = None) -> str:
         """
         Read the file's contents as a string.
 
         Parameters
         ----------
-        encoding The encoding to use when reading.
+        encoding : Optional[str], optional
+            The encoding to use when reading.
+            The default is `None`, in which case the current locale's encoding is used.
 
         Returns
         -------
-        The file contents as a string.
+        str
+            The file contents as a string.
         """
         async with await self.get_reference_to_actual_content_file_async() as local_pin:
             file: Optional[PathLike] = local_pin.content_path
@@ -414,14 +461,14 @@ class FileValue(IVariableValue, ABC):
     @abstractmethod
     def _has_content(self) -> bool:
         """
-        Check whether or not this file value has content.
+        Check whether this file value has content.
 
-        This information is used to decide whether or not to pass
-        the file value to the file store.
+        This information is used to decide whether to pass the file value to the file store.
 
         Returns
         -------
-        True if there is content, false otherwise.
+        bool
+            True if there is content, false otherwise.
         """
 
     @overrides
@@ -431,11 +478,14 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        save_context The save context to use.
+        context : Optional[ISaveContext], optional
+            The save context to use. The default value is `None`,
+            in which case file values are not supported.
 
         Returns
         -------
-        A string appropriate for use in files and APIs.
+        str
+            A string appropriate for use in files and APIs.
         """
         if context is None:
             raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
@@ -455,11 +505,13 @@ class FileValue(IVariableValue, ABC):
 
         Parameters
         ----------
-        save_context The save context used for the conversion.
+        save_context : ISaveContext
+            The save context used for the conversion.
 
         Returns
         -------
-        API object that matches this FileValue.
+        Dict[str, Optional[str]]
+            API object that matches this FileValue.
         """
         obj: Dict[str, Optional[str]] = {}
         if self._has_content():
@@ -483,9 +535,11 @@ class FileValue(IVariableValue, ABC):
         Get the file extension of the file value held, if known, including the period.
 
         If the file extension is not known, ".tmp" is returned.
+
         Returns
         -------
-        The file extension of the file value held if known, otherwise, ".tmp"
+        str
+            The file extension of the file value held if known, otherwise, ".tmp"
         """
         ext: str = FileValue._DEFAULT_EXT
         if isinstance(self._original_path, PathLike):
@@ -497,41 +551,52 @@ class FileValue(IVariableValue, ABC):
 
 class LocalFileValue(FileValue, ABC):
     """
-    A base class for file values where the file contents already exist on the local disk.
+    A base class for file values where the file contents already exist on the local
+    disk.
 
-    Generally speaking, clients of this library should not attempt to use this class.
-    It is intended for dependents of this library who are attempting to implement a new
+    Generally speaking, clients of this library should not attempt to use this class. It
+    is intended for dependents of this library who are attempting to implement a new
     FileScope type where that FileScope always stores file content on the local disk.
-    Clients are discouraged from attempting to introspect FileValues to determine if they
-    are LocalFileValues for the purpose of getting a path to the locally stored content.
-    Instead, always correctly use FileValue's get_reference_to_actual_content_file,
-    which will allow the code in question to get a local path even for files that are
-    not originally hosted locally. For files that are originally hosted locally,
-    this will not produce an additional copy and instead will give a context manager
-    that will do nothing on enter/exit but still allow access to the actual content
-    path.
+    Clients are discouraged from attempting to introspect FileValues to determine if
+    they are LocalFileValues for the purpose of getting a path to the locally stored
+    content. Instead, always correctly use FileValue's
+    get_reference_to_actual_content_file, which will allow the code in question to get a
+    local path even for files that are not originally hosted locally. For files that are
+    originally hosted locally, this will not produce an additional copy and instead will
+    give a context manager that will do nothing on enter/exit but still allow access to
+    the actual content path.
     """
 
     def __init__(
         self,
-        original_path: Optional[PathLike],
-        mime_type: Optional[str],
-        encoding: Optional[str],
-        value_id: Optional[UUID],
-        file_size: Optional[int],
-        actual_content_file_name: Optional[PathLike],
+        original_path: Optional[PathLike] = None,
+        mime_type: Optional[str] = None,
+        encoding: Optional[str] = None,
+        value_id: Optional[UUID] = None,
+        file_size: Optional[int] = None,
+        actual_content_file_name: Optional[PathLike] = None,
     ):
         """
         Initialize a new instance.
 
         Parameters
         ----------
-        original_path Path to the file to wrap.
-        mime_type Mime type of the file.
-        encoding The encoding of the file.
-        value_id The id that uniquely identifies this file. Auto-generated\
-            if not supplied.
-        actual_content_file_name The path to where the content is actually being stored.
+        original_path : Optional[PathLike], optional
+            Path to the file to wrap. The default is `None`, which indicates that the original file
+            path is not known or does not exist.
+        mime_type : Optional[str], optional
+            MIME type of the file. The default is `None`, which indicates that the file value does
+            not have a MIME type.
+        encoding : Optional[str], optional
+            Encoding of the file. The default is `None`, which indicates that the file value does
+            not have a text encoding (for example, if it is a binary file).
+        value_id : Optional[UUID], optional
+            ID that uniquely identifies this file. If this value is not supplied, or if the default
+            value of `None` is provided, it is automatically generated.
+        file_size : Optional[int], optional
+            Size of the file in bytes, if known. The default value is `None`, which indicates that
+            the file size is not known. Note that a size of `None` does not indicate that the file
+            is of size zero.
         """
         super().__init__(
             original_path=original_path,
@@ -549,7 +614,8 @@ class LocalFileValue(FileValue, ABC):
 
         Returns
         -------
-        PathLike to the file.
+        Optional[PathLike]
+            PathLike to the file.
         """
         return self.__actual_content_file_name
 
@@ -570,16 +636,16 @@ class EmptyFileValue(LocalFileValue):
     """
     Represents an empty file value.
 
-    Generally speaking, you should not create an instance of this class
-    but instead use ansys.tools.variableinterop.EMPTY_FILE.
+    Generally speaking, you should not create an instance of this class but instead use
+    ansys.tools.variableinterop.EMPTY_FILE.
     """
 
     def __init__(self):
         """
         Construct a new instance.
 
-        Generally speaking you should not create an instance of this
-        class but instead use ansys.tools.variableinterop.EMPTY_FILE.
+        Generally speaking you should not create an instance of this class but instead
+        use ansys.tools.variableinterop.EMPTY_FILE.
         """
         super().__init__(None, None, None, UUID(int=0), None, None)
 

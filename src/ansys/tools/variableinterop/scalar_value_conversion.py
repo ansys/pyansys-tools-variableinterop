@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of scalar value visitors."""
 
 from overrides import overrides
@@ -13,8 +34,7 @@ from .variable_value import IVariableValue
 
 
 class __ToBooleanVisitor(IVariableValueVisitor[bool]):
-    """An IVariableValueVisitor which returns a bool equivalent of the \
-    object visited."""
+    """Converts visited values to ``BooleanValue`` when possible."""
 
     @overrides
     def visit_boolean(self, value: "BooleanValue") -> bool:
@@ -79,7 +99,7 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
 
 class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
-    """This visitor implementation converts the visited value to a RealValue."""
+    """Converts visited values to ``IntegerValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerValue:
@@ -144,7 +164,7 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
 
 
 class __ToRealVisitor(IVariableValueVisitor[RealValue]):
-    """This visitor implementation converts the visited value to a RealValue."""
+    """Converts visited values to ``RealValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealValue:
@@ -209,7 +229,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
 
 class __ToStringVisitor(IVariableValueVisitor[StringValue]):
-    """This visitor implementation converts the visited value to a StringValue."""
+    """Converts visited values to ``StringValue`` when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringValue:

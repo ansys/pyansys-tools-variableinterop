@@ -2,9 +2,9 @@
 from typing import Type
 
 import pytest
-from test_utils import _create_exception_context
 
 import ansys.tools.variableinterop as interop
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -57,7 +57,7 @@ def test_construct_variable_metadata(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result: interop.CommonVariableMetadata = source.construct_variable_metadata()

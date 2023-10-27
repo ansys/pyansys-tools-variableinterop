@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of CommonVariableMetadata."""
 from __future__ import annotations
 
@@ -16,12 +37,11 @@ from .variable_value import IVariableValue
 
 class CommonVariableMetadata(ABC):
     """
-    Common metadata for variables.
+    Provides metadata common to all variables.
 
-    It may be that many uses have additional metadata, but this core
-    set is defined by the Ansys Interoperability Guidelines.
-    It allows a common understanding between products of
-    some high-use properties. It does not exclude defining
+    It may be that many uses have additional metadata, but this core set is defined by
+    Ansys interoperability guidelines, which allow a common understanding between
+    products of some high-use properties. These guidelines do not exclude defining
     additional or more specific metadata as needed.
     """
 
@@ -35,7 +55,8 @@ class CommonVariableMetadata(ABC):
         return self.equals(other)
 
     def equals(self, other: Any) -> bool:
-        """Determine if a given object is equal to this metadata.
+        """
+        Determine if a given object is equal to this metadata.
 
         Parameters
         ----------
@@ -45,7 +66,7 @@ class CommonVariableMetadata(ABC):
         Returns
         -------
         bool
-            ``True`` if metadata objects are equal, false otherwise.
+            ``True`` if metadata objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, CommonVariableMetadata)
@@ -65,7 +86,8 @@ class CommonVariableMetadata(ABC):
         visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T],
     ) -> ivariablemetadata_visitor.T:
         """
-        Invoke the visitor pattern of this object using the passed in visitor implementation.
+        Invoke the visitor pattern of this object using the passed in visitor
+        implementation.
 
         Parameters
         ----------
@@ -75,7 +97,7 @@ class CommonVariableMetadata(ABC):
         Returns
         -------
         T
-            The results of the visitor invocation.
+            Results of the visitor invocation.
         """
         raise NotImplementedError
 
@@ -103,11 +125,11 @@ class CommonVariableMetadata(ABC):
 
     def get_default_value(self) -> IVariableValue:
         """
-        Get default value that should be used for variable describe \
-        by this metadata.
+        Get the default value that should be used for a variable described by this
+        metadata. metadata.
 
-        The metadata may have set lower bound, upper bounds or
-        enumerated values which restricts what are possible valid
+        The metadata may have set the lower bounds, upper bounds, or
+        enumerated values that restrict what are possible valid
         values. This method will select a valid default value.
 
         - If the type's default value (e.g. 0 or empty string) is a
@@ -141,14 +163,14 @@ class CommonVariableMetadata(ABC):
                 metadata: scalar_metadata.StringMetadata,
             ) -> scalar_values.StringValue:
                 """
-                For given StringMetadata, use enumerated values to\
-                get the default value to use for the associated\
-                variable.
+                For the given ``StringMetadata`` value, use enumerated values to get the
+                default value to use for the associated variable.
 
                 Parameters
                 ----------
                 metadata : StringMetadata
-                    Metadata to use to generate default value.
+                    Metadata to use to generate the default value.
+
                 Returns
                 -------
                 StringValue
@@ -166,14 +188,14 @@ class CommonVariableMetadata(ABC):
             @staticmethod
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
-                For a numeric metadata (i.e. IntegerMetadata or\
-                RealMetadata) get the default value to use.
+                For a numeric metadata (``IntegerMetadata`` or ``RealMetadata`` type),
+                get the default value to use.
 
                 Parameters
                 ----------
-                metadata : IntegerMetadata or RealMetadata.
-                    Metadata to use to generate default value.
-                type_ : IntegerValue or RealValue
+                metadata : M
+                    Metadata to use to generate the default value.
+                type_ : Type[T]
                     Type of the default value to generate.
 
                 Returns
@@ -293,8 +315,8 @@ class CommonVariableMetadata(ABC):
 
     def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
-        Convert the value of the given variable value to the \
-        appropriate type for this meta data.
+        Convert the value of the given variable value to the appropriate type for this
+        metadata.
 
         Parameters
         ----------
@@ -303,7 +325,8 @@ class CommonVariableMetadata(ABC):
 
         Returns
         -------
-        Value converted to the appropriate type.
+        IVariableValue
+            Value converted to the appropriate type.
         """
         from ansys.tools.variableinterop import (
             array_value_conversion,

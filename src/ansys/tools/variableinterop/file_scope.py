@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Implementation of FileScope."""
 from __future__ import annotations
 
@@ -15,7 +36,7 @@ from .isave_context import ILoadContext
 
 class FileScope(AbstractContextManager, ABC):
     """
-    Abstract base class that represents a file scope.
+    Provides an abstract base for file scopes.
 
     A file scope helps a program manage disk use for file storage and
     enables it to clean up caches and space in a reliable way.
@@ -45,19 +66,47 @@ class FileScope(AbstractContextManager, ABC):
 
     @abstractmethod
     def close(self) -> None:
-        """TODO."""
+        """Close the file scope, cleaning up any files it contains."""
         ...
 
     @abstractmethod
     def read_from_file(
-        self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
+        self, to_read: PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None
     ) -> FileValue:
-        """TODO."""
+        """
+        Read the contents of a file and create a new ``FileValue`` object backed by a
+        file in this scope.
+
+        Parameters
+        ----------
+        to_read : PathLike
+            Path to the file to read.
+        mime_type : Optional[str], optional
+            MIME type of the file. The default is `None`, which indicates that the file
+            does not have a MIME type or it is not known.
+        encoding : Optional[str], optional
+            Encoding of the file. The default is `None`, which indicates that the file
+            does not have a text encoding (for example, because it is a binary file.)
+
+        Returns
+        -------
+        FileValue
+            New ``FileValue`` object with the contents of the specified file, backed by this scope.
+        """
         ...
 
     @abstractmethod
     def from_api_object(
         self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
     ) -> FileValue:
-        """TODO."""
+        """
+        Create a ``FileScope`` object from a map of API strings.
+
+        Parameters
+        ----------
+        api_object : Dict[str, Optional[str]]
+            Map of API strings that define the scope.
+        load_context : ILoadContext
+            Load context to read the file contents from.
+        """
         ...

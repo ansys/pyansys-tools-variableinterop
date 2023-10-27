@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of NonManagingFileScope."""
 from __future__ import annotations
 
@@ -16,7 +37,7 @@ from .isave_context import ILoadContext, ISaveContext
 
 class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     """
-    A simple file scope implementation that performs no management.
+    Provides a simple file scope implementation that performs no management.
 
     This file scope that allows you to create `FileValue` instances that are backed by arbitrary
     preexisting files on disk. It is up to the caller to ensure that the file remains in place
@@ -38,18 +59,21 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             return bool(self._original_path)
 
         def __init__(
-            self, to_read: PathLike, mime_type: Optional[str], encoding: Optional[str]
+            self, to_read: PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None
         ) -> None:
             """
             Construct a new NonManagingFileValue.
 
             Parameters
             ----------
-            original_path Path to the file to wrap.
-            mime_type Mime type of the file.
-            encoding The encoding of the file.
-            value_id The id that uniquely identifies this file. Auto-generated\
-                if not supplied.
+            to_read : PathLike
+                Path to the file to wrap.
+            mime_type : Optional[str], optional
+                MIME type of the file. The default value is `None`, which indicates that the MIME
+                type is not known or the file does not have one.
+            encoding : Optional[str], optional
+                The text encoding of the file. The default value is `None`, which indicates that the
+                file does not have a known text encoding (for example, because it is a binary file).
             """
             size: Optional[int] = None
             # TODO: The tests use a lot of non-existent files, so this prevents
@@ -80,15 +104,17 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
 
     def to_api_string_file_store(self, file_var: FileValue) -> str:
         """
-        TODO.
+        Serialize a FileValue in this scope to an API string.
 
         Parameters
         ----------
-        file_var TODO
+        file_var : FileValue
+            The FileValue to serialize.
 
         Returns
         -------
-        TODO
+        str
+            An API string representing the value.
         """
         if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")

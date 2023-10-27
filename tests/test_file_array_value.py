@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import numpy
-from test_file_value import _TestFileValue
 
 import ansys.tools.variableinterop as acvi
+from test_file_value import _TestFileValue
 
 
 def test_default_construct() -> None:

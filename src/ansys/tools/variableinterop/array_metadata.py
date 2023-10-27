@@ -1,17 +1,34 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definitions of array metadata types."""
-from typing import TypeVar
-
 from overrides import overrides
 
-from .ivariablemetadata_visitor import IVariableMetadataVisitor
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 from .variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):
-    """Metadata for BooleanArrayValue."""
-
-    T = TypeVar("T")
+    """Provides metadata for a variable with a ``BooleanArrayValue`` value type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -24,9 +41,7 @@ class BooleanArrayMetadata(BooleanMetadata):
 
 
 class IntegerArrayMetadata(IntegerMetadata):
-    """Metadata for IntegerArrayValue."""
-
-    T = TypeVar("T")
+    """Provides metadata for a variable with an ``IntegerArrayValue`` value type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -39,9 +54,7 @@ class IntegerArrayMetadata(IntegerMetadata):
 
 
 class RealArrayMetadata(RealMetadata):
-    """Metadata for RealArrayValue."""
-
-    T = TypeVar("T")
+    """Provides metadata for a variable with a ``RealArrayValue`` value type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -54,9 +67,7 @@ class RealArrayMetadata(RealMetadata):
 
 
 class StringArrayMetadata(StringMetadata):
-    """Metadata for StringArrayValue."""
-
-    T = TypeVar("T")
+    """Provides metadata for a variable with a ``StringArrayValue`` value type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:

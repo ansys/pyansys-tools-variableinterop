@@ -1,15 +1,14 @@
 """
 Unit tests for checking equality of IVariableValues.
 
-For most types equality handling is gained for free by extending the
-numpy types, so these tests are just verifying that is working correctly.
+For most types equality handling is gained for free by extending the numpy types, so
+these tests are just verifying that is working correctly.
 """
 from pathlib import Path
 from uuid import UUID
 
 import numpy as np
 import pytest
-from test_file_value import _TestFileValue
 
 from ansys.tools.variableinterop.array_values import (
     BooleanArrayValue,
@@ -25,6 +24,7 @@ from ansys.tools.variableinterop.scalar_values import (
     StringValue,
 )
 import ansys.tools.variableinterop.variable_value as variable_value
+from test_file_value import _TestFileValue
 
 
 @pytest.mark.parametrize(

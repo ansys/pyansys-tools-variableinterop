@@ -1,22 +1,41 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of scalar metadata types."""
 from __future__ import annotations
 
-from typing import Any, List, Optional, TypeVar
+from typing import Any, List, Optional
 
 from overrides import overrides
 
 from .common_variable_metadata import CommonVariableMetadata
-from .ivariablemetadata_visitor import IVariableMetadataVisitor
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 from .numeric_metadata import NumericMetadata
 from .scalar_values import IntegerValue, RealValue, StringValue
 from .utils.implicit_coercion import implicit_coerce
 from .variable_type import VariableType
 
-T = TypeVar("T")
-
 
 class BooleanMetadata(CommonVariableMetadata):
-    """Common metadata for VariableType.BOOLEAN and VariableType.BOOLEAN_ARRAY."""
+    """Provides metadata for variables of boolean and boolean array type."""
 
     @overrides
     def __eq__(self, other):
@@ -38,7 +57,7 @@ class BooleanMetadata(CommonVariableMetadata):
 
 
 class IntegerMetadata(NumericMetadata):
-    """Common metadata for VariableType.INTEGER and VariableType.INTEGER_ARRAY."""
+    """Provides metadata for variables of integer and integer array type."""
 
     @overrides
     def __init__(self) -> None:
@@ -75,7 +94,8 @@ class IntegerMetadata(NumericMetadata):
 
         Returns
         -------
-        The lower bound, or None if no lower bound is specified.
+        Optional[IntegerValue]
+            The lower bound, or None if no lower bound is specified.
         """
         return self._lower_bound
 
@@ -99,7 +119,8 @@ class IntegerMetadata(NumericMetadata):
 
         Returns
         -------
-        The upper bound, or None if no upper bound is specified.
+        Optional[IntegerValue]
+            The upper bound, or None if no upper bound is specified.
         """
         return self._upper_bound
 
@@ -115,9 +136,11 @@ class IntegerMetadata(NumericMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[IntegerValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -128,8 +151,8 @@ class IntegerMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[IntegerValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -139,9 +162,11 @@ class IntegerMetadata(NumericMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -152,8 +177,8 @@ class IntegerMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -171,7 +196,7 @@ class IntegerMetadata(NumericMetadata):
 
 
 class RealMetadata(NumericMetadata):
-    """Common metadata for VariableType.REAL and VariableType.REAL_ARRAY."""
+    """Provides metadata for variables of type real and real array."""
 
     @overrides
     def __init__(self) -> None:
@@ -208,7 +233,8 @@ class RealMetadata(NumericMetadata):
 
         Returns
         -------
-        The lower bound, or None if no lower bound is specified.
+        Optional[RealValue]
+            The lower bound, or None if no lower bound is specified.
         """
         return self._lower_bound
 
@@ -232,7 +258,8 @@ class RealMetadata(NumericMetadata):
 
         Returns
         -------
-        The upper bound, or None if no upper bound is specified.
+        Optional[RealValue]
+            The upper bound, or None if no upper bound is specified.
         """
         return self._upper_bound
 
@@ -248,9 +275,11 @@ class RealMetadata(NumericMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[RealValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -261,8 +290,8 @@ class RealMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[RealValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -272,9 +301,11 @@ class RealMetadata(NumericMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -285,8 +316,8 @@ class RealMetadata(NumericMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -331,9 +362,11 @@ class StringMetadata(CommonVariableMetadata):
         Get the list of enumerated values.
 
         May be empty to imply no enumerated values.
+
         Returns
         -------
-        The list of enumerated values.
+        List[StringValue]
+            The list of enumerated values.
         """
         return self._enumerated_values
 
@@ -344,8 +377,8 @@ class StringMetadata(CommonVariableMetadata):
 
         Parameters
         ----------
-        value
-        The list of values to set.
+        value : List[StringValue]
+            The list of values to set.
         """
         self._enumerated_values = value
 
@@ -355,9 +388,11 @@ class StringMetadata(CommonVariableMetadata):
         Get the list of enumerated aliases.
 
         May be empty to imply no enumerated aliases.
+
         Returns
         -------
-        The list of enumerated aliases.
+        List[str]
+            The list of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -368,8 +403,8 @@ class StringMetadata(CommonVariableMetadata):
 
         Parameters
         ----------
-        value
-        The list of aliases to set.
+        value : List[str]
+            The list of aliases to set.
         """
         self._enumerated_aliases = value
 

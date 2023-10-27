@@ -134,10 +134,8 @@ def test_from_api_str_valid(
     expected_mime_type: str,
     expected_encoding: Optional[Any],
 ) -> None:
-
     # Setup
     with acvi.NonManagingFileScope() as sut_scope:
-
         # Execute
         sut_file_inst: acvi.FileValue = acvi.from_api_string(
             acvi.VariableType.FILE, source, sut_scope, sut_scope
@@ -152,7 +150,6 @@ def test_from_api_str_valid(
 
 
 def test_array_to_api_str():
-
     # Setup
     with acvi.NonManagingFileScope() as sut_scope:
         sut_values: acvi.FileArrayValue = acvi.FileArrayValue(
@@ -194,7 +191,6 @@ def test_array_to_api_str():
 
 
 def test_array_to_api_str_2d():
-
     # TODO: This test does not test the size parameter because the files tested
     # do not really exist.
 

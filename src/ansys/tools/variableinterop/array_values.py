@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of all array value implementations of IVariableValue."""
 from __future__ import annotations
 
@@ -23,11 +44,12 @@ T = TypeVar("T")
 
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
-    """Array of boolean values.
+    """
+    Stores a value as a``BooleanArrayValue`` type.
 
-    In Python BooleanArrayValue is implemented by extending NumPy's ndarray type. This means that
-    they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators.
+    In Python, a ``BooleanArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    array operators.
     """
 
     @overrides
@@ -62,7 +84,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            ``RealArrayValue`` type with the same values converted to real numbers.
         """
         return self.astype(np.float64).view(RealArrayValue)
 
@@ -72,7 +95,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        An IntegerArrayValue with the same values converted to int.
+        IntegerArrayValue
+           ``IntegerArrayValue`` type with the same values converted to integers.
         """
         return self.astype(np.int64).view(IntegerArrayValue)
 
@@ -82,7 +106,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            ``StringArrayValue`` type with the same values converted to strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -95,7 +120,8 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     @staticmethod
     def from_api_string(value: str) -> BooleanArrayValue:
-        """Convert API formatted string to an BooleanArrayValue value.
+        """
+        Convert an API-formatted string to a ``BooleanArrayValue`` type.
 
         Parameters
         ----------
@@ -124,16 +150,16 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
 class IntegerArrayValue(CommonArrayValue[np.int64]):
     """
-    Array of integer values.
+    Stores an ``IntegerArrayValue`` type.
 
-    In Python IntegerArrayValue is implemented by extending NumPy's ndarray type. This means that
-    they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, call to_integer_array_value
-    on the RealArrayValue and use the resulting IntegerArrayValue as you would a NumPy ndarray of
-    int64 values.
+    In Python, the ``IntegerArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    array operators. It also means that they inherit many of the NumPy behaviors, which
+    may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value is
+    floored instead of rounded. If you want the variable interop standard conversions,
+    call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the resulting
+    ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
     """
 
     @overrides
@@ -162,13 +188,14 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     def variable_type(self) -> VariableType:
         return VariableType.INTEGER_ARRAY
 
-    def to_boolean_array_value(self):
+    def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to a BooleanArrayValue.
+        Convert this value to the ``BooleanArrayValue`` type.
 
         Returns
         -------
-        A BooleanArrayValue with the same values converted to bool.
+        BooleanArrayValue
+            ``BooleanArrayValue`` type with the same values converted to Boolean.
         """
         return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
 
@@ -178,7 +205,8 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            ``RealArrayValue`` type with the same values converted to real values.
         """
         return self.astype(np.float64).view(RealArrayValue)
 
@@ -188,7 +216,8 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            ``StringArrayValue`` object converted to an array of strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -201,7 +230,8 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     @staticmethod
     def from_api_string(value: str) -> IntegerArrayValue:
-        """Convert API formatted string to an IntegerArrayValue value.
+        """
+        Convert an API-formatted string to an ``IntegerArrayValue`` value.
 
         Parameters
         ----------
@@ -229,16 +259,16 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
 class RealArrayValue(CommonArrayValue[np.float64]):
     """
-    Array of real values.
+    Stores a value of real array type.
 
-    In Python RealArrayValue is implemented by extending NumPy's ndarray type. This means that
-    they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from real to integer, the value will be floored instead
-    of rounded. If you want the variable interop standard conversions, call to_integer_array_value
-    on the RealArrayValue and use the resulting IntegerArrayValue as you would a NumPy ndarray of
-    int64 values.
+    In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    array operators. It also means that they inherit many of the NumPy behaviors, which
+    may be slightly different from the behaviors specified in the variable interop
+    standards. For example, when converting from real to integer, the value is
+    floored instead of rounded. If you want the variable interop standard conversions,
+    call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the resulting
+    ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
     """
 
     @overrides
@@ -267,23 +297,25 @@ class RealArrayValue(CommonArrayValue[np.float64]):
     def variable_type(self) -> VariableType:
         return VariableType.REAL_ARRAY
 
-    def to_boolean_array_value(self):
+    def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to a BooleanArrayValue.
+        Convert this value to a ``BooleanArrayValue`` type.
 
         Returns
         -------
-        A BooleanArrayValue with the same values converted to bool.
+        BooleanArrayValue
+            ``BooleanArrayValue`` type with the same values converted to Boolean.
         """
         return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
 
-    def to_integer_array_value(self):
+    def to_integer_array_value(self) -> IntegerArrayValue:
         """
-        Convert this value to an IntegerArrayValue.
+        Convert this value to an ``IntegerArrayValue`` type.
 
         Returns
         -------
-        An IntegerArrayValue with the same values converted to int.
+        IntegerArrayValue
+            ``IntegerArrayValue`` type with the same values converted to integers.
         """
 
         def away_from_zero(x: np.float64) -> np.int64:
@@ -297,7 +329,8 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
         Returns
         -------
-        A StringArrayValue with the same values converted to string.
+        StringArrayValue
+            ``StringArrayValue`` type with the same values converted to strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -310,7 +343,8 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     @staticmethod
     def from_api_string(value: str) -> RealArrayValue:
-        """Convert API formatted string to an RealArrayValue value.
+        """
+        Convert an API-formatted string to the ``RealArrayValue`` type.
 
         Parameters
         ----------
@@ -350,11 +384,12 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
 
 class StringArrayValue(CommonArrayValue[np.str_]):
-    """Array of string values.
+    """
+    Stores a ``StringArrayValue`` type.
 
-    In Python StringArrayValue is implemented by extending NumPy's ndarray type. This means that
-    they will decay naturally into numpy.ndarray objects when using numpy's array
-    operators.
+    In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+    This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+    array operators.
     """
 
     @overrides
@@ -389,13 +424,14 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
         Returns
         -------
-        A RealArrayValue with the same values converted to real.
+        RealArrayValue
+            ``RealArrayValue`` type with the same values converted to real numbers.
         """
         return self.astype(np.float64).view(RealArrayValue)
 
     def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to a BooleanArrayValue.
+        Convert this value to a ``BooleanArrayValue`` type.
 
         Returns
         -------
@@ -424,7 +460,8 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     @staticmethod
     def from_api_string(value: str) -> StringArrayValue:
-        """Convert API formatted string to an StringArrayValue value.
+        """
+        Convert an API-formatted string to a ``StringArrayValue`` type.
 
         Parameters
         ----------
@@ -444,7 +481,6 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     @overrides
     def to_display_string(self, locale_name: str) -> str:
-
         api_string: str = ArrayToFromStringUtil.value_to_string(
             self, lambda elem: '"' + StringValue(elem).to_display_string(locale_name) + '"'
         )

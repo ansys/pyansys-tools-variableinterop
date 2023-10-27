@@ -2,7 +2,6 @@
 
 import numpy as np
 import pytest
-from test_utils import _create_exception_context
 
 from ansys.tools.variableinterop import (
     BooleanArrayValue,
@@ -16,10 +15,11 @@ from ansys.tools.variableinterop import (
     StringValue,
     ValueDeserializationUnsupportedException,
 )
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param("-1", "en_US.UTF-8", IntegerValue(-1), id="-1, en_US"),
         pytest.param("-1", "de_DE.UTF-8", IntegerValue(-1), id="-1, de_DE"),
@@ -39,18 +39,18 @@ from ansys.tools.variableinterop import (
         ),
     ],
 )
-def test_converting_from_an_integer(value: str, locale: str, expected: IntegerValue) -> None:
+def test_converting_from_an_integer(value: str, locale_value: str, expected: IntegerValue) -> None:
     """
     Verifies the conversion of various strings to IntegerValues.
 
     Parameters
     ----------
-    value The value to format.
-    locale The locale to format in.
-    expected The expected output.
+    value: The value to format.
+    locale_value: The locale to format in.
+    expected: The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: IntegerValue = visitor.visit_int()
@@ -60,7 +60,7 @@ def test_converting_from_an_integer(value: str, locale: str, expected: IntegerVa
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param("0", "en_US.UTF-8", RealValue(0), id="0, en_US"),
         pytest.param("0", "de_DE.UTF-8", RealValue(0), id="0, de_DE"),
@@ -111,18 +111,18 @@ def test_converting_from_an_integer(value: str, locale: str, expected: IntegerVa
         ),
     ],
 )
-def test_converting_from_a_real(value: str, locale: str, expected: RealValue) -> None:
+def test_converting_from_a_real(value: str, locale_value: str, expected: RealValue) -> None:
     """
     Verifies the conversion of various strings to RealValues.
 
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: RealValue = visitor.visit_real()
@@ -135,7 +135,7 @@ def test_converting_from_a_real(value: str, locale: str, expected: RealValue) ->
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param("True", "en_US.UTF-8", BooleanValue(np.True_), id="True, en_US"),
         pytest.param("True", "de_DE.UTF-8", BooleanValue(np.True_), id="True, de_DE"),
@@ -155,18 +155,18 @@ def test_converting_from_a_real(value: str, locale: str, expected: RealValue) ->
         pytest.param("0", "de_DE.UTF-8", BooleanValue(np.False_), id="False, de_DE"),
     ],
 )
-def test_converting_from_a_boolean(value: str, locale: str, expected: BooleanValue) -> None:
+def test_converting_from_a_boolean(value: str, locale_value: str, expected: BooleanValue) -> None:
     """
     Verifies the conversion of various strings to BooleanValues.
 
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: BooleanValue = visitor.visit_boolean()
@@ -176,7 +176,7 @@ def test_converting_from_a_boolean(value: str, locale: str, expected: BooleanVal
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param("foo", "en_US.UTF-8", StringValue("foo"), id="foo, en_US"),
         pytest.param("foo", "de_DE.UTF-8", StringValue("foo"), id="foo, de_DE"),
@@ -208,18 +208,18 @@ def test_converting_from_a_boolean(value: str, locale: str, expected: BooleanVal
         ),
     ],
 )
-def test_converting_from_a_string(value: str, locale: str, expected: StringValue) -> None:
+def test_converting_from_a_string(value: str, locale_value: str, expected: StringValue) -> None:
     """
     Verifies the conversion of various strings to StringValues.
 
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: StringValue = visitor.visit_string()
@@ -229,7 +229,7 @@ def test_converting_from_a_string(value: str, locale: str, expected: StringValue
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param(
             "1,2,3", "en_US.UTF-8", IntegerArrayValue((1, 3), [1, 2, 3]), id="Single dim, en_US"
@@ -252,7 +252,7 @@ def test_converting_from_a_string(value: str, locale: str, expected: StringValue
     ],
 )
 def test_converting_from_an_integer_array(
-    value: str, locale: str, expected: IntegerArrayValue
+    value: str, locale_value: str, expected: IntegerArrayValue
 ) -> None:
     """
     Verifies the conversion of various strings to IntegerArrayValues.
@@ -260,11 +260,11 @@ def test_converting_from_an_integer_array(
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: IntegerArrayValue = visitor.visit_int_array()
@@ -274,7 +274,7 @@ def test_converting_from_an_integer_array(
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param(
             "5,4,3.25", "en_US.UTF-8", RealArrayValue((1, 3), [5, 4, 3.25]), id="Single dim, en_US"
@@ -299,18 +299,20 @@ def test_converting_from_an_integer_array(
         ),
     ],
 )
-def test_converting_from_a_real_array(value: str, locale: str, expected: RealArrayValue) -> None:
+def test_converting_from_a_real_array(
+    value: str, locale_value: str, expected: RealArrayValue
+) -> None:
     """
     Verifies the conversion of various strings to RealArrayValues.
 
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: RealArrayValue = visitor.visit_real_array()
@@ -320,7 +322,7 @@ def test_converting_from_a_real_array(value: str, locale: str, expected: RealArr
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param(
             "True,False,True",
@@ -353,7 +355,7 @@ def test_converting_from_a_real_array(value: str, locale: str, expected: RealArr
     ],
 )
 def test_converting_from_a_boolean_array(
-    value: str, locale: str, expected: BooleanArrayValue
+    value: str, locale_value: str, expected: BooleanArrayValue
 ) -> None:
     """
     Verifies the conversion of various strings to BooleanArrayValues.
@@ -361,11 +363,11 @@ def test_converting_from_a_boolean_array(
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: BooleanArrayValue = visitor.visit_bool_array()
@@ -375,7 +377,7 @@ def test_converting_from_a_boolean_array(
 
 
 @pytest.mark.parametrize(
-    "value,locale,expected",
+    "value,locale_value,expected",
     [
         pytest.param(
             '"one","two","three"',
@@ -404,7 +406,7 @@ def test_converting_from_a_boolean_array(
     ],
 )
 def test_converting_from_a_string_array(
-    value: str, locale: str, expected: StringArrayValue
+    value: str, locale_value: str, expected: StringArrayValue
 ) -> None:
     """
     Verifies the conversion of various strings to StringArrayValues.
@@ -412,11 +414,11 @@ def test_converting_from_a_string_array(
     Parameters
     ----------
     value The value to format.
-    locale The locale to format in.
+    locale_value The locale to format in.
     expected The expected output.
     """
     # Setup
-    visitor = FromFormattedStringVisitor(value, locale)
+    visitor = FromFormattedStringVisitor(value, locale_value)
 
     # SUT
     result: StringArrayValue = visitor.visit_string_array()
@@ -426,9 +428,7 @@ def test_converting_from_a_string_array(
 
 
 def test_converting_file_value():
-    """
-    Verifies that attempting to deserialize a file value always fails.
-    """
+    """Verifies that attempting to deserialize a file value always fails."""
     visitor = FromFormattedStringVisitor("any string", "locale ignored")
 
     with _create_exception_context(ValueDeserializationUnsupportedException):
@@ -436,9 +436,7 @@ def test_converting_file_value():
 
 
 def test_converting_file_array_value():
-    """
-    Verifies that attempting to deserialize a file value always fails.
-    """
+    """Verifies that attempting to deserialize a file value always fails."""
     visitor = FromFormattedStringVisitor("any string", "locale ignored")
 
     with _create_exception_context(ValueDeserializationUnsupportedException):

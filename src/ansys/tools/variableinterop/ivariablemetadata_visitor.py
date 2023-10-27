@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of IVariableMetadataVisitor."""
 from __future__ import annotations
 
@@ -20,14 +41,15 @@ T = TypeVar("T")
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
     """
-    The interface to be implemented to instantiate the visitor pattern.
+    Defines the interface to be implemented to use the visitor pattern with variable
+    metadata.
 
-    Pass an instance to CommonVariableMetadata.accept().
+    Pass an instance to :meth:``CommonVariableMetadata.accept()``.
     """
 
     # Single dispatch would make this prettier, but doesn't work with
-    #  class methods until 3.8:
-    #  https://docs.python.org/3/library/functools.html#functools.singledispatch
+    # class methods until 3.8:
+    # https://docs.python.org/3/library/functools.html#functools.singledispatch
 
     @abstractmethod
     def visit_integer(self, metadata: IntegerMetadata) -> T:
@@ -36,13 +58,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The IntegerMetadata being visited
+        metadata : IntegerMetadata
+            ``IntegerMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -53,13 +75,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The RealMetadata being visited
+        metadata : RealMetadata
+            ``RealMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -70,13 +92,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The BooleanMetadata being visited
+        metadata : BooleanMetadata
+            ``BooleanMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -87,29 +109,30 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The StringMetadata being visited
+        metadata : StringMetadata
+            ``StringMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def visit_file(self, metadata: FileMetadata):
+    def visit_file(self, metadata: FileMetadata) -> T:
         """
         Will be called if accept is called on a FileMetadata.
 
         Parameters
         ----------
-        metadata The FileMetadata being visited
+        metadata : FileMetadata
+            ``FileMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -120,13 +143,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The IntegerArrayMetaData being visited.
+        metadata : IntegerArrayMetadata
+            ``IntegerArrayMetadata`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -137,13 +160,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The RealArrayMetaData being visited.
+        metadata : RealArrayMetadata
+            ``RealArrayMetaData`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -154,13 +177,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The BooleanArrayMetaData being visited.
+        metadata : BooleanArrayMetadata
+            ``BooleanArrayMetaData`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
@@ -171,27 +194,29 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
 
         Parameters
         ----------
-        metadata
-            The StringArrayMetaData being visited.
+        metadata : StringArrayMetadata
+            ``StringArrayMetaData`` object being visited.
 
         Returns
         -------
         T
-            The result.
+            Result.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def visit_file_array(self, metadata: FileArrayMetadata):
+    def visit_file_array(self, metadata: FileArrayMetadata) -> T:
         """
         Will be called if accept is called on a FileArrayMetadata.
 
         Parameters
         ----------
-        metadata The FileArrayMetadata being visited
+        metadata : FileArrayMetadata
+            ``FileArrayMetadata`` object being visited
 
         Returns
         -------
-        The result.
+        T
+            Result.
         """
         raise NotImplementedError

@@ -1,5 +1,5 @@
-PyAnsys Common Variable Interop
-###############################
+PyAnsys Tools Variable Interop
+==============================
 
 
 Project Overview
@@ -8,11 +8,6 @@ This library contains definitions of the basic variables, types,
 metadata, and values intended to provide interoperability between
 all products that optionally choose to participate.
 
-**Work in Progress**
-
-This library is a work in progress and has not been released yet. 
-It still has unfinished documentation and APIs are not guaranteed 
-to be stable yet.
 
 Characteristics
 ---------------
@@ -35,13 +30,13 @@ Characteristics of this library include:
   operations to the existing data types. It is extremely hard to make both possible at the same
   time. This library uses the `visitor pattern <https://en.wikipedia.org/wiki/Visitor_pattern>`_ to
   make it easy and reliable to add and reuse
-  new operations with compile-time semantics. 
-- In trade, adding new datatypes is not easy
-- Most commonly re-used metadata strongly defined. Generic dictionary provided for custom metadata
+  new operations with compile-time semantics.
+- In trade, adding new datatypes is not easy.
+- Most commonly re-used metadata is strongly defined. A generic dictionary is provided for custom metadata.
 
-Top Level Items
+Top-level items
 ---------------
-The top level items in this package are:
+Descriptions follow of the top-level items in this package:
 
 * The base metadata type that all variable types extend is
   CommonVariableMetadata. Metadata is defined as the information
@@ -54,10 +49,10 @@ The top level items in this package are:
   explicit. Explicit conversions may also throw an exception if
   there is an overflow or other "bad data" situation.
 
-Project Background
+Project background
 ------------------
-After 20 years of working on integration problems a holistic review was performed around the
-concept of a variable in some legacy codebases. No less than 2 dozen classes that represent a
+After 20 years of work on integration problems, a holistic review was performed around the
+concept of a variable in some legacy codebases. No less than two dozen classes that represent a
 variable were found. There were many more switch statements where one datatype needed to be
 converted to another. This inconsistency brings about the following problems:
 
@@ -78,92 +73,81 @@ The standards and the standard implementations in several languages came out of 
 Installation
 ------------
 The ``pyansys-tools-variableinterop`` package currently supports Python
-3.8 through 3.10 on Windows and Linux.
-This package is not currently available on PyPI, but will be when it is
-ready for use.
-At that time you can install ``pyansys-tools-variableinterop`` with:
+3.9 through 3.12 on Windows, MacOS, and Linux.
+
+You can install ``pyansys-tools-variableinterop`` with:
 
 .. code::
 
    pip install pyansys-tools-variableinterop
 
-Alternatively, install the latest from `pyansys-tools-variableinterop GitHub
-<https://github.com/pyansys/pyansys-tools-variableinterop>`_ via:
+Alternatively, install the latest version from `pyansys-tools-variableinterop GitHub
+<https://github.com/ansys/pyansys-tools-variableinterop/>`_ via:
 
 .. code::
 
-   pip install git+https://github.com/pyansys/pyansys-tools-variableinterop.git
+   pip install git+https://github.com/ansys/pyansys-tools-variableinterop
 
-For a local "development" version, install with:
+
+To install a local development version of the project, run these commands:
 
 .. code::
 
-   git clone https://github.com/pyansys/pyansys-tools-variableinterop.git
+   git clone https://github.com/ansys/pyansys-tools-variableinterop
    cd pyansys-tools-variableinterop
-   pip install poetry
-   poetry install -E dev
+   pip install -e .
 
-This creates a new virtual environment, which can be activated with
-
-.. code::
-
-   poetry shell
 
 Documentation
 -------------
-TODO: link to the full sphinx documentation.
-`pyansys-tools-variableinterop <https://common-variableinterop.docs.pyansys.com/>`_
-For building documentation, you can run the usual rules provided in the Sphinx Makefile, such as:
 
-.. code::
+Install the required dependencies for the documentation with this command:
 
-    make -C doc/ html && your_browser_name doc/html/index.html
+.. code:: bash
 
-on Unix, or:
+    pip install .[doc]
 
-.. code::
+    # For Linux and MacOS
+    make -C doc/ html && your_browser_name doc/build/html/index.html
 
+    # For Windows
     .\doc\make.bat html
-
-on Windows. Make sure the required dependencies are installed with:
-
-.. code::
-
-    pip install -E docs
-
-
-Usage
------
-Values and metadata can be created like any other Python object:
-
-.. code:: python
-
-   >>> import ansys.tools.variableinterop as atvi
-   >>> width = atvi.RealValue(3.1)
-   >>> width
-   3.1
-
-   # Standard python operations should work seamlessly
-   >>> 4 + width
-   7.1
-
-   >>> width_metadata = atvi.RealMetadata()
-   >>> width_metadata.lower_bound = 0.1
-   >>> var(width_metadata)
-   {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
+    .\doc\build\html\index.html
 
 
 Testing
 -------
-Dependencies required for testing can be installed via:
+Install the dependencies required for testing with this command:
 
-.. code::
+.. code:: bash
 
-    poetry install -E test
+    pip install .[tests]
 
-The tests can then be run via pytest.
+Run the tests via ``pytest`` with this command:
+
+.. code:: bash
+
+    pytest -v
+
+
+Usage
+-----
+You can create values and metadata like any other Python object:
+
+.. code:: python
+
+   import ansys.tools.variableinterop as atvi
+
+   width = atvi.RealValue(3.1)
+   width
+
+.. code:: python
+
+   width_metadata = atvi.RealMetadata()
+   width_metadata.lower_bound = 0.1
+   var(width_metadata)
 
 
 License
 -------
-pyansys-tools-variableinterop is licensed under the MIT license.
+``pyansys-tools-variableinterop`` is licensed under the MIT license.

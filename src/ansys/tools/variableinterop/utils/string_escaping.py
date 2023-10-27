@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Provides functions for ModelCenter-standard string escaping."""
 from typing import Dict, List
 
@@ -12,12 +33,13 @@ def escape_string(unescaped: str) -> str:
 
     Parameters
     ----------
-    unescaped the unescaped string.
+    unescaped : str
+        the unescaped string.
 
     Returns
     -------
-    The string with the specified characters escaped.
-
+    str
+        The string with the specified characters escaped.
     """
     return (
         unescaped.replace("\\", r"\\")
@@ -33,9 +55,9 @@ __unescape_map: Dict[str, str] = {"n": "\n", "r": "\r", "t": "\t", "0": "\0"}
 """
 This map contains characters escaped by escape_string that require special handling.
 
-Note that some of the characters actually escaped by escape_string are not present in this map.
-In those cases, the correct unescaping behavior is to insert the character after the backslash
-unchanged (backslash and double-quote).
+Note that some of the characters actually escaped by escape_string are not present in
+this map. In those cases, the correct unescaping behavior is to insert the character
+after the backslash unchanged (backslash and double-quote).
 """
 
 
@@ -53,12 +75,13 @@ def unescape_string(escaped: str) -> str:
 
     Parameters
     ----------
-    escaped the string with escape sequences
+    escaped : str
+        the string with escape sequences
 
     Returns
     -------
-    The string with the escape sequences undone.
-
+    str
+        The string with the escape sequences undone.
     """
     unescaped: List[str] = []
     str_index: int = 0

@@ -1,180 +1,196 @@
-# check spelling, codestyle
 name: GitHub CI
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 on:
   pull_request:
+  workflow_dispatch:
   push:
     tags:
       - "*"
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
+env:
+  DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
+  MAIN_PYTHON_VERSION: '3.10'
+  PACKAGE_NAME: 'pyansys-tools-variableinterop'
+
 jobs:
-  style:
-    name: Style Check
+  code-style:
+    name: "Code style"
     runs-on: ubuntu-latest
+    steps:
+      - name: PyAnsys code style checks
+        uses: ansys/actions/code-style@v4
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+  doc-style:
+    name: "Documentation Style Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: PyAnsys documentation style checks
+        uses: ansys/actions/doc-style@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  smoke-tests:
+    name: "Build and Smoke tests"
+    runs-on: ${{ matrix.os }}
+    needs: [code-style]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.9', '3.10', '3.11','3.12']
+        should-release:
+          - ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') }}
+        exclude:
+          - should-release: false
+            os: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Build wheelhouse and perform smoke test
+        uses: ansys/actions/build-wheelhouse@v4
         with:
-          python-version: 3.8
+          library-name: ${{ env.PACKAGE_NAME }}
+          operating-system: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install style requirements
-        run: |
-          pip install .[style] --disable-pip-version-check
-
-      - name: Codespell
-        run: |
-          make codespell
-
-      - name: flake8
-        run: |
-          make flake8
-
-  main:
-    name: Build and Testing
+  build-test:
+    name: "Build and unit testing"
     runs-on: ubuntu-latest
+    needs: [smoke-tests]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Create wheel
+      - name: Create Python venv
         run: |
-          pip install build
-          python -m build --wheel
+          python -m venv .venv
+          .venv/bin/activate
 
-      - name: Validate wheel
+      - name: "Unit testing requirements installation"
         run: |
-          pip install twine
-          twine check dist/*
-
-      - name: Install variableinterop, with test extra
-        run: pip install $(echo dist/*)[test]
+          pip install .[tests]
 
       - name: Setup locale for tests
         run: |
           sudo locale-gen de_DE.UTF-8
 
-      - name: Unit testing
+      - name: "Unit testing"
         run: |
-          cd tests  # so we're testing the install, not local
-          pytest -vx
+          pytest -v --durations=10 --maxfail=10\
+            --cov=ansys.tools.variableinterop\
+            --cov-report=xml:coverage.xml\
+            --cov-report=html --cov-report term
 
-      - name: Upload wheel
-        uses: actions/upload-artifact@v2
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v3
         with:
-          name: pyansys-tools-variableinterop-wheel
-          path: dist/
-          retention-days: 7
+          name: remote.xml
+          flags: remote
 
-  docs:
-    name: Build Documentation
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: remote.xml
+          path: ./remote.xml
+
+  doc-build:
+    name: "Documentation building"
     runs-on: ubuntu-latest
-
+    needs: [doc-style]
     steps:
-      - uses: actions/checkout@v2
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Install variableinterop, with docs extra
-        run: pip install .[docs]
-
-      - name: Build HTML
+      - name: Create Python venv
         run: |
-          make -C doc html 
-          # Add back in to previous line once documentation is cleaned up: SPHINXOPTS="-W"
+          python -m venv .venv
+          .venv/bin/activate
 
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: "Documentation requirements installation"
+        run: |
+          pip install .[doc]
+
+      - name: "Run Ansys documentation building action"
+        uses: ansys/actions/doc-build@v4
         with:
-          path: doc/build/html
-          retention-days: 7
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          checkout: false
+          skip-install: true
+          sphinxopts: -j auto
 
-#      - name: Build PDF Documentation
-#        run: |
-#          sudo apt update
-#          sudo apt-get install -y texlive-latex-extra latexmk
-#          make -C doc latexpdf
 
-#      - name: Upload PDF Documentation
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Documentation-pdf
-#          path: doc/build/latex/*.pdf
-#          retention-days: 7
+  package:
+    name: Package library
+    needs: [doc-build, build-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build library source and wheel artifacts
+        uses: ansys/actions/build-library@v4
+        with:
+          library-name: ${{ env.PACKAGE_NAME }}
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-  Deploy-Pages: 
+  doc-deploy-dev:
+    name: "Deploy development documentation"
+    # Deploy development only when merging to main
     if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: docs 
+    needs: [package]
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: "Deploy the latest documentation"
+        uses: ansys/actions/doc-deploy-dev@v4
+        with:
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  Release:
-    if: contains(github.ref, 'refs/tags')
-    needs: [main, style, docs]
+  release:
+    name: "Release project to public PyPI and GitHub"
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    needs:  [package]
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v1
+
+    - name: "Release to the public PyPI repository"
+      uses: ansys/actions/release-pypi-public@v4
+      with:
+        library-name: ${{ env.PACKAGE_NAME }}
+        twine-username: "__token__"
+        twine-token: ${{ secrets.PYPI_TOKEN }}
+
+    - name: "Release to GitHub"
+      uses: ansys/actions/release-github@v4
+      with:
+        library-name: ${{ env.PACKAGE_NAME }}
+
+
+  doc-deploy-stable:
+    name: "Deploy stable documentation"
+    # Deploy release documentation when creating a new tag
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    needs: [release]
+    steps:
+      - name: "Deploy the stable documentation"
+        uses: ansys/actions/doc-deploy-stable@v4
         with:
-          python-version: 3.9
-
-      - uses: actions/checkout@v2
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: pyansys-tools-variableinterop-wheel
-
-#      - uses: actions/download-artifact@v2
-#        with:
-#          name: Documentation-pdf
-
-# When we go to publish this on PyPi, if we want docs included we
-# will need to rewrite this section because the artifact was changed
-# to save using actions/upload-pages-artifact@v1actions/upload-pages-artifact@v1
-# This saves in a slightly different format (zip of a tar file)
-#      - uses: actions/download-artifact@v2
-#        with:
-#          name: Documentation-html
-#          path: ~/html
-
-      # list current directory
-      - name: List directory structure
-        run: ls -R
-
-      # note how we use the PyPI tokens
-      - name: Upload to Azure PyPi (disabled)
-        run: |
-          pip install twine
-          # twine upload --skip-existing ./**/*.whl
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            ./**/*.whl
-            ./**/*.zip
-            ./**/*.pdf
+            cname: ${{ env.DOCUMENTATION_CNAME }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+            python-version: ${{ env.MAIN_PYTHON_VERSION }}

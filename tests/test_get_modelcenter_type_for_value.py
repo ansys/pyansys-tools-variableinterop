@@ -61,8 +61,7 @@ class TestUnknownValue(IVariableValue):
 )
 def test_get_modelcenter_type_for_value(value: IVariableValue, expected: str) -> None:
     """
-    Verifies the correct ModelCenter type string is returned for each \
-    IVariableValue.
+    Verifies the correct ModelCenter type string is returned for each IVariableValue.
 
     Parameters
     ----------

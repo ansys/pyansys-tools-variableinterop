@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of array value visitors."""
 import numpy as np
 from overrides import overrides
@@ -23,7 +44,8 @@ import ansys.tools.variableinterop.variable_value as variable_value
 
 
 class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArrayValue]):
-    """Visitor pattern to call conversion methods to BooleanArrayValue."""
+    """Visits variable values and converts to a ``BooleanArrayValue`` type when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> BooleanArrayValue:
@@ -94,14 +116,14 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
     Returns
     -------
     BooleanArrayValue
-    The value as a BooleanArrayValue.
-
+        Value as a ``BooleanArrayValue`` type.
     """
     return other.accept(__ToBooleanArrayVisitor())
 
 
 class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
-    """Visitor pattern to call conversion methods to IntegerArrayValue."""
+    """Visits variable values and converts them to ``IntegerArrayValue`` when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerArrayValue:
@@ -172,14 +194,14 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
     Returns
     -------
     IntegerArrayValue
-    The value as a IntegerArrayValue.
-
+        The value as a IntegerArrayValue.
     """
     return other.accept(__ToIntegerArrayVisitor())
 
 
 class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValue]):
-    """Visitor pattern to call conversion methods to RealArrayValue."""
+    """Visits variable values and converts them to ``RealArrayValue`` types when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealArrayValue:
@@ -250,14 +272,14 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     Returns
     -------
     RealArrayValue
-    The value as a RealArrayValue.
-
+        Value as an ``RealArrayValue`` type.
     """
     return other.accept(__ToRealArrayVisitor())
 
 
 class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArrayValue]):
-    """Visitor pattern to call conversion methods to StringArrayValue."""
+    """Visits variable values and converts them to ``StringArrayValue`` types when
+    possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringArrayValue:
@@ -328,7 +350,6 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
     Returns
     -------
     StringArrayValue
-    The value as a StringArrayValue.
-
+        Value as a ``StringArrayValue`` type.
     """
     return other.accept(__ToStringArrayVisitor())

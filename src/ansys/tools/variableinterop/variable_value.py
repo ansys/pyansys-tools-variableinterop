@@ -1,3 +1,24 @@
+# Copyright (C) 2023 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 """Definition of IVariableValue and related classes."""
 from __future__ import annotations
 
@@ -16,7 +37,7 @@ T = TypeVar("T")
 
 
 class IVariableValue(ABC):
-    """Interface that defines the common behavior between variable types."""
+    """Defines an interface for the common behavior among all variable types."""
 
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
@@ -25,17 +46,18 @@ class IVariableValue(ABC):
     @abstractmethod
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         """
-        Invoke the visitor pattern of this object using the passed in visitor implementation.
+        Invoke the visitor pattern of this object using the passed in visitor
+        implementation.
 
         Parameters
         ----------
-        visitor
+        visitor : IVariableValueVisitor
             The visitor object to call
 
         Returns
         -------
         T
-            The results of the visitor invocation
+            Results of the visitor invocation
         """
         raise NotImplementedError
 
@@ -71,7 +93,7 @@ class IVariableValue(ABC):
 
         Parameters
         ----------
-        locale_name
+        locale_name : str
             The locale to format in.
 
         Returns
@@ -83,7 +105,11 @@ class IVariableValue(ABC):
 
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
-    """Interface that defines common behavior for array types. Inherits ``IVariableValue``."""
+    """
+    Interface that defines common behavior for array types.
+
+    Inherits ``IVariableValue``.
+    """
 
     def get_lengths(self) -> Tuple[int]:
         """

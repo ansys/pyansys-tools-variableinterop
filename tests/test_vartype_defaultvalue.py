@@ -2,9 +2,9 @@
 from typing import Type
 
 import pytest
-from test_utils import _create_exception_context
 
 import ansys.tools.variableinterop as interop
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -54,7 +54,7 @@ def test_default_value(
 
     Returns
     -------
-    nothing
+    None
     """
     with _create_exception_context(expect_exception):
         result: interop.IVariableValue = source.get_default_value()

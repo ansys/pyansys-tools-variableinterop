@@ -1,8 +1,8 @@
 import numpy
 import pytest
-from test_utils import _create_exception_context
 
 from ansys.tools.variableinterop import BooleanValue, IntegerValue, RealValue, StringValue
+from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
@@ -51,7 +51,8 @@ from ansys.tools.variableinterop import BooleanValue, IntegerValue, RealValue, S
     ],
 )
 def test_construct(arg: str, expect_equality: numpy.str_) -> None:
-    """Verify that __init__ for StringValue correctly instantiates the superclass data"""
+    """Verify that __init__ for StringValue correctly instantiates the superclass
+    data."""
     instance: StringValue = StringValue(arg)
     assert instance == expect_equality
 
@@ -75,6 +76,7 @@ def test_construct(arg: str, expect_equality: numpy.str_) -> None:
 def test_from_api_string(source: str, expected_value: StringValue) -> None:
     """
     Verify that from_api_string for StringValue works correctly for valid cases.
+
     Parameters
     ----------
     source : str
@@ -91,9 +93,7 @@ def test_from_api_string(source: str, expected_value: StringValue) -> None:
 
 
 def test_from_api_string_rejects_none() -> None:
-    """
-    Verify that from_api_string cannot be called with None.
-    """
+    """Verify that from_api_string cannot be called with None."""
     with _create_exception_context(TypeError):
         result: StringValue = StringValue.from_api_string(None)
 
