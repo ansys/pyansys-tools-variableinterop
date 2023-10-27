@@ -43,7 +43,9 @@ doc = [
     "pytest-sphinx==0.5.0",
 ]
 tests = [
-    "numpy==1.26.0",
+    "anyio==4.0.0",
+    "numpy==1.26.1",
+    "overrides==7.4.0",
     "pytest==7.4.2",
     "pytest-cov==4.1.0",
     "pytest-mock==3.11.1",
