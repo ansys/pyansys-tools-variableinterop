@@ -71,6 +71,7 @@ converted to another. This inconsistency brings about the following problems:
   implementation, if it doesn't match what is used at an API boundary by a different capability
   or product, errors ensue.
 
+
 The standards and the standard implementations in several languages came out of this review.
 
 Documentation and issues
