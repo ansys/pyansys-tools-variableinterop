@@ -62,7 +62,7 @@ these steps:
    .. code::
 
       pip install .[doc]
-      pip install .[tests]    
+      pip install .[tests]
 
 #. Install the project in editable mode with this command:
 

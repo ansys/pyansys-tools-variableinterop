@@ -19,7 +19,7 @@ PyAnsys Tools Variable Interop has these key characteristics:
 - Follows and implements the standards in TODO: Add reference to standards doc.
 - Provides the following capabilities:
 
-  - to/from an "API" string (not intended for UI layer) to allos data transfer in human-readable format
+  - to/from an "API" string (not intended for UI layer) to allows data transfer in human-readable format
     across products and regions
   - to/from human display strings
   - to/from binary blocks that are platform agnostic
@@ -99,7 +99,7 @@ You can install this package with this command:
    pip install pyansys-tools-variableinterop
 
 Alternatively, install the latest version from `pyansys-tools-variableinterop GitHub
-<https://github.com/ansys/pyansys-tools-variableinterop/>`_ with this comand:
+<https://github.com/ansys/pyansys-tools-variableinterop/>`_ with this command:
 
 .. code::
 
@@ -113,8 +113,8 @@ To install a local development version of the project, run these commands:
    cd pyansys-tools-variableinterop
    pip install -e .
 
-Documentation builds
---------------------
+Documentation building
+----------------------
 
 Install the required dependencies for building the documentation with this
 command:
