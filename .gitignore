@@ -68,6 +68,9 @@ _autosummary
 *,cover
 test-output.xml
 
+# Vale
+doc/styles/Google
+
 \#*
 .\#*
 /.ipynb_checkpoints
