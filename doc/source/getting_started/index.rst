@@ -10,7 +10,7 @@ Install in user mode
 ^^^^^^^^^^^^^^^^^^^^
 
 Before installing the ``pyansys-tools-variableinterop`` package, make sure that you
-have the latest version of `pip`_ with this command::
+have the latest version of `pip`_ with this command:
 
 .. code:: bash
 
@@ -77,7 +77,7 @@ Style and testing
 If required, you can call style commands (such as `black`_, `isort`_,
 and `flake8`_) or unit testing commands (such as `pytest`_) from the command line.
 However, this does not guarantee that your project is being tested in an isolated
-environment, which is why you might consider using `tox`_.
+environment, which is why you might consider using `tox <tox_>`_.
 
 
 Distributing
@@ -92,10 +92,10 @@ command to install the building requirements:
 
 Then, run these commands:
 
-    .. code:: bash
+.. code:: bash
 
-        python -m build
-        python -m twine check dist/*
+    python -m build
+    python -m twine check dist/*
 
 
 .. LINKS AND REFERENCES

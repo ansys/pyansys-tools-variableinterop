@@ -80,6 +80,10 @@ Documentation and issues
 Documentation for the latest stable release of this package is hosted at
 `PyAnsys Tools Variable Interop documentation <https://variableinterop.docs.pyansys.com/index.html>`_.
 
+In the upper right corner of the documentation's title bar, there is an option for switching from
+viewing the documentation for the latest stable release to viewing the documentation for the development
+version or previously released versions.
+
 On the `PyAnsys Tools Variable Interop Issues <https://github.com/ansys/pyansys-tools-variableinterop/issues>`_ page,
 you can create issues to report bugs and request new features. On the
 `PyAnsys Tools Variable Interop Discussions <https://github.com/ansys/pyansys-tools-variableinterop/discussions>`_
