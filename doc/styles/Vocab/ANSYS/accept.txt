@@ -3,6 +3,5 @@ API
 Interop
 isort
 Makefile
-nd
 PyAnsys Tools Variable Interop
 pytest

@@ -76,7 +76,7 @@ Documentation and issues
 ------------------------
 
 Documentation for the latest stable release of this package is hosted at
-`PyAnsys Tools Variable Interop documentation <https://variableinterop.docs.pyansys.com/index.html`_.
+`PyAnsys Tools Variable Interop documentation <https://variableinterop.docs.pyansys.com/index.html>`_.
 
 On the `PyAnsys Tools Variable Interop Issues <https://github.com/ansys/pyansys-tools-variableinterop/issues>`_ page,
 you can create issues to report bugs and request new features. On the
@@ -98,8 +98,9 @@ You can install this package with this command:
 
    pip install pyansys-tools-variableinterop
 
-Alternatively, install the latest version from `pyansys-tools-variableinterop GitHub
-<https://github.com/ansys/pyansys-tools-variableinterop/>`_ with this command:
+Alternatively, install the latest version from the `pyansys-tools-variableinterop
+<https://github.com/ansys/pyansys-tools-variableinterop/>`_ GitHub repository
+with this command:
 
 .. code::
 

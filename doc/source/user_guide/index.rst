@@ -1,8 +1,6 @@
 User guide
 ==========
 
-Usage
------
 You can create values and metadata like any other Python object:
 
 .. code:: python
