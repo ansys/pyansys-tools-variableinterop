@@ -41,7 +41,7 @@ T = TypeVar("T")
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
     """
-    Defines the interface to be implemented to use the visitor pattern with variable
+    Defines the interface to be implemented for using the visitor pattern with variable
     metadata.
 
     This class passes an instance to the :meth:`CommonVariableMetadata.accept()` method.

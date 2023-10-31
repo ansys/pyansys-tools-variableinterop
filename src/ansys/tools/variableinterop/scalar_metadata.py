@@ -107,7 +107,7 @@ class IntegerMetadata(NumericMetadata):
     @property
     def upper_bound(self) -> Optional[IntegerValue]:
         """
-        Hard upper bound for this variable.
+        Hard upper bound for the variable.
 
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used to

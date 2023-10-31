@@ -36,7 +36,7 @@ T = TypeVar("T")
 
 class IVariableValueVisitor(ABC, Generic[T]):
     """
-    Defines the interface to be implemented to use the visitor pattern with variable
+    Defines the interface to be implemented for using the visitor pattern with variable
     values.
 
     This class passes an instance to the :meth:`IVariableValue.accept()` method.

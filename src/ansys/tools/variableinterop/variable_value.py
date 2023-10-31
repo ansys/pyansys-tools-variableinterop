@@ -37,7 +37,7 @@ T = TypeVar("T")
 
 
 class IVariableValue(ABC):
-    """Defines an interface for the common behavior among all variable types."""
+    """Defines an interface for the behavior common among all variable types."""
 
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
@@ -65,7 +65,7 @@ class IVariableValue(ABC):
     @abstractmethod
     def variable_type(self) -> variable_type_lib.VariableType:
         """
-        Get the variable type of the object.
+        Variable type of the object.
 
         Returns
         -------
@@ -106,9 +106,9 @@ class IVariableValue(ABC):
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
     """
-    Defines an interface for the common behavior among all array types.
+    Defines an interface for the behavior common among all array types.
 
-    IThis class inherits the ``IVariableValue`` class.
+    This class inherits the ``IVariableValue`` class.
     """
 
     def get_lengths(self) -> Tuple[int]:
@@ -135,6 +135,6 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
 
 
 class VariableValueInvalidError(Exception):
-    """Raises an error to indicate that a required variable value was invalid."""
+    """Raises an error to indicate that a required variable value is invalid."""
 
     pass

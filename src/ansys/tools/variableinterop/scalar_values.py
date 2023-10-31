@@ -69,7 +69,7 @@ class BooleanValue(IVariableValue):
         "n": False,
         "false": False,
     }
-    """A mapping of acceptable normalized values for API string conversion to their
+    """Mapping of acceptable normalized values for API string conversion to their
     corresponding Boolean value."""
 
     @staticmethod

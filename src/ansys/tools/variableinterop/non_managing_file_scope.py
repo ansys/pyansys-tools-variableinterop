@@ -39,7 +39,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     """
     Provides a simple file scope implementation that performs no management.
 
-    This file scope allows you to create `FileValue` instances that are backed by arbitrary
+    This file scope allows you to create ``FileValue`` instances that are backed by arbitrary
     preexisting files on disk. It is up to the caller to ensure that the file remains in place
     and unchanged for the lifespan of the ``FileValue`` instance and that the file is deleted at
     an appropriate time. Because of these restrictions, it is generally not recommended using
