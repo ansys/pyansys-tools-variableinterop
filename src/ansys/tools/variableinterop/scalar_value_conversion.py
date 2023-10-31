@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of scalar value visitors."""
 
 from overrides import overrides
@@ -34,7 +35,7 @@ from .variable_value import IVariableValue
 
 
 class __ToBooleanVisitor(IVariableValueVisitor[bool]):
-    """Converts visited values to ``BooleanValue`` when possible."""
+    """Converts visited values to the ``BooleanValue`` type when possible."""
 
     @overrides
     def visit_boolean(self, value: "BooleanValue") -> bool:
@@ -79,27 +80,27 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
     """
-    Convert the given value to a BooleanValue.
+    Convert the given value to a ``BooleanValue``type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
+    Note that some conversions are lossy (resulting in a loss of precision),
     and some conversions are not possible (raises IncompatibleTypesException).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a BooleanValue.
+        Other value to convert to a ``BooleanValue`` type.
 
     Returns
     -------
     BooleanValue
-        The value as a BooleanValue.
+        Value as a ``BooleanValue`` type.
     """
     return BooleanValue(other.accept(__ToBooleanVisitor()))
 
 
 class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
-    """Converts visited values to ``IntegerValue`` when possible."""
+    """Converts visited values to the ``IntegerValue`` type when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> IntegerValue:
@@ -144,27 +145,27 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
 def to_integer_value(other: IVariableValue) -> IntegerValue:
     """
-    Convert the given value to an IntegerValue.
+    Convert the given value to an ``IntegerValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
+    Note that some conversions are lossy (resulting in a loss of precision),
     and some conversions are not possible (raises IncompatibleTypesException).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a IntegerValue.
+        Other value to convert to an ``IntegerValue`` type.
 
     Returns
     -------
     IntegerValue
-        The value as a IntegerValue.
+        Value as an ``IntegerValue`` type.
     """
     return other.accept(__ToIntegerVisitor())
 
 
 class __ToRealVisitor(IVariableValueVisitor[RealValue]):
-    """Converts visited values to ``RealValue`` when possible."""
+    """Converts visited values to the ``RealValue`` type when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> RealValue:
@@ -209,27 +210,27 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
 
 def to_real_value(other: IVariableValue) -> RealValue:
     """
-    Convert the given value to a RealValue.
+    Convert the given value to a ``RealValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
+    Note that some conversions are lossy (resulting in a loss of precision),
     and some conversions are not possible (raises IncompatibleTypesException).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a RealValue.
+        Other value to convert to a ``RealValue`` type.
 
     Returns
     -------
     RealValue
-        The value as a RealValue.
+        Value as a ``RealValue`` type.
     """
     return other.accept(__ToRealVisitor())
 
 
 class __ToStringVisitor(IVariableValueVisitor[StringValue]):
-    """Converts visited values to ``StringValue`` when possible."""
+    """Converts visited values to a ``StringValue`` type when possible."""
 
     @overrides
     def visit_integer(self, value: IntegerValue) -> StringValue:
@@ -274,20 +275,20 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
 def to_string_value(other: IVariableValue) -> StringValue:
     """
-    Convert the given value to a StringValue.
+    Convert the given value to a ``StringValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
+    Note that some conversions are lossy (resulting in a loss of precision),
     and some conversions are not possible (raises IncompatibleTypesException).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a StringValue.
+        Other value to convert to a ``StringValue`` type.
 
     Returns
     -------
     StringValue
-        The value as a StringValue.
+        Value as a ``StringValue`` type.
     """
     return other.accept(__ToStringVisitor())

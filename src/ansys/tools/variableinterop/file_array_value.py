@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of FileArrayValue."""
 from __future__ import annotations
 
@@ -77,12 +78,12 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         Parameters
         ----------
         context : ISaveContext
-            The context used for saving.
+            Context used for saving.
 
         Returns
         -------
         str
-            A string appropriate for use in files and APIs.
+            String appropriate for use in files and APIs.
         """
         if context is None:
             raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
@@ -95,7 +96,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     @staticmethod
     def from_api_object(value: Any, context: ILoadContext, scope: FileScope) -> FileArrayValue:
         """
-        Initialize a new FileArrayValue from a list of api strings.
+        Initialize a new ``FileArrayValue`` type from a list of API strings.
 
         Parameters
         ----------
@@ -109,7 +110,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         Returns
         -------
         FileArrayValue
-            New ``FileArrayValue`` initialized from the value.
+            New ``FileArrayValue`` type initialized from the value.
         """
         if isinstance(value, list):
             # Define a function for transforming individual API objects to elements.

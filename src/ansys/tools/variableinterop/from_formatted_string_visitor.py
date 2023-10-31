@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of FromFormattedStringVisitor."""
 from __future__ import annotations
 
@@ -38,10 +39,10 @@ from .variable_value import IVariableValue
 
 
 class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
-    """Converts a string formatted for a locale to a IVariableValue."""
+    """Converts a string formatted for a locale to a ``IVariableValue`` type."""
 
     def __init__(self, value: np.str_, locale_name: str):
-        """Initialize the object."""
+        """Initialize a new instance."""
         self._value = value
         self._locale_name = locale_name
 

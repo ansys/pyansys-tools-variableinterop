@@ -77,7 +77,7 @@ Style and testing
 If required, you can call style commands (such as `black`_, `isort`_,
 and `flake8`_) or unit testing commands (such as `pytest`_) from the command line.
 However, this does not guarantee that your project is being tested in an isolated
-environment, which is why you might consider using `tox <tox_>`_.
+environment, which is why you might consider using `tox`_.
 
 
 Distributing

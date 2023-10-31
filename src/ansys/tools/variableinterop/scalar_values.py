@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of all scalar value implementations of IVariableValue."""
 from __future__ import annotations
 
@@ -39,25 +40,26 @@ from .variable_value import IVariableValue
 
 class BooleanValue(IVariableValue):
     """
-    Stores a value for a variable of type boolean.
+    Stores a value for a ``BooleanValue`` variable type.
 
-    This type is treated by Python as if it were any other boolean type such as
-    numpy.bool\_ or a built-in bool.
+    This type is treated by Python as if it were any other Boolean type, such as
+    ``numpy.bool\_`` or a built-in Boolean.
     """
 
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
-        """Convert a numpy int64 to a bool value per interchange specifications."""
+        """Convert a NumPy int64 type to a Boolean value per interchange
+        specifications."""
         return bool(val != 0)
 
     @staticmethod
     def int_to_bool(val: int) -> bool:
-        """Convert an int to a bool value per interchange specifications."""
+        """Convert an integer to a Boolean value per interchange specifications."""
         return bool(val != 0)
 
     @staticmethod
     def float_to_bool(val: float) -> bool:
-        """Convert a float value to a bool per interchange specifications."""
+        """Convert a float value to a Boolean value per interchange specifications."""
         return bool(val != 0.0)
 
     api_str_to_bool: Dict[str, bool] = {
@@ -69,11 +71,11 @@ class BooleanValue(IVariableValue):
         "false": False,
     }
     """A mapping of acceptable normalized values for API string conversion to their
-    corresponding bool value."""
+    corresponding Boolean value."""
 
     @staticmethod
     def str_to_bool(val: str) -> bool:
-        """Convert a str to a bool per interchange specifications."""
+        """Convert a string to a Boolean value per interchange specifications."""
         _value: str = str.lower(str.strip(val))
         if _value in BooleanValue.api_str_to_bool:
             return BooleanValue.api_str_to_bool[_value]
@@ -87,16 +89,19 @@ class BooleanValue(IVariableValue):
 
     def __init__(self, source: object = None):
         """
-        Construct a BooleanValue from various source types.
+        Construct a ``BooleanValue`` variable type from various source types.
 
         Parameters
         ----------
         source : object
-            Supported types include:
-            None: Constructs a False BooleanValue
-            bool or numpy.bool\_: Constructs a BooleanValue with the given Boolean value.
-            IVariableValue: Constructs a BooleanValue per the specification
-            Others: raises an exception
+            Source type. Options are:
+
+            - ``None``: Constructs a ``BooleanValue`` type set to ``False``.
+            - ``bool`` or ``numpy.bool\_``: Constructs a ``BooleanValue`` type
+              with the given Boolean value.
+            - ``IVariableValue``: Constructs a ``BooleanValue`` type per the specification
+
+            Any other option raises an exception.
         """
         self.__value: np.bool_
         if source is None:
@@ -261,14 +266,14 @@ class BooleanValue(IVariableValue):
 
     def to_real_value(self) -> RealValue:
         """
-        Convert a given BooleanValue to a RealValue.
+        Convert a given ``BooleanValue`` type to a ``RealValue`` type.
 
-        True is converted to 1.0 and False is converted to 0.0
+        ``True`` is converted to ``1.0``,  and ``False`` is converted to ``0.0``.
 
         Returns
         -------
         RealValue
-            A RealValue with value representing the original BooleanValue.
+            ``RealValue`` type with value representing the original ``BooleanValue`` type.
         """
         if self:
             return RealValue(1.0)
@@ -278,43 +283,44 @@ class BooleanValue(IVariableValue):
     @staticmethod
     def from_api_string(value: str) -> BooleanValue:
         """
-        Convert an API string back into a value.
+        Convert an API string back into a ``BooleanValue`` type.
 
         The conversion is performed according to the type
         interoperability specifications.
 
-        Values which are parseable as floating-point numbers
-        are parsed in that manner, then converted to boolean.
+        Values that are parseable as floating-point numbers
+        are parsed in that manner and then converted to a ``BooleanValue`` type.
 
-        Values which are non-numeric are checked to see if they match
-        the following values for True: "true", "yes", or "y"; or the
-        following values for False: "false", "no", or "n". The
-        comparison is case-insensitive.
+        Values that are non-numeric are checked to see if they match
+        any of the following values.  The comparison is case-insensitive.
 
-        Values not otherwise interpretable result in a ValueError.
+        - For ``True``: ``"true"``, ``"yes"``, or ``"y"``.
+        - For ``False``: ``"false"``, ``"no"``, or ``"n"``.
+
+        Values not interpretable result in a ``ValueError``.
 
         Parameters
         ----------
         value : str
-            The string to parse.
+            String to parse.
 
         Returns
         -------
         BooleanValue
-            A boolean value parsed from the API string.
+            ``BooleanValue`` type parsed from the API string.
         """
         return BooleanValue(BooleanValue.str_to_bool(value))
 
     def to_integer_value(self) -> IntegerValue:
         """
-        Convert a given BooleanValue to an IntegerValue.
+        Convert a given ``BooleanValue`` type to an ``IntegerValue`` type.
 
-        True is converted to 1 and False is converted to 0.
+        ``True`` is converted to ``1``, and ``False`` is converted to ``0``.
 
         Returns
         -------
         IntegerValue
-            An IntegerValue with value representing the original BooleanValue.
+            ``IntegerValue`` type with the value representing the original ``BooleanValue`` type.
         """
         if self:
             return IntegerValue(1)
@@ -331,18 +337,18 @@ class BooleanValue(IVariableValue):
 
 class IntegerValue(np.int64, IVariableValue):
     """
-    Stores a value for a variable of type integer.
+    Stores a value for an ``IntegerValue`` type.
 
-    In Python IntegerValue is implemented by extending NumPy's int64 type. This means
-    that they will decay naturally into numpy.int64 objects when using NumPy's
-    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    In Python, the ``IntegerValue`` type is implemented by extending NumPy's int64 type.
+    This means that they will decay naturally into ``numpy.int64`` objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the NumPy behaviors,
     which may be slightly different from the behaviors specified in the variable interop
-    standards. For example, when converting from real to integer, the value will be
+    standards. For example, when converting from real to integer, the value is
     floored instead of rounded. If you want the variable interop standard conversions,
-    use the to_real_value function on this class to get a RealValue, which will be
-    rounded according to the variable interop standards and decomposes naturally into a
-    numpy.float64. Other conversions to analogous Python or NumPy types are identical
-    between the variable interop standards and the default Python / NumPy behavior.
+    use the :meth:`to_real_value` method on this class to get a ``RealValue type``, which
+    is rounded according to the variable interop standards and decomposes naturally into a
+    ``numpy.float64`` type. Other conversions to analogous Python or NumPy types are identical
+    between the variable interop standards and the default Python and NumPy behaviors.
     """
 
     @overrides
@@ -350,17 +356,17 @@ class IntegerValue(np.int64, IVariableValue):
         """
         Create a new instance.
 
-        Construction behaves differently for floating-point numbers and strings depending on
-        whether the argument is an IVariableValue or not.
+        Construction behaves differently for floating-point numbers and strings, depending on
+        whether the argument is an ``IVariableValue`` type.
 
-        IVariableValue instances are converted according to the standard interop rules.
-        Reals are rounded. Values with a .5 in the tenths place are rounded away from zero.
-        Strings are converted to reals, then rounded according to those rules.
+        ``IVariableValue`` instances are converted according to the standard interop rules.
+        ``Real`` types are rounded. Values with a .5 in the tenths place are rounded away from zero.
+        ``String`` types are converted to ``Real`` type and then rounded according to those rules.
 
         Parameters
         ----------
         arg : Any
-            The argument from which to construct this instance.
+            Argument to construct the instance from.
         """
 
         if isinstance(arg, IVariableValue):
@@ -398,42 +404,42 @@ class IntegerValue(np.int64, IVariableValue):
 
     def to_real_value(self) -> RealValue:
         """
-        Convert this IntegerValue to a RealValue.
+        Convert this ``IntegerValue`` type to a ``RealValue`` type.
 
-        Note that since a RealValue is a 64-bit floating point number, it has a 52-bit mantissa.
-        That means that a portion of the range of 64-bit IntegerValues cannot be completely
-        accurately represented by RealValues; this conversion is sometimes lossy for IntegerValues
-        of sufficient magnitude.
+        Because a ``RealValue`` type is a 64-bit floating point number, it has a 52-bit mantissa.
+        That means that a portion of the range of 64-bit ``IntegerValue`` types cannot be completely
+        accurately represented by ``RealValue`` types. This conversion is sometimes lossy for
+        ``IntegerValue`` types of sufficient magnitude.
 
         Returns
         -------
         RealValue
-            A RealValue with the same numeric value as this IntegerValue.
+            ``RealValue`` type with the same numeric value as the ``IntegerValue`` type.
         """
         return RealValue(self)
 
     @staticmethod
     def from_api_string(value: str) -> IntegerValue:
         """
-        Create an integer value from an API string.
+        Create an ``IntegerValue`` type from an API string.
 
         Leading and trailing whitespace is ignored.
-        Values which can be correctly parsed as floating-point numbers
-        are parsed in that manner, then rounded to integers. When rounding,
+        Values that can be correctly parsed as floating-point numbers
+        are parsed in that manner and then rounded to integers. When rounding,
         values with a 5 in the tenths place are rounded away from zero.
 
         Parameters
         ----------
         value : str
-            The string to parse.
+            String to parse.
 
         Returns
         -------
         IntegerValue
-            An integer value parsed from the API string.
+            ``IntegerValue``type parsed from the API string.
         """
         if value is None:
-            raise TypeError("Cannot create integer values from NoneType")
+            raise TypeError("Cannot create integer values from `None` type.")
 
         # Check to see if this looks like a float.
         if any(char == "E" or char == "e" or char == "." for char in value):
@@ -453,16 +459,17 @@ class IntegerValue(np.int64, IVariableValue):
 
 class RealValue(np.float64, IVariableValue):
     """
-    Stores a value for a variable of type real.
+    Stores a value for a ``RealValue`` variable type.
 
-    In Python RealValue is implemented by extending NumPy's float64 type. This means
-    that they will decay naturally into numpy.float64 objects when using NumPy's
-    arithmetic operators. It also means that they inherit many of the numpy behaviors,
+    In Python, the ``RealValue`` type is implemented by extending NumPy's float64 type. This means
+    that they decay naturally into ``numpy.float64`` objects when using NumPy's
+    arithmetic operators. It also means that they inherit many of the NumPy behaviors,
     which may be slightly different from the behaviors specified in the variable interop
-    standards. For example, when converting from real to integer, the value will be
+    standards. For example, when converting from real to integer, the value is
     floored instead of rounded. If you want the variable interop standard conversions,
-    use to_int_value() to get an IntegerValue with variable interop standard rounding
-    (away from zero). IntegerValue decomposes naturally to numpy.int64.
+    use the :meth:`to_int_value()` method to get an ``IntegerValue`` type with variable
+    interop standard rounding (away from zero). The ``IntegerValue`` type decomposes naturally to
+    ``numpy.int64`` objects.
     """
 
     def __new__(cls, arg: Any = 0.0):
@@ -472,7 +479,7 @@ class RealValue(np.float64, IVariableValue):
         Parameters
         ----------
         arg : Any
-            The argument from which to construct this instance.
+            Argument to construct the instance from.
         """
         if isinstance(arg, BooleanValue):
             return super().__new__(cls, bool(arg))
@@ -483,22 +490,23 @@ class RealValue(np.float64, IVariableValue):
     """
     This is the canonical API string representation for infinity.
 
-    from_api_string will accept other values provided they are unambiguously infinity.
+    The :meth:`from_api_string()` method accepts other values provided they are
+    unambiguously infinity.
     """
 
     __CANONICAL_NEG_INF = "-Infinity"
     """
     This is the canonical API string representation for negative infinity.
 
-    from_api_string will accept other values provided they are unambiguously negative
-    infinity.
+    The :meth:`from_api_string()` method accepts other values provided they are
+    unambiguously negative infinity.
     """
 
     __CANONICAL_NAN = "NaN"
     """
     This is the canonical API string representation for NaN.
 
-    from_api_string will accept other values provided they are unambiguously NaN.
+    The :meth:`from_api_string` method accepts other values provided they are unambiguously NaN.
     """
 
     @overrides
@@ -527,46 +535,46 @@ class RealValue(np.float64, IVariableValue):
     @staticmethod
     def from_api_string(value: str) -> RealValue:
         """
-        Convert an API string back into a value.
+        Convert an API string back into a ``RealValue`` type.
 
         Parameters
         ----------
         value : str
-            The string to convert.
+            String to convert.
         """
         return RealValue(float(value))
 
     def to_int_value(self) -> IntegerValue:
         """
-        Convert this RealValue to an IntegerValue.
+        Convert this ``RealValue`` type to an ``IntegerValue`` type.
 
         The conversion is performed according to the type
         interoperability specifications. The value is rounded to the
         nearest integer, where values with a 5 in the tenths place are
         always rounded away from zero. (Note that this is different
-        from the "default" Python rounding behavior.)
+        from the default Python rounding behavior.)
 
         Returns
         -------
         IntegerValue
-            An IntegerValue that is the result of rounding this value
-            to the nearest integer (values with a 5 in the tenths place
-            are rounded away from zero).
+            ``IntegerValue`` type that is the result of rounding this value
+            to the nearest integer. (Values with a 5 in the tenths place
+            are rounded away from zero.)
         """
         return IntegerValue(self)
 
     def to_boolean_value(self) -> BooleanValue:
         """
-        Convert this RealValue to a BooleanValue.
+        Convert this ``RealValue``type to a ``BooleanValue`` type.
 
         The conversion is performed according to the type
         interoperability specifications. Any value other than exactly 0
-        is considered to be 'True'.
+        is considered to be ``True``.
 
         Returns
         -------
         BooleanValue
-            A BooleanValue that is the result of converting this RealValue.
+            ``BooleanValue`` type that is the result of converting the ``RealValue`` type.
         """
         return BooleanValue(self != 0)
 
@@ -580,15 +588,15 @@ class RealValue(np.float64, IVariableValue):
 
 class StringValue(np.str_, IVariableValue):
     """
-    Stores a value for a variable of type file.
+    Stores a value for the ``IVariableValue`` type.
 
-    In Python IntegerValue is implemented by extending NumPy's str\_ type. This means
-    that they will decay naturally into numpy.str\_ objects when used with other types
-    operators. It also means that they inherit many of the numpy behaviors, which may be
-    slightly different from the behaviors specified in the variable interop standards.
-    For example, when converting from string to integer, values parseable as a floating-
-    point number are rejected instead of parsed as such and rounded. If you want the
-    variable interop standard conversions, use the from_api_string method on any given
+    In Python, the ``IntegerValue`` type is implemented by extending NumPy's ``str\_`` type.
+    This means that they decay naturally into ``numpy.str\_`` objects when used with other
+    types of operators. It also means that they inherit many of the NumPy behaviors, which
+    may be slightly different from the behaviors specified in the variable interop standards.
+    For example, when converting from string to integer, values parseable as floating-
+    point numbers are rejected instead of parsed as such and then rounded. If you want the
+    variable interop standard conversions, use the :meth:`from_api_string()` method on any given
     variable interop type to get an instance of that type, which should decompose
     naturally to the analogous NumPy type.
     """
@@ -611,16 +619,16 @@ class StringValue(np.str_, IVariableValue):
         """
         Convert an API string back to a string value.
 
-        The string is stored exactly as specified; no escaping is performed
-        as with from_formatted string.
+        The string is stored exactly as specified. No escaping is performed
+        as with the :meth:`from_formatted string` method.
 
         Parameters
         ----------
         value : str
-            The string to convert.
+            String to convert.
         """
         if value is None:
-            raise TypeError("Cannot create a StringValue from None.")
+            raise TypeError("Cannot create a `StringValue` type from `None` type.")
 
         # No conversion / escaping when coming from API string
         return StringValue(value)

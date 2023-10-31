@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of scalar metadata types."""
 from __future__ import annotations
 
@@ -35,7 +36,7 @@ from .variable_type import VariableType
 
 
 class BooleanMetadata(CommonVariableMetadata):
-    """Provides metadata for variables of boolean and boolean array type."""
+    """Provides metadata for ``BOOLEAN`` and ``BOOLEAN_ARRAY`` variable types."""
 
     @overrides
     def __eq__(self, other):
@@ -57,7 +58,7 @@ class BooleanMetadata(CommonVariableMetadata):
 
 
 class IntegerMetadata(NumericMetadata):
-    """Provides metadata for variables of integer and integer array type."""
+    """Provides metadata for ``INTEGER`` and ``INTEGER_ARRAY`` variable types."""
 
     @overrides
     def __init__(self) -> None:
@@ -83,26 +84,25 @@ class IntegerMetadata(NumericMetadata):
     @property
     def lower_bound(self) -> Optional[IntegerValue]:
         """
-        Hard lower bound for this variable.
+        Hard lower bound for the variable.
 
         Systems utilizing this variable should prevent setting the
         value below this lower bound. This is typically used to
         represent physical impossibilities (negative length) or limits
-        of the simulation software (values below this will cause an
-        error or invalid result). This may not be the soft bounds used
+        of the simulation software. Values below this hard lower bound
+        cause an error or invalid result. This may not be the soft bounds used
         for an optimization design parameter or DOE exploration.
 
         Returns
         -------
         Optional[IntegerValue]
-            The lower bound, or None if no lower bound is specified.
+            Lower bound or ``None`` if no lower bound is specified.
         """
         return self._lower_bound
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
     def lower_bound(self, value: Optional[IntegerValue]) -> None:
-        """Set the lower bound."""
         self._lower_bound = value
 
     @property
@@ -113,34 +113,33 @@ class IntegerMetadata(NumericMetadata):
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used to
         represent physical impossibilities (100%) or limits of the
-        simulation software (values above this will cause an error or
-        invalid result). This may not be the soft bounds used for an
+        simulation software. Values above this hard upper bound cause
+        an error or invalid result. This may not be the soft bounds used for an
         optimization design parameter or DOE exploration.
 
         Returns
         -------
         Optional[IntegerValue]
-            The upper bound, or None if no upper bound is specified.
+            Upper bound or ``None`` if no upper bound is specified.
         """
         return self._upper_bound
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
     def upper_bound(self, value: Optional[IntegerValue]) -> None:
-        """Set the upper bound."""
         self._upper_bound = value
 
     @property
     def enumerated_values(self) -> List[IntegerValue]:
         """
-        Get the list of enumerated values.
+        List of enumerated values.
 
-        May be empty to imply no enumerated values.
+        This list may be empty to imply that there are no enumerated values.
 
         Returns
         -------
         List[IntegerValue]
-            The list of enumerated values.
+            List of enumerated values.
         """
         return self._enumerated_values
 
@@ -152,21 +151,21 @@ class IntegerMetadata(NumericMetadata):
         Parameters
         ----------
         value : List[IntegerValue]
-            The list of values to set.
+            List of values to set.
         """
         self._enumerated_values = value
 
     @property
     def enumerated_aliases(self) -> List[str]:
         """
-        Get the list of enumerated aliases.
+        List of enumerated aliases.
 
-        May be empty to imply no enumerated aliases.
+        This list may be empty to imply that there are no enumerated aliases.
 
         Returns
         -------
         List[str]
-            The list of enumerated aliases.
+            List of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -178,7 +177,7 @@ class IntegerMetadata(NumericMetadata):
         Parameters
         ----------
         value : List[str]
-            The list of aliases to set.
+            List of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -196,7 +195,7 @@ class IntegerMetadata(NumericMetadata):
 
 
 class RealMetadata(NumericMetadata):
-    """Provides metadata for variables of type real and real array."""
+    """Provides metadata for ``REAL`` and ``REAL_ARRAY`` variable types."""
 
     @overrides
     def __init__(self) -> None:
@@ -222,64 +221,62 @@ class RealMetadata(NumericMetadata):
     @property
     def lower_bound(self) -> Optional[RealValue]:
         """
-        Hard lower bound for this variable.
+        Hard lower bound for the variable.
 
         Systems utilizing this variable should prevent setting the
         value below this lower bound. This is typically used to
         represent physical impossibilities (negative length) or limits
-        of the simulation software (values below this will cause an
-        error or invalid result). This may not be the soft bounds used
-        for an optimization design parameter or DOE exploration.
+        of the simulation software. Values below this hard lower bound
+        cause an error or invalid result. This may not be the soft bounds
+        used for an optimization design parameter or DOE exploration.
 
         Returns
         -------
         Optional[RealValue]
-            The lower bound, or None if no lower bound is specified.
+            Lower bound or ``None`` if no lower bound is specified.
         """
         return self._lower_bound
 
     @lower_bound.setter  # type: ignore
     @implicit_coerce
     def lower_bound(self, value: Optional[RealValue]) -> None:
-        """Set the lower bound."""
         self._lower_bound = value
 
     @property
     def upper_bound(self) -> Optional[RealValue]:
         """
-        Hard upper bound for this variable.
+        Hard upper bound for the variable.
 
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used
         to represent physical impossibilities (100%) or limits of the
-        simulation software (values above this will cause an error or
-        invalid result). This may not be the soft bounds used for an
+        simulation software. Values above this hard upper bound cause an error or
+        invalid result. This may not be the soft bounds used for an
         optimization design parameter or DOE exploration.
 
         Returns
         -------
         Optional[RealValue]
-            The upper bound, or None if no upper bound is specified.
+            Upper bound or ``None`` if no upper bound is specified.
         """
         return self._upper_bound
 
     @upper_bound.setter  # type: ignore
     @implicit_coerce
     def upper_bound(self, value: Optional[RealValue]) -> None:
-        """Set the upper bound."""
         self._upper_bound = value
 
     @property
     def enumerated_values(self) -> List[RealValue]:
         """
-        Get the list of enumerated values.
+        List of enumerated values.
 
-        May be empty to imply no enumerated values.
+        This list may be empty to imply that there are no enumerated values.
 
         Returns
         -------
         List[RealValue]
-            The list of enumerated values.
+           List of enumerated values.
         """
         return self._enumerated_values
 
@@ -291,21 +288,21 @@ class RealMetadata(NumericMetadata):
         Parameters
         ----------
         value : List[RealValue]
-            The list of values to set.
+            List of values to set.
         """
         self._enumerated_values = value
 
     @property
     def enumerated_aliases(self) -> List[str]:
         """
-        Get the list of enumerated aliases.
+        List of enumerated aliases.
 
-        May be empty to imply no enumerated aliases.
+        This list may be empty to imply that there are no enumerated aliases.
 
         Returns
         -------
         List[str]
-            The list of enumerated aliases.
+            List of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -317,7 +314,7 @@ class RealMetadata(NumericMetadata):
         Parameters
         ----------
         value : List[str]
-            The list of aliases to set.
+            List of aliases to set.
         """
         self._enumerated_aliases = value
 
@@ -335,7 +332,7 @@ class RealMetadata(NumericMetadata):
 
 
 class StringMetadata(CommonVariableMetadata):
-    """Common metadata for VariableType.STRING and VariableType.STRING_ARRAY."""
+    """Provides common metadata for ``STRING`` and ``STRING_ARRAY`` variable types."""
 
     @overrides
     def __init__(self) -> None:
@@ -359,14 +356,14 @@ class StringMetadata(CommonVariableMetadata):
     @property
     def enumerated_values(self) -> List[StringValue]:
         """
-        Get the list of enumerated values.
+        List of enumerated values.
 
-        May be empty to imply no enumerated values.
+        This list may be empty to imply that there are no enumerated values.
 
         Returns
         -------
         List[StringValue]
-            The list of enumerated values.
+            List of enumerated values.
         """
         return self._enumerated_values
 
@@ -378,21 +375,21 @@ class StringMetadata(CommonVariableMetadata):
         Parameters
         ----------
         value : List[StringValue]
-            The list of values to set.
+            List of values to set.
         """
         self._enumerated_values = value
 
     @property
     def enumerated_aliases(self) -> List[str]:
         """
-        Get the list of enumerated aliases.
+        List of enumerated aliases.
 
-        May be empty to imply no enumerated aliases.
+        This list may be empty to imply that there are no enumerated aliases.
 
         Returns
         -------
         List[str]
-            The list of enumerated aliases.
+            List of enumerated aliases.
         """
         return self._enumerated_aliases
 
@@ -404,7 +401,7 @@ class StringMetadata(CommonVariableMetadata):
         Parameters
         ----------
         value : List[str]
-            The list of aliases to set.
+            List of aliases to set.
         """
         self._enumerated_aliases = value
 

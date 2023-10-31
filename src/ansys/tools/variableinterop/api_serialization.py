@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of ToAPIStringVisitor."""
 from typing import Optional
 
@@ -47,8 +48,8 @@ class ToAPIStringVisitor(IVariableValueVisitor[str]):
         Parameters
         ----------
         save_context : Optional[ISaveContext], optional
-            Save context to use for conversion. This may be omitted in cases where you do not wish
-             to support file values. context to use for conversion. The default value is ``None``.
+            Save context to use for conversion. The default value is ``None``, which indicates
+            that you do not want to support file values.
         """
         self._save_context = save_context
 
@@ -102,13 +103,13 @@ def to_api_string(value: IVariableValue, save_context: Optional[ISaveContext] = 
     value : IVariableValue
         Value to convert to an API string.
     save_context : Optional[ISaveContext], optional
-        Save context to use for conversion. This may be omitted in cases where you do not wish
-        to support file values. The default value is ``None``.
+        Save context to use for conversion. The default value is ``None``, which indicates
+        that you do not want to support file values.
 
     Returns
     -------
     str
-        The serialized form of value.
+        Serialized form of the value.
     """
     return value.accept(ToAPIStringVisitor(save_context))
 
@@ -129,11 +130,11 @@ def from_api_string(
     source : str
        Source string.
     fscope : Optional[FileScope], optional
-        The file scope to use to deserialize file variables. May be ``None`` if file variables
-        are not needed, which is the default.
+        File scope to use to deserialize file variables. The default is ``None``,
+        which indictates that file variables are not needed.
     load_context : Optional[ILoadContext], optional
-        Load context to read file contents from. If file variables are
-        not needed, the value can be ``None``, which is the default.
+        Load context to read file contents from. The default is ``None``, which
+        indicates file variables are not needed.
 
     Returns
     -------

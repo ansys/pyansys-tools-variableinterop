@@ -1,5 +1,9 @@
 API reference
 =============
+
+This section describes ``ansys.tools.variableinterop`` endpoints, their capabilities,
+and how to interact with them programmatically.
+
 .. currentmodule:: ansys.tools.variableinterop
 
 .. autosummary::

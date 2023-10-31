@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definitions of array metadata types."""
 from overrides import overrides
 
@@ -28,7 +29,7 @@ from .variable_type import VariableType
 
 
 class BooleanArrayMetadata(BooleanMetadata):
-    """Provides metadata for a variable with a ``BooleanArrayValue`` value type."""
+    """Provides metadata for a variable of the ``BooleanArrayValue`` type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -41,7 +42,7 @@ class BooleanArrayMetadata(BooleanMetadata):
 
 
 class IntegerArrayMetadata(IntegerMetadata):
-    """Provides metadata for a variable with an ``IntegerArrayValue`` value type."""
+    """Provides metadata for a variable of the ``IntegerArrayValue`` type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -54,7 +55,7 @@ class IntegerArrayMetadata(IntegerMetadata):
 
 
 class RealArrayMetadata(RealMetadata):
-    """Provides metadata for a variable with a ``RealArrayValue`` value type."""
+    """Provides metadata for a variable of the ``RealArrayValue`` type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
@@ -67,7 +68,7 @@ class RealArrayMetadata(RealMetadata):
 
 
 class StringArrayMetadata(StringMetadata):
-    """Provides metadata for a variable with a ``StringArrayValue`` value type."""
+    """Provides metadata for a variable of the ``StringArrayValue`` type."""
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:

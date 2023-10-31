@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of GetModelCenterTypeForValue."""
 from overrides import overrides
 
@@ -27,30 +28,31 @@ from .variable_value import IVariableValue
 
 
 class GetModelCenterTypeForValue:
-    """Provides a static method for getting the corresponding ModelCenter type for an
-    ``IVariableValue`` object."""
+    """Provides a static method for getting the model center for an ``IVariableValue``
+    type."""
 
     @staticmethod
     def get_modelcenter_type(value: IVariableValue) -> str:
         """
-        Get the corresponding ModelCenter type for an IVariableValue.
+        Get the model center type for an ``IVariableValue`` variable.
 
         Parameters
         ----------
         value : IVariableValue
-            Value to get the type for.
+            ``IVariableValue`` variable to get the model center type for.
 
         Returns
         -------
         str
-            Corresponding ``ModelCenter`` type string.
+            Model center type.
         """
         generator = GetModelCenterTypeForValue._GetModelCenterTypeVisitor()
         result: str = vartype_accept(generator, value.variable_type)
         return result
 
     class _GetModelCenterTypeVisitor(IVariableTypePseudoVisitor[str]):
-        """Helper visitor used by GetModelCenterTypeForValue."""
+        """Provides the helper visitor used by the ``GetModelCenterTypeForValue``
+        class."""
 
         @overrides
         def visit_unknown(self) -> str:

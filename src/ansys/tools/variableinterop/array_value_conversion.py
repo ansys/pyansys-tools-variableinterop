@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of array value visitors."""
 import numpy as np
 from overrides import overrides
@@ -102,16 +103,16 @@ class __ToBooleanArrayVisitor(ivariable_visitor.IVariableValueVisitor[BooleanArr
 
 def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArrayValue:
     """
-    Convert the given value to a BooleanArrayValue.
+    Convert the given value to a ``BooleanArrayValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
-    and some conversions are not possible (raises IncompatibleTypesException).
+    Note that some conversions are lossy (resulting in a loss of precision),
+    and some conversions are not possible (raises ``IncompatibleTypesException``).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a BooleanArrayValue.
+        Other value to convert to a ``BooleanArrayValue`` type.
 
     Returns
     -------
@@ -122,7 +123,7 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
 
 
 class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArrayValue]):
-    """Visits variable values and converts them to ``IntegerArrayValue`` when
+    """Visits variable values and converts them to ``IntegerArrayValue`` types when
     possible."""
 
     @overrides
@@ -180,21 +181,21 @@ class __ToIntegerArrayVisitor(ivariable_visitor.IVariableValueVisitor[IntegerArr
 
 def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArrayValue:
     """
-    Convert the given value to a IntegerArrayValue.
+    Convert the given value to an ``IntegerArrayValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
-    and some conversions are not possible (raises IncompatibleTypesException).
+    Note that some conversions are lossy (resulting in a loss of precision),
+    and some conversions are not possible (raises ``IncompatibleTypesException``).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a IntegerArrayValue.
+        Other value to convert to an ``IntegerArrayValue`` type.
 
     Returns
     -------
     IntegerArrayValue
-        The value as a IntegerArrayValue.
+        Value as an ``IntegerArrayValue`` type.
     """
     return other.accept(__ToIntegerArrayVisitor())
 
@@ -258,21 +259,21 @@ class __ToRealArrayVisitor(ivariable_visitor.IVariableValueVisitor[RealArrayValu
 
 def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
     """
-    Convert the given value to a RealArrayValue.
+    Convert the given value to a ``RealArrayValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
-    and some conversions are not possible (raises IncompatibleTypesException).
+    Note that some conversions are lossy (resulting in a loss of precision),
+    and some conversions are not possible (raises ``IncompatibleTypesException``).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a RealArrayValue.
+        Other value to convert to a ``RealArrayValue`` type.
 
     Returns
     -------
     RealArrayValue
-        Value as an ``RealArrayValue`` type.
+        Value as a ``RealArrayValue`` type.
     """
     return other.accept(__ToRealArrayVisitor())
 
@@ -336,16 +337,16 @@ class __ToStringArrayVisitor(ivariable_visitor.IVariableValueVisitor[StringArray
 
 def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayValue:
     """
-    Convert the given value to a StringArrayValue.
+    Convert the given value to a ``StringArrayValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
-    Note that some conversions are lossy (resulting in a loss of precision)
-    and some conversions are not possible (raises IncompatibleTypesException).
+    Note that some conversions are lossy (resulting in a loss of precision),
+    and some conversions are not possible (raises ``IncompatibleTypesException``).
 
     Parameters
     ----------
     other : IVariableValue
-        The other value to convert to a StringArrayValue.
+        Other value to convert to a ``StringArrayValue`` type.
 
     Returns
     -------

@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 """Definition of NonManagingFileScope."""
 from __future__ import annotations
 
@@ -39,20 +40,20 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
     """
     Provides a simple file scope implementation that performs no management.
 
-    This file scope that allows you to create `FileValue` instances that are backed by arbitrary
+    This file scope allows you to create `FileValue` instances that are backed by arbitrary
     preexisting files on disk. It is up to the caller to ensure that the file remains in place
-    and unchanged for the lifespan of the FileValue instance, and that the file is deleted at
+    and unchanged for the lifespan of the ``FileValue`` instance and that the file is deleted at
     an appropriate time. Because of these restrictions, it is generally not recommended using
     this file scope except for referencing permanently installed files.
 
-    It also serves as a "pass-through" save context; since the files are assumed to be managed
-    externally such that they are permanent or at least not deleted while in use,
-    the save context takes no action to actually save them and simply passes through
+    This file scope also serves as a "pass-through" save context. Because the files are
+    assumed to be managed externally such that they are permanent (or at least not deleted
+    while in use), the save context takes no action to save them but simply passes through
     their current location on disk as an identifier.
     """
 
     class NonManagingFileValue(LocalFileValue):
-        """Implementation of FileValue used by this scope."""
+        """Implementation of a ``FileValue`` instance used by this scope."""
 
         @overrides
         def _has_content(self) -> bool:
@@ -72,7 +73,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
                 MIME type of the file. The default value is `None`, which indicates that the MIME
                 type is not known or the file does not have one.
             encoding : Optional[str], optional
-                The text encoding of the file. The default value is `None`, which indicates that the
+                Eext encoding of the file. The default value is `None`, which indicates that the
                 file does not have a known text encoding (for example, because it is a binary file).
             """
             size: Optional[int] = None
@@ -104,17 +105,17 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
 
     def to_api_string_file_store(self, file_var: FileValue) -> str:
         """
-        Serialize a FileValue in this scope to an API string.
+        Serialize a ``FileValue`` instance in this scope to an API string.
 
         Parameters
         ----------
         file_var : FileValue
-            The FileValue to serialize.
+            ``FileValue`` instance to serialize.
 
         Returns
         -------
         str
-            An API string representing the value.
+            API string representing the ``FileValue`` instance.
         """
         if not issubclass(type(file_var), NonManagingFileScope.NonManagingFileValue):
             raise TypeError("This file scope cannot serialize file values it did not create.")
