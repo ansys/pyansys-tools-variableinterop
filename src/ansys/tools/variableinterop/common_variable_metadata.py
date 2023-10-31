@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of CommonVariableMetadata."""
+"""Defines the ``CommonVariableMetadata`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -61,12 +61,12 @@ class CommonVariableMetadata(ABC):
         Parameters
         ----------
         other : Any
-            Object to compare the object to.
+            Other object to compare this object to.
 
         Returns
         -------
         bool
-            ``True`` if metadata objects are equal, ``False`` otherwise.
+            ``True`` if the metadata objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, CommonVariableMetadata)
@@ -120,7 +120,7 @@ class CommonVariableMetadata(ABC):
 
     @property
     def custom_metadata(self) -> Dict[str, IVariableValue]:
-        """Aby custom metadata is stored in this dictionary."""
+        """Custom metadata stored in this dictionary."""
         return self._custom_metadata
 
     def get_default_value(self) -> IVariableValue:

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of FileArrayValue."""
+"""Defines the ``FileArrayValue`` class."""
 from __future__ import annotations
 
 import json
@@ -43,7 +43,7 @@ T = TypeVar("T")
 
 class FileArrayValue(CommonArrayValue[FileValue]):
     """
-    Stores a ``FileArrayValue`` type.
+    Stores a value for the ``FileArrayValue`` variable type.
 
     In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's

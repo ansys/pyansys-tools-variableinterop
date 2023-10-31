@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of NonManagingFileScope."""
+"""Defines the ``NonManagingFileScope`` class."""
 from __future__ import annotations
 
 import os
@@ -62,7 +62,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
             self, to_read: PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None
         ) -> None:
             """
-            Construct a new NonManagingFileValue.
+            Construct a new ``NonManagingFileValue`` instance.
 
             Parameters
             ----------
@@ -72,7 +72,7 @@ class NonManagingFileScope(FileScope, ISaveContext, ILoadContext):
                 MIME type of the file. The default value is `None`, which indicates that the MIME
                 type is not known or the file does not have one.
             encoding : Optional[str], optional
-                Eext encoding of the file. The default value is `None`, which indicates that the
+                Encoding of the file. The default value is `None`, which indicates that the
                 file does not have a known text encoding (for example, because it is a binary file).
             """
             size: Optional[int] = None

@@ -19,8 +19,9 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""This module contains utilities for implicitly coercing arbitrary Python objects \
-into the appropriate IVariableValue type."""
+
+"""Provides utilities for implicitly coercing arbitrary Python objects \ into the
+appropriate ``IVariableValue`` type."""
 from __future__ import annotations
 
 from decimal import Decimal
@@ -52,12 +53,12 @@ __TYPE_MAPPINGS = {
 }
 """
 This map applies when coercing scalar values to a method argument type hinted as
-IVariableValue.
+``IVariableValue``.
 
-It is used to determine the specific implementation of IVariableValue that should be
+It is used to determine the specific ``IVariableValue`` implementation that should be
 generated from the argument's actual runtime value. The type of the actual runtime
 argument value is the key in the dictionary, and the value is the specific
-IVariableValue implementation that should be used.
+``IVariableValue`` implementation that should be used.
 """
 
 __ARR_TYPE_MAPPINGS = {
@@ -73,12 +74,12 @@ __ARR_TYPE_MAPPINGS = {
 }
 """
 This map applies when coercing ndarray values to a method argument type hinted as
-IVariableValue.
+``IVariableValue``.
 
-It is used to determine the specific implementation of IVariableValue that should be
+It is used to determine the specific ``IVariableValue`` implementation that should be
 generated from the argument's actual runtime value. The dtype of the actual ndarray
 value at runtime is the key in the dictionary, and the value is the specific
-IVariableValue implementation that should be used.
+``IVariableValue`` implementation that should be used.
 """
 
 __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
@@ -119,9 +120,10 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE = {
     ],
 }
 """
-Rules for implicitly coercing scalar values to a specific IVariableValue implementation.
+Rules for implicitly coercing scalar values to a specific ``IVariableValue``
+implementation.
 
-This map is used to determine whether the coercion is allowed. The IVariableValue
+This map is used to determine whether the coercion is allowed. The ``IVariableValue``
 implementation type is the key. The value is a list of all types that may be implicitly
 coerced to that type.
 """
@@ -133,9 +135,10 @@ __ALLOWED_SPECIFIC_IMPLICIT_COERCE_ARR = {
     StringArrayValue: [np.integer, np.inexact, np.bool_, np.str_],
 }
 """
-Rules for implicitly coercing array values to a specific IVariableValue implementation.
+Rules for implicitly coercing array values to a specific ``IVariableValue``
+implementation.
 
-The map is used to determine whether the coercion is allowed. The IVariableValue
+The map is used to determine whether the coercion is allowed. The ``IVariableValue``
 implementation type is the key. NumPy ndarrays with their dtype set to any of the items
 in the value list are allowed to be implicitly coerced to the type represented by the
 key.
@@ -144,17 +147,17 @@ key.
 
 def _is_optional(arg_type: type) -> bool:
     """
-    Determine if a type object refers to an Optional[x].
+    Determine if a type object refers to an ``Optional[x]``.
 
     Parameters
     ----------
     arg_type : type
-        The type to check for optional.
+        Type to check for optional.
 
     Returns
     -------
     bool
-        ``True`` if the argument passed in is Optional[x] for some x.
+        ``True`` if the argument passed is ``Optional[x]`` for some x.
     """
     return (
         hasattr(arg_type, "__origin__")
@@ -166,19 +169,20 @@ def _is_optional(arg_type: type) -> bool:
 
 def _get_optional_type(arg_type: type) -> type:
     """
-    If _is_optional(arg_type) returns true, this function will return the type argument
-    to Optional[x]. If _is_optional(arg_type) returns false, this function's behavior is
-    undeclared.
+    Get "x" from "Optional[x]".
 
-    Parameters
+        Parameters
     ----------
     arg_type : type
-        The Optional[x] type. Only valid if _is_optional(arg_type) returns true.
+        "Optional[x]" type. This parameter is only valid if the ``_is_optional`` argument
+        returns ``True``.
 
     Returns
     -------
     type
-        The 'x' from Optional[x].
+        If the ``_is_optional`` argument returns ``True``, the "x" from ``Optional[x]``
+        is returned.
+        If the ``_is_optional`` argument returns ``False``, the behavior is undeclared.
     """
     return arg_type.__args__[0]  # type: ignore
 
@@ -187,16 +191,16 @@ def _specific_implicit_coerce_allowed(
     target_arg_type: type, actual_arg_type: type, ruleset: Dict[type, List[type]]
 ) -> bool:
     """
-    Check whether implicit coercion from a given type to a given type is allowed or not.
+    Check whether implicit coercion from a given type to a given type is allowed.
 
     Parameters
     ----------
     target_arg_type : type
-        The target type of the argument (the type declared on the method).
+        Target type of the argument (type declared on the method).
     actual_arg_type : type
-        The actual type of the argument (the type of the actual object being passed).
+        Actual type of the argument (type of the actual object being passed).
     ruleset : Dict[type, List[type]]
-        A map of types to allowed coercion types.
+        Map of types to allowed coercion types.
 
     Returns
     -------
@@ -270,19 +274,20 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
     Attempt to coerce the argument into the given type.
 
     This function uses implicit semantics in that lossy conversions are
-    not considered (such as int64->real64 since precision may be lost).
+    not considered (such as int64->real64 because precision may be lost).
 
     Parameters
     ----------
     arg : Any
-        The object to attempt to convert
+        Object to attempt to convert.
     arg_type : type
-        The type of object to convert to. Must be IVariableValue or something derived from it.
+        Type of object to convert to. The type must be ``IVariableValue`` or
+        something derived from it.
 
     Returns
     -------
     Any
-        The converted object
+        Converted object
 
     Raises
     ------
@@ -325,20 +330,21 @@ def implicit_coerce_single(arg: Any, arg_type: type) -> Any:
 
 def implicit_coerce(func: Any) -> Any:
     """
-    Use to decorate functions that use the PEP 484 typing system to try and coerce any
-    arguments that accept IVariableValue or any derived type into an acceptable value.
+    Use to decorate functions using the PEP 484 typing system to try and coerce any
+    arguments that accept the ``IVariableValue`` type or any derived type into an
+    acceptable value.
 
     Parameters
     ----------
     func : Any
-        The function to decorate.
+        Function to decorate.
 
     Returns
     -------
     Any
-        The wrapper function.
+        Wrapper function.
     """
-    assert inspect.isfunction(func), "Decorator must be used on functions"
+    assert inspect.isfunction(func), "Decorator must be used on functions."
     signature = inspect.signature(func)
     type_hints = get_type_hints(func)
 

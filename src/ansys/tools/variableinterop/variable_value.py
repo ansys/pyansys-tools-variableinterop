@@ -19,7 +19,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of IVariableValue and related classes."""
+
+"""Defines the ``IVariableValue`` class and related classes."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -46,18 +47,18 @@ class IVariableValue(ABC):
     @abstractmethod
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         """
-        Invoke the visitor pattern of this object using the passed in visitor
+        Invoke the visitor pattern of this object using the passed-in visitor
         implementation.
 
         Parameters
         ----------
         visitor : IVariableValueVisitor
-            The visitor object to call
+            Visitor object to call.
 
         Returns
         -------
         T
-            Results of the visitor invocation
+            Results of the visitor invocation.
         """
         raise NotImplementedError
 
@@ -65,55 +66,55 @@ class IVariableValue(ABC):
     @abstractmethod
     def variable_type(self) -> variable_type_lib.VariableType:
         """
-        Get the variable type of this object.
+        Get the variable type of the object.
 
         Returns
         -------
         VariableType
-            The variable type of this object
+            Variable type of the object.
         """
         raise NotImplementedError
 
     @abstractmethod
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
-        Convert this value to an API string.
+        Convert the value to an API string.
 
         Returns
         -------
         str
-            A string appropriate for use in files and APIs.
+            String appropriate for use in files and APIs.
         """
         raise NotImplementedError
 
     @abstractmethod
     def to_display_string(self, locale_name: str) -> str:
         """
-        Convert this value to a formatted string.
+        Convert the value to a formatted string.
 
         Parameters
         ----------
         locale_name : str
-            The locale to format in.
+            Locale to format the string in.
 
         Returns
         -------
         str
-            A string appropriate for use in user facing areas.
+            String appropriate for use in user-facing areas.
         """
         raise NotImplementedError
 
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
     """
-    Interface that defines common behavior for array types.
+    Defines an interface for the common behavior among all array types.
 
-    Inherits ``IVariableValue``.
+    IThis class inherits the ``IVariableValue`` class.
     """
 
     def get_lengths(self) -> Tuple[int]:
         """
-        Get dimension sizes of the array.
+        Get the dimension sizes of the array.
 
         Returns
         -------
@@ -124,7 +125,7 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
 
     def rank(self) -> int:
         """
-        Get number of dimensions in the array.
+        Get the number of dimensions in the array.
 
         Returns
         -------
@@ -135,6 +136,6 @@ class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
 
 
 class VariableValueInvalidError(Exception):
-    """Raised to indicate a required variable value was invalid."""
+    """Raises an error to indicate that a required variable value was invalid."""
 
     pass
