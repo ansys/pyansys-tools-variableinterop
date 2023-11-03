@@ -2,7 +2,7 @@ PyAnsys Tools Variable Interop
 ==============================
 
 .. include:: ../../README.rst
-   :start-line: 4
+   :start-line: 30
 
 .. toctree::
    :hidden:
