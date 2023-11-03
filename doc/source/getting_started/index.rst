@@ -29,7 +29,7 @@ Installing the ``pyansys-tools-variableinterop`` package in developer mode allow
 you to modify the source and enhance it.
 
 Before contributing to the project, ensure that you are thoroughly familiar with the
-`PyAnsys Developer's Guide`_.
+`PyAnsys Developer's Guide <dev_guide_pyansys>`_.
 
 To install the ``pyansys-tools-variableinterop`` package in developer mode, perform
 these steps:
@@ -96,14 +96,3 @@ Then, run these commands:
 
     python -m build
     python -m twine check dist/*
-
-
-.. LINKS AND REFERENCES
-.. _black: https://github.com/psf/black
-.. _flake8: https://flake8.pycqa.org/en/latest/
-.. _isort: https://github.com/PyCQA/isort
-.. _pip: https://pypi.org/project/pip/
-.. _pre-commit: https://pre-commit.com/
-.. _PyAnsys Developer's Guide: https://dev.docs.pyansys.com/
-.. _pytest: https://docs.pytest.org/en/stable/
-.. _tox: https://tox.wiki/

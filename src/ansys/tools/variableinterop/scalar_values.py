@@ -435,7 +435,7 @@ class IntegerValue(np.int64, IVariableValue):
         Returns
         -------
         IntegerValue
-            ``IntegerValue``type parsed from the API string.
+            ``IntegerValue`` type parsed from the API string.
         """
         if value is None:
             raise TypeError("Cannot create integer values from `None` type.")
