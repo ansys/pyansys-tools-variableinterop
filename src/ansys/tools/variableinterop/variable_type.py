@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of VariableType."""
+"""Defines the ``VariableType`` class."""
 from __future__ import annotations
 
 from enum import Enum
@@ -33,22 +33,22 @@ class VariableType(Enum):
     """Provides an enumeration of the possible variable types."""
 
     # When editing this enumeration,
-    # be sure to also update the IVariableTypePseudoVisitor
+    # be sure to also update ``IVariableTypePseudoVisitor``
     # and its implementation of the pseudo-visitor pattern
     # appropriately.
     UNKNOWN = 0
-    """If the type is unknown."""
+    """Type is unknown."""
     INTEGER = 1
     """
     Integer values.
 
-    These are stored as 64 bit signed integers
+    These are stored as 64-bit signed integers
     """
     REAL = 2
     """
     Real values.
 
-    These are stored as 64 bit floating point numbers
+    These are stored as 64-bit floating point numbers
     """
     BOOLEAN = 3
     """Boolean values."""
@@ -58,39 +58,39 @@ class VariableType(Enum):
     """File values."""
     INTEGER_ARRAY = 6
     """
-    An array of integer values.
+    Array of integer values.
 
-    These are stored as 64 bit signed integers. Multidimensional arrays are supported.
+    These are stored as 64-bit signed integers. Multidimensional arrays are supported.
     """
     REAL_ARRAY = 7
     """
-    An array of real values.
+    Array of real values.
 
-    These are stored as 64 bit floating point numbers. Multidimensional arrays are
+    These are stored as 64-bit floating point numbers. Multidimensional arrays are
     supported.
     """
     BOOLEAN_ARRAY = 8
     """
-    An array of boolean values.
+    Array of Boolean values.
 
     Multidimensional arrays are supported.
     """
     STRING_ARRAY = 9
     """
-    An array of string values.
+    Array of string values.
 
     Multidimensional arrays are supported.
     """
     FILE_ARRAY = 10
     """
-    An array of file values.
+    Array of file values.
 
     Multidimensional arrays are supported.
     """
 
     @property
     def associated_type_name(self) -> str:
-        """Get the name of the associated IVariableValue type."""
+        """Get the name of the associated ``IVariableValue`` type."""
         from .array_values import (
             BooleanArrayValue,
             IntegerArrayValue,
@@ -119,26 +119,26 @@ class VariableType(Enum):
     @staticmethod
     def from_string(s: str) -> VariableType:
         """
-        Get VariableType from string.
+        Get the ``VariableType`` value from a string.
 
         Parameters
         ----------
         s : str
-            String to convert to a VariableType.
+            String to convert to a ``VariableType`` value.
 
         Returns
         -------
         VariableType
-            The result.
+            Result.
         """
 
         class __IterableKeyDict(Dict[Union[Iterable, str], Any]):
-            """Dict that can initialize with iterable keys and give each value its own
-            entry."""
+            """Provides a dictionary that can initialize with iterable keys and give
+            each value its own entry."""
 
             def __init__(self, d_: Dict[Union[Iterable, str], VariableType]):
                 def __br():
-                    """Break down initializer dict to tuple subkeys."""
+                    """Break down initializer dictionary to tuple subkeys."""
                     for k, v in d_.items():
                         if isinstance(k, str):
                             yield k, v
@@ -170,7 +170,7 @@ class VariableType(Enum):
 
     def to_display_string(self) -> str:
         """
-        Get the VariableType's display string.
+        Get the display string for the ``VariableType`` value.
 
         Returns
         -------
@@ -200,7 +200,7 @@ class VariableType(Enum):
         Returns
         -------
         IVariableValue
-            A new value object whose type matches this type.
+            New value object whose type matches this type.
         """
         from .array_values import (
             BooleanArrayValue,
@@ -214,7 +214,7 @@ class VariableType(Enum):
         from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
         class __DefaultValueVisitor(IVariableTypePseudoVisitor[IVariableValue]):
-            """Visitor that returns a default value for each type."""
+            """Provides the visitor that returns a default value for each type."""
 
             def visit_unknown(self) -> IVariableValue:
                 raise TypeError
@@ -261,7 +261,7 @@ class VariableType(Enum):
         Returns
         -------
         CommonVariableMetadata
-            A new metadata object whose type matches this type.
+            New metadata object whose type matches this type.
         """
         from .array_metadata import (
             BooleanArrayMetadata,
@@ -276,7 +276,7 @@ class VariableType(Enum):
         from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 
         class __DefaultMetadataVisitor(IVariableTypePseudoVisitor[CommonVariableMetadata]):
-            """Visitor that returns a default metadata for each type."""
+            """Provides the visitor that returns a default metadata for each type."""
 
             def visit_unknown(self) -> CommonVariableMetadata:
                 raise TypeError

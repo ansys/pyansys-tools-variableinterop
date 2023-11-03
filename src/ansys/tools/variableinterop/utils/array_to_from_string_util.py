@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of ArrayToFromStringUtil."""
+"""Defines the ``ArrayToFromStringUtil`` class."""
 from math import prod
 import re
 from typing import Any, Callable, List, Match, Optional, Tuple
@@ -32,15 +32,15 @@ from ..variable_value import CommonArrayValue, IVariableValue
 
 
 class ArrayToFromStringUtil:
-    """Utility methods for converting CommonValueArrays to/from string
-    representations."""
+    """Provides utility methods for converting ``CommonValueArray`` objects to and from
+    string representations."""
 
-    # Regular Expression pattern, as a string, of an array value with the optional curly braces.
+    # Regular expression pattern, as a string, of an array value with the optional curly braces.
     # Captures the list of values, unparsed, in valueList.
     _array_with_curly_braces_regex: str = r"{(?P<valueList>.*)}"
     # Regular Expression pattern, as a string, of an array value with the optional bounds prefix
-    # Captures the list of values, unparsed, in valueList and the list of
-    # array bounds, unparsed, in boundList.
+    # Captures the list of values, unparsed, in ``valueList`` and the list of
+    # array bounds, unparsed, in ``boundList``.
     _array_with_bounds_regex: str = (
         r"^\s*"
         + r"BOUNDS\s*\[(?P<boundList>[\d,\s]*)\]\s*"
@@ -57,20 +57,20 @@ class ArrayToFromStringUtil:
         """
         Convert an array value to a string representation of it.
 
-        stringify_action allows converting the value arbitrarily, so both API and display strings
-        can use this method.
+        The :meth:`stringify_action` method allows converting the value arbitrarily, so both
+        API and display strings can use this method.
 
         Parameters
         ----------
         value : NDArray
-            The array value to convert.
+            Array value to convert.
         stringify_action : Callable
-            The action used to convert each individual value in the array.
+            Action to use to convert each individual value in the array.
 
         Returns
         -------
         str
-            The generated string.
+            Generated string.
         """
         api_string: str = ""
         # Specify bounds for arrays of more than 1d:
@@ -88,20 +88,20 @@ class ArrayToFromStringUtil:
         valueify_action: Callable[[str], IVariableValue],
     ) -> CommonArrayValue:
         """
-        Convert a string into a CommonValueArray object.
+        Convert a string into a ``CommonValueArray`` object.
 
-        valueify_action allows converting the value arbitrarily, so both API and display strings
-        can use this method.
+        The :meth:`valueify_action` method allows converting the value arbitrarily, so both
+        API and display strings can use this method.
 
         Parameters
         ----------
         value : str
-            The string value to parse.
+            String value to parse.
         create_action : Callable[[Any], CommonArrayValue]
-            An action that takes either a shape or a list of initial values, and creates a new
+            Action that takes either a shape or a list of initial values and creates a new
             array of the correct type.
         valueify_action : Callable[[str], IVariableValue]
-            The action used to parse each individual value to the correct type.
+            Action used to parse each individual value to the correct type.
 
         Returns
         -------
@@ -163,17 +163,17 @@ class ArrayToFromStringUtil:
     @staticmethod
     def _value_regex_match(value_str: str) -> Optional[Match[str]]:
         """
-        Parse a single value, that may be quoted.
+        Parse a single value, which may be surrounded in quotation marks.
 
         Parameters
         ----------
         value_str : str
-            The string to parse.
+            String to parse.
 
         Returns
         -------
         Optional[Match[str]]
-            The regex match object, or None if not matched.
+            Regex match object or None if no match is found.
         """
         match: Optional[Match[str]] = re.search(
             ArrayToFromStringUtil._quoted_value_regex, value_str, flags=re.IGNORECASE

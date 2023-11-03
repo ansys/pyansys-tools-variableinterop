@@ -45,19 +45,19 @@ PyAnsys Tools Variable Interop has these key characteristics:
 - Follows and implements the standards in TODO: Add reference to standards doc.
 - Provides the following capabilities:
 
-  - to/from an "API" string (not intended for UI layer) to allows data transfer in human-readable format
+  - To/from an "API" string (not intended for UI layer) to allow data transfer in human-readable format
     across products and regions
-  - to/from human display strings
-  - to/from binary blocks that are platform agnostic
-  - implicit conversion to/from language primitives for lossless conversions
-  - explicit conversion for lossy conversions
+  - To/from human-readable display strings
+  - To/from binary blocks that are platform agnostic
+  - Implicit conversion to/from language primitives for lossless conversions
+  - Explicit conversion for lossy conversions
 
 - Uses the `visitor pattern <https://en.wikipedia.org/wiki/Visitor_pattern>`_ to make it easy and
   reliable to add and reuse new operations with compile-time semantics. A data type library can
   either make it easy to add new data types or make it easy to add new operations to the existing
   data types. It is extremely hard to make both possible at the same time. Because this library
   makes it easy to add new operations to the existing data types, adding new data types is not easy.
-- Defines most commonly re-used metadata strongly.
+- Defines strongly the most commonly reused metadata.
 - Provides a generic dictionary for custom metadata.
 
 Top-level items
@@ -72,9 +72,9 @@ Descriptions follow of the top-level items in PyAnsys Tools Variable Interop:
 - The value interface is ``IVariableValue``. These values are defined so that
   PyAnsys Tools Variable Interop knows how to properly convert from one type to
   the other via language operators. Lossless conversions are implicit. Operations
-  that are lossy, such as converting a real to an integer value, are
-  explicit. Explicit conversions may throw an exception if there is an overflow
-  or other "bad data" situation.
+  that are lossy, such as converting a real value to an integer, are explicit.
+  Explicit conversions can throw an exception if there is an overflow or other
+  "bad data" situation.
 
 
 Project background
@@ -82,7 +82,7 @@ Project background
 
 After 20 years of work on integration problems, a holistic review was performed around the
 concept of a variable in some legacy codebases. No less than two dozen classes that represent a
-variable were found. There were many more switch statements where one data type needed to be
+variable were found. There were many more switch statements, where one data type needed to be
 converted to another. This inconsistency brings about the following problems:
 
 - The behavior of one capability within the product suite does not match that of other
@@ -90,10 +90,10 @@ converted to another. This inconsistency brings about the following problems:
 - Switch statements are notorious for introducing bugs. People tend to cut and paste them, leading
   to subtle maintenance issues as one is modified and the other diverges. There is no compile-time
   type checking.
-- Slight differences data types (int32 versus int64) can lead to unexpected bugs, including disastrous
+- Slight differences in data types (int32 versus int64) can lead to unexpected bugs, including disastrous
   "bad data with no error" class issues.
-- Seemingly simple tasks like reliably converting to string or byte buffer and back are
-  surprisingly hard to do correctly in all the edge cases. Worse, even if you get a "correct"
+- Seemingly simple tasks like reliably converting to a string or byte buffer and back are
+  surprisingly hard to do correctly in all edge cases. Worse, even if you get a "correct"
   implementation, if it doesn't match what is used at an API boundary by a different capability
   or product, errors ensue.
 

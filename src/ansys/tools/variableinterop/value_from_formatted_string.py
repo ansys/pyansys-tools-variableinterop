@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Contains a method for converting a formatted string to a value."""
+"""Provides a method for converting a formatted string to a value."""
 from numpy import unicode_
 
 from .from_formatted_string_visitor import FromFormattedStringVisitor

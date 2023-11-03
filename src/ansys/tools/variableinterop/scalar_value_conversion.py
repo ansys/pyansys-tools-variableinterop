@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of scalar value visitors."""
+"""Defines scalar value visitors."""
 
 from overrides import overrides
 
@@ -79,7 +79,7 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
     """
-    Convert the given value to a ``BooleanValue``type.
+    Convert the given value to a ``BooleanValue`` type.
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),

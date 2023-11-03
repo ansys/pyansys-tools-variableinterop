@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of VariableState."""
+"""Defines the ``VariableState`` class."""
 from __future__ import annotations
 
 from .utils.implicit_coercion import implicit_coerce
@@ -37,9 +37,9 @@ class VariableState:
         Parameters
         ----------
         value : IVariableValue
-            The variable value.
+            Variable value.
         is_valid : bool
-            The validity flag (true indicates the value is valid).
+            Whether the flag is valid. ``True`` indicates that the value is valid.
         """
         self.__value = value
         self.__is_valid = is_valid
@@ -51,12 +51,12 @@ class VariableState:
         Parameters
         ----------
         other : Any
-            The object to compare.
+            Other object to compare.
 
         Returns
         -------
         bool
-            True if the objects are equal, false otherwise.
+            ``True`` if the objects are equal, ``False`` otherwise.
         """
         return (
             isinstance(other, VariableState)
@@ -72,18 +72,18 @@ class VariableState:
     @property
     def is_valid(self) -> bool:
         """
-        Get the validity flag.
+        Flag indicating that the object is equal to the other object.
 
-        True indicates the value is valid.
+        ``True`` indicates that the objects are equal.
         """
         return self.__is_valid
 
     @property
     def safe_value(self) -> IVariableValue:
         """
-        Get the variable value.
+        Variable value.
 
-        VariableValueInvalidError is raised if the variable value is not valid.
+        ``VariableValueInvalidError`` is raised if the variable value is not valid.
         """
         if self.__is_valid:
             return self.__value
@@ -92,13 +92,13 @@ class VariableState:
 
     def clone(self) -> VariableState:
         """
-        Clone this instance.
+        Clone the instance.
 
         The returned instance contains a clone of this instance's value.
 
         Returns
         -------
         VariableState
-            a deep copy of this instance
+            Deep copy of the instance.
         """
         return VariableState(self.__value.clone(), self.__is_valid)

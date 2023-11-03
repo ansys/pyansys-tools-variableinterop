@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of scalar metadata types."""
+"""Defines scalar metadata types."""
 from __future__ import annotations
 
 from typing import Any, List, Optional
@@ -107,7 +107,7 @@ class IntegerMetadata(NumericMetadata):
     @property
     def upper_bound(self) -> Optional[IntegerValue]:
         """
-        Hard upper bound for this variable.
+        Hard upper bound for the variable.
 
         Systems utilizing this variable should prevent setting the
         value above this upper bound. This is typically used to

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of FileArrayMetadata."""
+"""Defines the ``FileArrayMetadata`` class."""
 from overrides import overrides
 
 from .file_metadata import FileMetadata
@@ -28,7 +28,7 @@ from .variable_type import VariableType
 
 
 class FileArrayMetadata(FileMetadata):
-    """Provides metadata for variables of the ``FileArray`` type."""
+    """Provides metadata for the ``FileArray`` variable type."""
 
     @property  # type: ignore
     @overrides

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of all scalar value implementations of IVariableValue."""
+"""Defines all scalar value implementations of the ``IVariableValue`` variable type."""
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
@@ -39,7 +39,7 @@ from .variable_value import IVariableValue
 
 class BooleanValue(IVariableValue):
     """
-    Stores a value for a ``BooleanValue`` variable type.
+    Stores a value as a ``BooleanValue`` variable type.
 
     This type is treated by Python as if it were any other Boolean type, such as
     ``numpy.bool\_`` or a built-in Boolean.
@@ -69,7 +69,7 @@ class BooleanValue(IVariableValue):
         "n": False,
         "false": False,
     }
-    """A mapping of acceptable normalized values for API string conversion to their
+    """Mapping of acceptable normalized values for API string conversion to their
     corresponding Boolean value."""
 
     @staticmethod
@@ -336,7 +336,7 @@ class BooleanValue(IVariableValue):
 
 class IntegerValue(np.int64, IVariableValue):
     """
-    Stores a value for an ``IntegerValue`` type.
+    Stores a value as an ``IntegerValue`` variable type.
 
     In Python, the ``IntegerValue`` type is implemented by extending NumPy's int64 type.
     This means that they will decay naturally into ``numpy.int64`` objects when using NumPy's
@@ -458,7 +458,7 @@ class IntegerValue(np.int64, IVariableValue):
 
 class RealValue(np.float64, IVariableValue):
     """
-    Stores a value for a ``RealValue`` variable type.
+    Stores a value as a ``RealValue`` variable type.
 
     In Python, the ``RealValue`` type is implemented by extending NumPy's float64 type. This means
     that they decay naturally into ``numpy.float64`` objects when using NumPy's
@@ -587,7 +587,7 @@ class RealValue(np.float64, IVariableValue):
 
 class StringValue(np.str_, IVariableValue):
     """
-    Stores a value for the ``IVariableValue`` type.
+    Stores a value as an ``IVariableValue`` variable type.
 
     In Python, the ``IntegerValue`` type is implemented by extending NumPy's ``str\_`` type.
     This means that they decay naturally into ``numpy.str\_`` objects when used with other

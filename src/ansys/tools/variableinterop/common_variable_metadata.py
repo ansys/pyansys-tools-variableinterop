@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of CommonVariableMetadata."""
+"""Defines the ``CommonVariableMetadata`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -61,12 +61,12 @@ class CommonVariableMetadata(ABC):
         Parameters
         ----------
         other : Any
-            Object to compare the object to.
+            Other object to compare this object to.
 
         Returns
         -------
         bool
-            ``True`` if metadata objects are equal, ``False`` otherwise.
+            ``True`` if the metadata objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, CommonVariableMetadata)
@@ -120,7 +120,7 @@ class CommonVariableMetadata(ABC):
 
     @property
     def custom_metadata(self) -> Dict[str, IVariableValue]:
-        """Aby custom metadata is stored in this dictionary."""
+        """Custom metadata stored in a dictionary."""
         return self._custom_metadata
 
     def get_default_value(self) -> IVariableValue:
@@ -128,9 +128,9 @@ class CommonVariableMetadata(ABC):
         Get the default value that should be used for a variable described by this
         metadata.
 
-        The metadata may have set the lower bounds, upper bounds, or
-        enumerated values that restrict what are possible valid
-        values. This method selects a valid default value.
+        The metadata may have set the lower bound, upper bound, or
+        enumerated values, which restricts what values are valid. This
+        method selects a valid default value.
 
         - If the type's default value (such as ``0`` or an empty string) is a
           valid value for the metadata, use it.

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of all array value implementations of the ``IVariableValue`` type."""
+"""Defines all array value implementations of the ``IVariableValue`` variable type."""
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
@@ -45,7 +45,7 @@ T = TypeVar("T")
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """
-    Stores a value as a ``BooleanArrayValue`` type.
+    Stores a value as a ``BooleanArrayValue`` variable type.
 
     In Python, a ``BooleanArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -150,7 +150,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
 class IntegerArrayValue(CommonArrayValue[np.int64]):
     """
-    Stores an ``IntegerArrayValue`` type.
+    Stores a value as an ``IntegerArrayValue`` variable type.
 
     In Python, the ``IntegerArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -259,7 +259,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
 class RealArrayValue(CommonArrayValue[np.float64]):
     """
-    Stores a value as a ``RealArrayValue`` type.
+    Stores a value as a ``RealArrayValue`` variable type.
 
     In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -385,7 +385,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
 class StringArrayValue(CommonArrayValue[np.str_]):
     """
-    Stores a ``StringArrayValue`` type.
+    Stores a value as a ``StringArrayValue`` variable type.
 
     In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's

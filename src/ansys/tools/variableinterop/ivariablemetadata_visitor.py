@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of IVariableMetadataVisitor."""
+"""Defines the ``IVariableMetadataVisitor`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -41,7 +41,7 @@ T = TypeVar("T")
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
     """
-    Defines the interface to be implemented to use the visitor pattern with variable
+    Defines the interface to be implemented for using the visitor pattern with variable
     metadata.
 
     This class passes an instance to the :meth:`CommonVariableMetadata.accept()` method.
