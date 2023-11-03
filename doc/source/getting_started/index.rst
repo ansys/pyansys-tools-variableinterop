@@ -29,7 +29,7 @@ Installing the ``pyansys-tools-variableinterop`` package in developer mode allow
 you to modify the source and enhance it.
 
 Before contributing to the project, ensure that you are thoroughly familiar with the
-`PyAnsys Developer's Guide <dev_guide_pyansys>`_.
+`PyAnsys Developer's Guide <dev_guide_pyansys_>`_.
 
 To install the ``pyansys-tools-variableinterop`` package in developer mode, perform
 these steps:
