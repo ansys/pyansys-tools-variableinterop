@@ -41,7 +41,7 @@ PyAnsys Tools Variable Interop has these key characteristics:
 - Supports a minimal but complete set of formally defined data types for engineering work.
 - Offers a standard base implementation in each supported language that matches the style and intent of
   the given language.
-- Follows and implements the standard data types and conversion rules that all ModelCenter products follow.
+- Implements the same standard data types and conversion rules as all ModelCenter products.
 - Provides the following capabilities:
 
   - To/from an "API" string (not intended for UI layer) to allow data transfer in human-readable format
