@@ -11,7 +11,7 @@ project = "pyansys-tools-variableinterop"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__
-cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
+cname = os.getenv("DOCUMENTATION_CNAME", default="variableinterop.docs.pyansys.com")
 switcher_version = get_version_match(__version__)
 
 # Select desired logo, theme, and declare the html title
@@ -23,7 +23,6 @@ html_short_title = html_title = "PyAnsys Tools Variable Interop"
 # specify the location of your github repo
 html_theme_options = {
     "github_url": "https://github.com/ansys/pyansys-tools-variableinterop",
-    "check_switcher": False,
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "collapse_navigation": True,
@@ -42,6 +41,7 @@ html_theme_options = {
         "json_url": f"https://{cname}/versions.json",
         "version_match": switcher_version,
     },
+    "check_switcher": False,
 }
 
 html_context = {
