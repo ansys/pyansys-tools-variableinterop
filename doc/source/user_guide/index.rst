@@ -34,12 +34,11 @@ You can create values and metadata like any other Python object:
 
    width_metadata = atvi.RealMetadata()
    width_metadata.lower_bound = 0.1
-   var(width_metadata)
+   vars(width_metadata)
 
 
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
 
-      7.1
       {'_description': '', '_custom_metadata': {}, '_units': '', '_display_format': '', '_lower_bound': 0.1, '_upper_bound': None, '_enumerated_values': [], '_enumerated_aliases': []}
