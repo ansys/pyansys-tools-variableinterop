@@ -10,6 +10,6 @@ For contributing to this project, see the [PyAnsys Developer's Guide].
 Further information about contributing to PyAnsys Tools Variable Interop
 can be found in [Contributing].
 
-[PyAnsys Developer's Guide]: https://dev.docs.pyansys.com/
-[Contributing]: https://dev.docs.pyansys.com/how-to/contributing.html
+[PyAnsys Developer's Guide]: https://dev.docs.pyansys.com/how-to/contributing.html
+[Contributing]: https://variableinterop.docs.pyansys.com/version/dev/contributing/index.html
 
