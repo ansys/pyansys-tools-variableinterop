@@ -336,10 +336,10 @@ class FileValue(IVariableValue, ABC):
         progress_callback : Optional[Callable[[int], None]], optional
             Callback that can be called to indicate progress in realizing the local copy.
             The default is ``None``, in which case this method makes no attempt
-            to report its progress. If a percentage value is specified, an estimate is
-            shown of the progress made in loading the file. This callback might not
-            necessarily be called at all, even if other calls occur.
-
+            to report its progress. This method may call a provided callback with a
+            percentage value between 0 and 100 inclusive. The provided callback may not
+            necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+            even if other calls occur.
 
         Returns
         -------
@@ -359,16 +359,17 @@ class FileValue(IVariableValue, ABC):
         returned by this call may point to a cached file or even the original file. Callers
         must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
         may occur. If the caller needs to modify the file, consider using the ``write_file``
-        methodor copying the file before modifying it.
+        method or copying the file before modifying it.
 
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]], optional
             Callback that can be called to indicate progress in realizing the local copy.
             The default is ``None``, in which case this method makes no attempt
-            to report its progress. If a percentage value is specified, an estimate is
-            shown of the progress made in loading the file. This callback might not
-            necessarily be called at all, even if other calls occur.
+            to report its progress. This method may call a provided callback with a
+            percentage value between 0 and 100 inclusive. The provided callback may not
+            necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+            even if other calls occur.
 
         Returns
         -------
@@ -403,7 +404,7 @@ class FileValue(IVariableValue, ABC):
         Returns
         -------
         bool
-            ``True`` if the MIME type starts with text or is an application (JSON),
+            ``True`` if the MIME type starts with ``text`` or is ``application/json``,
             ``False`` otherwise.
         """
         return FileValue.is_text_based_static(self.mime_type)
@@ -415,7 +416,7 @@ class FileValue(IVariableValue, ABC):
         Parameters
         ----------
         encoding : Optional[str], optional
-            Encoding to use when reading. The default is `None`, in which case the
+            Encoding to use when reading. The default is ``None``, in which case the
             current locale's encoding is used.
 
         Returns
@@ -528,7 +529,7 @@ class LocalFileValue(FileValue, ABC):
     is intended for dependents of this library who are attempting to implement a new
     ``FileScope`` instance that always stores the content of a file on the local disk.
     Clients are discouraged from attempting to introspect a ``FileValues``instance to
-    determine if they are ``LocalFileValues`` for the purpose of getting a path to the
+    determine if they are instances of ``LocalFileValue`` for the purpose of getting a path to the
     locally stored content. Instead, always correctly use the
     ``get_reference_to_actual_content_file`` method for the ``FileValue`` instance to
     allow the code in question to get the local path, even for files that are not

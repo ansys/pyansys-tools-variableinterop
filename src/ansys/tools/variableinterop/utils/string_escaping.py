@@ -19,13 +19,13 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Provides functions for ``ModelCenter``-standard string escaping."""
+"""Provides functions for ModelCenter-standard string escaping."""
 from typing import Dict, List
 
 
 def escape_string(unescaped: str) -> str:
     """
-    Escape a string according to ``ModelCenter`` conventions.
+    Escape a string according to ModelCenter conventions.
 
     The following characters are escaped: backslash, newline,
     carriage return, tab, double-quote, and null. Backslash is itself

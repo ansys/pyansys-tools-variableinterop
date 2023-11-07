@@ -213,7 +213,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises ``IncompatibleTypesException``).
 
     Parameters
     ----------

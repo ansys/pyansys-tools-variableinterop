@@ -35,7 +35,7 @@ class ISaveContext(AbstractContextManager, ABC):
     """
     Defines an abstraction for a save medium.
 
-    This interface was defied to separate the concerns of being able to save large
+    This interface was defined to separate the concerns of being able to save large
     associated content in other transfer mediums. It allows out-of-bound data to be
     transferred. Examples include saving to a ZIP file or using an SCP side-channel on
     an SSH connection to send files or other large data objects.
@@ -58,7 +58,7 @@ class ISaveContext(AbstractContextManager, ABC):
         Save a file to the save medium.
 
         It is up to the ``ISaveContext`` implementation to decide how or when to send the actual
-        data. Some ``ISaveContexts`` implementations may merely collect metadata as part of this
+        data. Some ``ISaveContext`` implementations may merely collect metadata as part of this
         call and send the data on flush.
 
         Parameters
@@ -68,7 +68,7 @@ class ISaveContext(AbstractContextManager, ABC):
         content_id : Optional[str], optional
             Unique ID for the file. The default value is ``None``, in which case an ID
             is automatically generated and returned. This ID can be used with an equivalent
-            ``ILoadContext`` instance to load the contents on deserialize.
+            ``ILoadContext`` instance to load the contents on deserialization.
 
         Returns
         -------
