@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of NumericMetadata."""
+"""Defines the ``NumericMetadata`` class."""
 from __future__ import annotations
 
 from abc import ABC
@@ -52,12 +52,12 @@ class NumericMetadata(CommonVariableMetadata, ABC):
         Parameters
         ----------
         other : Any
-            Object to compare this object to.
+            Given metadata to compare this metadate to.
 
         Returns
         -------
         bool
-            True if objects are equal, false otherwise.
+            ``True`` if the two objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, NumericMetadata)
@@ -73,21 +73,19 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
     @property
     def units(self) -> str:
-        """Get the units of the variable."""
+        """Units of the variable."""
         return self._units
 
     @units.setter
     def units(self, value: str) -> None:
-        """Set the units of the variable."""
         self._units = value
 
     # TODO: Formally define format specifications
     @property
     def display_format(self) -> str:
-        """Get the display format of the variable."""
+        """Display format of the variable."""
         return self._display_format
 
     @display_format.setter
     def display_format(self, value: str) -> None:
-        """Set the display format of the variable."""
         self._display_format = value

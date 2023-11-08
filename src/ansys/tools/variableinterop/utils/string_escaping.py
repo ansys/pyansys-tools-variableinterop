@@ -34,12 +34,12 @@ def escape_string(unescaped: str) -> str:
     Parameters
     ----------
     unescaped : str
-        the unescaped string.
+        Unescaped string.
 
     Returns
     -------
     str
-        The string with the specified characters escaped.
+        String with the specified characters escaped.
     """
     return (
         unescaped.replace("\\", r"\\")
@@ -53,35 +53,36 @@ def escape_string(unescaped: str) -> str:
 
 __unescape_map: Dict[str, str] = {"n": "\n", "r": "\r", "t": "\t", "0": "\0"}
 """
-This map contains characters escaped by escape_string that require special handling.
+This map contains characters escaped by the :meth:`escape_string` method that require
+special handling.
 
-Note that some of the characters actually escaped by escape_string are not present in
-this map. In those cases, the correct unescaping behavior is to insert the character
-after the backslash unchanged (backslash and double-quote).
+Note that some of the characters actually escaped by the :meth:`escape_string` method
+are not present in this map. In those cases, the correct unescaping behavior is to
+insert the character after the backslash unchanged (backslash and double quotation marks).
 """
 
 
 def unescape_string(escaped: str) -> str:
     r"""
-    Unescape a string according to ModelCenter conventions.
+    Unescape a string according to ``ModelCenter`` conventions.
 
-    The escape sequences \n, \r, \t, and \0 are transformed into
+    The escape sequences ``\n``, ``\r``, ``\t``, and ``\0`` are transformed into
     newline, carriage return, tab, and null respectively. In other
     cases where a backslash appears, it is simply removed
     and the following character is allowed to remain. (Note that this
-    also results in the correct behavior for double-quote and
-    backslash itself, even though those characters are escaped by
-    escape_string).
+    also results in the correct behavior for double-quotatoin marks and
+    the backslash itself, even though those characters are escaped by
+    the :meth:`escape_string` method.)
 
     Parameters
     ----------
     escaped : str
-        the string with escape sequences
+        String with the escape sequences.
 
     Returns
     -------
     str
-        The string with the escape sequences undone.
+        String with the escape sequences undone.
     """
     unescaped: List[str] = []
     str_index: int = 0

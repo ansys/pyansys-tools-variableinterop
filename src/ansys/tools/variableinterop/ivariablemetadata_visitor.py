@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of IVariableMetadataVisitor."""
+"""Defines the ``IVariableMetadataVisitor`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -41,10 +41,11 @@ T = TypeVar("T")
 
 class IVariableMetadataVisitor(ABC, Generic[T]):
     """
-    Defines the interface to be implemented to use the visitor pattern with variable
+    Defines the interface to be implemented for using the visitor pattern with variable
     metadata.
 
-    Pass an instance to :meth:``CommonVariableMetadata.accept()``.
+    To use an implementation of this interface, create and pass an instance to the
+    :meth:`IVariableValue.accept()` method.
     """
 
     # Single dispatch would make this prettier, but doesn't work with
@@ -54,12 +55,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_integer(self, metadata: IntegerMetadata) -> T:
         """
-        Will be called if accept is called on an IntegerMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on an
+        ``IntegerMetadata`` type.
 
         Parameters
         ----------
         metadata : IntegerMetadata
-            ``IntegerMetadata`` object being visited.
+            ``IntegerMetadata`` type to visit.
 
         Returns
         -------
@@ -71,12 +73,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real(self, metadata: RealMetadata) -> T:
         """
-        Will be called if accept is called on a RealMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``RealMetadata`` type.
 
         Parameters
         ----------
         metadata : RealMetadata
-            ``RealMetadata`` object being visited.
+            ``RealMetadata`` type to visit.
 
         Returns
         -------
@@ -88,12 +91,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_boolean(self, metadata: BooleanMetadata) -> T:
         """
-        Will be called if accept is called on a BooleanMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``BooleanMetadata`` type.
 
         Parameters
         ----------
         metadata : BooleanMetadata
-            ``BooleanMetadata`` object being visited.
+            ``BooleanMetadata`` type to visit.
 
         Returns
         -------
@@ -105,12 +109,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string(self, metadata: StringMetadata) -> T:
         """
-        Will be called if accept is called on a StringMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``StringMetadata`` type.
 
         Parameters
         ----------
         metadata : StringMetadata
-            ``StringMetadata`` object being visited.
+            ``StringMetadata`` type to visit.
 
         Returns
         -------
@@ -122,12 +127,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file(self, metadata: FileMetadata) -> T:
         """
-        Will be called if accept is called on a FileMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``FileMetadata`` type.
 
         Parameters
         ----------
         metadata : FileMetadata
-            ``FileMetadata`` object being visited.
+            ``FileMetadata`` type to visit.
 
         Returns
         -------
@@ -139,12 +145,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_integer_array(self, metadata: IntegerArrayMetadata) -> T:
         """
-        Will be called if accept is called on an IntegerArrayMetaData.
+        Method that is called if the ``IVariableValue.accept()`` method is called on an
+        ``IntegerArrayMetaData`` type.
 
         Parameters
         ----------
         metadata : IntegerArrayMetadata
-            ``IntegerArrayMetadata`` object being visited.
+            ``IntegerArrayMetadata`` type to visit.
 
         Returns
         -------
@@ -156,12 +163,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real_array(self, metadata: RealArrayMetadata) -> T:
         """
-        Will be called if accept is called on a RealArrayMetaData.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``RealArrayMetaData`` type.
 
         Parameters
         ----------
         metadata : RealArrayMetadata
-            ``RealArrayMetaData`` object being visited.
+            ``RealArrayMetaData`` type to visit.
 
         Returns
         -------
@@ -173,12 +181,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_boolean_array(self, metadata: BooleanArrayMetadata) -> T:
         """
-        Will be called if accept is called on a BooleanArrayMetaData.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``BooleanArrayMetaData`` type.
 
         Parameters
         ----------
         metadata : BooleanArrayMetadata
-            ``BooleanArrayMetaData`` object being visited.
+            ``BooleanArrayMetaData`` type to visit.
 
         Returns
         -------
@@ -190,12 +199,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string_array(self, metadata: StringArrayMetadata) -> T:
         """
-        Will be called if accept is called on a StringArrayMetaData.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``StringArrayMetaData`` type.
 
         Parameters
         ----------
         metadata : StringArrayMetadata
-            ``StringArrayMetaData`` object being visited.
+            ``StringArrayMetaData`` type to visit.
 
         Returns
         -------
@@ -207,12 +217,13 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file_array(self, metadata: FileArrayMetadata) -> T:
         """
-        Will be called if accept is called on a FileArrayMetadata.
+        Method that is called if the ``IVariableValue.accept()`` method is called on a
+        ``FileArrayMetadata``` type.
 
         Parameters
         ----------
         metadata : FileArrayMetadata
-            ``FileArrayMetadata`` object being visited
+            ``FileArrayMetadata`` type to visit.
 
         Returns
         -------

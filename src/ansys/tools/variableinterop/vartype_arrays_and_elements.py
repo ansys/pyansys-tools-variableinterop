@@ -35,7 +35,7 @@ class __ScalarToArrayPseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableT
     """
     Provides the corresponding array type for a given scalar type.
 
-    Provides None if the visited type has no array type or is an array.
+    Provides ``None`` if the visited type has no array type or is an array.
     """
 
     @overrides
@@ -87,7 +87,7 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
     """
     Provides the corresponding element type for a given array type.
 
-    Provides None if the visited type is not an array.
+    Provides ``None`` if the visited type is not an array.
     """
 
     @overrides
@@ -137,18 +137,18 @@ class __ElementTypePseudoVisitor(IVariableTypePseudoVisitor[Optional[VariableTyp
 
 def to_array_type(vartype: VariableType) -> VariableType:
     """
-    Given a VariableType, find the corresponding array type, if one exists. Otherwise,
+    Given a variable type, find the corresponding array type, if one exists. Otherwise,
     ValueError is raised.
 
     Parameters
     ----------
     vartype : VariableType
-        The variable type of interest.
+        Variable type of interest.
 
     Returns
     -------
     VariableType
-        The corresponding array type.
+        Corresponding array type.
 
     Raises
     ------
@@ -165,19 +165,19 @@ def to_array_type(vartype: VariableType) -> VariableType:
 
 def get_element_type(vartype: VariableType) -> VariableType:
     """
-    Given a VariableType representing an array, return the corresponding element type.
+    Given a variable type representing an array, return the corresponding element type.
 
-    When a non-array type is passed, ValueError is raised.
+    When a non-array type is passed, ``ValueError`` is raised.
 
     Parameters
     ----------
     vartype : VariableType
-        The variable type of interest.
+        Variable type of interest.
 
     Returns
     -------
     VariableType
-        The corresponding element type.
+        Corresponding element type.
 
     Raises
     ------

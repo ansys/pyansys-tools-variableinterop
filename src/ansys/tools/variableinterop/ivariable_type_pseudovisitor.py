@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Defines and implements a variable type pseudovisitor pattern."""
+"""Defines and implements a pseudo-visitor pattern for variable types."""
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Generic, TypeVar
 
@@ -30,18 +30,18 @@ T = TypeVar("T")
 
 class IVariableTypePseudoVisitor(ABC, Generic[T]):
     """
-    Defines an interface for "pseudo-visitors" of the ``VariableType`` enumeration.
+    Defines an interface for pseudo-visitors of the ``VariableType`` enumeration.
 
-    This interface defines a "pseudo-visitor" for possible ``VariableType`` values.
+    This interface defines a pseudo-visitor for possible ``VariableType`` values.
     Although this pattern ultimately requires the use of a single "switch-statement
-    equivalent" (see the following ``__accept_map`` below) it confines the said switch to a single
-    instance, and allows it to essentially be reused with `mypy` "typesafety."
+    equivalent" (see the following ``__accept_map``), it confines the said switch to a single
+    instance and allows it to essentially be reused with ``mypy`` "typesafety."
     """
 
     @abstractmethod
     def visit_unknown(self) -> T:
         """
-        Visit the UNKNOWN variable type.
+        Visit the ``UNKNOWN`` variable type.
 
         Returns
         -------
@@ -53,7 +53,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_int(self) -> T:
         """
-        Visit the INTEGER variable type.
+        Visit the ``INTEGER`` variable type.
 
         Returns
         -------
@@ -65,7 +65,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real(self) -> T:
         """
-        Visit the REAL variable type.
+        Visit the ``REAL`` variable type.
 
         Returns
         -------
@@ -77,7 +77,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_boolean(self) -> T:
         """
-        Visit the BOOLEAN variable type.
+        Visit the ``BOOLEAN`` variable type.
 
         Returns
         -------
@@ -89,7 +89,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string(self) -> T:
         """
-        Visit the STRING variable type.
+        Visit the ``STRING`` variable type.
 
         Returns
         -------
@@ -101,7 +101,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file(self) -> T:
         """
-        Visit the FILE variable type.
+        Visit the ``FILE`` variable type.
 
         Returns
         -------
@@ -113,7 +113,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_int_array(self) -> T:
         """
-        Visit the INTEGER_ARRAY variable type.
+        Visit the ``INTEGER_ARRAY`` variable type.
 
         Returns
         -------
@@ -125,7 +125,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real_array(self) -> T:
         """
-        Visit the REAL_ARRAY variable type.
+        Visit the ``REAL_ARRAY`` variable type.
 
         Returns
         -------
@@ -137,7 +137,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_bool_array(self) -> T:
         """
-        Visit the BOOLEAN_ARRAY variable type.
+        Visit the ``BOOLEAN_ARRAY`` variable type.
 
         Returns
         -------
@@ -149,7 +149,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string_array(self) -> T:
         """
-        Visit the STRING_ARRAY variable type.
+        Visit the ``STRING_ARRAY`` variable type.
 
         Returns
         -------
@@ -161,7 +161,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file_array(self) -> T:
         """
-        Visit the FILE_ARRAY variable type.
+        Visit the ``FILE_ARRAY`` variable type.
 
         Returns
         -------
@@ -173,7 +173,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
 
 def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the UNKNOWN type.
+    Accept a visitor to the UNKNOWN variable type.
 
     Returns
     -------
@@ -185,7 +185,7 @@ def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_int(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the INTEGER type.
+    Accept a visitor to the ``INTEGER`` variable type.
 
     Returns
     -------
@@ -197,7 +197,7 @@ def __accept_int(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_real(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the REAL type.
+    Accept a visitor to the ``REAL`` variable type.
 
     Returns
     -------
@@ -209,7 +209,7 @@ def __accept_real(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_boolean(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the BOOLEAN type.
+    Accept a visitor to the ``BOOLEAN`` variable type.
 
     Returns
     -------
@@ -221,7 +221,7 @@ def __accept_boolean(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_string(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the STRING type.
+    Accept a visitor to the ``STRING`` variable type.
 
     Returns
     -------
@@ -233,7 +233,7 @@ def __accept_string(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the FILE type.
+    Accept a visitor to the ``FILE`` variable type.
 
     Returns
     -------
@@ -245,7 +245,7 @@ def __accept_file(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the INTEGER_ARRAY type.
+    Accept a visitor to the ``INTEGER_ARRAY`` variable type.
 
     Returns
     -------
@@ -257,7 +257,7 @@ def __accept_int_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_real_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the REAL_ARRAY type.
+    Accept a visitor to the ``REAL_ARRAY`` variable type.
 
     Returns
     -------
@@ -269,7 +269,7 @@ def __accept_real_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_boolean_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the BOOLEAN_ARRAY type.
+    Accept a visitor to the ``BOOLEAN_ARRAY`` variable type.
 
     Returns
     -------
@@ -281,7 +281,7 @@ def __accept_boolean_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_string_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the STRING_ARRAY type.
+    Accept a visitor to the ``STRING_ARRAY`` variable type.
 
     Returns
     -------
@@ -292,7 +292,7 @@ def __accept_string_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
 
 def __accept_file_array(visitor: "IVariableTypePseudoVisitor[T]") -> T:
     """
-    Accept a visitor to the FILE_ARRAY type.
+    Accept a visitor to the ``FILE_ARRAY`` variable type.
 
     Returns
     -------
@@ -324,14 +324,14 @@ This allows Python to quickly and correctly find the right "accept" implementati
 
 def vartype_accept(visitor: "IVariableTypePseudoVisitor[T]", var_type: VariableType) -> T:
     """
-    Accept a visitor to the specified type.
+    Accept a visitor to the specified variable type.
 
     Parameters
     ----------
     visitor : T
         Visitor to accept.
     var_type : VariableType
-        Type that the visitor should visit.
+        Variable type that the visitor should visit.
 
     Returns
     -------

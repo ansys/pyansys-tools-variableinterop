@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Implementation of FileScope."""
+"""Implements the ``FileScope`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -38,20 +38,20 @@ class FileScope(AbstractContextManager, ABC):
     """
     Provides an abstract base for file scopes.
 
-    A file scope helps a program manage disk use for file storage and
+    A file scope helps a program manage the disk space used for file storage and
     enables it to clean up caches and space in a reliable way.
-    `FileValue` instances except for
-    `ansys.tools.variableinterop.EMPTY_FILE` should always be created
-    by a `FileScope` instance. `FileValue` instances created by a
-    `FileScope` are not valid once the `FileScope` has been closed.
+    ``FileValue`` instances (except for ``ansys.tools.variableinterop.EMPTY_FILE``)
+    should always be created by a ``FileScope`` instance. ``FileValue`` instances
+    created by a ``FileScope`` instance are not valid once the ``FileScope`` instance
+    has been closed.
 
-    This abstract base class contains the logic to be a Context Manager
-    for use in `with` blocks. Any derived class's `close` method will be
-    automatically called when the `with` block is exited.
+    This abstract base class contains the logic to be a context manager
+    for use in ``with`` blocks. Any derived class's ``close`` method is
+    automatically called when the ``with`` block is exited.
     """
 
     def __init__(self):
-        """Initialize."""
+        """Initialize a new instance."""
         pass
 
     @overrides
@@ -66,7 +66,7 @@ class FileScope(AbstractContextManager, ABC):
 
     @abstractmethod
     def close(self) -> None:
-        """Close the file scope, cleaning up any files it contains."""
+        """Close the ``FileScope`` instance, cleaning up any files it contains."""
         ...
 
     @abstractmethod
@@ -83,7 +83,7 @@ class FileScope(AbstractContextManager, ABC):
             Path to the file to read.
         mime_type : Optional[str], optional
             MIME type of the file. The default is `None`, which indicates that the file
-            does not have a MIME type or it is not known.
+            does not have a MIME type or that the type is not known.
         encoding : Optional[str], optional
             Encoding of the file. The default is `None`, which indicates that the file
             does not have a text encoding (for example, because it is a binary file.)
@@ -100,7 +100,7 @@ class FileScope(AbstractContextManager, ABC):
         self, api_object: Dict[str, Optional[str]], load_context: ILoadContext
     ) -> FileValue:
         """
-        Create a ``FileScope`` object from a map of API strings.
+        Create a ``FileScope`` instance from a map of API strings.
 
         Parameters
         ----------

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Provides a function that allows checking whether a variable type is an array type."""
+"""Provides a method for checking whether a variable type is an array type."""
 from overrides import overrides
 
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
@@ -30,7 +30,7 @@ class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
     """
     Determines whether the visited variable type is an array.
 
-    True is returned if the visited type is an array type, and false is returned
+    ``True`` is returned if the visited type is an array type, and ``False`` is returned
     otherwise.
     """
 
@@ -81,16 +81,16 @@ class _VarTypeIsArrayVisitor(IVariableTypePseudoVisitor[bool]):
 
 def var_type_is_array(vartype: VariableType) -> bool:
     """
-    Check whether the provided variable type is an array type or not.
+    Check whether the provided variable type is an array type.
 
     Parameters
     ----------
     vartype : VariableType
-        the variable type of interest
+        Variable type of interest.
 
     Returns
     -------
     bool
-        True if the specified variable type is an array type, false otherwise.
+        ``True`` if the specified variable type is an array type, ``False`` otherwise.
     """
     return vartype_accept(_VarTypeIsArrayVisitor(), vartype)

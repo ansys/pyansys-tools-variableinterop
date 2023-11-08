@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of IVariableValueVisitor."""
+"""Defines the ``IVariableValueVisitor`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -36,10 +36,11 @@ T = TypeVar("T")
 
 class IVariableValueVisitor(ABC, Generic[T]):
     """
-    Defines the interface to be implemented to use the visitor pattern with variable
+    Defines the interface to be implemented for using the visitor pattern with variable
     values.
 
-    Pass an instance to IVariableValue.accept().
+    To use an implementation of this interface, create and pass an instance to the
+    :meth:`IVariableValue.accept()` method.
     """
 
     # Single dispatch would make this prettier, but doesn't work with
@@ -49,12 +50,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_integer(self, value: IntegerValue) -> T:
         """
-        Will be called if accept is called on an IntegerValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        an ``IntegerValue`` type.
 
         Parameters
         ----------
         value : IntegerValue
-            ``IntegerValue`` object being visited.
+            ``IntegerValue`` type to visit.
 
         Returns
         -------
@@ -66,12 +68,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real(self, value: RealValue) -> T:
         """
-        Will be called if accept is called on a RealValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``RealValue`` type.
 
         Parameters
         ----------
         value : RealValue
-            ``RealValue`` object being visited.
+            ``RealValue`` type to visit.
 
         Returns
         -------
@@ -83,12 +86,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_boolean(self, value: BooleanValue) -> T:
         """
-        Will be called if accept is called on a BooleanValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``BooleanValue`` type.
 
         Parameters
         ----------
         value : BooleanValue
-            ``BooleanValue`` object being visited.
+            ``BooleanValue`` type to visit.
 
         Returns
         -------
@@ -100,12 +104,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string(self, value: StringValue) -> T:
         """
-        Will be called if accept is called on a StringValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``StringValue`` type.
 
         Parameters
         ----------
         value : StringValue
-            ``StringValue`` object being visited.
+            ``StringValue`` type to visit.
 
         Returns
         -------
@@ -117,12 +122,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_integer_array(self, value: IntegerArrayValue) -> T:
         """
-        Will be called if accept is called on an IntegerArrayValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        an ``IntegerArrayValue`` type.
 
         Parameters
         ----------
         value : IntegerArrayValue
-            ``IntegerArrayValue`` object being visited.
+            ``IntegerArrayValue`` type to visit.
 
         Returns
         -------
@@ -134,12 +140,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file(self, value: FileValue) -> T:
         """
-        Will be called if accept is called on an FileValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``FileValue`` type.
 
         Parameters
         ----------
         value : FileValue
-            ``FileValue`` object being visited
+            ``FileValue`` type to visit.
 
         Returns
         -------
@@ -151,12 +158,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_real_array(self, value: RealArrayValue) -> T:
         """
-        Will be called if accept is called on a RealArrayValue.
+        Method that is called if the `:meth:`IVariableValue.accept()` method is called
+        on a ``RealArrayValue`` type.
 
         Parameters
         ----------
         value : RealArrayValue
-            ``RealArrayValue`` object being visited.
+            ``RealArrayValue`` type to visit.
 
         Returns
         -------
@@ -168,12 +176,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_boolean_array(self, value: BooleanArrayValue) -> T:
         """
-        Will be called if accept is called on a BooleanArrayValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``BooleanArrayValue`` type.
 
         Parameters
         ----------
         value : BooleanArrayValue
-            ``BooleanArrayValue`` being visited.
+            ``BooleanArrayValue`` type to visit.
 
         Returns
         -------
@@ -185,12 +194,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_string_array(self, value: StringArrayValue) -> T:
         """
-        Will be called if accept is called on a StringArrayValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``StringArrayValue`` type.
 
         Parameters
         ----------
         value : StringArrayValue
-            ``StringArrayValue`` object being visited.
+            ``StringArrayValue`` type to visit.
 
         Returns
         -------
@@ -202,12 +212,13 @@ class IVariableValueVisitor(ABC, Generic[T]):
     @abstractmethod
     def visit_file_array(self, value: FileArrayValue) -> T:
         """
-        Will be called if accept is called on an FileArrayValue.
+        Method that is called if the :meth:`IVariableValue.accept()` method is called on
+        a ``FileArrayValue`` type.
 
         Parameters
         ----------
         value : FileArrayValue
-            ``FileArrayValue`` object being visited.
+            ``FileArrayValue`` type to visit.
 
         Returns
         -------

@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Custom Exception types."""
+"""Provides custom exception types."""
 
 from configparser import ConfigParser
 import os
@@ -41,7 +41,7 @@ def _error(name: str, *args: object) -> str:
 
     Returns
     -------
-    The formatted error string.
+        Formatted error string.
     """
     parser = ConfigParser()
     parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))

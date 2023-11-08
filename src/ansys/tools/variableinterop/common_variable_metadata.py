@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of CommonVariableMetadata."""
+"""Defines the ``CommonVariableMetadata`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -39,10 +39,10 @@ class CommonVariableMetadata(ABC):
     """
     Provides metadata common to all variables.
 
-    It may be that many uses have additional metadata, but this core set is defined by
-    Ansys interoperability guidelines, which allow a common understanding between
-    products of some high-use properties. These guidelines do not exclude defining
-    additional or more specific metadata as needed.
+    While users may have additional metadata, this core set is defined by Ansys
+    interoperability guidelines to allow a common understanding between products of some
+    high-use properties. These guidelines do not exclude defining additional or more
+    specific metadata as needed.
     """
 
     def __init__(self) -> None:
@@ -51,22 +51,22 @@ class CommonVariableMetadata(ABC):
         self._custom_metadata: Dict[str, IVariableValue] = {}
 
     def __eq__(self, other):
-        """Determine if a given object is equal to this metadata."""
+        """Determine if the object is equal to the metadata."""
         return self.equals(other)
 
     def equals(self, other: Any) -> bool:
         """
-        Determine if a given object is equal to this metadata.
+        Determine if the object is equal to the metadata.
 
         Parameters
         ----------
         other : Any
-            Object to compare this object to.
+            Other object to compare this object to.
 
         Returns
         -------
         bool
-            ``True`` if metadata objects are equal, ``False`` otherwise.
+            ``True`` if the metadata objects are equal, ``False`` otherwise.
         """
         equal: bool = (
             isinstance(other, CommonVariableMetadata)
@@ -77,7 +77,7 @@ class CommonVariableMetadata(ABC):
         return equal
 
     def clone(self) -> CommonVariableMetadata:
-        """Get a deep copy of this metadata."""
+        """Get a deep copy of the metadata."""
         return copy.deepcopy(self)
 
     @abstractmethod
@@ -86,13 +86,13 @@ class CommonVariableMetadata(ABC):
         visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T],
     ) -> ivariablemetadata_visitor.T:
         """
-        Invoke the visitor pattern of this object using the passed in visitor
+        Invoke the visitor pattern of this object using the passed-in visitor
         implementation.
 
         Parameters
         ----------
         visitor : IVariableMetadataVisitor[T]
-            The visitor object to call.
+            Visitor object to call.
 
         Returns
         -------
@@ -103,7 +103,7 @@ class CommonVariableMetadata(ABC):
 
     @property
     def description(self) -> str:
-        """Get the description of the variable."""
+        """Description of the variable."""
         return self._description
 
     @description.setter
@@ -114,33 +114,32 @@ class CommonVariableMetadata(ABC):
         Parameters
         ----------
         value : str
-            The new description to set.
+            New description.
         """
         self._description = value
 
     @property
     def custom_metadata(self) -> Dict[str, IVariableValue]:
-        """Additional, custom metadata may be stored in this dictionary."""
+        """Custom metadata stored in a dictionary."""
         return self._custom_metadata
 
     def get_default_value(self) -> IVariableValue:
         """
         Get the default value that should be used for a variable described by this
-        metadata. metadata.
+        metadata.
 
-        The metadata may have set the lower bounds, upper bounds, or
-        enumerated values that restrict what are possible valid
-        values. This method will select a valid default value.
+        The metadata may have set the lower bound, upper bound, or
+        enumerated values, which restricts what values are valid. This
+        method selects a valid default value.
 
-        - If the type's default value (e.g. 0 or empty string) is a
+        - If the type's default value (such as ``0`` or an empty string) is a
           valid value for the metadata, use it.
-        - else if metadata has enumerated values, select the first
-          value in the enumerated values which is valid per the other
-          restrictions.
-        - else if metadata has a lower bound and is it is valid, use it.
-        - else if metadata does not have a lower bound, but does have an
-          upper bound, use upper bound.
-        - else no value is valid, use the type's default value.
+        - If the metadata has enumerated values, select the first
+          enumerated value that is valid per the other restrictions.
+        - If the metadata has a lower bound and it is valid, use it.
+        - If metadata does not have a lower bound but does have an
+          upper bound, use the upper bound.
+        - If no value is valid, use the type's default value.
         """
         from ansys.tools.variableinterop import (
             array_metadata,
@@ -156,7 +155,7 @@ class CommonVariableMetadata(ABC):
         class __DefaultValueVisitor(
             ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
         ):
-            """Metadata visitor to implement getting the default value."""
+            """Implements the metadata visitor for getting the default value."""
 
             @staticmethod
             def __get_str_enumerated_default(
@@ -174,7 +173,7 @@ class CommonVariableMetadata(ABC):
                 Returns
                 -------
                 StringValue
-                    Default value to use for associated variable.
+                    Default value to use for the associated variable.
                 """
                 default_value: scalar_values.StringValue = scalar_values.StringValue()
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
@@ -189,7 +188,7 @@ class CommonVariableMetadata(ABC):
             def __get_numeric_default(metadata: M, type_: Type[T]) -> T:
                 """
                 For a numeric metadata (``IntegerMetadata`` or ``RealMetadata`` type),
-                get the default value to use.
+                get the default value to use for the associated variable.
 
                 Parameters
                 ----------
@@ -201,7 +200,7 @@ class CommonVariableMetadata(ABC):
                 Returns
                 -------
                 T
-                    Default value to use for associated variable.
+                    Default value to use for the associated variable.
                 """
                 default_value = type_()
                 if metadata.enumerated_values is not None and len(metadata.enumerated_values):
@@ -315,13 +314,12 @@ class CommonVariableMetadata(ABC):
 
     def runtime_convert(self, source: IVariableValue) -> IVariableValue:
         """
-        Convert the value of the given variable value to the appropriate type for this
-        metadata.
+        Convert the value of the variable to the appropriate type for this metadata.
 
         Parameters
         ----------
         source : IVariableValue
-            value to convert
+            Value to convert
 
         Returns
         -------
@@ -391,11 +389,11 @@ class CommonVariableMetadata(ABC):
     @abstractmethod
     def variable_type(self) -> variable_type_lib.VariableType:
         """
-        Variable type of this object.
+        Variable type of the object.
 
         Returns
         -------
         VariableType
-            The variable type of this object.
+            Variable type of the object.
         """
         raise NotImplementedError

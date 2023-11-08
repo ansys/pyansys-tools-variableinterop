@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of FileArrayValue."""
+"""Defines the ``FileArrayValue`` class."""
 from __future__ import annotations
 
 import json
@@ -43,7 +43,7 @@ T = TypeVar("T")
 
 class FileArrayValue(CommonArrayValue[FileValue]):
     """
-    Stores a ``FileArrayValue`` type.
+    Stores a value for the ``FileArrayValue`` variable type.
 
     In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -77,12 +77,12 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         Parameters
         ----------
         context : ISaveContext
-            The context used for saving.
+            Context used for saving.
 
         Returns
         -------
         str
-            A string appropriate for use in files and APIs.
+            String appropriate for use in files and APIs.
         """
         if context is None:
             raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
@@ -95,7 +95,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     @staticmethod
     def from_api_object(value: Any, context: ILoadContext, scope: FileScope) -> FileArrayValue:
         """
-        Initialize a new FileArrayValue from a list of api strings.
+        Initialize a new ``FileArrayValue`` type from a list of API strings.
 
         Parameters
         ----------
@@ -109,7 +109,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
         Returns
         -------
         FileArrayValue
-            New ``FileArrayValue`` initialized from the value.
+            New ``FileArrayValue`` type initialized from the value.
         """
         if isinstance(value, list):
             # Define a function for transforming individual API objects to elements.

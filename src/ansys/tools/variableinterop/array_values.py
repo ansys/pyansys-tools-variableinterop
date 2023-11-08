@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of all array value implementations of IVariableValue."""
+"""Defines all array value implementations of the ``IVariableValue`` variable type."""
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
@@ -45,7 +45,7 @@ T = TypeVar("T")
 
 class BooleanArrayValue(CommonArrayValue[np.bool_]):
     """
-    Stores a value as a``BooleanArrayValue`` type.
+    Stores a value as a ``BooleanArrayValue`` variable type.
 
     In Python, a ``BooleanArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -80,7 +80,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     def to_real_array_value(self) -> RealArrayValue:
         """
-        Convert this value to a RealArrayValue.
+        Convert this value to a ``RealArrayValue`` type.
 
         Returns
         -------
@@ -91,7 +91,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     def to_integer_array_value(self) -> IntegerArrayValue:
         """
-        Convert this value to an IntegerArrayValue.
+        Convert this value to an ``IntegerArrayValue`` type.
 
         Returns
         -------
@@ -102,7 +102,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
     def to_string_array_value(self) -> StringArrayValue:
         """
-        Convert this value to an StringArrayValue.
+        Convert this value to a ``StringArrayValue`` type.
 
         Returns
         -------
@@ -126,12 +126,12 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
         Parameters
         ----------
         value : str
-            API string to be parsed.
+            API string to parse.
 
         Returns
         -------
         BooleanArrayValue
-            Result of a parse as BooleanArrayValue object.
+            Result of parsing the ``BooleanArrayValue`` type.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -150,7 +150,7 @@ class BooleanArrayValue(CommonArrayValue[np.bool_]):
 
 class IntegerArrayValue(CommonArrayValue[np.int64]):
     """
-    Stores an ``IntegerArrayValue`` type.
+    Stores a value as an ``IntegerArrayValue`` variable type.
 
     In Python, the ``IntegerArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -190,18 +190,18 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to the ``BooleanArrayValue`` type.
+        Convert this value to a ``BooleanArrayValue`` type.
 
         Returns
         -------
         BooleanArrayValue
-            ``BooleanArrayValue`` type with the same values converted to Boolean.
+            ``BooleanArrayValue`` type with the same values converted to Boolean values.
         """
         return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
 
     def to_real_array_value(self) -> RealArrayValue:
         """
-        Convert this value to a RealArrayValue.
+        Convert this value to a ``RealArrayValue`` type.
 
         Returns
         -------
@@ -212,12 +212,12 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
     def to_string_array_value(self) -> StringArrayValue:
         """
-        Convert this value to an StringArrayValue.
+        Convert this value to a ``StringArrayValue`` type.
 
         Returns
         -------
         StringArrayValue
-            ``StringArrayValue`` object converted to an array of strings.
+            ``StringArrayValue`` type converted to an array of strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -231,17 +231,17 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
     @staticmethod
     def from_api_string(value: str) -> IntegerArrayValue:
         """
-        Convert an API-formatted string to an ``IntegerArrayValue`` value.
+        Convert an API-formatted string to an ``IntegerArrayValue`` type.
 
         Parameters
         ----------
         value : str
-            API string to be parsed.
+            API string to parse.
 
         Returns
         -------
         IntegerArrayValue
-            Result of a parse as IntegerArrayValue object.
+            Result of parsing the ``IntegerArrayValue`` type.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -259,7 +259,7 @@ class IntegerArrayValue(CommonArrayValue[np.int64]):
 
 class RealArrayValue(CommonArrayValue[np.float64]):
     """
-    Stores a value of real array type.
+    Stores a value as a ``RealArrayValue`` variable type.
 
     In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -304,7 +304,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         Returns
         -------
         BooleanArrayValue
-            ``BooleanArrayValue`` type with the same values converted to Boolean.
+            ``BooleanArrayValue`` type with the same values converted to Boolean values.
         """
         return np.vectorize(np.bool_)(self).view(BooleanArrayValue)
 
@@ -325,12 +325,12 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
     def to_string_array_value(self) -> StringArrayValue:
         """
-        Convert this value to an StringArrayValue.
+        Convert the value to a ``StringArrayValue`` type.
 
         Returns
         -------
         StringArrayValue
-            ``StringArrayValue`` type with the same values converted to strings.
+            ``StringArrayValue`` type with the same value converted to strings.
         """
         return self.astype(np.str_).view(StringArrayValue)
 
@@ -349,12 +349,12 @@ class RealArrayValue(CommonArrayValue[np.float64]):
         Parameters
         ----------
         value : str
-            API string to be parsed.
+            API string to parse.
 
         Returns
         -------
         RealArrayValue
-            Result of a parse as RealArrayValue object.
+            Result of parsing the ``RealArrayValue`` type.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,
@@ -385,7 +385,7 @@ class RealArrayValue(CommonArrayValue[np.float64]):
 
 class StringArrayValue(CommonArrayValue[np.str_]):
     """
-    Stores a ``StringArrayValue`` type.
+    Stores a value as a ``StringArrayValue`` variable type.
 
     In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
     This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
@@ -420,7 +420,7 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     def to_real_array_value(self) -> RealArrayValue:
         """
-        Convert this value to a RealArrayValue.
+        Convert the value to a ``RealArrayValue`` type.
 
         Returns
         -------
@@ -431,23 +431,23 @@ class StringArrayValue(CommonArrayValue[np.str_]):
 
     def to_boolean_array_value(self) -> BooleanArrayValue:
         """
-        Convert this value to a ``BooleanArrayValue`` type.
+        Convert the value to a ``BooleanArrayValue`` type.
 
         Returns
         -------
         BooleanArrayValue
-            A BooleanArrayValue with the same values converted to bool.
+            ``BooleanArrayValue`` type with the same values converted to Boolean values.
         """
         return np.vectorize(BooleanValue.str_to_bool)(self).view(BooleanArrayValue)
 
     def to_integer_array_value(self) -> IntegerArrayValue:
         """
-        Convert this value to an IntegerArrayValue.
+        Convert the value to an ``IntegerArrayValue`` type.
 
         Returns
         -------
         IntegerArrayValue
-            An IntegerArrayValue with the same values converted to int.
+            ``IntegerArrayValue`` type with the same values converted to integers.
         """
         return self.to_real_array_value().to_integer_array_value()
 
@@ -466,12 +466,12 @@ class StringArrayValue(CommonArrayValue[np.str_]):
         Parameters
         ----------
         value : str
-            API string to be parsed.
+            API string to parse.
 
         Returns
         -------
         StringArrayValue
-            Result of a parse as StringArrayValue object.
+            Result of parsing the ``StringArrayValue`` type.
         """
         return ArrayToFromStringUtil.string_to_value(
             value,

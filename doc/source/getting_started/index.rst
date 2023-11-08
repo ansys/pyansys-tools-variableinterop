@@ -6,23 +6,28 @@ Installation
 
 Two installation modes of the ``pyansys-tools-variableinterop`` package are provided: user and developer.
 
-For users
-^^^^^^^^^
+Install in user mode
+^^^^^^^^^^^^^^^^^^^^
 
-Install the latest release for use with this command:
+Before installing the ``pyansys-tools-variableinterop`` package, make sure that you
+have the latest version of `pip`_ with this command:
+
+.. code:: bash
+
+    python -m pip install -U pip
+
+Then, install the latest ``pyansys-tools-variableinterop`` package with this command:
 
 .. code:: bash
 
     python -m pip install pyansys-tools-variableinterop
 
-
-For developers
-^^^^^^^^^^^^^^
+Install in developer mode
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Installing the ``pyansys-tools-variableinterop`` package in developer mode allows
 you to modify the source and enhance it.
-
-For procedural information, see :ref:`ref_contribute`.
+Refer to the `Contribute`_ section for more information.
 
 Style and testing
 -----------------
@@ -45,7 +50,7 @@ command to install the building requirements:
 
 Then, run these commands:
 
-    .. code:: bash
+.. code:: bash
 
-        python -m build
-        python -m twine check dist/*
+    python -m build
+    python -m twine check dist/*

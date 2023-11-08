@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of FileValue."""
+"""Defines the ``FileValue`` class."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -104,8 +104,8 @@ class AlreadyLocalFileContentContext(LocalFileContentContext, AsyncLocalFileCont
         Parameters
         ----------
         local_content_path : Optional[Path], optional
-            Path to the local content. The default is ``None``, which indicates the file value is
-            empty.
+            Path to the local content. The default is ``None``, which indicates that the file
+            value is empty.
         """
         self._local_content_path = local_content_path
 
@@ -147,7 +147,7 @@ class FileValue(IVariableValue, ABC):
         file_size: Optional[int] = None,
     ):
         """
-        Construct a new FileValue.
+        Initialize a new instance.
 
         Parameters
         ----------
@@ -155,18 +155,18 @@ class FileValue(IVariableValue, ABC):
             Path to the file to wrap. The default is `None`, which indicates that the original file
             path is not known or does not exist.
         mime_type : Optional[str], optional
-            MIME type of the file. The default is `None`, which indicates that the file value does
+            MIME type of the file. The default is `None`, which indicates that the file does
             not have a MIME type.
         encoding : Optional[str], optional
-            Encoding of the file. The default is `None`, which indicates that the file value does
+            Encoding of the file. The default is `None`, which indicates that the file does
             not have a text encoding (for example, if it is a binary file).
         value_id : Optional[UUID], optional
-            ID that uniquely identifies this file. If this value is not supplied, or if the default
-            value of `None` is provided, it is automatically generated.
+            ID that uniquely identifies the file. The default is ``None``, in which case an ID
+            is automatically generated.
         file_size : Optional[int], optional
-            Size of the file in bytes, if known. The default value is `None`, which indicates that
-            the file size is not known. Note that a size of `None` does not indicate that the file
-            is of size zero.
+            Size of the file in bytes. The default value is ``None``, which indicates that
+            the file size is not known. A file size of ``None`` does not indicate that the file
+            is zero bytes.
         """
         self._id: UUID = uuid4() if (value_id is None) else value_id
         self._mime_type: str = "" if (mime_type is None) else mime_type
@@ -222,72 +222,44 @@ class FileValue(IVariableValue, ABC):
 
     @property
     def mime_type(self) -> str:
-        """
-        Get the mimetype of this FileValue.
-
-        Returns
-        -------
-           str
-            Mime type of the file.
-        """
+        """MIME type of the file."""
         return self._mime_type
 
     @property
     def original_file_name(self) -> Optional[PathLike]:
-        """
-        Get the filename of the file that was wrapped.
-
-        Returns
-        -------
-        Optional[PathLike]
-            Original filename.
-        """
+        """Name of the original file that was wrapped."""
         return self._original_path
 
     @property
     def extension(self) -> str:
-        """
-        Get the extension of the file.
-
-        Returns
-        -------
-        str
-            Extension of the file.
-        """
+        """Extension of the file."""
         # TODO: Implement
         raise NotImplementedError()
 
     @property
     def file_encoding(self) -> Optional[str]:
-        """
-        Get the encoding of the file.
-
-        Returns     Encoding of the file. Optional[str]     Encoding of the file.
-        """
+        """Encoding of the file."""
         return self._file_encoding
 
     @property
     def id(self) -> UUID:
         """
-        Get the id of this FileValue.
+        ID of the file.
 
         Returns
         -------
         UUID
-            UUID that identifies this value.
+            ID that identifies the file.
         """
         return self._id
 
     @property
     def file_size(self) -> Optional[int]:
         """
-        Get the size of the file in bytes if known.
+        Size of the file in bytes if known.
 
-        Returns
-        -------
-        Optional[int]
-            Size of the file in bytes. ``None`` indicates that the file size is not known,
-            not necessarily that it is zero.
+        A value of ``None`` indicates that the file size is not known,
+        not that the file size is zero bytes.
         """
         return self._size
 
@@ -299,7 +271,7 @@ class FileValue(IVariableValue, ABC):
         Parameters
         ----------
         filename : str
-            The file to read.
+            File to read.
 
         Returns
         -------
@@ -351,29 +323,28 @@ class FileValue(IVariableValue, ABC):
         self, progress_callback: Optional[Callable[[int], None]] = None
     ) -> AsyncLocalFileContentContext:
         """
-        Realizes the file contents to a local filesystem if needed.
+        Realize the file contents to a local filesystem if needed.
 
-        The FileValue is intended to represent an immutable value. The file
-        returned by this call may point to a cached or even the original file. Callers
-        must not modify the file on disk or undefined behavior, including class 3 errors,
-        may occur. If the caller needs to modify the file, consider using
-        write_file, or copying the file before modifying it.
+        The ``FileValue`` instance is intended to represent an immutable value. The file
+        returned by this call may point to a cached file or even the original file. Callers
+        must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+        may occur. If the caller needs to modify the file, consider using the ``write_file``
+        method or copying the file before modifying it.
 
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]], optional
-            Callback that may be called to indicate progress in realizing the local copy.
-            The argument is a percentage between 0 and 100 inclusive that indicates
-            an estimate of the progress made in loading the file.
-            The callback might not necessarily be called at all.
-            are not guaranteed, even if other calls occur.
+            Callback that can be called to indicate progress in realizing the local copy.
             The default is ``None``, in which case this method makes no attempt
-            to report its progress.
+            to report its progress. This method may call a provided callback with a
+            percentage value between 0 and 100 inclusive. The provided callback may not
+            necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+            even if other calls occur.
 
         Returns
         -------
         AsyncLocalFileContentContext
-            A context manager that, when exited, will delete the local copy
+            Context manager that, when exited, deletes the local copy
             if it is a temporary file.
         """
 
@@ -384,73 +355,74 @@ class FileValue(IVariableValue, ABC):
         """
         Realizes the file contents to a local filesystem if needed.
 
-        The FileValue is intended to represent an immutable value. The file
-        returned by this call may point to a cached or even the original file. Callers
-        must not modify the file on disk or undefined behavior, including class 3 errors,
-        may occur. If the caller needs to modify the file, consider using
-        write_file, or copying the file before modifying it.
+        The ``FileValue`` instance is intended to represent an immutable value. The file
+        returned by this call may point to a cached file or even the original file. Callers
+        must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+        may occur. If the caller needs to modify the file, consider using the ``write_file``
+        method or copying the file before modifying it.
 
         Parameters
         ----------
         progress_callback : Optional[Callable[[int], None]], optional
-            A callback that may be called to indicate progress in realizing the local copy.
-            The argument will be a percentage between 0 and 100 inclusive that indicates
-            an estimate of the progress made in loading the file.
-            The callback will not necessarily be called at all, and calls for 0% or 100%
-            are not guaranteed, even if other calls occur.
+            Callback that can be called to indicate progress in realizing the local copy.
             The default is ``None``, in which case this method makes no attempt
-            to report its progress.
+            to report its progress. This method may call a provided callback with a
+            percentage value between 0 and 100 inclusive. The provided callback may not
+            necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+            even if other calls occur.
 
         Returns
         -------
         LocalFileContentContext
-            A context manager that, when exited, will delete the local copy
+            Context manager that, when exited, deletes the local copy
             if it is a temporary file.
         """
 
     @classmethod
     def is_text_based_static(cls, mimetype: str) -> Optional[bool]:
         """
-        Determine if a file is text-based via it's mimetype.
+        Determines if a file is text-based via its MIME type.
 
         Parameters
         ----------
         mimetype : str
-            The file's mimetype.
+            File's MIME type.
 
         Returns
         -------
         Optional[bool]
-            True if the mimetype starts with text or is application/json, False otherwise.
+            ``True`` if the MIME type starts with text or is an application (JSON),
+            ``False`` otherwise.
         """
         return str(mimetype).startswith("text/") or str(mimetype).startswith("application/json")
 
     @property
     def is_text_based(self) -> Optional[bool]:
         """
-        Determine if this file is text-based via it's mimetype.
+        Flag indicating if this file is text-based via its MIME type.
 
         Returns
         -------
         bool
-            True if the mimetype starts with text or is application/json, False otherwise.
+            ``True`` if the MIME type starts with ``text`` or is ``application/json``,
+            ``False`` otherwise.
         """
         return FileValue.is_text_based_static(self.mime_type)
 
     async def get_contents(self, encoding: Optional[str] = None) -> str:
         """
-        Read the file's contents as a string.
+        Read the contents of the file as a string.
 
         Parameters
         ----------
         encoding : Optional[str], optional
-            The encoding to use when reading.
-            The default is `None`, in which case the current locale's encoding is used.
+            Encoding to use when reading. The default is ``None``, in which case the
+            current locale's encoding is used.
 
         Returns
         -------
         str
-            The file contents as a string.
+            Contents of the file as a string.
         """
         async with await self.get_reference_to_actual_content_file_async() as local_pin:
             file: Optional[PathLike] = local_pin.content_path
@@ -461,31 +433,31 @@ class FileValue(IVariableValue, ABC):
     @abstractmethod
     def _has_content(self) -> bool:
         """
-        Check whether this file value has content.
+        Check whether this file has content.
 
-        This information is used to decide whether to pass the file value to the file store.
+        You use this method to decide whether to pass the content of the file to the file store.
 
         Returns
         -------
         bool
-            True if there is content, false otherwise.
+            ``True`` if there is content, ``False`` otherwise.
         """
 
     @overrides
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
         """
-        Convert this value to an API string using a save context.
+        Convert the value to an API string using a save context.
 
         Parameters
         ----------
         context : Optional[ISaveContext], optional
-            The save context to use. The default value is `None`,
+            Save context to use. The default value is ``None``,
             in which case file values are not supported.
 
         Returns
         -------
         str
-            A string appropriate for use in files and APIs.
+            String appropriate for use in files and APIs.
         """
         if context is None:
             raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
@@ -501,17 +473,17 @@ class FileValue(IVariableValue, ABC):
 
     def to_api_object(self, save_context: ISaveContext) -> Dict[str, Optional[str]]:
         """
-        Convert this file to an api object.
+        Convert this file to an API object.
 
         Parameters
         ----------
         save_context : ISaveContext
-            The save context used for the conversion.
+            Save context to use for the conversion.
 
         Returns
         -------
         Dict[str, Optional[str]]
-            API object that matches this FileValue.
+            API object that matches this ``FileValue`` instance.
         """
         obj: Dict[str, Optional[str]] = {}
         if self._has_content():
@@ -532,14 +504,14 @@ class FileValue(IVariableValue, ABC):
 
     def get_extension(self) -> str:
         """
-        Get the file extension of the file value held, if known, including the period.
+        Get the file extension of the file, including the period.
 
-        If the file extension is not known, ".tmp" is returned.
+        If the file extension is not known, ``.tmp`` is returned.
 
         Returns
         -------
         str
-            The file extension of the file value held if known, otherwise, ".tmp"
+            File extension of the file if known, ``".tmp"`` otherwise.
         """
         ext: str = FileValue._DEFAULT_EXT
         if isinstance(self._original_path, PathLike):
@@ -551,20 +523,19 @@ class FileValue(IVariableValue, ABC):
 
 class LocalFileValue(FileValue, ABC):
     """
-    A base class for file values where the file contents already exist on the local
-    disk.
+    Base class for file values where the file contents already exist on the local disk.
 
     Generally speaking, clients of this library should not attempt to use this class. It
     is intended for dependents of this library who are attempting to implement a new
-    FileScope type where that FileScope always stores file content on the local disk.
-    Clients are discouraged from attempting to introspect FileValues to determine if
-    they are LocalFileValues for the purpose of getting a path to the locally stored
-    content. Instead, always correctly use FileValue's
-    get_reference_to_actual_content_file, which will allow the code in question to get a
-    local path even for files that are not originally hosted locally. For files that are
-    originally hosted locally, this will not produce an additional copy and instead will
-    give a context manager that will do nothing on enter/exit but still allow access to
-    the actual content path.
+    ``FileScope`` instance that always stores the content of a file on the local disk.
+    Clients are discouraged from attempting to introspect a ``FileValues``instance to
+    determine if they are instances of ``LocalFileValue`` for the purpose of getting a path to the
+    locally stored content. Instead, always correctly use the
+    ``get_reference_to_actual_content_file`` method for the ``FileValue`` instance to
+    allow the code in question to get the local path, even for files that are not
+    originally hosted locally. For files that are originally hosted locally, this
+    does not produce an additional copy but rather gives a context manager that does
+    nothing on enter or exit but still allows access to the actual content path.
     """
 
     def __init__(
@@ -585,18 +556,18 @@ class LocalFileValue(FileValue, ABC):
             Path to the file to wrap. The default is `None`, which indicates that the original file
             path is not known or does not exist.
         mime_type : Optional[str], optional
-            MIME type of the file. The default is `None`, which indicates that the file value does
+            MIME type of the file. The default is `None`, which indicates that the file does
             not have a MIME type.
         encoding : Optional[str], optional
-            Encoding of the file. The default is `None`, which indicates that the file value does
+            Encoding of the file. The default is `None`, which indicates that the file does
             not have a text encoding (for example, if it is a binary file).
         value_id : Optional[UUID], optional
-            ID that uniquely identifies this file. If this value is not supplied, or if the default
-            value of `None` is provided, it is automatically generated.
+            ID that uniquely identifies the file. The default is ``None``, in which case an ID
+            is automatically generated.
         file_size : Optional[int], optional
-            Size of the file in bytes, if known. The default value is `None`, which indicates that
-            the file size is not known. Note that a size of `None` does not indicate that the file
-            is of size zero.
+            Size of the file in bytes. The default value is `None`, which indicates that
+            the file size is not known. A size of `None` does not indicate that the file
+            is zero bytes.
         """
         super().__init__(
             original_path=original_path,
@@ -610,7 +581,7 @@ class LocalFileValue(FileValue, ABC):
     @property
     def actual_content_file_name(self) -> Optional[PathLike]:
         """
-        Get a PathLike to the actual file this FileValue wraps.
+        Get the path to the file that this ``FileValue`` instance wraps.
 
         Returns
         -------
@@ -637,7 +608,7 @@ class EmptyFileValue(LocalFileValue):
     Represents an empty file value.
 
     Generally speaking, you should not create an instance of this class but instead use
-    ansys.tools.variableinterop.EMPTY_FILE.
+    ``ansys.tools.variableinterop.EMPTY_FILE``.
     """
 
     def __init__(self):

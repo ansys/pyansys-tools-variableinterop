@@ -19,7 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Definition of FileMetadata."""
+"""Defines the ``FileMetadata`` class."""
 from __future__ import annotations
 
 from typing import Any, TypeVar
@@ -34,7 +34,7 @@ T = TypeVar("T")
 
 
 class FileMetadata(CommonVariableMetadata):
-    """Provides metadata for a variable of the ``File`` type."""
+    """Provides metadata for the ``File`` variable type."""
 
     @overrides
     def __eq__(self, other):

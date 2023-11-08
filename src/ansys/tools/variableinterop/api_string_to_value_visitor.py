@@ -22,10 +22,10 @@
 """
 Provides a variable type pseudo-visitor that parses values from strings.
 
-The pseudo-visitor is constructed with the string to parse, then accepted by the
+The pseudo-visitor is constructed with the string to parse and then accepted by the
 appropriate variable type. When visiting, it attempts to parse the string into the
 visited type. For more information on why this pattern is better than bare switch
-statements, see :class:``IVariableTypePseudoVisitor``.
+statements, see :class:`IVariableTypePseudoVisitor`.
 """
 import json
 from typing import Optional
@@ -57,11 +57,11 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         source : str
             String that values should be parsed from.
         fscope : Optional[FileScope], optional
-            File scope to use to deserialize file variables. If file variables are
-            not needed, the value may be ``None``, which is the default.
+            File scope to use to deserialize file variables. The default is ``None``,
+            which indicates that file variables are not needed.
         save_context : Optional[ILoadContext], optional
-            Save context to read file contents from. If file variables are
-            not needed, the value may be ``None``, which is the default.
+            Save context to read file contents from. The default is ``None``, which
+            indicates that file variables are not needed.
         """
         self._source: str = source
         self._scope: Optional[FileScope] = fscope
@@ -69,10 +69,10 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
     def visit_unknown(self) -> None:
         """
-        Visit the UNKNOWN variable type.
+        Visit the ``UNKNOWN`` variable type.
 
-        Given that variables of type Unknown cannot actually be produced,
-        this method always raises.
+        Given that variables of the ``UNKNOWN`` type cannot actually be produced,
+        this method always raises ``NotImplementedError``.
 
         Returns
         -------
@@ -84,60 +84,60 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
         NotImplementedError
             Always.
         """
-        raise NotImplementedError("Cannot create values with unknown type.")
+        raise NotImplementedError("Cannot create values with `UNKNOWN` type.")
 
     def visit_int(self) -> IntegerValue:
         """
-        Produce an IntegerValue from the API string format.
+        Produce an ``IntegerValue`` type from the API string format.
 
         Returns
         -------
         IntegerValue
-            ``IntegerValue`` with a value determined by the specified string.
+            ``IntegerValue`` type with a value determined by the specified string.
         """
         return IntegerValue.from_api_string(self._source)
 
     def visit_real(self) -> RealValue:
         """
-        Produce a RealValue from the API string format.
+        Produce a ``RealValue`` type from the API string format.
 
         Returns
         -------
         RealValue
-            ``RealValue`` with a value determined by the specified string.
+            ``RealValue`` type with a value determined by the specified string.
         """
         return RealValue.from_api_string(self._source)
 
     def visit_boolean(self) -> BooleanValue:
         """
-        Produce a BooleanValue from the API string format.
+        Produce a ``BooleanValue`` type from the API string format.
 
         Returns
         -------
         BooleanValue
-            ``BooleanValue`` with a value determined by the specified string.
+            ``BooleanValue`` type with a value determined by the specified string.
         """
         return BooleanValue.from_api_string(self._source)
 
     def visit_string(self) -> StringValue:
         """
-        Produce a StringValue from the API string format.
+        Produce a ``StringValue`` type from the API string format.
 
         Returns
         -------
         StringValue
-            ``StringValue`` with a value determined by the specified string.
+            ``StringValue`` type with a value determined by the specified string.
         """
         return StringValue.from_api_string(self._source)
 
     def visit_file(self) -> FileValue:
         """
-        Produce a ``FileValue`` from the API string format.
+        Produce a ``FileValue`` type from the API string format.
 
         Returns
         -------
         FileValue
-            ``FileValue`` with a value determined by the specified string.
+            ``FileValue`` type with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
@@ -148,56 +148,56 @@ class APIStringToValueVisitor(IVariableTypePseudoVisitor):
 
     def visit_int_array(self) -> IntegerArrayValue:
         """
-        Produce an IntegerArrayValue from the API string format.
+        Produce an ``IntegerArrayValue`` type from the API string format.
 
         Returns
         -------
         IntegerArrayValue
-            ``IntegerArrayValue`` with a value determined by the specified string.
+            ``IntegerArrayValue`` type with a value determined by the specified string.
         """
         return IntegerArrayValue.from_api_string(self._source)
 
     def visit_real_array(self) -> RealArrayValue:
         """
-        Produce a RealArrayValue from the API string format.
+        Produce a ``RealArrayValue`` type from the API string format.
 
         Returns
         -------
         RealArrayValue
-            ``RealArrayValue`` with a value determined by the specified string.
+            ``RealArrayValue`` type with a value determined by the specified string.
         """
         return RealArrayValue.from_api_string(self._source)
 
     def visit_bool_array(self) -> BooleanArrayValue:
         """
-        Produce a BooleanArrayValue from the API string format.
+        Produce a ``BooleanArrayValue`` from the API string format.
 
         Returns
         -------
         BooleanArrayValue
-            ``BooleanArrayValue`` with a value determined by the specified string.
+            ``BooleanArrayValue`` type with a value determined by the specified string.
         """
         return BooleanArrayValue.from_api_string(self._source)
 
     def visit_string_array(self) -> StringArrayValue:
         """
-        Produce a StringArrayValue from the API string format.
+        Produce a ``StringArrayValue`` type from the API string format.
 
         Returns
         -------
         StringArrayValue
-            ``StringArrayValue`` with a value determined by the specified string.
+            ``StringArrayValue`` type with a value determined by the specified string.
         """
         return StringArrayValue.from_api_string(self._source)
 
     def visit_file_array(self) -> FileArrayValue:
         """
-        Produce a ``FileArrayValue`` from the API string format.
+        Produce a ``FileArrayValue`` type from the API string format.
 
         Returns
         -------
         FileArrayValue
-            ``FileArrayValue`` with a value determined by the specified string.
+            ``FileArrayValue`` type with a value determined by the specified string.
         """
         if self._scope is None or self._save_context is None:
             raise NotImplementedError(
