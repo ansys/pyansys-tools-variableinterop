@@ -177,7 +177,3 @@ This way, it's not possible for you to push code that fails the style checks:
   trim trailing whitespace.................................................Passed
   Add License Headers......................................................Passed
   Validate GitHub Workflows................................................Passed
-
-.. LINKS AND REFERENCES
-.. _dev_guide_pyansys_pep8: https://dev.docs.pyansys.com/coding-style/pep8.html
-.. _pre-commit: https://pre-commit.com/
