@@ -116,20 +116,13 @@ templates:
 
 * Bug report template
 * Feature request template
+* Documentation issue template
+* Example request template
 
 If your issue does not fit into one of these categories, create your own issue.
 
 To reach the PyAnsys support team, email `pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
 
-
-Build documentation
--------------------
-
-To build the PyAnsys Tools Variable Interop documentation locally, in the root directory of the repository,
-run these commands::
-
-    pip install .[doc]
-    .\doc\make.bat html
 
 Testing
 -------
@@ -184,7 +177,3 @@ This way, it's not possible for you to push code that fails the style checks:
   trim trailing whitespace.................................................Passed
   Add License Headers......................................................Passed
   Validate GitHub Workflows................................................Passed
-
-.. LINKS AND REFERENCES
-.. _dev_guide_pyansys_pep8: https://dev.docs.pyansys.com/coding-style/pep8.html
-.. _pre-commit: https://pre-commit.com/

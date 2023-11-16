@@ -27,7 +27,7 @@ Install in developer mode
 
 Installing the ``pyansys-tools-variableinterop`` package in developer mode allows
 you to modify the source and enhance it.
-Refer to the `Contribute`_ section for more information.
+For more information, see :ref:`ref_contribute`.
 
 Style and testing
 -----------------
