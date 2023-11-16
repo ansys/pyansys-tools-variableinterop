@@ -116,20 +116,13 @@ templates:
 
 * Bug report template
 * Feature request template
+* Documentation issue template
+* Example request template
 
 If your issue does not fit into one of these categories, create your own issue.
 
 To reach the PyAnsys support team, email `pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
 
-
-Build documentation
--------------------
-
-To build the PyAnsys Tools Variable Interop documentation locally, in the root directory of the repository,
-run these commands::
-
-    pip install .[doc]
-    .\doc\make.bat html
 
 Testing
 -------
