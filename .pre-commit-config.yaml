@@ -1,6 +1,13 @@
 exclude: "tests/integration/files"
 repos:
 
+- repo: https://github.com/ansys/pre-commit-hooks
+  rev: v0.2.8
+  hooks:
+  - id: add-license-headers
+    args:
+    - --start_year=2024
+
 - repo: https://github.com/psf/black
   rev: 23.9.1  # IF VERSION CHANGES --> MODIFY "blacken-docs" MANUALLY AS WELL!!
   hooks:
@@ -27,6 +34,7 @@ repos:
   hooks:
   - id: docformatter
     additional_dependencies: [tomli]
+    args: ["-i", "--black"]
 
 - repo: https://github.com/codespell-project/codespell
   rev: v2.2.6
@@ -40,13 +48,6 @@ repos:
 #   - id: pydocstyle
 #     additional_dependencies: [tomli]
 #     exclude: "tests/"
-
-- repo: https://github.com/ansys/pre-commit-hooks
-  rev: v0.2.8
-  hooks:
-  - id: add-license-headers
-    args:
-    - --start_year=2024
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.5.0
