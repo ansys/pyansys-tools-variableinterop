@@ -19,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 """Defines and implements a pseudo-visitor pattern for variable types."""
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Generic, TypeVar
