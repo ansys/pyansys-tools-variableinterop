@@ -128,7 +128,6 @@ jobs:
       - name: "Documentation requirements installation"
         run: |
           pip install .[doc]
-          pip list
 
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v4
