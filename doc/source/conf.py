@@ -173,11 +173,6 @@ rst_epilog = ""
 with open("links.rst") as f:
     rst_epilog += f.read()
 
-linkcheck_ignore = [
-    "https://github.com/ansys/pyansys-tools-variableinterop/*",  # this site is private
-    "https://variableinterop.docs.pyansys.com/*",  # this site is private
-]
-
 # -- Options for LaTeX output ------------------------------------------------
 latex_elements = {}
 

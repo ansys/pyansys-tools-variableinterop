@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "pyansys-tools-variableinterop"
-version = "0.1.dev0"
+version = "0.2.dev"
 description = "Optional variable specifications for interoperability between languages and capabilities."
 readme = "README.rst"
 requires-python = ">=3.9,<4"
