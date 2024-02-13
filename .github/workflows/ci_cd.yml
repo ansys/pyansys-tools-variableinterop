@@ -15,7 +15,7 @@ concurrency:
 
 env:
   DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
-  MAIN_PYTHON_VERSION: '3.10'
+  MAIN_PYTHON_VERSION: '3.12' # for testing purposes
   PACKAGE_NAME: 'pyansys-tools-variableinterop'
 
 jobs:
