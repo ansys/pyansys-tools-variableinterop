@@ -22,7 +22,6 @@
 """Defines the ``FromFormattedStringVisitor`` class."""
 from __future__ import annotations
 
-import distutils.util
 import locale
 
 import numpy as np
@@ -35,6 +34,22 @@ from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
 from .utils.locale_utils import LocaleUtils
 from .variable_value import IVariableValue
+
+
+def strtobool(val):
+    """
+    Convert a string representation of truth to true (1) or false (0).
+
+    True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values are 'n', 'no',
+    'f', 'false', 'off', and '0'.  Raises ValueError if 'val' is anything else.
+    """
+    val = val.lower()
+    if val in ("y", "yes", "t", "true", "on", "1"):
+        return 1
+    elif val in ("n", "no", "f", "false", "off", "0"):
+        return 0
+    else:
+        raise ValueError("invalid truth value %r" % (val,))
 
 
 class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
@@ -68,7 +83,7 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
     @overrides
     def visit_boolean(self) -> BooleanValue:
         result: np.str_ = LocaleUtils.perform_safe_locale_action(
-            self._locale_name, lambda: bool(distutils.util.strtobool(self._value))
+            self._locale_name, lambda: bool(strtobool(self._value))
         )
         return result
 
