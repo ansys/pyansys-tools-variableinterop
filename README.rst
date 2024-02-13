@@ -6,8 +6,8 @@ PyAnsys Tools Variable Interop
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |pypi| image:: https://img.shields.io/pypi/v/ansys-tools-variableinterop.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/ansys-tools-variableinterop/
+.. |pypi| image:: https://img.shields.io/pypi/v/pyansys-tools-variableinterop.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/pyansys-tools-variableinterop/
 
 .. |codecov| image:: https://codecov.io/gh/ansys/pyansys-tools-variableinterop/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/ansys/pyansys-tools-variableinterop
