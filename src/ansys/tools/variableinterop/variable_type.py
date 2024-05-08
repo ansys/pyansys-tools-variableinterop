@@ -23,11 +23,53 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Dict, Iterable, Union
+from typing import Any, Dict, Iterable, Optional, Type, Union
+
+from .exceptions import IncompatibleTypesException, VariableTypeUnknownError
 
 from .utils.locale_utils import Strings
 from .variable_value import IVariableValue
 
+def create_incompatible_types_exception(from_type: Union[VariableType, str], to_type: Union[VariableType, str]) -> IncompatibleTypesException:
+    """
+    Construct exception.
+
+    Parameters
+    ----------
+    from_type : Union[VariableType, str]
+        ``VariableType`` or string identifying the type to convert from.
+    to_type : Union[VariableType, str]
+        ``VariableType`` or string identifying the type to convert to.
+
+    Returns
+    -------
+    Newly created ``IncompatibleTypesException``
+    """
+    actual_from_type: Optional[VariableType]
+    actual_from_type_str: str
+    actual_to_type: Optional[VariableType]
+    actual_to_type_str: str
+
+    if isinstance(from_type, VariableType):
+        actual_from_type = from_type
+        actual_from_type_str = from_type.associated_type_name
+    else:
+        actual_from_type = None
+        actual_from_type_str = from_type
+    if isinstance(to_type, VariableType):
+        actual_to_type = to_type
+        actual_to_type_str = to_type.associated_type_name
+    else:
+        actual_to_type = None
+        actual_to_type_str = to_type
+    message: str = Strings.get("Errors", "ERROR_INCOMPATIBLE_TYPES", actual_from_type_str, actual_to_type_str)
+    result = IncompatibleTypesException(message)
+    # Monkey patch with these attributes since due to circular dependency they can't be declared.
+    result.from_type = actual_from_type
+    result.from_type_str = actual_from_type_str
+    result.to_type = actual_to_type
+    result.to_type_str = actual_to_type_str
+    return result
 
 class VariableType(Enum):
     """Provides an enumeration of the possible variable types."""
@@ -91,6 +133,13 @@ class VariableType(Enum):
     @property
     def associated_type_name(self) -> str:
         """Get the name of the associated ``IVariableValue`` type."""
+        if self == VariableType.UNKNOWN:
+            return "unknown"
+        return self.associated_type.__name__
+
+    @property
+    def associated_type(self) -> Type:
+        """Get the associated ``IVariableValue`` type."""
         from .array_values import (
             BooleanArrayValue,
             IntegerArrayValue,
@@ -101,18 +150,20 @@ class VariableType(Enum):
         from .file_value import FileValue
         from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 
-        class_map: Dict[VariableType, str] = {
-            VariableType.UNKNOWN: "unknown",
-            VariableType.STRING: StringValue.__name__,
-            VariableType.REAL: RealValue.__name__,
-            VariableType.INTEGER: IntegerValue.__name__,
-            VariableType.BOOLEAN: BooleanValue.__name__,
-            VariableType.FILE: FileValue.__name__,
-            VariableType.STRING_ARRAY: StringArrayValue.__name__,
-            VariableType.REAL_ARRAY: RealArrayValue.__name__,
-            VariableType.INTEGER_ARRAY: IntegerArrayValue.__name__,
-            VariableType.BOOLEAN_ARRAY: BooleanArrayValue.__name__,
-            VariableType.FILE_ARRAY: FileArrayValue.__name__,
+        if self == VariableType.UNKNOWN:
+            raise VariableTypeUnknownError()
+
+        class_map: Dict[VariableType, Type] = {
+            VariableType.STRING: StringValue,
+            VariableType.REAL: RealValue,
+            VariableType.INTEGER: IntegerValue,
+            VariableType.BOOLEAN: BooleanValue,
+            VariableType.FILE: FileValue,
+            VariableType.STRING_ARRAY: StringArrayValue,
+            VariableType.REAL_ARRAY: RealArrayValue,
+            VariableType.INTEGER_ARRAY: IntegerArrayValue,
+            VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
+            VariableType.FILE_ARRAY: FileArrayValue,
         }
         return class_map[self]
 

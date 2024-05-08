@@ -29,11 +29,10 @@ from typing import Any, Dict, Optional, cast
 import numpy as np
 from overrides import overrides
 
-from .exceptions import IncompatibleTypesException
 from .isave_context import ISaveContext
 from .ivariable_visitor import IVariableValueVisitor, T
 from .utils.locale_utils import LocaleUtils
-from .variable_type import VariableType
+from .variable_type import VariableType, create_incompatible_types_exception
 from .variable_value import IVariableValue
 
 
@@ -131,7 +130,7 @@ class BooleanValue(IVariableValue):
         elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value = np.bool_(source != 0.0)
         else:
-            raise IncompatibleTypesException(type(source).__name__, VariableType.BOOLEAN)
+            raise create_incompatible_types_exception(type(source).__name__, VariableType.BOOLEAN)
 
     def __add__(self, other):
         """Magic method add."""

@@ -29,7 +29,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
-from .exceptions import _error
+from .utils.locale_utils import Strings
 from .file_scope import FileScope
 from .file_value import FileValue
 from .isave_context import ILoadContext, ISaveContext
@@ -85,7 +85,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
             String appropriate for use in files and APIs.
         """
         if context is None:
-            raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
+            raise ValueError(Strings.get("Errors", "ERROR_FILE_NO_CONTEXT"))
 
         def elem_to_api_obj(item: FileValue) -> Dict[str, Optional[str]]:
             return item.to_api_object(cast(ISaveContext, context))
@@ -117,7 +117,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
                 if isinstance(item, dict):
                     return scope.from_api_object(item, context)
                 else:
-                    raise TypeError(_error("ERROR_JAGGED_FILE_ARRAY", type(item)))
+                    raise TypeError(Strings.get("Errors", "ERROR_JAGGED_FILE_ARRAY", type(item)))
 
             # Construct the item.
             return FileArrayValue(

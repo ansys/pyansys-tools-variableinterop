@@ -31,7 +31,7 @@ from typing import Any, Dict, List, Optional, Union, get_type_hints
 import numpy as np
 
 from ..array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
-from ..exceptions import _error
+from .locale_utils import Strings
 from ..scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from ..variable_value import CommonArrayValue, IVariableValue
 
@@ -230,7 +230,7 @@ def __implicit_coerce_single_scalar_free(arg: Any):
     for cls in type(arg).__mro__:
         if cls in __TYPE_MAPPINGS:
             return __TYPE_MAPPINGS[cls](arg)
-    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), IVariableValue))
+    raise TypeError(Strings.get("Errors", "ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), IVariableValue))
 
 
 def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> IVariableValue:
@@ -238,7 +238,7 @@ def __implicit_coerce_single_array_free(arg: Any, arr_type: type) -> IVariableVa
         if cls in __ARR_TYPE_MAPPINGS:
             return __ARR_TYPE_MAPPINGS[cls](values=arg)
     raise TypeError(
-        _error(
+        Strings.get("Errors", 
             "ERROR_IMPLICIT_COERCE_NOT_ALLOWED",
             " with dtype ".join([str(type(arg)), str(arr_type)]),
             IVariableValue,
@@ -257,7 +257,7 @@ def __implicit_coerce_single_array_specific(arg: Any, target_type: type):
     from_type_str: str = str(type(arg))
     if maybe_arr_type is not None:
         from_type_str = " with dtype ".join([str(type(arg)), str(maybe_arr_type)])
-    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", from_type_str, target_type))
+    raise TypeError(Strings.get("Errors", "ERROR_IMPLICIT_COERCE_NOT_ALLOWED", from_type_str, target_type))
 
 
 def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
@@ -265,7 +265,7 @@ def __implicit_coerce_single_scalar_specific(arg: Any, target_type: type):
         target_type, type(arg), __ALLOWED_SPECIFIC_IMPLICIT_COERCE
     ):
         return target_type(arg)
-    raise TypeError(_error("ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), target_type))
+    raise TypeError(Strings.get("Errors", "ERROR_IMPLICIT_COERCE_NOT_ALLOWED", type(arg), target_type))
 
 
 def implicit_coerce_single(arg: Any, arg_type: type) -> Any:

@@ -19,34 +19,33 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Provides custom exception types."""
 
-from configparser import ConfigParser
-import os
-from typing import Optional, Union
-from .utils.locale_utils import Strings
+from typing import Any, cast
+import pytest
+from typing_extensions import reveal_type
+from ansys.tools.variableinterop.api import ITypeLibrary
+from unittest.mock import Mock
+from pytest_mock import MockerFixture
 
+from ansys.tools.variableinterop import RealValue, RealArrayValue, StringValue, UnifiedTypeLibrary, IncompatibleTypesException
 
-class IncompatibleTypesException(Exception):
-    """Indicates that the types used in a conversion are incompatible."""
+def test_other_bogus() -> None:
+    sut = UnifiedTypeLibrary()
+    sv = StringValue("3.2")
+    rv: RealValue = sut.runtime_convert(sv, "String", "Real")    
+    assert rv == 3.2
 
- 
-class FormatException(BaseException):
-    """Indicates that the string used to create a variable value was incorrectly
-    formatted."""
+def test_other_bogus2() -> None:
+    sut = UnifiedTypeLibrary()
+    sv = StringValue("abc")
+    with pytest.raises(ValueError):
+        rv: RealValue = sut.runtime_convert(sv, "String", "Real")    
 
-    def __init__(self):
-        """Construct exception."""
-        message: str = Strings.get("Errors", "ERROR_FORMAT")
-        super().__init__(message)
-
-
-class ValueDeserializationUnsupportedException(Exception):
-    """Indicates that deserializing a value is not allowed."""
-
-    def __init__(self, message: str):
-        """Construct a new instance."""
-        super().__init__(message)
-
-class VariableTypeUnknownError(Exception):
-    """Indicates that `VariableType.UNKNOWN` was used when a type was needed."""
+def test_other_bogus3() -> None:
+    sut = UnifiedTypeLibrary()
+    sv = RealArrayValue(values=[1.1,2.2])
+    bla = RealValue("2.2")
+    print(f"ho {type(bla)}")
+    with pytest.raises(IncompatibleTypesException):
+        rv: RealValue = sut.runtime_convert(sv, "RealArray", "Real")    
+    

@@ -28,7 +28,6 @@ from typing import Any, Dict, Type, TypeVar
 
 from overrides import overrides
 
-from ansys.tools.variableinterop import exceptions
 import ansys.tools.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
 import ansys.tools.variableinterop.variable_type as variable_type_lib
 
@@ -356,7 +355,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file(self, metadata) -> file_value.FileValue:
-                raise exceptions.IncompatibleTypesException(
+                raise variable_type_lib.create_incompatible_types_exception(
                     source.variable_type, variable_type_lib.VariableType.FILE
                 )
 
@@ -378,7 +377,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file_array(self, metadata) -> file_array_value.FileArrayValue:
-                raise exceptions.IncompatibleTypesException(
+                raise variable_type_lib.create_incompatible_types_exception(
                     source.variable_type, variable_type_lib.VariableType.FILE_ARRAY
                 )
 
