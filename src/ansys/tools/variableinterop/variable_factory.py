@@ -1,36 +1,82 @@
+# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from typing import Any, Dict, Iterable, Type, Union
 
-from ansys.tools.variableinterop.array_metadata import BooleanArrayMetadata, IntegerArrayMetadata, RealArrayMetadata, StringArrayMetadata
-from ansys.tools.variableinterop.array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
+from ansys.tools.variableinterop.api import IncompatibleTypesError
+from ansys.tools.variableinterop.array_metadata import (
+    BooleanArrayMetadata,
+    IntegerArrayMetadata,
+    RealArrayMetadata,
+    StringArrayMetadata,
+)
+from ansys.tools.variableinterop.array_values import (
+    BooleanArrayValue,
+    IntegerArrayValue,
+    RealArrayValue,
+    StringArrayValue,
+)
 from ansys.tools.variableinterop.common_variable_metadata import CommonVariableMetadata
 from ansys.tools.variableinterop.exceptions import VariableTypeUnknownError
 from ansys.tools.variableinterop.file_array_metadata import FileArrayMetadata
 from ansys.tools.variableinterop.file_array_value import FileArrayValue
 from ansys.tools.variableinterop.file_metadata import FileMetadata
 from ansys.tools.variableinterop.file_value import EMPTY_FILE, FileValue
-from ansys.tools.variableinterop.ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
-from ansys.tools.variableinterop.scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
-from ansys.tools.variableinterop.scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from ansys.tools.variableinterop.ivariable_type_pseudovisitor import (
+    IVariableTypePseudoVisitor,
+    vartype_accept,
+)
+from ansys.tools.variableinterop.scalar_metadata import (
+    BooleanMetadata,
+    IntegerMetadata,
+    RealMetadata,
+    StringMetadata,
+)
+from ansys.tools.variableinterop.scalar_values import (
+    BooleanValue,
+    IntegerValue,
+    RealValue,
+    StringValue,
+)
 from ansys.tools.variableinterop.variable_type import VariableType
 from ansys.tools.variableinterop.variable_value import IVariableValue
 
 _class_map: dict[VariableType, Type] = {
-        VariableType.STRING: StringValue,
-        VariableType.REAL: RealValue,
-        VariableType.INTEGER: IntegerValue,
-        VariableType.BOOLEAN: BooleanValue,
-        VariableType.FILE: FileValue,
-        VariableType.STRING_ARRAY: StringArrayValue,
-        VariableType.REAL_ARRAY: RealArrayValue,
-        VariableType.INTEGER_ARRAY: IntegerArrayValue,
-        VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
-        VariableType.FILE_ARRAY: FileArrayValue,
-    }
+    VariableType.STRING: StringValue,
+    VariableType.REAL: RealValue,
+    VariableType.INTEGER: IntegerValue,
+    VariableType.BOOLEAN: BooleanValue,
+    VariableType.FILE: FileValue,
+    VariableType.STRING_ARRAY: StringArrayValue,
+    VariableType.REAL_ARRAY: RealArrayValue,
+    VariableType.INTEGER_ARRAY: IntegerArrayValue,
+    VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
+    VariableType.FILE_ARRAY: FileArrayValue,
+}
 
-_map_class: dict[Type, VariableType] = {t: vt for (vt, t) in _class_map.items() }
+_map_class: dict[Type, VariableType] = {t: vt for (vt, t) in _class_map.items()}
+
 
 class VariableFactory:
-
     @staticmethod
     def associated_type_name(type: VariableType) -> str:
         """Get the name of the associated ``IVariableValue`` type."""
@@ -153,7 +199,6 @@ class VariableFactory:
         visitor = __DefaultValueVisitor()
         return vartype_accept(visitor, type)
 
-
     @staticmethod
     def construct_variable_metadata(type: VariableType) -> CommonVariableMetadata:
         """
@@ -203,3 +248,26 @@ class VariableFactory:
 
         visitor = __DefaultMetadataVisitor()
         return vartype_accept(visitor, type)
+
+
+def create_incompatible_types_error(
+    from_type: VariableType, to_type: VariableType
+) -> IncompatibleTypesError:
+    """
+    Create an ``IncompatibleTypesError`` from ``VariableType`` definitions.
+
+    Parameters
+    ----------
+    from_type : VariableType
+        ``VariableType`` identifying the type to convert from.
+    to_type : VariableType
+        ``VariableType`` identifying the type to convert to.
+
+    Returns
+    -------
+    Newly created ``IncompatibleTypesError``
+    """
+    return IncompatibleTypesError(
+        VariableFactory.associated_type_name(from_type),
+        VariableFactory.associated_type_name(to_type),
+    )

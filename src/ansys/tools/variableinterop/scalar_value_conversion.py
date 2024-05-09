@@ -23,12 +23,14 @@
 
 from overrides import overrides
 
+from ansys.tools.variableinterop.variable_factory import create_incompatible_types_error
+
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .file_array_value import FileArrayValue
 from .file_value import FileValue
 from .ivariable_visitor import IVariableValueVisitor
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
-from .variable_type import VariableType, create_incompatible_types_error
+from .variable_type import VariableType
 from .variable_value import IVariableValue
 
 

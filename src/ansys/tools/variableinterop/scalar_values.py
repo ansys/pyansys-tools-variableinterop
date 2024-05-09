@@ -132,9 +132,7 @@ class BooleanValue(IVariableValue):
         elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
             self.__value = np.bool_(source != 0.0)
         else:
-            raise IncompatibleTypesError(
-                type(source).__name__, VariableType.BOOLEAN.associated_type_name
-            )
+            raise IncompatibleTypesError(type(source).__name__, BooleanValue.__name__)
 
     def __add__(self, other):
         """Magic method add."""

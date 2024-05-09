@@ -74,7 +74,7 @@ class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
         @property
         def value_type(self) -> Type:
             """The Python type used for values of this type."""
-            return self.variable_type.associated_type
+            return VariableFactory.associated_type(self.variable_type)
 
         @property
         def metadata_type(self) -> Type:
@@ -86,7 +86,7 @@ class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
         return self._types
 
     def get_type(self, type_name: str) -> ITypeInformation:
-        return UnifiedTypeLibrary._TypeAdapter(VariableType.from_string(type_name))
+        return UnifiedTypeLibrary._TypeAdapter(VariableFactory.from_string(type_name))
 
     def is_linking_allowed(self, source_type: str, dest_type: str) -> TypeCompatibility:
         source_vt: VariableType = VariableFactory.from_string(source_type)
