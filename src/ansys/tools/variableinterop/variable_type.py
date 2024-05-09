@@ -23,53 +23,34 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Dict, Iterable, Optional, Type, Union
+from typing import Any, Dict, Iterable, Type, Union
 
 from ansys.tools.variableinterop.api import IncompatibleTypesError
 
+from .common_variable_metadata import CommonVariableMetadata
 from .exceptions import VariableTypeUnknownError
-
 from .utils.locale_utils import Strings
 from .variable_value import IVariableValue
-from .common_variable_metadata import CommonVariableMetadata
 
-def create_incompatible_types_exception(from_type: Union[VariableType, str], to_type: Union[VariableType, str]) -> IncompatibleTypesError:
+
+def create_incompatible_types_error(
+    from_type: VariableType, to_type: VariableType
+) -> IncompatibleTypesError:
     """
-    Construct exception.
+    Create an ``IncompatibleTypesError`` from ``VariableType`` definitions.
 
     Parameters
     ----------
-    from_type : Union[VariableType, str]
-        ``VariableType`` or string identifying the type to convert from.
-    to_type : Union[VariableType, str]
-        ``VariableType`` or string identifying the type to convert to.
+    from_type : VariableType
+        ``VariableType`` identifying the type to convert from.
+    to_type : VariableType
+        ``VariableType`` identifying the type to convert to.
 
     Returns
     -------
     Newly created ``IncompatibleTypesError``
     """
-    actual_from_type: Optional[VariableType]
-    actual_from_type_str: str
-    actual_to_type: Optional[VariableType]
-    actual_to_type_str: str
-
-    if isinstance(from_type, VariableType):
-        actual_from_type = from_type
-        actual_from_type_str = from_type.associated_type_name
-    else:
-        actual_from_type = None
-        actual_from_type_str = from_type
-    if isinstance(to_type, VariableType):
-        actual_to_type = to_type
-        actual_to_type_str = to_type.associated_type_name
-    else:
-        actual_to_type = None
-        actual_to_type_str = to_type
-    result = IncompatibleTypesError(actual_from_type_str, actual_to_type_str)
-    # Monkey patch with these attributes since due to circular dependency they can't be declared.
-    result.from_type = actual_from_type
-    result.to_type = actual_to_type
-    return result
+    return IncompatibleTypesError(from_type.associated_type_name, to_type.associated_type_name)
 
 
 class VariableType(Enum):
@@ -155,17 +136,17 @@ class VariableType(Enum):
             raise VariableTypeUnknownError()
 
         class_map: dict[VariableType, Type] = {
-                VariableType.STRING: StringValue,
-                VariableType.REAL: RealValue,
-                VariableType.INTEGER: IntegerValue,
-                VariableType.BOOLEAN: BooleanValue,
-                VariableType.FILE: FileValue,
-                VariableType.STRING_ARRAY: StringArrayValue,
-                VariableType.REAL_ARRAY: RealArrayValue,
-                VariableType.INTEGER_ARRAY: IntegerArrayValue,
-                VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
-                VariableType.FILE_ARRAY: FileArrayValue,
-            }
+            VariableType.STRING: StringValue,
+            VariableType.REAL: RealValue,
+            VariableType.INTEGER: IntegerValue,
+            VariableType.BOOLEAN: BooleanValue,
+            VariableType.FILE: FileValue,
+            VariableType.STRING_ARRAY: StringArrayValue,
+            VariableType.REAL_ARRAY: RealArrayValue,
+            VariableType.INTEGER_ARRAY: IntegerArrayValue,
+            VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
+            VariableType.FILE_ARRAY: FileArrayValue,
+        }
 
         return class_map[self]
 

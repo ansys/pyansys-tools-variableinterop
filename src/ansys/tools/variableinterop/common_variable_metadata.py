@@ -355,7 +355,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file(self, metadata) -> file_value.FileValue:
-                raise variable_type_lib.create_incompatible_types_exception(
+                raise variable_type_lib.create_incompatible_types_error(
                     source.variable_type, variable_type_lib.VariableType.FILE
                 )
 
@@ -377,7 +377,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file_array(self, metadata) -> file_array_value.FileArrayValue:
-                raise variable_type_lib.create_incompatible_types_exception(
+                raise variable_type_lib.create_incompatible_types_error(
                     source.variable_type, variable_type_lib.VariableType.FILE_ARRAY
                 )
 

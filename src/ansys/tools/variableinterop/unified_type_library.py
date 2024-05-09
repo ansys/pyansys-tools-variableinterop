@@ -20,78 +20,90 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from functools import cached_property
-from typing import Any, Optional, Set, Type, Union
-from ansys.tools.variableinterop.api import DEST_TYPE, METADATA_TYPE, SOURCE_TYPE, ITypeInformation, AbstractInitializerTypeLibrary, TypeCompatibility
-from .variable_factory import VariableFactory
-from .variable_type import VariableType, create_incompatible_types_exception
+from typing import Optional, Set, Type
+
+from ansys.tools.variableinterop.api import (
+    DEST_TYPE,
+    METADATA_TYPE,
+    SOURCE_TYPE,
+    AbstractInitializerTypeLibrary,
+    ITypeInformation,
+    TypeCompatibility,
+)
+
 from .linking_rules import is_linking_allowed
+from .variable_factory import VariableFactory
+from .variable_type import VariableType
+
 
 class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
-
     def __init__(self):
-        self._types: Set[ITypeInformation] = set(UnifiedTypeLibrary._TypeAdapter(t) for t in VariableType if t != VariableType.UNKNOWN)
-        
+        self._types: Set[ITypeInformation] = set(
+            UnifiedTypeLibrary._TypeAdapter(t) for t in VariableType if t != VariableType.UNKNOWN
+        )
+
     @property
     def type_library_identifier(self) -> str:
         return "http://defs.ansys.com/typeLibrary/uniform"
-    
+
     class _TypeAdapter(ITypeInformation):
         def __init__(self, type: VariableType) -> None:
-            self.variable_type : VariableType = type
+            self.variable_type: VariableType = type
 
         @property
         def canonical_name(self) -> str:
             "Canonical name of the type"
-            return self.variable_type.to_display_string() #TODO: A display string is not what is wanted here.
-        
+            return (
+                self.variable_type.to_display_string()
+            )  # TODO: A display string is not what is wanted here.
+
         @property
         def aliases(self) -> Set[str]:
-            """Set of aliases for the type"""
+            """Set of aliases for the type."""
             raise NotImplementedError
-        
+
         @property
         def type_description(self) -> str:
-            """Detailed description of the type"""
+            """Detailed description of the type."""
             raise NotImplementedError
-        
+
         def get_ui_display_name(self, locale: str) -> str:
-            """Detailed description of the type"""
+            """Detailed description of the type."""
             raise NotImplementedError
 
         @property
         def value_type(self) -> Type:
-            """The Python type used for values of this type"""
+            """The Python type used for values of this type."""
             return self.variable_type.associated_type
 
         @property
         def metadata_type(self) -> Type:
-            """The Python type used for metadata of this type"""
+            """The Python type used for metadata of this type."""
             raise NotImplementedError
 
     @property
     def allowed_types(self) -> Set[ITypeInformation]:
         return self._types
-    
+
     def get_type(self, type_name: str) -> ITypeInformation:
         return UnifiedTypeLibrary._TypeAdapter(VariableType.from_string(type_name))
-    
+
     def is_linking_allowed(self, source_type: str, dest_type: str) -> TypeCompatibility:
         source_vt: VariableType = VariableFactory.from_string(source_type)
         dest_vt: VariableType = VariableFactory.from_string(dest_type)
         return is_linking_allowed(source_vt, dest_vt)
-    
+
     def compute_safe_default_value(self, metadata: METADATA_TYPE) -> Optional[DEST_TYPE]:
         raise NotImplementedError
-    
+
     def value_to_byte_array(self, source: SOURCE_TYPE, source_type: str) -> bytes:
         raise NotImplementedError
-    
+
     def byte_array_to_value(self, dest_type: str, source: bytes) -> DEST_TYPE:
         raise NotImplementedError
-    
+
     def metadata_to_byte_array(self, source: SOURCE_TYPE) -> bytes:
         raise NotImplementedError
-    
+
     def byte_array_to_metadata(self, dest_type: str, source: bytes) -> DEST_TYPE:
         raise NotImplementedError

@@ -515,6 +515,6 @@ def test_to_boolean_value_raises(
             # Verify
             if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
-                    str(e), source.__class__.__name__, bool.__name__
+                    str(e), source.__class__.__name__, BooleanValue.__name__
                 )
             raise e
