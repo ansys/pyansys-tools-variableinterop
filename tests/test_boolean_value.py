@@ -26,6 +26,7 @@ import numpy as np
 import pytest
 
 import ansys.tools.variableinterop as acvi
+from ansys.tools.variableinterop.api import IncompatibleTypesError
 from test_utils import _create_exception_context
 
 # region bool-ness
@@ -327,10 +328,10 @@ def test_boolean_binary_operators_same_types(
         pytest.param(True, True, None, id="true"),
         pytest.param(False, False, None, id="false"),
         pytest.param(None, False, None, id="none"),
-        pytest.param("", None, acvi.IncompatibleTypesException, id="empty-string"),
-        pytest.param("something", None, acvi.IncompatibleTypesException, id="non-empty-string"),
+        pytest.param("", None, IncompatibleTypesError, id="empty-string"),
+        pytest.param("something", None, IncompatibleTypesError, id="non-empty-string"),
         pytest.param(
-            "false", None, acvi.IncompatibleTypesException, id="non-empty-string-says-false"
+            "false", None, IncompatibleTypesError, id="non-empty-string-says-false"
         ),
         pytest.param(acvi.IntegerValue(0), False, None, id="from IntegerValue zero"),
         pytest.param(acvi.IntegerValue(-1), True, None, id="from IntegerValue -1"),

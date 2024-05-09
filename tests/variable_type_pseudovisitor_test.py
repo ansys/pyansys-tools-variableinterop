@@ -23,7 +23,7 @@
 import pytest
 
 from ansys.tools.variableinterop import IVariableTypePseudoVisitor, VariableType, vartype_accept
-
+from ansys.tools.variableinterop.api import IncompatibleTypesError
 
 class TestPseudoVisitor(IVariableTypePseudoVisitor[str]):
     def visit_unknown(self):

@@ -20,15 +20,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from typing import Any, Optional, Set, Type
-from ansys.tools.variableinterop.api.itype_library import DEST_TYPE, METADATA_TYPE, SOURCE_TYPE, ITypeInformation, ITypeLibrary, TypeCompatibility
+from functools import cached_property
+from typing import Any, Optional, Set, Type, Union
+from ansys.tools.variableinterop.api import DEST_TYPE, METADATA_TYPE, SOURCE_TYPE, ITypeInformation, AbstractInitializerTypeLibrary, TypeCompatibility
+from .variable_factory import VariableFactory
 from .variable_type import VariableType, create_incompatible_types_exception
 from .linking_rules import is_linking_allowed
 
-class UnifiedTypeLibrary(ITypeLibrary):
+class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
 
     def __init__(self):
-        self._types: Set[ITypeInformation] = set(UnifiedTypeLibrary._TypeAdapter(t) for t in VariableType)
+        self._types: Set[ITypeInformation] = set(UnifiedTypeLibrary._TypeAdapter(t) for t in VariableType if t != VariableType.UNKNOWN)
         
     @property
     def type_library_identifier(self) -> str:
@@ -41,7 +43,7 @@ class UnifiedTypeLibrary(ITypeLibrary):
         @property
         def canonical_name(self) -> str:
             "Canonical name of the type"
-            self.variable_type.to_display_string() #TODO: A display string is not what is wanted here.
+            return self.variable_type.to_display_string() #TODO: A display string is not what is wanted here.
         
         @property
         def aliases(self) -> Set[str]:
@@ -75,18 +77,10 @@ class UnifiedTypeLibrary(ITypeLibrary):
         return UnifiedTypeLibrary._TypeAdapter(VariableType.from_string(type_name))
     
     def is_linking_allowed(self, source_type: str, dest_type: str) -> TypeCompatibility:
-        source_vt: VariableType = VariableType.from_string(source_type)
-        dest_vt: VariableType = VariableType.from_string(dest_type)
+        source_vt: VariableType = VariableFactory.from_string(source_type)
+        dest_vt: VariableType = VariableFactory.from_string(dest_type)
         return is_linking_allowed(source_vt, dest_vt)
     
-    def runtime_convert(self, source: Any, source_type: str, dest_type: str) -> Any:
-        source_vt: VariableType = VariableType.from_string(source_type)
-        dest_vt: VariableType = VariableType.from_string(dest_type)
-        if not is_linking_allowed(source_vt, dest_vt).allowed:
-            raise create_incompatible_types_exception(source_vt, dest_vt)
-        dest_type: Type = dest_vt.associated_type
-        return dest_type(source)  
-
     def compute_safe_default_value(self, metadata: METADATA_TYPE) -> Optional[DEST_TYPE]:
         raise NotImplementedError
     

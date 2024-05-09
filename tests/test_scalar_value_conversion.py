@@ -33,7 +33,6 @@ from ansys.tools.variableinterop import (
     BooleanValue,
     FileArrayValue,
     FileValue,
-    IncompatibleTypesException,
     IntegerArrayValue,
     IntegerValue,
     IVariableValue,
@@ -46,6 +45,7 @@ from ansys.tools.variableinterop import (
     to_real_value,
     to_string_value,
 )
+from ansys.tools.variableinterop.api import IncompatibleTypesError
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
 
@@ -344,10 +344,10 @@ def test_to_string_value(source: IVariableValue, expected_result: StringValue) -
 
 def test_file_value_to_string_value():
     """Verify that to_string_value fails for FileValue instances."""
-    with _create_exception_context(IncompatibleTypesException):
+    with _create_exception_context(IncompatibleTypesError):
         try:
             _ = to_string_value(EMPTY_FILE)
-        except IncompatibleTypesException as thrown:
+        except IncompatibleTypesError as thrown:
             _assert_incompatible_types_exception(
                 str(thrown), FileValue.__name__, StringValue.__name__
             )
@@ -356,10 +356,10 @@ def test_file_value_to_string_value():
 
 def test_file_array_value_to_string_value():
     """Verify that to_string_value fails for FileArrayValue instances."""
-    with _create_exception_context(IncompatibleTypesException):
+    with _create_exception_context(IncompatibleTypesError):
         try:
             _ = to_string_value(FileArrayValue())
-        except IncompatibleTypesException as thrown:
+        except IncompatibleTypesError as thrown:
             _assert_incompatible_types_exception(
                 str(thrown), FileArrayValue.__name__, StringValue.__name__
             )
@@ -374,18 +374,18 @@ def test_file_array_value_to_string_value():
         # Array Types
         pytest.param(
             BooleanArrayValue(values=[True, False, True]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="BooleanArrayValue",
         ),
         pytest.param(
-            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesException, id="IntegerArrayValue"
+            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesError, id="IntegerArrayValue"
         ),
         pytest.param(
-            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesException, id="RealArrayValue"
+            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesError, id="RealArrayValue"
         ),
         pytest.param(
             StringArrayValue(values=["0", "1", "0"]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="StringArrayValue",
         ),
     ],
@@ -409,7 +409,7 @@ def test_to_real_value_raises(
             _ = to_real_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, RealValue.__name__
                 )
@@ -428,18 +428,18 @@ def test_to_real_value_raises(
         # Array Types
         pytest.param(
             BooleanArrayValue(values=[True, False, True]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="BooleanArrayValue",
         ),
         pytest.param(
-            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesException, id="IntegerArrayValue"
+            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesError, id="IntegerArrayValue"
         ),
         pytest.param(
-            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesException, id="RealArrayValue"
+            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesError, id="RealArrayValue"
         ),
         pytest.param(
             StringArrayValue(values=["0", "1", "0"]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="StringArrayValue",
         ),
     ],
@@ -463,7 +463,7 @@ def test_to_integer_value_raises(
             _ = to_integer_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, IntegerValue.__name__
                 )
@@ -478,18 +478,18 @@ def test_to_integer_value_raises(
         # Array Types
         pytest.param(
             BooleanArrayValue(values=[True, False, True]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="BooleanArrayValue",
         ),
         pytest.param(
-            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesException, id="IntegerArrayValue"
+            IntegerArrayValue(values=[0, 1, 0]), IncompatibleTypesError, id="IntegerArrayValue"
         ),
         pytest.param(
-            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesException, id="RealArrayValue"
+            RealArrayValue(values=[1.0, 0.0]), IncompatibleTypesError, id="RealArrayValue"
         ),
         pytest.param(
             StringArrayValue(values=["0", "1", "0"]),
-            IncompatibleTypesException,
+            IncompatibleTypesError,
             id="StringArrayValue",
         ),
     ],
@@ -513,7 +513,7 @@ def test_to_boolean_value_raises(
             _ = to_boolean_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, bool.__name__
                 )

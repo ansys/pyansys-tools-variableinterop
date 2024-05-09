@@ -25,12 +25,15 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any, Dict, Iterable, Optional, Type, Union
 
-from .exceptions import IncompatibleTypesException, VariableTypeUnknownError
+from ansys.tools.variableinterop.api import IncompatibleTypesError
+
+from .exceptions import VariableTypeUnknownError
 
 from .utils.locale_utils import Strings
 from .variable_value import IVariableValue
+from .common_variable_metadata import CommonVariableMetadata
 
-def create_incompatible_types_exception(from_type: Union[VariableType, str], to_type: Union[VariableType, str]) -> IncompatibleTypesException:
+def create_incompatible_types_exception(from_type: Union[VariableType, str], to_type: Union[VariableType, str]) -> IncompatibleTypesError:
     """
     Construct exception.
 
@@ -43,7 +46,7 @@ def create_incompatible_types_exception(from_type: Union[VariableType, str], to_
 
     Returns
     -------
-    Newly created ``IncompatibleTypesException``
+    Newly created ``IncompatibleTypesError``
     """
     actual_from_type: Optional[VariableType]
     actual_from_type_str: str
@@ -62,14 +65,12 @@ def create_incompatible_types_exception(from_type: Union[VariableType, str], to_
     else:
         actual_to_type = None
         actual_to_type_str = to_type
-    message: str = Strings.get("Errors", "ERROR_INCOMPATIBLE_TYPES", actual_from_type_str, actual_to_type_str)
-    result = IncompatibleTypesException(message)
+    result = IncompatibleTypesError(actual_from_type_str, actual_to_type_str)
     # Monkey patch with these attributes since due to circular dependency they can't be declared.
     result.from_type = actual_from_type
-    result.from_type_str = actual_from_type_str
     result.to_type = actual_to_type
-    result.to_type_str = actual_to_type_str
     return result
+
 
 class VariableType(Enum):
     """Provides an enumeration of the possible variable types."""
@@ -153,18 +154,19 @@ class VariableType(Enum):
         if self == VariableType.UNKNOWN:
             raise VariableTypeUnknownError()
 
-        class_map: Dict[VariableType, Type] = {
-            VariableType.STRING: StringValue,
-            VariableType.REAL: RealValue,
-            VariableType.INTEGER: IntegerValue,
-            VariableType.BOOLEAN: BooleanValue,
-            VariableType.FILE: FileValue,
-            VariableType.STRING_ARRAY: StringArrayValue,
-            VariableType.REAL_ARRAY: RealArrayValue,
-            VariableType.INTEGER_ARRAY: IntegerArrayValue,
-            VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
-            VariableType.FILE_ARRAY: FileArrayValue,
-        }
+        class_map: dict[VariableType, Type] = {
+                VariableType.STRING: StringValue,
+                VariableType.REAL: RealValue,
+                VariableType.INTEGER: IntegerValue,
+                VariableType.BOOLEAN: BooleanValue,
+                VariableType.FILE: FileValue,
+                VariableType.STRING_ARRAY: StringArrayValue,
+                VariableType.REAL_ARRAY: RealArrayValue,
+                VariableType.INTEGER_ARRAY: IntegerArrayValue,
+                VariableType.BOOLEAN_ARRAY: BooleanArrayValue,
+                VariableType.FILE_ARRAY: FileArrayValue,
+            }
+
         return class_map[self]
 
     @staticmethod
@@ -302,8 +304,6 @@ class VariableType(Enum):
 
         visitor = __DefaultValueVisitor()
         return vartype_accept(visitor, self)
-
-    from .common_variable_metadata import CommonVariableMetadata
 
     def construct_variable_metadata(self) -> CommonVariableMetadata:
         """

@@ -23,16 +23,26 @@
 
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any, Optional, Protocol, Set, Type, TypeVar
+from typing import Any, Optional, Protocol, Set, Type, TypeVar, Union
+import numpy as np
 
-RequiredTypes : Set[str] = frozenset([
-    "Real",
-    "Integer",
-    "Boolean",
-    "String",
-    "File",
-    "Struct"
-]) 
+REAL_NAME="Real"
+REAL_TYPE=np.float64
+INTEGER_NAME="Integer"
+INTEGER_TYPE=np.int64
+BOOLEAN_NAME="Boolean"
+BOOLEAN_TYPE=bool
+STRING_NAME="String"
+STRING_TYPE=str
+
+RequiredTypes : dict[str, Type] = {
+    REAL_NAME: REAL_TYPE,
+    INTEGER_NAME: INTEGER_TYPE,
+    BOOLEAN_NAME: BOOLEAN_TYPE,
+    STRING_NAME: STRING_TYPE,
+#    "File",
+#    "Struct"
+    }
 """
 The list of types that a type library must support.
 
@@ -42,10 +52,10 @@ The meanings are:
 * Integer - 64 bit integer number
 * Boolean - Logical true/false
 * String - Unicode string
-* File - A reference to a file. TODO: define
-* Struct - A structure of multiple sub-variables
 
 """
+
+TypesRequired: dict[Type, str] = {t: s for (s,t) in RequiredTypes.items()}
 
 class ITypeInformation(Protocol):
     """Defines a data type"""
@@ -187,7 +197,7 @@ class ITypeLibrary(Protocol):
         raise NotImplementedError
     
     @abstractmethod
-    def runtime_convert(self, source: Any, source_type: str, dest_type: str) -> Any:
+    def runtime_convert(self, source: Any, source_type: Type, dest_type: Type) -> Any:
         """
         Converts an instance of one type into another type.
         

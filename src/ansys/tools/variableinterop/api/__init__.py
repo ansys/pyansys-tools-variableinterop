@@ -29,4 +29,6 @@ except ModuleNotFoundError:
 __version__ = importlib_metadata.version("pyansys-tools-variableinterop")
 """ansys.tools.variableinterop.api version."""
 
-from .itype_library import RequiredTypes, ITypeInformation, TypeCompatibility, ITypeLibrary, INCOMPATIBLE
+from .itype_library import RequiredTypes, ITypeInformation, TypeCompatibility, ITypeLibrary, INCOMPATIBLE, DEST_TYPE, SOURCE_TYPE, METADATA_TYPE
+from .abstract_initializer_type_library import AbstractInitializerTypeLibrary
+from .exceptions import IncompatibleTypesError

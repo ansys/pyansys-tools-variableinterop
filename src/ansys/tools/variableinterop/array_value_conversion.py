@@ -106,7 +106,7 @@ def to_boolean_array_value(other: variable_value.IVariableValue) -> BooleanArray
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------
@@ -184,7 +184,7 @@ def to_integer_array_value(other: variable_value.IVariableValue) -> IntegerArray
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------
@@ -262,7 +262,7 @@ def to_real_array_value(other: variable_value.IVariableValue) -> RealArrayValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------
@@ -340,7 +340,7 @@ def to_string_array_value(other: variable_value.IVariableValue) -> StringArrayVa
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------

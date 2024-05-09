@@ -82,7 +82,7 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
@@ -147,7 +147,7 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
@@ -212,7 +212,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------
@@ -277,7 +277,7 @@ def to_string_value(other: IVariableValue) -> StringValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
