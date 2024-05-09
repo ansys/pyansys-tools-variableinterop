@@ -19,7 +19,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Creates an abstraction for a type library such that an STC such as Laki can generically handle data."""
+"""Creates an abstraction for a type library such that an STC such as Laki can
+generically handle data."""
 
 try:
     import importlib.metadata as importlib_metadata
@@ -29,6 +30,12 @@ except ModuleNotFoundError:
 __version__ = importlib_metadata.version("pyansys-tools-variableinterop")
 """ansys.tools.variableinterop.api version."""
 
-from .itype_library import RequiredTypes, ITypeInformation, TypeCompatibility, ITypeLibrary, INCOMPATIBLE, DEST_TYPE, SOURCE_TYPE, METADATA_TYPE
 from .abstract_initializer_type_library import AbstractInitializerTypeLibrary
 from .exceptions import IncompatibleTypesError
+from .itype_library import (
+    INCOMPATIBLE,
+    ITypeInformation,
+    ITypeLibrary,
+    RequiredTypes,
+    TypeCompatibility,
+)

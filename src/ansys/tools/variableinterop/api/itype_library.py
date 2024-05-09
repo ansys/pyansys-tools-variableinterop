@@ -23,7 +23,7 @@
 
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any, Optional, Protocol, Set, Type, TypeVar
+from typing import Any, Optional, Protocol, Set, Type
 
 import numpy as np
 
@@ -131,14 +131,6 @@ class TypeCompatibility:
 
 INCOMPATIBLE = TypeCompatibility(False, False, False)
 """TypeCompatibility assertion that two types are not compatible at all."""
-
-SOURCE_TYPE = TypeVar("SOURCE_TYPE")
-"""Type variable representing the actual type library type for a source parameter."""
-DEST_TYPE = TypeVar("DEST_TYPE")
-"""Type variable representing the actual type library type for a destination parameter
-or return value."""
-METADATA_TYPE = TypeVar("METADATA_TYPE")
-"""Type variable representing the actual type library type for a variable's metadata."""
 
 
 class ITypeLibrary(Protocol):

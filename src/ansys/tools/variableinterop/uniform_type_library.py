@@ -19,13 +19,11 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+"""This module contains the ``UniformTypeLibrary`` type."""
 
 from typing import Optional, Set, Type
 
 from ansys.tools.variableinterop.api import (
-    DEST_TYPE,
-    METADATA_TYPE,
-    SOURCE_TYPE,
     AbstractInitializerTypeLibrary,
     ITypeInformation,
     TypeCompatibility,
@@ -36,17 +34,26 @@ from .variable_factory import VariableFactory
 from .variable_type import VariableType
 
 
-class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
+class UniformTypeLibrary(AbstractInitializerTypeLibrary):
+    """Standard implementation of ``ITypeLibrary`` which provides types that adhere to
+    the standards originally defined within the ModelCenter team for the ModelCenter
+    ecosystem."""
+
     def __init__(self):
+        """Constructor."""
         self._types: Set[ITypeInformation] = set(
-            UnifiedTypeLibrary._TypeAdapter(t) for t in VariableType if t != VariableType.UNKNOWN
+            UniformTypeLibrary._TypeAdapter(t) for t in VariableType if t != VariableType.UNKNOWN
         )
 
     @property
     def type_library_identifier(self) -> str:
+        # TODO: This should probably be https for consistency with
+        #       modern standards. However, it doesn't really matter as nothing is published there
         return "http://defs.ansys.com/typeLibrary/uniform"
 
     class _TypeAdapter(ITypeInformation):
+        """Defines ``ITypeInformation`` for a particular ``VariableType``"""
+
         def __init__(self, type: VariableType) -> None:
             self.variable_type: VariableType = type
 
@@ -60,15 +67,18 @@ class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
         @property
         def aliases(self) -> Set[str]:
             """Set of aliases for the type."""
+            # TODO: implement
             raise NotImplementedError
 
         @property
         def type_description(self) -> str:
             """Detailed description of the type."""
+            # TODO: implement
             raise NotImplementedError
 
         def get_ui_display_name(self, locale: str) -> str:
             """Detailed description of the type."""
+            # TODO: implement
             raise NotImplementedError
 
         @property
@@ -79,6 +89,7 @@ class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
         @property
         def metadata_type(self) -> Type:
             """The Python type used for metadata of this type."""
+            # TODO: implement
             raise NotImplementedError
 
     @property
@@ -86,24 +97,29 @@ class UnifiedTypeLibrary(AbstractInitializerTypeLibrary):
         return self._types
 
     def get_type(self, type_name: str) -> ITypeInformation:
-        return UnifiedTypeLibrary._TypeAdapter(VariableFactory.from_string(type_name))
+        return UniformTypeLibrary._TypeAdapter(VariableFactory.from_string(type_name))
 
     def is_linking_allowed(self, source_type: str, dest_type: str) -> TypeCompatibility:
         source_vt: VariableType = VariableFactory.from_string(source_type)
         dest_vt: VariableType = VariableFactory.from_string(dest_type)
         return is_linking_allowed(source_vt, dest_vt)
 
-    def compute_safe_default_value(self, metadata: METADATA_TYPE) -> Optional[DEST_TYPE]:
+    def compute_safe_default_value(self, type_name: str, metadata: object) -> Optional[object]:
+        # TODO: implement
         raise NotImplementedError
 
-    def value_to_byte_array(self, source: SOURCE_TYPE, source_type: str) -> bytes:
+    def value_to_byte_array(self, source_type: str, source: object) -> bytes:
+        # TODO: implement
         raise NotImplementedError
 
-    def byte_array_to_value(self, dest_type: str, source: bytes) -> DEST_TYPE:
+    def byte_array_to_value(self, dest_type: str, source: bytes) -> object:
+        # TODO: implement
         raise NotImplementedError
 
-    def metadata_to_byte_array(self, source: SOURCE_TYPE) -> bytes:
+    def metadata_to_byte_array(self, source_type: str, source: object) -> bytes:
+        # TODO: implement
         raise NotImplementedError
 
-    def byte_array_to_metadata(self, dest_type: str, source: bytes) -> DEST_TYPE:
+    def byte_array_to_metadata(self, dest_type: str, source: bytes) -> object:
+        # TODO: implement
         raise NotImplementedError

@@ -19,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+"""This module contains the ``VariableFactory`` class and related functionality."""
 
 from typing import Any, Dict, Iterable, Type, Union
 
@@ -77,16 +78,42 @@ _map_class: dict[Type, VariableType] = {t: vt for (vt, t) in _class_map.items()}
 
 
 class VariableFactory:
+    """Static factory methods for variables within this type system."""
+
     @staticmethod
     def associated_type_name(type: VariableType) -> str:
-        """Get the name of the associated ``IVariableValue`` type."""
+        """
+        Get the name of the associated ``IVariableValue`` type.
+
+        Parameters
+        ----------
+        type: VariableType
+            Type to query
+
+        Returns
+        -------
+        str
+            Name of the associated ``IVariableValue`` type.
+        """
         if type == VariableType.UNKNOWN:
             return "unknown"
         return VariableFactory.associated_type(type).__name__
 
     @staticmethod
     def associated_type(type: VariableType) -> Type:
-        """Get the associated ``IVariableValue`` type."""
+        """
+        Get the associated ``IVariableValue`` type.
+
+        Parameters
+        ----------
+        type: VariableType
+            Type to query
+
+        Returns
+        -------
+        Type
+            Type of the associated ``IVariableValue`` type.
+        """
 
         if Type == VariableType.UNKNOWN:
             raise VariableTypeUnknownError()
@@ -95,6 +122,20 @@ class VariableFactory:
 
     @staticmethod
     def from_type(t: Type) -> VariableType:
+        """
+        Given a Python ``Type``, return the associated ``VariableType``
+
+        Parameters
+        ----------
+        t: Type
+            Python ``Type`` to query
+
+        Returns
+        -------
+        VariableType
+            Related ``VariableType`` or ``VariableType.UNKNOWN`` if the type
+            is not from the type library.
+        """
         return _map_class.get(t, VariableType.UNKNOWN)
 
     @staticmethod
@@ -152,12 +193,17 @@ class VariableFactory:
     @staticmethod
     def get_default_value(type: VariableType) -> IVariableValue:
         """
-        Construct the default value for this type.
+        Construct the default value for a ``VariableType``.
+
+        Parameters
+        ----------
+        type: VariableType
+            Type to query
 
         Returns
         -------
         IVariableValue
-            New value object whose type matches this type.
+            New value object whose type matches the passed in ``VariableType``.
         """
 
         class __DefaultValueVisitor(IVariableTypePseudoVisitor[IVariableValue]):
@@ -202,12 +248,17 @@ class VariableFactory:
     @staticmethod
     def construct_variable_metadata(type: VariableType) -> CommonVariableMetadata:
         """
-        Construct the default metadata for this type.
+        Construct the default metadata for a ``VariableType``.
+
+        Parameters
+        ----------
+        type: VariableType
+            Type to query
 
         Returns
         -------
         CommonVariableMetadata
-            New metadata object whose type matches this type.
+            New metadata object whose type matches the passed in ``VariableType``.
         """
 
         class __DefaultMetadataVisitor(IVariableTypePseudoVisitor[CommonVariableMetadata]):
@@ -267,6 +318,7 @@ def create_incompatible_types_error(
     -------
     Newly created ``IncompatibleTypesError``
     """
+    # TODO: Do we want to use the class names (RealValue) or the canonical names (Real)?
     return IncompatibleTypesError(
         VariableFactory.associated_type_name(from_type),
         VariableFactory.associated_type_name(to_type),
