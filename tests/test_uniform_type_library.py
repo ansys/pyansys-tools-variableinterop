@@ -23,25 +23,29 @@
 import numpy as np
 import pytest
 
+from abstract_type_library_compatibility_tests import AbstractTypeLibraryCompatibilityTests
 from ansys.tools.variableinterop import RealArrayValue, RealValue, StringValue, UniformTypeLibrary
 from ansys.tools.variableinterop.api import IncompatibleTypesError
+from ansys.tools.variableinterop.api.itype_library import ITypeLibrary
+
+# TODO: Better defined tests for UniformTypeLibrary
 
 
-def test_other_bogus() -> None:
+def test_runtime_convert_stringvalue_to_realvalue() -> None:
     sut = UniformTypeLibrary()
     sv = StringValue("3.2")
     rv: RealValue = sut.runtime_convert(sv, StringValue, RealValue)
     assert rv == 3.2
 
 
-def test_other_bogus2() -> None:
+def test_runtime_convert_bad_string_to_realvalue() -> None:
     sut = UniformTypeLibrary()
     sv = StringValue("abc")
     with pytest.raises(ValueError):
         rv: RealValue = sut.runtime_convert(sv, StringValue, RealValue)
 
 
-def test_other_bogus3() -> None:
+def test_runtime_convert_incompatible_types() -> None:
     sut = UniformTypeLibrary()
     sv = RealArrayValue(values=[1.1, 2.2])
     bla = RealValue("2.2")
@@ -49,7 +53,7 @@ def test_other_bogus3() -> None:
         rv: RealValue = sut.runtime_convert(sv, RealArrayValue, RealValue)
 
 
-def test_other_bogus4() -> None:
+def test_runtime_convert_to_native_str() -> None:
     sut = UniformTypeLibrary()
     sv = StringValue("3.2")
     rv: str = sut.runtime_convert(sv, StringValue, str)
@@ -57,7 +61,7 @@ def test_other_bogus4() -> None:
     assert type(rv) == str
 
 
-def test_other_bogus4b() -> None:
+def test_runtime_convert_from_native_str() -> None:
     sut = UniformTypeLibrary()
     sv = "3.2"
     rv: StringValue = sut.runtime_convert(sv, str, StringValue)
@@ -65,22 +69,29 @@ def test_other_bogus4b() -> None:
     assert type(rv) == StringValue
 
 
-def test_other_bogus5() -> None:
+def test_runtime_convert_invalid_stringvalue_to_np_float() -> None:
     sut = UniformTypeLibrary()
     sv = StringValue("3.2")
     with pytest.raises(IncompatibleTypesError):
         rv: str = sut.runtime_convert(sv, StringValue, np.float64)
 
 
-def test_other_bogus6() -> None:
+def test_runtime_convert_invalid_np_float_to_stringvalue() -> None:
     sut = UniformTypeLibrary()
     sv = np.float64(3.2)
     with pytest.raises(IncompatibleTypesError):
         rv: str = sut.runtime_convert(sv, np.float64, StringValue)
 
 
-def test_other_bogus7() -> None:
+def test_runtime_convert_invalid_native_float_to_realvalue() -> None:
     sut = UniformTypeLibrary()
     sv = 3.2
     with pytest.raises(IncompatibleTypesError):
         rv: str = sut.runtime_convert(sv, type(sv), RealValue)
+
+
+class TestUniformTypeLibrary(AbstractTypeLibraryCompatibilityTests):
+    """Add the compatibility tests for the ``UniformTypeLibrary``"""
+
+    def create_sut(self) -> ITypeLibrary:
+        return UniformTypeLibrary()
