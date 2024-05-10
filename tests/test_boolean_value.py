@@ -330,9 +330,7 @@ def test_boolean_binary_operators_same_types(
         pytest.param(None, False, None, id="none"),
         pytest.param("", None, IncompatibleTypesError, id="empty-string"),
         pytest.param("something", None, IncompatibleTypesError, id="non-empty-string"),
-        pytest.param(
-            "false", None, IncompatibleTypesError, id="non-empty-string-says-false"
-        ),
+        pytest.param("false", None, IncompatibleTypesError, id="non-empty-string-says-false"),
         pytest.param(acvi.IntegerValue(0), False, None, id="from IntegerValue zero"),
         pytest.param(acvi.IntegerValue(-1), True, None, id="from IntegerValue -1"),
         pytest.param(acvi.IntegerValue(1), True, None, id="from IntegerValue 1"),

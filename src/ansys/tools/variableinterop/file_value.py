@@ -34,9 +34,9 @@ from anyio import Path, open_file
 from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
-from .utils.locale_utils import Strings
 from .isave_context import ISaveContext
 from .ivariable_visitor import IVariableValueVisitor
+from .utils.locale_utils import Strings
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 

@@ -21,28 +21,26 @@
 # SOFTWARE.
 
 from typing import Tuple
-from .variable_type import VariableType
-from ansys.tools.variableinterop.api import TypeCompatibility, INCOMPATIBLE
+
+from ansys.tools.variableinterop.api import INCOMPATIBLE, TypeCompatibility
+
 from .var_type_array_check import var_type_is_array
+from .variable_type import VariableType
 from .vartype_arrays_and_elements import get_element_type
 
 _rules: dict[Tuple[VariableType, VariableType], TypeCompatibility] = {
     (VariableType.BOOLEAN, VariableType.INTEGER): TypeCompatibility(True, False, False),
     (VariableType.BOOLEAN, VariableType.REAL): TypeCompatibility(True, False, False),
     (VariableType.BOOLEAN, VariableType.STRING): TypeCompatibility(True, False, False),
-
     (VariableType.INTEGER, VariableType.BOOLEAN): TypeCompatibility(True, True, False),
     (VariableType.INTEGER, VariableType.REAL): TypeCompatibility(True, True, False),
     (VariableType.INTEGER, VariableType.STRING): TypeCompatibility(True, False, False),
-
     (VariableType.REAL, VariableType.BOOLEAN): TypeCompatibility(True, True, False),
     (VariableType.REAL, VariableType.INTEGER): TypeCompatibility(True, True, True),
     (VariableType.REAL, VariableType.STRING): TypeCompatibility(True, False, False),
-
     (VariableType.STRING, VariableType.BOOLEAN): TypeCompatibility(True, False, True),
     (VariableType.STRING, VariableType.INTEGER): TypeCompatibility(True, False, True),
     (VariableType.STRING, VariableType.REAL): TypeCompatibility(True, False, True),
-
     # Is there a possible case that because of encodings, these conversions are lossy?
     (VariableType.STRING, VariableType.FILE): TypeCompatibility(True, False, False),
     (VariableType.FILE, VariableType.STRING): TypeCompatibility(True, False, True),
@@ -50,10 +48,11 @@ _rules: dict[Tuple[VariableType, VariableType], TypeCompatibility] = {
 
 # TODO: Unit test this function
 
-def is_linking_allowed(source: VariableType, dest: VariableType)->TypeCompatibility:
+
+def is_linking_allowed(source: VariableType, dest: VariableType) -> TypeCompatibility:
     """
     Is linking allowed from the source to the destination type?
-    
+
     Parameters
     ----------
     source: VariableType
@@ -70,10 +69,10 @@ def is_linking_allowed(source: VariableType, dest: VariableType)->TypeCompatibil
     if source == dest:
         return TypeCompatibility(True, False, False)
 
-    # The source and destination must be both arrays or both scalars    
+    # The source and destination must be both arrays or both scalars
     if var_type_is_array(source) != var_type_is_array(dest):
         return INCOMPATIBLE
-    
+
     # If handling arrays, test the base type
     if var_type_is_array(source):
         source = get_element_type(source)

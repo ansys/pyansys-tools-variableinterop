@@ -113,13 +113,9 @@ def test_visiting_a_value_should_work(value: acvi.IVariableValue, expected: Any)
 @pytest.mark.parametrize(
     "value,expected_result,expected_exception",
     [
-        pytest.param(
-            acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"
-        ),
+        pytest.param(acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, IncompatibleTypesError, id="RealValue"),
-        pytest.param(
-            acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"
-        ),
+        pytest.param(acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"),
         pytest.param(acvi.StringValue(""), None, IncompatibleTypesError, id="StringValue"),
         pytest.param(
             acvi.IntegerArrayValue(values=[1, 2]),
@@ -180,13 +176,9 @@ def test_to_real_array_visitor(
 @pytest.mark.parametrize(
     "value,expected_result,expected_exception",
     [
-        pytest.param(
-            acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"
-        ),
+        pytest.param(acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, IncompatibleTypesError, id="RealValue"),
-        pytest.param(
-            acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"
-        ),
+        pytest.param(acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"),
         pytest.param(acvi.StringValue(""), None, IncompatibleTypesError, id="StringValue"),
         pytest.param(
             acvi.IntegerArrayValue(values=[-1, 0, 1]),
@@ -243,13 +235,9 @@ def test_to_boolean_array_visitor(
 @pytest.mark.parametrize(
     "value,expected_result,expected_exception",
     [
-        pytest.param(
-            acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"
-        ),
+        pytest.param(acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, IncompatibleTypesError, id="RealValue"),
-        pytest.param(
-            acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"
-        ),
+        pytest.param(acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"),
         pytest.param(acvi.StringValue(""), None, IncompatibleTypesError, id="StringValue"),
         pytest.param(
             acvi.IntegerArrayValue(values=[-1, 0, 1]),
@@ -304,13 +292,9 @@ def test_to_integer_array_visitor(
 @pytest.mark.parametrize(
     "value,expected_result,expected_exception",
     [
-        pytest.param(
-            acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"
-        ),
+        pytest.param(acvi.IntegerValue(0), None, IncompatibleTypesError, id="IntegerValue"),
         pytest.param(acvi.RealValue(0), None, IncompatibleTypesError, id="RealValue"),
-        pytest.param(
-            acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"
-        ),
+        pytest.param(acvi.BooleanValue(False), None, IncompatibleTypesError, id="BooleanValue"),
         pytest.param(acvi.StringValue(""), None, IncompatibleTypesError, id="StringValue"),
         pytest.param(
             acvi.IntegerArrayValue(values=[-1, 0, 1]),

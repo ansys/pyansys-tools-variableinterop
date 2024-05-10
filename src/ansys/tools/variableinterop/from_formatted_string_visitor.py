@@ -93,7 +93,9 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
 
     @overrides
     def visit_file(self) -> IVariableValue:
-        raise ValueDeserializationUnsupportedException(Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR"))
+        raise ValueDeserializationUnsupportedException(
+            Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR")
+        )
 
     @overrides
     def visit_int_array(self) -> IVariableValue:
@@ -129,4 +131,6 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
 
     @overrides
     def visit_file_array(self) -> IVariableValue:
-        raise ValueDeserializationUnsupportedException(Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR"))
+        raise ValueDeserializationUnsupportedException(
+            Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR")
+        )

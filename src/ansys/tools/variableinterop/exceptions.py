@@ -21,9 +21,7 @@
 # SOFTWARE.
 """Provides custom exception types."""
 
-from configparser import ConfigParser
-import os
-from typing import Optional, Union
+
 from .utils.locale_utils import Strings
 
 
@@ -43,6 +41,7 @@ class ValueDeserializationUnsupportedException(Exception):
     def __init__(self, message: str):
         """Construct a new instance."""
         super().__init__(message)
+
 
 class VariableTypeUnknownError(Exception):
     """Indicates that `VariableType.UNKNOWN` was used when a type was needed."""

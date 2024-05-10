@@ -29,12 +29,12 @@ import numpy as np
 from numpy.typing import ArrayLike
 from overrides import overrides
 
-from .utils.locale_utils import Strings
 from .file_scope import FileScope
 from .file_value import FileValue
 from .isave_context import ILoadContext, ISaveContext
 from .ivariable_visitor import IVariableValueVisitor
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
+from .utils.locale_utils import Strings
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue
 
