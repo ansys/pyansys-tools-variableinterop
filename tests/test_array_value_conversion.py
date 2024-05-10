@@ -25,6 +25,7 @@ from typing import Type
 import pytest
 
 import ansys.tools.variableinterop as acvi
+from ansys.tools.variableinterop.api import IncompatibleTypesError
 import ansys.tools.variableinterop.array_value_conversion as array_value_conversion
 from test_utils import _assert_incompatible_types_exception, _create_exception_context
 
@@ -357,10 +358,10 @@ def test_to_string_array_value(
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
-        pytest.param(acvi.BooleanValue(True), acvi.IncompatibleTypesException, id="Boolean"),
-        pytest.param(acvi.IntegerValue(1), acvi.IncompatibleTypesException, id="Integer"),
-        pytest.param(acvi.RealValue(1.49), acvi.IncompatibleTypesException, id="Real"),
-        pytest.param(acvi.StringValue("a string"), acvi.IncompatibleTypesException, id="String"),
+        pytest.param(acvi.BooleanValue(True), IncompatibleTypesError, id="Boolean"),
+        pytest.param(acvi.IntegerValue(1), IncompatibleTypesError, id="Integer"),
+        pytest.param(acvi.RealValue(1.49), IncompatibleTypesError, id="Real"),
+        pytest.param(acvi.StringValue("a string"), IncompatibleTypesError, id="String"),
         pytest.param(
             acvi.StringArrayValue(values=[["1", "2.0"], ["4", ""]]), ValueError, id="String empty"
         ),
@@ -390,7 +391,7 @@ def test_to_real_array_value_raises(
             _ = array_value_conversion.to_real_array_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == acvi.IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, acvi.RealArrayValue.__name__
                 )
@@ -400,10 +401,10 @@ def test_to_real_array_value_raises(
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
-        pytest.param(acvi.BooleanValue(True), acvi.IncompatibleTypesException, id="Boolean"),
-        pytest.param(acvi.IntegerValue(1), acvi.IncompatibleTypesException, id="Integer"),
-        pytest.param(acvi.RealValue(1.49), acvi.IncompatibleTypesException, id="Real"),
-        pytest.param(acvi.StringValue("a string"), acvi.IncompatibleTypesException, id="String"),
+        pytest.param(acvi.BooleanValue(True), IncompatibleTypesError, id="Boolean"),
+        pytest.param(acvi.IntegerValue(1), IncompatibleTypesError, id="Integer"),
+        pytest.param(acvi.RealValue(1.49), IncompatibleTypesError, id="Real"),
+        pytest.param(acvi.StringValue("a string"), IncompatibleTypesError, id="String"),
         pytest.param(
             acvi.StringArrayValue(values=[["1", "2.0"], ["4", ""]]), ValueError, id="String empty"
         ),
@@ -443,7 +444,7 @@ def test_to_integer_array_value_raises(
             _ = array_value_conversion.to_integer_array_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == acvi.IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, acvi.IntegerArrayValue.__name__
                 )
@@ -453,10 +454,10 @@ def test_to_integer_array_value_raises(
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
-        pytest.param(acvi.BooleanValue(True), acvi.IncompatibleTypesException, id="Boolean"),
-        pytest.param(acvi.IntegerValue(1), acvi.IncompatibleTypesException, id="Integer"),
-        pytest.param(acvi.RealValue(1.49), acvi.IncompatibleTypesException, id="Real"),
-        pytest.param(acvi.StringValue("a string"), acvi.IncompatibleTypesException, id="String"),
+        pytest.param(acvi.BooleanValue(True), IncompatibleTypesError, id="Boolean"),
+        pytest.param(acvi.IntegerValue(1), IncompatibleTypesError, id="Integer"),
+        pytest.param(acvi.RealValue(1.49), IncompatibleTypesError, id="Real"),
+        pytest.param(acvi.StringValue("a string"), IncompatibleTypesError, id="String"),
         pytest.param(
             acvi.StringArrayValue(values=[["1", "2.0"], ["4", ""]]), ValueError, id="String empty"
         ),
@@ -486,7 +487,7 @@ def test_to_boolean_array_value_raises(
             _ = array_value_conversion.to_boolean_array_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == acvi.IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, acvi.BooleanArrayValue.__name__
                 )
@@ -496,10 +497,10 @@ def test_to_boolean_array_value_raises(
 @pytest.mark.parametrize(
     "source,expected_exception",
     [
-        pytest.param(acvi.BooleanValue(True), acvi.IncompatibleTypesException, id="Boolean"),
-        pytest.param(acvi.IntegerValue(1), acvi.IncompatibleTypesException, id="Integer"),
-        pytest.param(acvi.RealValue(1.49), acvi.IncompatibleTypesException, id="Real"),
-        pytest.param(acvi.StringValue("a string"), acvi.IncompatibleTypesException, id="String"),
+        pytest.param(acvi.BooleanValue(True), IncompatibleTypesError, id="Boolean"),
+        pytest.param(acvi.IntegerValue(1), IncompatibleTypesError, id="Integer"),
+        pytest.param(acvi.RealValue(1.49), IncompatibleTypesError, id="Real"),
+        pytest.param(acvi.StringValue("a string"), IncompatibleTypesError, id="String"),
     ],
 )
 def test_to_string_array_value_raises(
@@ -521,7 +522,7 @@ def test_to_string_array_value_raises(
             _ = array_value_conversion.to_string_array_value(source)
         except expected_exception as e:
             # Verify
-            if expected_exception == acvi.IncompatibleTypesException:
+            if expected_exception == IncompatibleTypesError:
                 _assert_incompatible_types_exception(
                     str(e), source.__class__.__name__, acvi.StringArrayValue.__name__
                 )

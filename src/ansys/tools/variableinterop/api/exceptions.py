@@ -19,29 +19,35 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Provides custom exception types."""
+
+from configparser import ConfigParser
+from functools import cached_property
+import os
 
 
-from .utils.locale_utils import Strings
+class IncompatibleTypesError(TypeError):
+    """Indicates that the types used in a conversion are incompatible."""
 
+    @cached_property
+    def _strings(self) -> ConfigParser:
+        """Returns a ConfigParser that has read the package strings.properties file."""
+        parser = ConfigParser()
+        parser.read(os.path.join(os.path.dirname(__file__), "strings.properties"))
+        return parser
 
-class FormatException(BaseException):
-    """Indicates that the string used to create a variable value was incorrectly
-    formatted."""
+    def __init__(self, from_type: str, to_type: str) -> None:
+        """
+        Constructor that builds a default message based on a from and to type as
+        strings.
 
-    def __init__(self):
-        """Construct exception."""
-        message: str = Strings.get("Errors", "ERROR_FORMAT")
-        super().__init__(message)
-
-
-class ValueDeserializationUnsupportedException(Exception):
-    """Indicates that deserializing a value is not allowed."""
-
-    def __init__(self, message: str):
-        """Construct a new instance."""
-        super().__init__(message)
-
-
-class VariableTypeUnknownError(Exception):
-    """Indicates that `VariableType.UNKNOWN` was used when a type was needed."""
+        Parameters
+        ----------
+        from_type: str
+            Name of the type for the source data
+        to_type: str
+            Name of the type for the destination data
+        """
+        self.from_type_str = from_type
+        self.to_type_str = to_type
+        msg = self._strings.get("Errors", "ERROR_INCOMPATIBLE_TYPES").format(from_type, to_type)
+        super().__init__(msg)

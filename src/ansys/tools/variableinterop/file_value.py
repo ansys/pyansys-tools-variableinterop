@@ -34,9 +34,9 @@ from anyio import Path, open_file
 from anyio.streams.file import FileReadStream, FileWriteStream
 from overrides import overrides
 
-from .exceptions import _error
 from .isave_context import ISaveContext
 from .ivariable_visitor import IVariableValueVisitor
+from .utils.locale_utils import Strings
 from .variable_type import VariableType
 from .variable_value import IVariableValue
 
@@ -460,7 +460,7 @@ class FileValue(IVariableValue, ABC):
             String appropriate for use in files and APIs.
         """
         if context is None:
-            raise ValueError(_error("ERROR_FILE_NO_CONTEXT"))
+            raise ValueError(Strings.get("Errors", "ERROR_FILE_NO_CONTEXT"))
         api_obj: Dict[str, Optional[str]] = self.to_api_object(cast(ISaveContext, context))
         return json.dumps(api_obj)
 
