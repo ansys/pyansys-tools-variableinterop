@@ -48,6 +48,8 @@ _rules: dict[Tuple[VariableType, VariableType], TypeCompatibility] = {
     (VariableType.FILE, VariableType.STRING): TypeCompatibility(True, False, True),
 }
 
+# TODO: Unit test this function
+
 def is_linking_allowed(source: VariableType, dest: VariableType)->TypeCompatibility:
     """
     Is linking allowed from the source to the destination type?
