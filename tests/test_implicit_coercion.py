@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -45,8 +45,7 @@ class IDummy(ABC):
     """Example interface that accepts variable types."""
 
     @abstractmethod
-    def variable_argument(self, value: IVariableValue) -> IVariableValue:
-        ...
+    def variable_argument(self, value: IVariableValue) -> IVariableValue: ...
 
 
 class Impl(ABC):

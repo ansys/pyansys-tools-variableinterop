@@ -5,3 +5,4 @@ isort
 Makefile
 PyAnsys Tools Variable Interop
 pytest
+THIRDPARTY
