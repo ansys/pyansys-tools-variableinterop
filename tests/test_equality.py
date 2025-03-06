@@ -57,8 +57,8 @@ from test_file_value import _TestFileValue
         pytest.param(RealValue(np.nan), RealValue(np.nan), False, id="NaN to NaN"),
         pytest.param(RealValue(0), RealValue(np.nan), False, id="Real to NaN"),
         pytest.param(RealValue(np.nan), RealValue(0), False, id="NaN to Real"),
-        pytest.param(RealValue(np.NINF), RealValue(np.inf), False, id="-INF to INF"),
-        pytest.param(RealValue(np.NINF), RealValue(np.NINF), True, id="-INF to -INF"),
+        pytest.param(RealValue(-np.inf), RealValue(np.inf), False, id="-INF to INF"),
+        pytest.param(RealValue(-np.inf), RealValue(-np.inf), True, id="-INF to -INF"),
         pytest.param(RealValue(np.inf), RealValue(np.inf), True, id="INF to INF"),
         pytest.param(
             RealValue(1.0),

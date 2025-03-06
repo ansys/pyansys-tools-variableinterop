@@ -113,8 +113,8 @@ def test_converting_from_an_integer(value: str, locale_value: str, expected: Int
             RealValue(-1.79769313486232e308),
             id="Min Value, de_DE",
         ),
-        pytest.param("-INF", "en_US.UTF-8", RealValue(np.NINF), id="Neg Infinity, en_US"),
-        pytest.param("-INF", "de_DE.UTF-8", RealValue(np.NINF), id="Neg Infinity, de_DE"),
+        pytest.param("-INF", "en_US.UTF-8", RealValue(-np.inf), id="Neg Infinity, en_US"),
+        pytest.param("-INF", "de_DE.UTF-8", RealValue(-np.inf), id="Neg Infinity, de_DE"),
         pytest.param("NAN", "en_US.UTF-8", RealValue(np.nan), id="NAN, en_US"),
         pytest.param("NAN", "de_DE.UTF-8", RealValue(np.nan), id="NAN, de_DE"),
         # Note that epsilon can vary between systems, so this is just testing tiny values
