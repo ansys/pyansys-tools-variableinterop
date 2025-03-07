@@ -1,7 +1,24 @@
 version: 2
 updates:
-  - package-ecosystem: "pip"
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    labels:
+      - "maintenance"
+      - "dependencies"
+    commit-message:
+      prefix: "build"
+
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-    versioning-strategy: "lockfile-only"
+      interval: "weekly"
+    labels:
+      - "maintenance"
+    commit-message:
+      prefix: "ci"
+    groups:
+       actions:
+          patterns:
+            - "*"
