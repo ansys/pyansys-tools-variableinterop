@@ -1,0 +1,73 @@
+:py:mod:`ansys.tools.variableinterop.utils.variable_type_util`
+==============================================================
+
+.. py:module:: ansys.tools.variableinterop.utils.variable_type_util
+
+.. autoapi-nested-parse::
+
+   Defines the ``VariableType`` type.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.utils.variable_type_util.to_type
+   ansys.tools.variableinterop.utils.variable_type_util.to_type_name
+
+
+
+.. py:function:: to_type(var_type: ansys.tools.variableinterop.variable_type.VariableType)
+
+   
+   Get the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_type_name(var_type: ansys.tools.variableinterop.variable_type.VariableType)
+
+   
+   Get the name of the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

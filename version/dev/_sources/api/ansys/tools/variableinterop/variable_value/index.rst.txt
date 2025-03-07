@@ -1,0 +1,317 @@
+:py:mod:`ansys.tools.variableinterop.variable_value`
+====================================================
+
+.. py:module:: ansys.tools.variableinterop.variable_value
+
+.. autoapi-nested-parse::
+
+   Defines the ``IVariableValue`` class and related classes.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.variable_value.IVariableValue
+   ansys.tools.variableinterop.variable_value.CommonArrayValue
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.variable_value.T
+
+
+.. py:data:: T
+
+   
+
+.. py:class:: IVariableValue
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   
+   Defines an interface for the behavior common among all variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+      :abstractmethod:
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: clone() -> IVariableValue
+
+      
+      Get a deep copy of this value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+      :abstractmethod:
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableValueVisitor`
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+      :abstractmethod:
+
+      
+      Convert the value to an API string.
+
+
+
+
+
+      :Returns:
+
+          :class:`python:str`
+              String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_display_string(locale_name: str) -> str
+      :abstractmethod:
+
+      
+      Convert the value to a formatted string.
+
+
+      :Parameters:
+
+          **locale_name** : :class:`python:str`
+              Locale to format the string in.
+
+
+
+      :Returns:
+
+          :class:`python:str`
+              String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: CommonArrayValue
+
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ ], :py:obj:`numpy.typing.NDArray`\ [\ :py:obj:`T`\ ], :py:obj:`IVariableValue`, :py:obj:`abc.ABC`
+
+   
+   Defines an interface for the behavior common among all array types.
+
+   This class inherits the ``IVariableValue`` class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: get_lengths() -> Tuple[int]
+
+      
+      Get the dimension sizes of the array.
+
+
+
+
+
+      :Returns:
+
+          :obj:`Tuple`\[:class:`python:int`]
+              Dimension sizes of the array.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: rank() -> int
+
+      
+      Get the number of dimensions in the array.
+
+
+
+
+
+      :Returns:
+
+          :class:`python:int`
+              Number of dimensions in the array.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:exception:: VariableValueInvalidError
+
+
+   Bases: :py:obj:`Exception`
+
+   
+   Raises an error to indicate that a required variable value is invalid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

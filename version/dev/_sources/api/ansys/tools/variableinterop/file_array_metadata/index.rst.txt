@@ -1,0 +1,112 @@
+:py:mod:`ansys.tools.variableinterop.file_array_metadata`
+=========================================================
+
+.. py:module:: ansys.tools.variableinterop.file_array_metadata
+
+.. autoapi-nested-parse::
+
+   Defines the ``FileArrayMetadata`` class.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.file_array_metadata.FileArrayMetadata
+
+
+
+
+.. py:class:: FileArrayMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.file_metadata.FileMetadata`
+
+   
+   Provides metadata for the ``FileArray`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+

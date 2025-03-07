@@ -1,0 +1,104 @@
+:py:mod:`ansys.tools.variableinterop`
+=====================================
+
+.. py:module:: ansys.tools.variableinterop
+
+.. autoapi-nested-parse::
+
+   
+   This library contains definitions of the basic variables, types, metadata, and values
+   intended to provide interoperability between all products that optionally choose to
+   participate.
+
+   For high-level project documentation with examples and installation instructions, see
+   http://variableinterop.docs.pyansys.com.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   utils/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   api_serialization/index.rst
+   api_string_to_value_visitor/index.rst
+   array_metadata/index.rst
+   array_value_conversion/index.rst
+   array_values/index.rst
+   common_variable_metadata/index.rst
+   exceptions/index.rst
+   file_array_metadata/index.rst
+   file_array_value/index.rst
+   file_metadata/index.rst
+   file_scope/index.rst
+   file_value/index.rst
+   from_formatted_string_visitor/index.rst
+   isave_context/index.rst
+   ivariable_type_pseudovisitor/index.rst
+   ivariable_visitor/index.rst
+   ivariablemetadata_visitor/index.rst
+   non_managing_file_scope/index.rst
+   numeric_metadata/index.rst
+   scalar_metadata/index.rst
+   scalar_value_conversion/index.rst
+   scalar_values/index.rst
+   value_from_formatted_string/index.rst
+   var_type_array_check/index.rst
+   variable_state/index.rst
+   variable_type/index.rst
+   variable_value/index.rst
+   vartype_arrays_and_elements/index.rst
+
+
+Package Contents
+----------------
+
+.. py:data:: __version__
+
+   
+   ansys.tools.variableinterop version.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

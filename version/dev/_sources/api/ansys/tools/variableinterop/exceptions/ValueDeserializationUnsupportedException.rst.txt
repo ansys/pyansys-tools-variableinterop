@@ -1,0 +1,25 @@
+.. py:exception:: ValueDeserializationUnsupportedException(message: str)
+
+
+   Bases: :py:obj:`Exception`
+
+   
+   Indicates that deserializing a value is not allowed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!

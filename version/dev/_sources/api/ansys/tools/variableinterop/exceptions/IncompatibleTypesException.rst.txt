@@ -1,0 +1,25 @@
+.. py:exception:: IncompatibleTypesException(from_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str], to_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str])
+
+
+   Bases: :py:obj:`BaseException`
+
+   
+   Indicates that the types used in a conversion are incompatible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!

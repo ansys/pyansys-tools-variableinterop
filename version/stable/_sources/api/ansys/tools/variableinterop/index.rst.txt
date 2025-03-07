@@ -1,0 +1,288 @@
+
+
+
+
+
+The ``ansys.tools.variableinterop`` library
+===========================================
+
+.. py:module:: ansys.tools.variableinterop
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variableinterop
+.. tab-set::
+
+    .. tab-item:: Subpackages
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils`
+            - Provides utility methods and classes used by the main package.
+
+
+
+    .. tab-item:: Submodules
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.api_serialization`
+            - Defines the ``ToAPIStringVisitor`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.api_string_to_value_visitor`
+            - Provides a variable type pseudo-visitor that parses values from strings.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.array_metadata`
+            - Defines array metadata types.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.array_value_conversion`
+            - Defines array value visitors.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.array_values`
+            - Defines all array value implementations of the ``IVariableValue`` variable type.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.common_variable_metadata`
+            - Defines the ``CommonVariableMetadata`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.exceptions`
+            - Provides custom exception types.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.file_array_metadata`
+            - Defines the ``FileArrayMetadata`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.file_array_value`
+            - Defines the ``FileArrayValue`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.file_metadata`
+            - Defines the ``FileMetadata`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.file_scope`
+            - Implements the ``FileScope`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.file_value`
+            - Defines the ``FileValue`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.from_formatted_string_visitor`
+            - Defines the ``FromFormattedStringVisitor`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.isave_context`
+            - Defines the ``ISaveContext`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.ivariable_type_pseudovisitor`
+            - Defines and implements a pseudo-visitor pattern for variable types.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.ivariable_visitor`
+            - Defines the ``IVariableValueVisitor`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.ivariablemetadata_visitor`
+            - Defines the ``IVariableMetadataVisitor`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.non_managing_file_scope`
+            - Defines the ``NonManagingFileScope`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.numeric_metadata`
+            - Defines the ``NumericMetadata`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.scalar_metadata`
+            - Defines scalar metadata types.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.scalar_value_conversion`
+            - Defines scalar value visitors.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.scalar_values`
+            - Defines all scalar value implementations of the ``IVariableValue`` variable type.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.value_from_formatted_string`
+            - Provides a method for converting a formatted string to a value.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.var_type_array_check`
+            - Provides a method for checking whether a variable type is an array type.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.variable_state`
+            - Defines the ``VariableState`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.variable_type`
+            - Defines the ``VariableType`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.variable_value`
+            - Defines the ``IVariableValue`` class and related classes.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.vartype_arrays_and_elements`
+            - Defines functions for determining the correct array type for a scalar type and vice-
+
+
+
+
+
+
+
+
+    .. tab-item:: Attributes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~__version__`
+            - ansys.tools.variableinterop version.
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🖿 utils<utils/index.rst>
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🗎 api_serialization<api_serialization/index.rst>
+    🗎 api_string_to_value_visitor<api_string_to_value_visitor/index.rst>
+    🗎 array_metadata<array_metadata/index.rst>
+    🗎 array_value_conversion<array_value_conversion/index.rst>
+    🗎 array_values<array_values/index.rst>
+    🗎 common_variable_metadata<common_variable_metadata/index.rst>
+    🗎 exceptions<exceptions/index.rst>
+    🗎 file_array_metadata<file_array_metadata/index.rst>
+    🗎 file_array_value<file_array_value/index.rst>
+    🗎 file_metadata<file_metadata/index.rst>
+    🗎 file_scope<file_scope/index.rst>
+    🗎 file_value<file_value/index.rst>
+    🗎 from_formatted_string_visitor<from_formatted_string_visitor/index.rst>
+    🗎 isave_context<isave_context/index.rst>
+    🗎 ivariable_type_pseudovisitor<ivariable_type_pseudovisitor/index.rst>
+    🗎 ivariable_visitor<ivariable_visitor/index.rst>
+    🗎 ivariablemetadata_visitor<ivariablemetadata_visitor/index.rst>
+    🗎 non_managing_file_scope<non_managing_file_scope/index.rst>
+    🗎 numeric_metadata<numeric_metadata/index.rst>
+    🗎 scalar_metadata<scalar_metadata/index.rst>
+    🗎 scalar_value_conversion<scalar_value_conversion/index.rst>
+    🗎 scalar_values<scalar_values/index.rst>
+    🗎 value_from_formatted_string<value_from_formatted_string/index.rst>
+    🗎 var_type_array_check<var_type_array_check/index.rst>
+    🗎 variable_state<variable_state/index.rst>
+    🗎 variable_type<variable_type/index.rst>
+    🗎 variable_value<variable_value/index.rst>
+    🗎 vartype_arrays_and_elements<vartype_arrays_and_elements/index.rst>
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+
+This library contains definitions of the basic variables, types, metadata, and values
+intended to provide interoperability between all products that optionally choose to
+participate.
+
+For high-level project documentation with examples and installation instructions, see
+http://variableinterop.docs.pyansys.com.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: __version__
+
+   
+   ansys.tools.variableinterop version.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

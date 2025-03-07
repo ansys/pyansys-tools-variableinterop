@@ -1,0 +1,95 @@
+:py:mod:`ansys.tools.variableinterop.exceptions`
+================================================
+
+.. py:module:: ansys.tools.variableinterop.exceptions
+
+.. autoapi-nested-parse::
+
+   Provides custom exception types.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+.. py:exception:: IncompatibleTypesException(from_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str], to_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str])
+
+
+   Bases: :py:obj:`BaseException`
+
+   
+   Indicates that the types used in a conversion are incompatible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:exception:: FormatException
+
+
+   Bases: :py:obj:`BaseException`
+
+   
+   Indicates that the string used to create a variable value was incorrectly
+   formatted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:exception:: ValueDeserializationUnsupportedException(message: str)
+
+
+   Bases: :py:obj:`Exception`
+
+   
+   Indicates that deserializing a value is not allowed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

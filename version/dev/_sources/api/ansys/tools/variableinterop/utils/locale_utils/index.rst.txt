@@ -1,0 +1,149 @@
+:py:mod:`ansys.tools.variableinterop.utils.locale_utils`
+========================================================
+
+.. py:module:: ansys.tools.variableinterop.utils.locale_utils
+
+.. autoapi-nested-parse::
+
+   Provides utilities for dealing with locales.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.utils.locale_utils.LocaleUtils
+   ansys.tools.variableinterop.utils.locale_utils.Strings
+
+
+
+
+.. py:class:: LocaleUtils
+
+
+   
+   Provides utilities for dealing with locales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: perform_safe_locale_action(locale_name: str, action: Callable) -> Any
+      :staticmethod:
+
+      
+      Switches to the correct locale, performs the specified action, and then switches
+      back safely.
+
+
+      :Parameters:
+
+          **locale_name: str**
+              Name of the locale to perform the action in.
+
+          **action** : :obj:`Callable`
+              Action to perform.
+
+
+
+      :Returns:
+
+          :obj:`Any`
+              Object returned by the action.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: Strings
+
+
+   
+   Provides utilities for obtaining string resources.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: get(section: str, name: str, *args: object) -> str
+      :staticmethod:
+
+      
+      Get a localized string from ``strings.properties``.
+
+
+      :Parameters:
+
+          **section** : :class:`python:str`
+              Section of ``strings.properties`` to get the localized string from.
+
+          **name** : :class:`python:str`
+              Identifier for the string to get.
+
+          **args** : :obj:`object`
+              Optional formatting arguments.
+
+
+
+      :Returns:
+
+          :class:`python:str`
+              Localized string.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+

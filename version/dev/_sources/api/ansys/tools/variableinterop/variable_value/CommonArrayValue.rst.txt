@@ -1,0 +1,80 @@
+.. py:class:: CommonArrayValue
+
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ ], :py:obj:`numpy.typing.NDArray`\ [\ :py:obj:`T`\ ], :py:obj:`IVariableValue`, :py:obj:`abc.ABC`
+
+   
+   Defines an interface for the behavior common among all array types.
+
+   This class inherits the ``IVariableValue`` class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: get_lengths() -> Tuple[int]
+
+      
+      Get the dimension sizes of the array.
+
+
+
+
+
+      :Returns:
+
+          :obj:`Tuple`\[:class:`python:int`]
+              Dimension sizes of the array.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: rank() -> int
+
+      
+      Get the number of dimensions in the array.
+
+
+
+
+
+      :Returns:
+
+          :class:`python:int`
+              Number of dimensions in the array.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+

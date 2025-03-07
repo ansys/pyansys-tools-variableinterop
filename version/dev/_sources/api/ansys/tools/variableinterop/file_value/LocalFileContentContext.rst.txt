@@ -1,0 +1,76 @@
+.. py:class:: LocalFileContentContext
+
+
+   Bases: :py:obj:`contextlib.AbstractContextManager`, :py:obj:`abc.ABC`
+
+   
+   Represents the context during which a locally available copy of file value content
+   should exist.
+
+   This is intended for use with a synchronous implementation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: content_path
+      :type: anyio.Path
+      :abstractmethod:
+
+      
+      Get the local path to the content.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: keep_file_on_exit() -> None
+      :abstractmethod:
+
+      
+      Call this method before exiting to prevent deleting the file on exit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+

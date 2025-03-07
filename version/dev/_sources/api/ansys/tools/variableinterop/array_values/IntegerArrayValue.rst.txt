@@ -1,0 +1,165 @@
+.. py:class:: IntegerArrayValue
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.CommonArrayValue`\ [\ :py:obj:`numpy.int64`\ ]
+
+   
+   Stores a value as an ``IntegerArrayValue`` variable type.
+
+   In Python, the ``IntegerArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+   This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+   array operators. It also means that they inherit many of the NumPy behaviors, which
+   may be slightly different from the behaviors specified in the variable interop
+   standards. For example, when converting from real to integer, the value is
+   floored instead of rounded. If you want the variable interop standard conversions,
+   call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the resulting
+   ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   .. py:method:: __eq__(other)
+
+
+   .. py:method:: clone() -> IntegerArrayValue
+
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+
+   .. py:method:: to_boolean_array_value() -> BooleanArrayValue
+
+      
+      Convert this value to a ``BooleanArrayValue`` type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`BooleanArrayValue`
+              ``BooleanArrayValue`` type with the same values converted to Boolean values.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_real_array_value() -> RealArrayValue
+
+      
+      Convert this value to a ``RealArrayValue`` type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`RealArrayValue`
+              ``RealArrayValue`` type with the same values converted to real values.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_string_array_value() -> StringArrayValue
+
+      
+      Convert this value to a ``StringArrayValue`` type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`StringArrayValue`
+              ``StringArrayValue`` type converted to an array of strings.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+
+   .. py:method:: from_api_string(value: str) -> IntegerArrayValue
+      :staticmethod:
+
+      
+      Convert an API-formatted string to an ``IntegerArrayValue`` type.
+
+
+      :Parameters:
+
+          **value** : :class:`python:str`
+              API string to parse.
+
+
+
+      :Returns:
+
+          :obj:`IntegerArrayValue`
+              Result of parsing the ``IntegerArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: to_display_string(locale_name: str) -> str
+
+

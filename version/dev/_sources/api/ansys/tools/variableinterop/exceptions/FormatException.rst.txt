@@ -1,0 +1,26 @@
+.. py:exception:: FormatException
+
+
+   Bases: :py:obj:`BaseException`
+
+   
+   Indicates that the string used to create a variable value was incorrectly
+   formatted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!

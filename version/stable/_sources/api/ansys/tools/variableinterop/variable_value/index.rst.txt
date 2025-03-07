@@ -1,0 +1,136 @@
+
+
+
+
+
+The ``variable_value.py`` module
+================================
+
+.. py:module:: ansys.tools.variableinterop.variable_value
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_value
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~IVariableValue`
+            - Defines an interface for the behavior common among all variable types.
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~CommonArrayValue`
+            - Defines an interface for the behavior common among all array types.
+
+
+
+
+    .. tab-item:: Exceptions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~VariableValueInvalidError`
+            - Raises an error to indicate that a required variable value is invalid.
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~T`
+            - 
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 IVariableValue<IVariableValue>
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 CommonArrayValue<CommonArrayValue>
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🗲 VariableValueInvalidError<VariableValueInvalidError>
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``IVariableValue`` class and related classes.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+   
+
+
+

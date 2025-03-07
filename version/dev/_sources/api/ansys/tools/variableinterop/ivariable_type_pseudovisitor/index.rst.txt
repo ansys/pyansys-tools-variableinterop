@@ -1,0 +1,418 @@
+:py:mod:`ansys.tools.variableinterop.ivariable_type_pseudovisitor`
+==================================================================
+
+.. py:module:: ansys.tools.variableinterop.ivariable_type_pseudovisitor
+
+.. autoapi-nested-parse::
+
+   Defines and implements a pseudo-visitor pattern for variable types.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.ivariable_type_pseudovisitor.IVariableTypePseudoVisitor
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.ivariable_type_pseudovisitor.vartype_accept
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.ivariable_type_pseudovisitor.T
+
+
+.. py:data:: T
+
+   
+
+.. py:class:: IVariableTypePseudoVisitor
+
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`Generic`\ [\ :py:obj:`T`\ ]
+
+   
+   Defines an interface for pseudo-visitors of the ``VariableType`` enumeration.
+
+   This interface defines a pseudo-visitor for possible ``VariableType`` values.
+   Although this pattern ultimately requires the use of a single "switch-statement
+   equivalent" (see the following ``__accept_map``), it confines the said switch to a single
+   instance and allows it to essentially be reused with ``mypy`` "typesafety."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: visit_unknown() -> T
+      :abstractmethod:
+
+      
+      Visit the ``UNKNOWN`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_int() -> T
+      :abstractmethod:
+
+      
+      Visit the ``INTEGER`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_real() -> T
+      :abstractmethod:
+
+      
+      Visit the ``REAL`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_boolean() -> T
+      :abstractmethod:
+
+      
+      Visit the ``BOOLEAN`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_string() -> T
+      :abstractmethod:
+
+      
+      Visit the ``STRING`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_file() -> T
+      :abstractmethod:
+
+      
+      Visit the ``FILE`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_int_array() -> T
+      :abstractmethod:
+
+      
+      Visit the ``INTEGER_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_real_array() -> T
+      :abstractmethod:
+
+      
+      Visit the ``REAL_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_bool_array() -> T
+      :abstractmethod:
+
+      
+      Visit the ``BOOLEAN_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_string_array() -> T
+      :abstractmethod:
+
+      
+      Visit the ``STRING_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_file_array() -> T
+      :abstractmethod:
+
+      
+      Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:function:: vartype_accept(visitor: IVariableTypePseudoVisitor[T], var_type: ansys.tools.variableinterop.variable_type.VariableType) -> T
+
+   
+   Accept a visitor to the specified variable type.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`T`
+           Visitor to accept.
+
+       **var_type** : :obj:`VariableType`
+           Variable type that the visitor should visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Visitor's result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

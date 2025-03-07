@@ -1,0 +1,323 @@
+.. py:class:: FromFormattedStringVisitor(value: numpy.str_, locale_name: str)
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.ivariable_type_pseudovisitor.IVariableTypePseudoVisitor`\ [\ :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`\ ]
+
+   
+   Converts a string formatted for a locale to the ``IVariableValue`` variable
+   type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: visit_unknown() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``UNKNOWN`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_int() -> ansys.tools.variableinterop.scalar_values.IntegerValue
+
+      
+      Visit the ``INTEGER`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_real() -> ansys.tools.variableinterop.scalar_values.RealValue
+
+      
+      Visit the ``REAL`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_boolean() -> ansys.tools.variableinterop.scalar_values.BooleanValue
+
+      
+      Visit the ``BOOLEAN`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_string() -> ansys.tools.variableinterop.scalar_values.StringValue
+
+      
+      Visit the ``STRING`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_file() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``FILE`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_int_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``INTEGER_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_real_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``REAL_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_bool_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``BOOLEAN_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_string_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``STRING_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: visit_file_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+      
+      Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+

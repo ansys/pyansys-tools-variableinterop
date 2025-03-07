@@ -1,0 +1,61 @@
+.. py:class:: Strings
+
+
+   
+   Provides utilities for obtaining string resources.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: get(section: str, name: str, *args: object) -> str
+      :staticmethod:
+
+      
+      Get a localized string from ``strings.properties``.
+
+
+      :Parameters:
+
+          **section** : :class:`python:str`
+              Section of ``strings.properties`` to get the localized string from.
+
+          **name** : :class:`python:str`
+              Identifier for the string to get.
+
+          **args** : :obj:`object`
+              Optional formatting arguments.
+
+
+
+      :Returns:
+
+          :class:`python:str`
+              Localized string.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+

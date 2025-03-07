@@ -1,0 +1,59 @@
+.. py:class:: LocaleUtils
+
+
+   
+   Provides utilities for dealing with locales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: perform_safe_locale_action(locale_name: str, action: Callable) -> Any
+      :staticmethod:
+
+      
+      Switches to the correct locale, performs the specified action, and then switches
+      back safely.
+
+
+      :Parameters:
+
+          **locale_name: str**
+              Name of the locale to perform the action in.
+
+          **action** : :obj:`Callable`
+              Action to perform.
+
+
+
+      :Returns:
+
+          :obj:`Any`
+              Object returned by the action.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+

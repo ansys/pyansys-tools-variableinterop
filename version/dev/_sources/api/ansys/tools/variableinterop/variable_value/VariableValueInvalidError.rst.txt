@@ -1,0 +1,25 @@
+.. py:exception:: VariableValueInvalidError
+
+
+   Bases: :py:obj:`Exception`
+
+   
+   Raises an error to indicate that a required variable value is invalid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!

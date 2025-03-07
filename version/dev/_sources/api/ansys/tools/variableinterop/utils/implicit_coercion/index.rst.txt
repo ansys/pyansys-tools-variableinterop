@@ -1,0 +1,102 @@
+:py:mod:`ansys.tools.variableinterop.utils.implicit_coercion`
+=============================================================
+
+.. py:module:: ansys.tools.variableinterop.utils.implicit_coercion
+
+.. autoapi-nested-parse::
+
+   Provides utilities for implicitly coercing arbitrary Python objects \ into the
+   appropriate ``IVariableValue`` type.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.utils.implicit_coercion.implicit_coerce_single
+   ansys.tools.variableinterop.utils.implicit_coercion.implicit_coerce
+
+
+
+.. py:function:: implicit_coerce_single(arg: Any, arg_type: type) -> Any
+
+   
+   Attempt to coerce the argument into the given type.
+
+   This function uses implicit semantics in that lossy conversions are
+   not considered (such as int64->real64 because precision may be lost).
+
+   :Parameters:
+
+       **arg** : :obj:`Any`
+           Object to attempt to convert.
+
+       **arg_type** : :obj:`type`
+           Type of object to convert to. The type must be ``IVariableValue`` or
+           something derived from it.
+
+
+
+   :Returns:
+
+       :obj:`Any`
+           Converted object
+
+
+
+
+   :Raises:
+
+       :obj:`TypeError`
+           If the argument cannot be converted to the supplied type.
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: implicit_coerce(func: Any) -> Any
+
+   
+   Use to decorate functions using the PEP 484 typing system to try and coerce any
+   arguments that accept the ``IVariableValue`` type or any derived type into an
+   acceptable value.
+
+
+   :Parameters:
+
+       **func** : :obj:`Any`
+           Function to decorate.
+
+
+
+   :Returns:
+
+       :obj:`Any`
+           Wrapper function.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+

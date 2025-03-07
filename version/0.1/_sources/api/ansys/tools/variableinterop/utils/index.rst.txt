@@ -1,0 +1,111 @@
+
+
+
+
+
+The ``utils`` package 
+=========================
+
+.. py:module:: ansys.tools.variableinterop.utils
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: utils
+.. tab-set::
+
+
+    .. tab-item:: Submodules
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils.array_to_from_string_util`
+            - Defines the ``ArrayToFromStringUtil`` class.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils.implicit_coercion`
+            - Provides utilities for implicitly coercing arbitrary Python objects \ into the
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils.locale_utils`
+            - Provides utilities for dealing with locales.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils.string_escaping`
+            - Provides functions for ModelCenter-standard string escaping.
+
+
+          * - :py:attr:`~ansys.tools.variableinterop.utils.variable_type_util`
+            - Defines the ``VariableType`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🗎 array_to_from_string_util<array_to_from_string_util/index.rst>
+    🗎 implicit_coercion<implicit_coercion/index.rst>
+    🗎 locale_utils<locale_utils/index.rst>
+    🗎 string_escaping<string_escaping/index.rst>
+    🗎 variable_type_util<variable_type_util/index.rst>
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+
+Provides utility methods and classes used by the main package.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+

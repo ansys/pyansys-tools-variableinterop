@@ -1,0 +1,187 @@
+:py:mod:`ansys.tools.variableinterop.numeric_metadata`
+======================================================
+
+.. py:module:: ansys.tools.variableinterop.numeric_metadata
+
+.. autoapi-nested-parse::
+
+   Defines the ``NumericMetadata`` class.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.numeric_metadata.NumericMetadata
+
+
+
+
+.. py:class:: NumericMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.common_variable_metadata.CommonVariableMetadata`, :py:obj:`abc.ABC`
+
+   
+   Provides a generic base for all numeric metadata implementations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: units
+      :type: str
+
+      
+      Units of the variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:property:: display_format
+      :type: str
+
+      
+      Display format of the variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: __eq__(other)
+
+      
+      Determine if the object is equal to the metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: equals(other: Any) -> bool
+
+      
+      Determine if a given metadata is equal to this metadata.
+
+
+      :Parameters:
+
+          **other** : :obj:`Any`
+              Given metadata to compare this metadate to.
+
+
+
+      :Returns:
+
+          :ref:`bool <python:bltin-boolean-values>`
+              ``True`` if the two objects are equal, ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+      :abstractmethod:
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+

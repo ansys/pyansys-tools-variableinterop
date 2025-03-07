@@ -1,0 +1,373 @@
+:py:mod:`ansys.tools.variableinterop.array_metadata`
+====================================================
+
+.. py:module:: ansys.tools.variableinterop.array_metadata
+
+.. autoapi-nested-parse::
+
+   Defines array metadata types.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ansys.tools.variableinterop.array_metadata.BooleanArrayMetadata
+   ansys.tools.variableinterop.array_metadata.IntegerArrayMetadata
+   ansys.tools.variableinterop.array_metadata.RealArrayMetadata
+   ansys.tools.variableinterop.array_metadata.StringArrayMetadata
+
+
+
+
+.. py:class:: BooleanArrayMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.scalar_metadata.BooleanMetadata`
+
+   
+   Provides metadata for the ``BooleanArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: IntegerArrayMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.scalar_metadata.IntegerMetadata`
+
+   
+   Provides metadata for the ``IntegerArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: RealArrayMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.scalar_metadata.RealMetadata`
+
+   
+   Provides metadata for the ``RealArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: StringArrayMetadata
+
+
+   Bases: :py:obj:`ansys.tools.variableinterop.scalar_metadata.StringMetadata`
+
+   
+   Provides metadata for the ``StringArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:property:: variable_type
+      :type: ansys.tools.variableinterop.variable_type.VariableType
+
+      
+      Variable type of the object.
+
+
+
+
+
+      :Returns:
+
+          :obj:`VariableType`
+              Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+      
+      Invoke the visitor pattern of this object using the passed-in visitor
+      implementation.
+
+
+      :Parameters:
+
+          **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+              Visitor object to call.
+
+
+
+      :Returns:
+
+          :obj:`T`
+              Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
