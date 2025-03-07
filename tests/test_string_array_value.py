@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -52,7 +52,10 @@ def test_shape_construct() -> None:
         ),
         pytest.param(
             StringArrayValue(
-                values=[[["あ", "い", "う"], ["え", "お", "か"]], [["き", "く", "け"], ["こ", "が", "ぎ"]]]
+                values=[
+                    [["あ", "い", "う"], ["え", "お", "か"]],
+                    [["き", "く", "け"], ["こ", "が", "ぎ"]],
+                ]
             ),
             'bounds[2,2,3]{"あ","い","う","え","お","か",' + '"き","く","け","こ","が","ぎ"}',
             id="Three dims",
@@ -106,7 +109,10 @@ def test_to_api_string(source: StringArrayValue, expected_result: str) -> None:
         pytest.param(
             'bounds[2,2,3]{"あ","い","う","え","お","か",' + '"き","く","け","こ","が","ぎ"}',
             StringArrayValue(
-                values=[[["あ", "い", "う"], ["え", "お", "か"]], [["き", "く", "け"], ["こ", "が", "ぎ"]]]
+                values=[
+                    [["あ", "い", "う"], ["え", "お", "か"]],
+                    [["き", "く", "け"], ["こ", "が", "ぎ"]],
+                ]
             ),
             id="Three dims",
         ),

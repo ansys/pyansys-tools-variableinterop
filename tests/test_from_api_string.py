@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -404,7 +404,10 @@ from test_utils import _create_exception_context
             VariableType.STRING_ARRAY,
             'bounds[2,2,3]{"あ","い","う","え","お","か",' + '"き","く","け","こ","が","ぎ"}',
             StringArrayValue(
-                values=[[["あ", "い", "う"], ["え", "お", "か"]], [["き", "く", "け"], ["こ", "が", "ぎ"]]]
+                values=[
+                    [["あ", "い", "う"], ["え", "お", "か"]],
+                    [["き", "く", "け"], ["こ", "が", "ぎ"]],
+                ]
             ),
             id="string array, 3d",
         ),
