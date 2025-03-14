@@ -13,12 +13,6 @@ set BUILDDIR=_build
 if "%1" == "" goto help
 if "%1" == "clean" goto clean
 
-REM TODO: these lines of code should be removed once the feature branch is merged
-for /f %%i in ('pip freeze ^| findstr /c:"sphinx-autoapi @ git+https://github.com/ansys/sphinx-autoapi"') do set is_custom_sphinx_autoapi_installed=%%i
-if NOT "%is_custom_sphinx_autoapi_installed%" == "sphinx-autoapi" (
-	pip uninstall --yes sphinx-autoapi
-	pip install "sphinx-autoapi @ git+https://github.com/ansys/sphinx-autoapi@feat/single-page-stable")
-REM TODO: these lines of code should be removed once the feature branch is merged
 
 if "%1" == "linkcheck" goto linkcheck
 
@@ -40,6 +34,7 @@ goto end
 
 :clean
 rmdir /s /q %BUILDDIR% > /NUL 2>&1
+rmdir /s /q %SOURCEDIR%/api > /NUL 2>&1
 goto end
 
 :linkcheck
