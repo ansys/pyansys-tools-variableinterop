@@ -1,0 +1,101 @@
+
+
+
+
+
+
+The ``scalar_metadata.py`` module
+=================================
+
+.. py:module:: ansys.tools.variableinterop.scalar_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: scalar_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_metadata.BooleanMetadata`
+            - Provides metadata for ``BOOLEAN`` and ``BOOLEAN_ARRAY`` variable types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_metadata.IntegerMetadata`
+            - Provides metadata for ``INTEGER`` and ``INTEGER_ARRAY`` variable types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_metadata.RealMetadata`
+            - Provides metadata for ``REAL`` and ``REAL_ARRAY`` variable types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_metadata.StringMetadata`
+            - Provides common metadata for ``STRING`` and ``STRING_ARRAY`` variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> BooleanMetadata</api/ansys/tools/variableinterop/scalar_metadata/BooleanMetadata>
+    <span class="nf nf-cod-symbol_class"></span> IntegerMetadata</api/ansys/tools/variableinterop/scalar_metadata/IntegerMetadata>
+    <span class="nf nf-cod-symbol_class"></span> RealMetadata</api/ansys/tools/variableinterop/scalar_metadata/RealMetadata>
+    <span class="nf nf-cod-symbol_class"></span> StringMetadata</api/ansys/tools/variableinterop/scalar_metadata/StringMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines scalar metadata types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

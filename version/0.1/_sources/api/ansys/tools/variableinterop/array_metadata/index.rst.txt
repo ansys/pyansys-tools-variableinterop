@@ -1,0 +1,100 @@
+
+
+
+
+
+The ``array_metadata.py`` module
+================================
+
+.. py:module:: ansys.tools.variableinterop.array_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: array_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~BooleanArrayMetadata`
+            - Provides metadata for the ``BooleanArrayValue`` variable type.
+
+
+          * - :py:attr:`~IntegerArrayMetadata`
+            - Provides metadata for the ``IntegerArrayValue`` variable type.
+
+
+          * - :py:attr:`~RealArrayMetadata`
+            - Provides metadata for the ``RealArrayValue`` variable type.
+
+
+          * - :py:attr:`~StringArrayMetadata`
+            - Provides metadata for the ``StringArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 BooleanArrayMetadata<BooleanArrayMetadata>
+    🝆 IntegerArrayMetadata<IntegerArrayMetadata>
+    🝆 RealArrayMetadata<RealArrayMetadata>
+    🝆 StringArrayMetadata<StringArrayMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines array metadata types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+
+
+
+
+
+The ``scalar_values.py`` module
+===============================
+
+.. py:module:: ansys.tools.variableinterop.scalar_values
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: scalar_values
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~BooleanValue`
+            - Stores a value as a ``BooleanValue`` variable type.
+
+
+          * - :py:attr:`~IntegerValue`
+            - Stores a value as an ``IntegerValue`` variable type.
+
+
+          * - :py:attr:`~RealValue`
+            - Stores a value as a ``RealValue`` variable type.
+
+
+          * - :py:attr:`~StringValue`
+            - Stores a value as an ``IVariableValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 BooleanValue<BooleanValue>
+    🝆 IntegerValue<IntegerValue>
+    🝆 RealValue<RealValue>
+    🝆 StringValue<StringValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines all scalar value implementations of the ``IVariableValue`` variable type.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

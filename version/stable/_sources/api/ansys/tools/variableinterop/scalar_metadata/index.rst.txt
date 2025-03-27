@@ -1,0 +1,100 @@
+
+
+
+
+
+The ``scalar_metadata.py`` module
+=================================
+
+.. py:module:: ansys.tools.variableinterop.scalar_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: scalar_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~BooleanMetadata`
+            - Provides metadata for ``BOOLEAN`` and ``BOOLEAN_ARRAY`` variable types.
+
+
+          * - :py:attr:`~IntegerMetadata`
+            - Provides metadata for ``INTEGER`` and ``INTEGER_ARRAY`` variable types.
+
+
+          * - :py:attr:`~RealMetadata`
+            - Provides metadata for ``REAL`` and ``REAL_ARRAY`` variable types.
+
+
+          * - :py:attr:`~StringMetadata`
+            - Provides common metadata for ``STRING`` and ``STRING_ARRAY`` variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 BooleanMetadata<BooleanMetadata>
+    🝆 IntegerMetadata<IntegerMetadata>
+    🝆 RealMetadata<RealMetadata>
+    🝆 StringMetadata<StringMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines scalar metadata types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

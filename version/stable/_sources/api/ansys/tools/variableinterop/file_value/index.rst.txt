@@ -1,0 +1,149 @@
+
+
+
+
+
+The ``file_value.py`` module
+============================
+
+.. py:module:: ansys.tools.variableinterop.file_value
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_value
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~AsyncLocalFileContentContext`
+            - Represents the context during which a locally available copy of file value content
+
+
+          * - :py:attr:`~LocalFileContentContext`
+            - Represents the context during which a locally available copy of file value content
+
+
+          * - :py:attr:`~AlreadyLocalFileContentContext`
+            - Provides a default local file context for when the file is already hosted locally.
+
+
+          * - :py:attr:`~FileValue`
+            - Provides an abstract base class for ``FileValue`` implementations.
+
+
+          * - :py:attr:`~LocalFileValue`
+            - Base class for file values where the file contents already exist on the local disk.
+
+
+          * - :py:attr:`~EmptyFileValue`
+            - Represents an empty file value.
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~T`
+            - 
+
+
+          * - :py:attr:`~RESOURCE_PARSER`
+            - 
+
+
+          * - :py:attr:`~EMPTY_FILE`
+            - 
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 AsyncLocalFileContentContext<AsyncLocalFileContentContext>
+    🝆 LocalFileContentContext<LocalFileContentContext>
+    🝆 AlreadyLocalFileContentContext<AlreadyLocalFileContentContext>
+    🝆 FileValue<FileValue>
+    🝆 LocalFileValue<LocalFileValue>
+    🝆 EmptyFileValue<EmptyFileValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FileValue`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+   
+
+.. py:data:: RESOURCE_PARSER
+
+   
+
+.. py:data:: EMPTY_FILE
+
+   
+
+
+

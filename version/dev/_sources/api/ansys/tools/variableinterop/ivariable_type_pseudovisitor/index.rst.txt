@@ -1,0 +1,142 @@
+
+
+
+
+
+
+The ``ivariable_type_pseudovisitor.py`` module
+==============================================
+
+.. py:module:: ansys.tools.variableinterop.ivariable_type_pseudovisitor
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: ivariable_type_pseudovisitor
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariable_type_pseudovisitor.IVariableTypePseudoVisitor`
+            - Defines an interface for pseudo-visitors of the ``VariableType`` enumeration.
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~vartype_accept`
+            - Accept a visitor to the specified variable type.
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_interface"></span> IVariableTypePseudoVisitor</api/ansys/tools/variableinterop/ivariable_type_pseudovisitor/IVariableTypePseudoVisitor>
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines and implements a pseudo-visitor pattern for variable types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: vartype_accept(visitor: IVariableTypePseudoVisitor[T], var_type: ansys.tools.variableinterop.variable_type.VariableType) -> T
+
+   
+   Accept a visitor to the specified variable type.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`T`
+           Visitor to accept.
+
+       **var_type** : :obj:`VariableType`
+           Variable type that the visitor should visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Visitor's result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:data:: T
+
+
+

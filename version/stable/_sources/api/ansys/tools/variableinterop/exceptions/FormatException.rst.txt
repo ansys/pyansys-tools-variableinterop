@@ -1,0 +1,38 @@
+
+
+
+
+FormatException
+===============
+
+.. py:exception:: FormatException
+   :canonical: ansys.tools.variableinterop.exceptions.FormatException
+
+
+
+Bases: :py:obj:`BaseException`
+
+Indicates that the string used to create a variable value was incorrectly
+
+
+
+
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.exceptions import FormatException
+
+
+
+
+

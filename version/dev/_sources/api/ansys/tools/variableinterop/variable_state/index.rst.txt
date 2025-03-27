@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``variable_state.py`` module
+================================
+
+.. py:module:: ansys.tools.variableinterop.variable_state
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_state
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_state.VariableState`
+            - Bundles a variable value with a validity flag.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> VariableState</api/ansys/tools/variableinterop/variable_state/VariableState>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``VariableState`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+
