@@ -26,6 +26,7 @@ from typing import Optional, Type
 import pytest
 
 import ansys.tools.variableinterop as acvi
+from ansys.tools.variableinterop.api import IncompatibleTypesError
 
 
 @contextmanager
@@ -94,7 +95,7 @@ def _test_to_value_visitor(
 
         except expected_exception_type as e:
             # Verify (expected exception)
-            if expected_exception_type == acvi.IncompatibleTypesException:
+            if expected_exception_type == IncompatibleTypesError:
                 assert str(e) == (
                     "Error: Cannot convert from type {0} to type {1}.\n"
                     "Reason: The types are incompatible."
@@ -104,7 +105,7 @@ def _test_to_value_visitor(
 
 def _assert_incompatible_types_exception(message: str, from_: str, to: str) -> None:
     """
-    Helper function to assert IncompatibleTypesException gave the expected message.
+    Helper function to assert IncompatibleTypesError gave the expected message.
 
     Parameters
     ----------

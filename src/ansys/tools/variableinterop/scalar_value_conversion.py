@@ -23,8 +23,9 @@
 
 from overrides import overrides
 
+from ansys.tools.variableinterop.variable_factory import create_incompatible_types_error
+
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
-from .exceptions import IncompatibleTypesException
 from .file_array_value import FileArrayValue
 from .file_value import FileValue
 from .ivariable_visitor import IVariableValueVisitor
@@ -54,27 +55,27 @@ class __ToBooleanVisitor(IVariableValueVisitor[bool]):
 
     @overrides
     def visit_file(self, value: FileValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> bool:
-        raise IncompatibleTypesException(value.variable_type, "bool")
+        raise create_incompatible_types_error(value.variable_type, VariableType.BOOLEAN)
 
 
 def to_boolean_value(other: IVariableValue) -> BooleanValue:
@@ -83,7 +84,7 @@ def to_boolean_value(other: IVariableValue) -> BooleanValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
@@ -119,27 +120,27 @@ class __ToIntegerVisitor(IVariableValueVisitor[IntegerValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> IntegerValue:
-        raise IncompatibleTypesException(value.variable_type, VariableType.INTEGER)
+        raise create_incompatible_types_error(value.variable_type, VariableType.INTEGER)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.INTEGER_ARRAY, VariableType.INTEGER)
+        raise create_incompatible_types_error(VariableType.INTEGER_ARRAY, VariableType.INTEGER)
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.REAL_ARRAY, VariableType.INTEGER)
+        raise create_incompatible_types_error(VariableType.REAL_ARRAY, VariableType.INTEGER)
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.BOOLEAN_ARRAY, VariableType.INTEGER)
+        raise create_incompatible_types_error(VariableType.BOOLEAN_ARRAY, VariableType.INTEGER)
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.INTEGER)
+        raise create_incompatible_types_error(VariableType.STRING_ARRAY, VariableType.INTEGER)
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> IntegerValue:
-        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.INTEGER)
+        raise create_incompatible_types_error(VariableType.FILE_ARRAY, VariableType.INTEGER)
 
 
 def to_integer_value(other: IVariableValue) -> IntegerValue:
@@ -148,7 +149,7 @@ def to_integer_value(other: IVariableValue) -> IntegerValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
@@ -184,27 +185,27 @@ class __ToRealVisitor(IVariableValueVisitor[RealValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> RealValue:
-        raise IncompatibleTypesException(value.variable_type, VariableType.REAL)
+        raise create_incompatible_types_error(value.variable_type, VariableType.REAL)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> RealValue:
-        raise IncompatibleTypesException(VariableType.INTEGER_ARRAY, VariableType.REAL)
+        raise create_incompatible_types_error(VariableType.INTEGER_ARRAY, VariableType.REAL)
 
     @overrides
     def visit_real_array(self, value: RealArrayValue) -> RealValue:
-        raise IncompatibleTypesException(VariableType.REAL_ARRAY, VariableType.REAL)
+        raise create_incompatible_types_error(VariableType.REAL_ARRAY, VariableType.REAL)
 
     @overrides
     def visit_boolean_array(self, value: BooleanArrayValue) -> RealValue:
-        raise IncompatibleTypesException(VariableType.BOOLEAN_ARRAY, VariableType.REAL)
+        raise create_incompatible_types_error(VariableType.BOOLEAN_ARRAY, VariableType.REAL)
 
     @overrides
     def visit_string_array(self, value: StringArrayValue) -> RealValue:
-        raise IncompatibleTypesException(VariableType.STRING_ARRAY, VariableType.REAL)
+        raise create_incompatible_types_error(VariableType.STRING_ARRAY, VariableType.REAL)
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> RealValue:
-        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.REAL)
+        raise create_incompatible_types_error(VariableType.FILE_ARRAY, VariableType.REAL)
 
 
 def to_real_value(other: IVariableValue) -> RealValue:
@@ -213,7 +214,7 @@ def to_real_value(other: IVariableValue) -> RealValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises ``IncompatibleTypesException``).
+    and some conversions are not possible (raises ``IncompatibleTypesError``).
 
     Parameters
     ----------
@@ -249,7 +250,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
     @overrides
     def visit_file(self, value: FileValue) -> StringValue:
-        raise IncompatibleTypesException(VariableType.FILE, VariableType.STRING)
+        raise create_incompatible_types_error(VariableType.FILE, VariableType.STRING)
 
     @overrides
     def visit_integer_array(self, value: IntegerArrayValue) -> StringValue:
@@ -269,7 +270,7 @@ class __ToStringVisitor(IVariableValueVisitor[StringValue]):
 
     @overrides
     def visit_file_array(self, value: FileArrayValue) -> StringValue:
-        raise IncompatibleTypesException(VariableType.FILE_ARRAY, VariableType.STRING)
+        raise create_incompatible_types_error(VariableType.FILE_ARRAY, VariableType.STRING)
 
 
 def to_string_value(other: IVariableValue) -> StringValue:
@@ -278,7 +279,7 @@ def to_string_value(other: IVariableValue) -> StringValue:
 
     The conversion is performed according to the type interoperability specifications.
     Note that some conversions are lossy (resulting in a loss of precision),
-    and some conversions are not possible (raises IncompatibleTypesException).
+    and some conversions are not possible (raises IncompatibleTypesError).
 
     Parameters
     ----------
