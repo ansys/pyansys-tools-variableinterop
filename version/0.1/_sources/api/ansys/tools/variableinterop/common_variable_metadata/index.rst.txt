@@ -1,0 +1,79 @@
+
+
+
+
+
+The ``common_variable_metadata.py`` module
+==========================================
+
+.. py:module:: ansys.tools.variableinterop.common_variable_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: common_variable_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:attr:`~CommonVariableMetadata`
+            - Provides metadata common to all variables.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    🝆 CommonVariableMetadata<CommonVariableMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``CommonVariableMetadata`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

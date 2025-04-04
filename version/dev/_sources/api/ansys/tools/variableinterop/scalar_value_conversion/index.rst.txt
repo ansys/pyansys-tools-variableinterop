@@ -1,0 +1,223 @@
+
+
+
+
+
+
+The ``scalar_value_conversion.py`` module
+=========================================
+
+.. py:module:: ansys.tools.variableinterop.scalar_value_conversion
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: scalar_value_conversion
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~to_boolean_value`
+            - Convert the given value to a ``BooleanValue`` type.
+
+
+          * - :py:obj:`~to_integer_value`
+            - Convert the given value to an ``IntegerValue`` type.
+
+
+          * - :py:obj:`~to_real_value`
+            - Convert the given value to a ``RealValue`` type.
+
+
+          * - :py:obj:`~to_string_value`
+            - Convert the given value to a ``StringValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines scalar value visitors.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: to_boolean_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.scalar_values.BooleanValue
+
+   
+   Convert the given value to a ``BooleanValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises IncompatibleTypesException).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``BooleanValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`BooleanValue`
+           Value as a ``BooleanValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_integer_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.scalar_values.IntegerValue
+
+   
+   Convert the given value to an ``IntegerValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises IncompatibleTypesException).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to an ``IntegerValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`IntegerValue`
+           Value as an ``IntegerValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_real_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.scalar_values.RealValue
+
+   
+   Convert the given value to a ``RealValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises ``IncompatibleTypesException``).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``RealValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`RealValue`
+           Value as a ``RealValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_string_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.scalar_values.StringValue
+
+   
+   Convert the given value to a ``StringValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises IncompatibleTypesException).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``StringValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`StringValue`
+           Value as a ``StringValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

@@ -1,0 +1,152 @@
+
+
+
+
+
+
+The ``vartype_arrays_and_elements.py`` module
+=============================================
+
+.. py:module:: ansys.tools.variableinterop.vartype_arrays_and_elements
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: vartype_arrays_and_elements
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~to_array_type`
+            - Given a variable type, find the corresponding array type, if one exists. Otherwise,
+
+
+          * - :py:obj:`~get_element_type`
+            - Given a variable type representing an array, return the corresponding element type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines functions for determining the correct array type for a scalar type and vice-
+versa.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: to_array_type(vartype: ansys.tools.variableinterop.variable_type.VariableType) -> ansys.tools.variableinterop.variable_type.VariableType
+
+   
+   Given a variable type, find the corresponding array type, if one exists. Otherwise,
+   ValueError is raised.
+
+
+   :Parameters:
+
+       **vartype** : :obj:`VariableType`
+           Variable type of interest.
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Corresponding array type.
+
+
+
+
+   :Raises:
+
+       :obj:`ValueError`
+           If the specified type does not have a corresponding array type.
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: get_element_type(vartype: ansys.tools.variableinterop.variable_type.VariableType) -> ansys.tools.variableinterop.variable_type.VariableType
+
+   
+   Given a variable type representing an array, return the corresponding element type.
+
+   When a non-array type is passed, ``ValueError`` is raised.
+
+   :Parameters:
+
+       **vartype** : :obj:`VariableType`
+           Variable type of interest.
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Corresponding element type.
+
+
+
+
+   :Raises:
+
+       :obj:`ValueError`
+           If the specified type does not have a corresponding element type.
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
