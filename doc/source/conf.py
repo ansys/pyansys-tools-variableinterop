@@ -128,6 +128,7 @@ numpydoc_validation_exclude = {
     "validate",
     "__cause__",
     "__context__",
+    "__version__"
 }
 
 # static path
