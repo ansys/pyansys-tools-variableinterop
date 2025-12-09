@@ -343,7 +343,6 @@ def implicit_coerce(func: Any) -> Any:
     Any
         Wrapper function.
     """
-    assert inspect.isfunction(func), "Decorator must be used on functions."
     signature = inspect.signature(func)
     type_hints = get_type_hints(func)
 
