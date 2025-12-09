@@ -14,7 +14,7 @@ Installation
 ------------
 
 The ``pyansys-tools-variableinterop`` package currently supports Python
-3.9 through 3.12 on Windows, MacOS, and Linux.
+3.10 through 3.13 on Windows, MacOS, and Linux.
 
 You can install the ``pyansys-tools-variableinterop`` package with this command:
 

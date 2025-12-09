@@ -12,10 +12,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 env:
   DOCUMENTATION_CNAME: 'variableinterop.docs.pyansys.com'
-  MAIN_PYTHON_VERSION: '3.11'
+  MAIN_PYTHON_VERSION: '3.13'
   PACKAGE_NAME: 'pyansys-tools-variableinterop'
 
 jobs:
@@ -28,6 +27,7 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
+
   doc-style:
     name: "Documentation Style Check"
     runs-on: ubuntu-latest
@@ -38,6 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           vale-version: "3.4.1"
 
+
   smoke-tests:
     name: "Build and Smoke tests"
     runs-on: ${{ matrix.os }}
@@ -46,13 +47,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.9', '3.10', '3.11','3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
         should-release:
           - ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') }}
         exclude:
           - should-release: false
             os: macos-latest
-
     steps:
       - name: "Build wheelhouse and perform smoke test"
         uses: ansys/actions/build-wheelhouse@v8
@@ -60,6 +60,7 @@ jobs:
           library-name: ${{ env.PACKAGE_NAME }}
           operating-system: ${{ matrix.os }}
           python-version: ${{ matrix.python-version }}
+
 
   build-test:
     name: "Build and unit testing"
@@ -73,12 +74,12 @@ jobs:
       - name: "Setup Python"
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          python-version: ${{ matrix.python-version }}
 
       - name: "Create Python venv"
         run: |
           python -m venv .venv
-          .venv/bin/activate
+          . .venv/bin/activate
 
       - name: "Unit testing requirements installation"
         run: |
@@ -107,6 +108,7 @@ jobs:
           name: remote.xml
           path: ./remote.xml
 
+
   doc-build:
     name: "Documentation building"
     runs-on: ubuntu-latest
@@ -123,7 +125,7 @@ jobs:
       - name: "Create Python venv"
         run: |
           python -m venv .venv
-          .venv/bin/activate
+          . .venv/bin/activate
 
       - name: "Documentation requirements installation"
         run: |
@@ -149,6 +151,7 @@ jobs:
           library-name: ${{ env.PACKAGE_NAME }}
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
+
   doc-deploy-dev:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
@@ -163,6 +166,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
           bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
+
 
   release:
     name: "Release project to public PyPI and GitHub"
