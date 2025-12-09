@@ -1,0 +1,844 @@
+
+
+
+
+
+
+:class:`FileValue`
+==================
+
+
+.. py:class:: ansys.tools.variableinterop.file_value.FileValue(original_path: Optional[os.PathLike] = None, mime_type: Optional[str] = None, encoding: Optional[str] = None, value_id: Optional[uuid.UUID] = None, file_size: Optional[int] = None)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`, :py:obj:`abc.ABC`
+
+
+   
+   Provides an abstract base class for ``FileValue`` implementations.
+
+   To create instances, use the ``FileScope`` class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+
+
+.. py:currentmodule:: FileValue
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~get_reference_to_actual_content_file_async`
+            - Realize the file contents to a local filesystem if needed.
+          * - :py:attr:`~get_reference_to_actual_content_file`
+            - Realizes the file contents to a local filesystem if needed.
+
+
+   .. tab-item:: Constructors
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~is_text_based_static`
+            - Determines if a file is text-based via its MIME type.
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+          * - :py:attr:`~write_file`
+            - Write the file's contents to a new file.
+          * - :py:attr:`~get_contents`
+            - Read the contents of the file as a string.
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string using a save context.
+          * - :py:attr:`~to_api_object`
+            - Convert this file to an API object.
+          * - :py:attr:`~get_extension`
+            - Get the file extension of the file, including the period.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+          * - :py:attr:`~mime_type`
+            - MIME type of the file.
+          * - :py:attr:`~original_file_name`
+            - Name of the original file that was wrapped.
+          * - :py:attr:`~extension`
+            - Extension of the file.
+          * - :py:attr:`~file_encoding`
+            - Encoding of the file.
+          * - :py:attr:`~id`
+            - ID of the file.
+          * - :py:attr:`~file_size`
+            - Size of the file in bytes if known.
+          * - :py:attr:`~is_text_based`
+            - Flag indicating if this file is text-based via its MIME type.
+
+
+   .. tab-item:: Attributes
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~BINARY_MIMETYPE`
+            - 
+          * - :py:attr:`~TEXT_MIMETYPE`
+            - 
+          * - :py:attr:`~ORIGINAL_FILENAME_KEY`
+            - JSON key for API serialization representing the original file name.
+          * - :py:attr:`~MIMETYPE_KEY`
+            - 
+          * - :py:attr:`~ENCODING_KEY`
+            - 
+          * - :py:attr:`~CONTENTS_KEY`
+            - 
+          * - :py:attr:`~SIZE_KEY`
+            - 
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~read_bom`
+            - Open a file for reading and detect a byte order mark at the beginning.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - 
+          * - :py:attr:`~__hash__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_value import FileValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: mime_type
+   :type: str
+
+
+   
+   MIME type of the file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: original_file_name
+   :type: Optional[os.PathLike]
+
+
+   
+   Name of the original file that was wrapped.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: extension
+   :type: str
+
+   :abstractmethod:
+
+
+   
+   Extension of the file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: file_encoding
+   :type: Optional[str]
+
+
+   
+   Encoding of the file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: id
+   :type: uuid.UUID
+
+
+   
+   ID of the file.
+
+
+
+
+
+   :Returns:
+
+       :obj:`UUID`
+           ID that identifies the file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: file_size
+   :type: Optional[int]
+
+
+   
+   Size of the file in bytes if known.
+
+   A value of ``None`` indicates that the file size is not known,
+   not that the file size is zero bytes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: is_text_based
+   :type: Optional[bool]
+
+
+   
+   Flag indicating if this file is text-based via its MIME type.
+
+
+
+
+
+   :Returns:
+
+       :ref:`bool <python:bltin-boolean-values>`
+           ``True`` if the MIME type starts with ``text`` or is ``application/json``,
+           ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Attribute detail
+----------------
+
+.. py:attribute:: BINARY_MIMETYPE
+   :type:  Final[str]
+   :value: 'application/octet-stream'
+
+
+.. py:attribute:: TEXT_MIMETYPE
+   :type:  Final[str]
+   :value: 'text/plain'
+
+
+.. py:attribute:: ORIGINAL_FILENAME_KEY
+   :type:  Final[str]
+   :value: 'originalFilename'
+
+
+   
+   JSON key for API serialization representing the original file name.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: MIMETYPE_KEY
+   :type:  Final[str]
+   :value: 'mimeType'
+
+
+.. py:attribute:: ENCODING_KEY
+   :type:  Final[str]
+   :value: 'encoding'
+
+
+.. py:attribute:: CONTENTS_KEY
+   :type:  Final[str]
+   :value: 'contents'
+
+
+.. py:attribute:: SIZE_KEY
+   :type:  Final[str]
+   :value: 'size'
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+.. py:method:: __hash__()
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: read_bom(filename: str) -> str
+   :staticmethod:
+
+
+   
+   Open a file for reading and detect a byte order mark at the beginning.
+
+
+   :Parameters:
+
+       **filename** : :class:`python:str`
+           File to read.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           If the file contains a BOM, an appropriate encoding is returned.
+           If the file does not contain a BOM, ``None`` is returned.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: write_file(file_name: os.PathLike) -> None
+   :async:
+
+
+   
+   Write the file's contents to a new file.
+
+
+   :Parameters:
+
+       **file_name** : :obj:`PathLike`
+           Path to the file to create.
+
+
+
+   :Returns:
+
+       :data:`python:None`
+           ..
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_reference_to_actual_content_file_async(progress_callback: Optional[Callable[[int], None]] = None) -> AsyncLocalFileContentContext
+   :abstractmethod:
+
+   :async:
+
+
+   
+   Realize the file contents to a local filesystem if needed.
+
+   The ``FileValue`` instance is intended to represent an immutable value. The file
+   returned by this call may point to a cached file or even the original file. Callers
+   must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+   may occur. If the caller needs to modify the file, consider using the ``write_file``
+   method or copying the file before modifying it.
+
+   :Parameters:
+
+       **progress_callback** : :obj:`Optional`\[:obj:`Callable`\[[:class:`python:int`], :data:`python:None`]], :obj:`optional`
+           Callback that can be called to indicate progress in realizing the local copy.
+           The default is ``None``, in which case this method makes no attempt
+           to report its progress. This method may call a provided callback with a
+           percentage value between 0 and 100 inclusive. The provided callback may not
+           necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+           even if other calls occur.
+
+
+
+   :Returns:
+
+       :obj:`AsyncLocalFileContentContext`
+           Context manager that, when exited, deletes the local copy
+           if it is a temporary file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_reference_to_actual_content_file(progress_callback: Optional[Callable[[int], None]] = None) -> LocalFileContentContext
+   :abstractmethod:
+
+
+   
+   Realizes the file contents to a local filesystem if needed.
+
+   The ``FileValue`` instance is intended to represent an immutable value. The file
+   returned by this call may point to a cached file or even the original file. Callers
+   must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+   may occur. If the caller needs to modify the file, consider using the ``write_file``
+   method or copying the file before modifying it.
+
+   :Parameters:
+
+       **progress_callback** : :obj:`Optional`\[:obj:`Callable`\[[:class:`python:int`], :data:`python:None`]], :obj:`optional`
+           Callback that can be called to indicate progress in realizing the local copy.
+           The default is ``None``, in which case this method makes no attempt
+           to report its progress. This method may call a provided callback with a
+           percentage value between 0 and 100 inclusive. The provided callback may not
+           necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+           even if other calls occur.
+
+
+
+   :Returns:
+
+       :obj:`LocalFileContentContext`
+           Context manager that, when exited, deletes the local copy
+           if it is a temporary file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: is_text_based_static(mimetype: str) -> Optional[bool]
+   :classmethod:
+
+
+   
+   Determines if a file is text-based via its MIME type.
+
+
+   :Parameters:
+
+       **mimetype** : :class:`python:str`
+           File's MIME type.
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:ref:`bool <python:bltin-boolean-values>`]
+           ``True`` if the MIME type starts with text or is an application (JSON),
+           ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_contents(encoding: Optional[str] = None) -> str
+   :async:
+
+
+   
+   Read the contents of the file as a string.
+
+
+   :Parameters:
+
+       **encoding** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Encoding to use when reading. The default is ``None``, in which case the
+           current locale's encoding is used.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           Contents of the file as a string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert the value to an API string using a save context.
+
+
+   :Parameters:
+
+       **context** : :obj:`Optional`\[:obj:`ISaveContext`], :obj:`optional`
+           Save context to use. The default value is ``None``,
+           in which case file values are not supported.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_object(save_context: ansys.tools.variableinterop.isave_context.ISaveContext) -> Dict[str, Optional[str]]
+
+   
+   Convert this file to an API object.
+
+
+   :Parameters:
+
+       **save_context** : :obj:`ISaveContext`
+           Save context to use for the conversion.
+
+
+
+   :Returns:
+
+       :obj:`Dict`\[:class:`python:str`, :obj:`Optional`\[:class:`python:str`]]
+           API object that matches this ``FileValue`` instance.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_extension() -> str
+
+   
+   Get the file extension of the file, including the period.
+
+   If the file extension is not known, ``.tmp`` is returned.
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           File extension of the file if known, ``".tmp"`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

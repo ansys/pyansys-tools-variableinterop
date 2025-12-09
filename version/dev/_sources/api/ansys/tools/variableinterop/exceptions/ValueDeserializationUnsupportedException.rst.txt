@@ -1,0 +1,49 @@
+
+
+
+
+
+
+:class:`ValueDeserializationUnsupportedException`
+=================================================
+
+
+.. py:exception:: ansys.tools.variableinterop.exceptions.ValueDeserializationUnsupportedException(message: str)
+
+   Bases: :py:obj:`Exception`
+
+
+   
+   Indicates that deserializing a value is not allowed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.exceptions import ValueDeserializationUnsupportedException
+
+
+
+
+

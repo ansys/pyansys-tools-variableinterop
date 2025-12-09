@@ -1,0 +1,112 @@
+
+
+
+
+
+
+The ``value_from_formatted_string.py`` module
+=============================================
+
+.. py:module:: ansys.tools.variableinterop.value_from_formatted_string
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: value_from_formatted_string
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~from_formatted_string`
+            - Convert a value formatted to a specific locale back into an IVariableValue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Provides a method for converting a formatted string to a value.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: from_formatted_string(var_type: ansys.tools.variableinterop.variable_type.VariableType, source: str, locale_name: str) -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Convert a value formatted to a specific locale back into an IVariableValue.
+
+
+   :Parameters:
+
+       **var_type** : :obj:`VariableType`
+           The type of variable to convert to.
+
+       **source** : :class:`python:str`
+           The string to convert.
+
+       **locale_name** : :class:`python:str`
+           The locale the string was formatted in.
+
+
+
+   :Returns:
+
+       :obj:`IVariableValue`
+           An IVariableValue of the specified type whose value matches the given string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

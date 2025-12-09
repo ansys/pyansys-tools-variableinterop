@@ -1,0 +1,411 @@
+
+
+
+
+
+
+:class:`APIStringToValueVisitor`
+================================
+
+
+.. py:class:: ansys.tools.variableinterop.api_string_to_value_visitor.APIStringToValueVisitor(source: str, fscope: Optional[ansys.tools.variableinterop.file_scope.FileScope] = None, save_context: Optional[ansys.tools.variableinterop.isave_context.ILoadContext] = None)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.ivariable_type_pseudovisitor.IVariableTypePseudoVisitor`
+
+
+   
+   Visits variable type enumeration values, producing a variable value from a
+   string.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: APIStringToValueVisitor
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_unknown`
+            - Visit the ``UNKNOWN`` variable type.
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_int`
+            - Produce an ``IntegerValue`` type from the API string format.
+          * - :py:attr:`~visit_real`
+            - Produce a ``RealValue`` type from the API string format.
+          * - :py:attr:`~visit_boolean`
+            - Produce a ``BooleanValue`` type from the API string format.
+          * - :py:attr:`~visit_string`
+            - Produce a ``StringValue`` type from the API string format.
+          * - :py:attr:`~visit_file`
+            - Produce a ``FileValue`` type from the API string format.
+          * - :py:attr:`~visit_int_array`
+            - Produce an ``IntegerArrayValue`` type from the API string format.
+          * - :py:attr:`~visit_real_array`
+            - Produce a ``RealArrayValue`` type from the API string format.
+          * - :py:attr:`~visit_bool_array`
+            - Produce a ``BooleanArrayValue`` from the API string format.
+          * - :py:attr:`~visit_string_array`
+            - Produce a ``StringArrayValue`` type from the API string format.
+          * - :py:attr:`~visit_file_array`
+            - Produce a ``FileArrayValue`` type from the API string format.
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.api_string_to_value_visitor import APIStringToValueVisitor
+
+
+
+Method detail
+-------------
+
+.. py:method:: visit_unknown() -> None
+   :abstractmethod:
+
+
+   
+   Visit the ``UNKNOWN`` variable type.
+
+   Given that variables of the ``UNKNOWN`` type cannot actually be produced,
+   this method always raises ``NotImplementedError``.
+
+
+
+
+   :Returns:
+
+       :data:`python:None`
+           Never returns; always raises ``NotImplementedError``.
+
+
+
+
+   :Raises:
+
+       :obj:`NotImplementedError`
+           Always.
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int() -> ansys.tools.variableinterop.scalar_values.IntegerValue
+
+   
+   Produce an ``IntegerValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerValue`
+           ``IntegerValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real() -> ansys.tools.variableinterop.scalar_values.RealValue
+
+   
+   Produce a ``RealValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`RealValue`
+           ``RealValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean() -> ansys.tools.variableinterop.scalar_values.BooleanValue
+
+   
+   Produce a ``BooleanValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`BooleanValue`
+           ``BooleanValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string() -> ansys.tools.variableinterop.scalar_values.StringValue
+
+   
+   Produce a ``StringValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`StringValue`
+           ``StringValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file() -> ansys.tools.variableinterop.file_value.FileValue
+
+   
+   Produce a ``FileValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`FileValue`
+           ``FileValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int_array() -> ansys.tools.variableinterop.array_values.IntegerArrayValue
+
+   
+   Produce an ``IntegerArrayValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerArrayValue`
+           ``IntegerArrayValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real_array() -> ansys.tools.variableinterop.array_values.RealArrayValue
+
+   
+   Produce a ``RealArrayValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`RealArrayValue`
+           ``RealArrayValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_bool_array() -> ansys.tools.variableinterop.array_values.BooleanArrayValue
+
+   
+   Produce a ``BooleanArrayValue`` from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`BooleanArrayValue`
+           ``BooleanArrayValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string_array() -> ansys.tools.variableinterop.array_values.StringArrayValue
+
+   
+   Produce a ``StringArrayValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`StringArrayValue`
+           ``StringArrayValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file_array() -> ansys.tools.variableinterop.file_array_value.FileArrayValue
+
+   
+   Produce a ``FileArrayValue`` type from the API string format.
+
+
+
+
+
+   :Returns:
+
+       :obj:`FileArrayValue`
+           ``FileArrayValue`` type with a value determined by the specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

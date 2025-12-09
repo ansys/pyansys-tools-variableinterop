@@ -1,0 +1,281 @@
+
+
+
+
+IntegerValue
+============
+
+.. py:class:: IntegerValue(value)
+   :canonical: ansys.tools.variableinterop.scalar_values.IntegerValue
+
+
+
+Bases: :py:obj:`numpy.int64`, :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`
+
+Stores a value as an ``IntegerValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Overview
+--------
+.. py:currentmodule:: IntegerValue
+.. tab-set::
+
+
+
+    .. tab-item:: Methods
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string.
+          * - :py:attr:`~to_real_value`
+            - Convert this ``IntegerValue`` type to a ``RealValue`` type.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+    .. tab-item:: Properties
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+    .. tab-item:: Static methods
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Create an ``IntegerValue`` type from an API string.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.scalar_values import IntegerValue
+
+
+Property detail
+---------------
+.. py:property:: variable_type
+   :canonical: ansys.tools.variableinterop.scalar_values.IntegerValue.variable_type
+   :type: VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[ansys.tools.variableinterop.ivariable_visitor.T]) -> ansys.tools.variableinterop.ivariable_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert the value to an API string.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_real_value() -> RealValue
+
+   
+   Convert this ``IntegerValue`` type to a ``RealValue`` type.
+
+   Because a ``RealValue`` type is a 64-bit floating point number, it has a 52-bit mantissa.
+   That means that a portion of the range of 64-bit ``IntegerValue`` types cannot be completely
+   accurately represented by ``RealValue`` types. This conversion is sometimes lossy for
+   ``IntegerValue`` types of sufficient magnitude.
+
+
+   :Returns:
+
+       :obj:`RealValue`
+           ``RealValue`` type with the same numeric value as the ``IntegerValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_string(value: str) -> IntegerValue
+   :staticmethod:
+
+   
+   Create an ``IntegerValue`` type from an API string.
+
+   Leading and trailing whitespace is ignored.
+   Values that can be correctly parsed as floating-point numbers
+   are parsed in that manner and then rounded to integers. When rounding,
+   values with a 5 in the tenths place are rounded away from zero.
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           String to parse.
+
+   :Returns:
+
+       :obj:`IntegerValue`
+           ``IntegerValue`` type parsed from the API string.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+

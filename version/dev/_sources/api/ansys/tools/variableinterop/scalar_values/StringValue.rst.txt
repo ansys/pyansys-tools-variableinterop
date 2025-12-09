@@ -1,0 +1,263 @@
+
+
+
+
+
+
+:class:`StringValue`
+====================
+
+
+.. py:class:: ansys.tools.variableinterop.scalar_values.StringValue
+
+   Bases: :py:obj:`numpy.str_`, :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`
+
+
+   
+   Stores a value as an ``IVariableValue`` variable type.
+
+   In Python, the ``IntegerValue`` type is implemented by extending NumPy's ``str\_`` type.
+   This means that they decay naturally into ``numpy.str\_`` objects when used with other
+   types of operators. It also means that they inherit many of the NumPy behaviors, which
+   may be slightly different from the behaviors specified in the variable interop standards.
+   For example, when converting from string to integer, values parseable as floating-
+   point numbers are rejected instead of parsed as such and then rounded. If you want the
+   variable interop standard conversions, use the :meth:`from_api_string()` method on any given
+   variable interop type to get an instance of that type, which should decompose
+   naturally to the analogous NumPy type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: StringValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Convert an API string back to a string value.
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.scalar_values import StringValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[ansys.tools.variableinterop.ivariable_visitor.T]) -> ansys.tools.variableinterop.ivariable_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert the value to an API string.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_string(value: str) -> StringValue
+   :staticmethod:
+
+
+   
+   Convert an API string back to a string value.
+
+   The string is stored exactly as specified. No escaping is performed
+   as with the :meth:`from_formatted string` method.
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           String to convert.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

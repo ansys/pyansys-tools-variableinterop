@@ -1,0 +1,151 @@
+
+
+
+
+
+
+The ``string_escaping.py`` module
+=================================
+
+.. py:module:: ansys.tools.variableinterop.utils.string_escaping
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: string_escaping
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~escape_string`
+            - Escape a string according to ModelCenter conventions.
+
+
+          * - :py:obj:`~unescape_string`
+            - Unescape a string according to ``ModelCenter`` conventions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Provides functions for ModelCenter-standard string escaping.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: escape_string(unescaped: str) -> str
+
+   
+   Escape a string according to ModelCenter conventions.
+
+   The following characters are escaped: backslash, newline,
+   carriage return, tab, double-quote, and null. Backslash is itself
+   used as an escape character.
+
+   :Parameters:
+
+       **unescaped** : :class:`python:str`
+           Unescaped string.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String with the specified characters escaped.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: unescape_string(escaped: str) -> str
+
+   
+   Unescape a string according to ``ModelCenter`` conventions.
+
+   The escape sequences ``\n``, ``\r``, ``\t``, and ``\0`` are transformed into
+   newline, carriage return, tab, and null respectively. In other
+   cases where a backslash appears, it is simply removed
+   and the following character is allowed to remain. (Note that this
+   also results in the correct behavior for double-quotatoin marks and
+   the backslash itself, even though those characters are escaped by
+   the :meth:`escape_string` method.)
+
+   :Parameters:
+
+       **escaped** : :class:`python:str`
+           String with the escape sequences.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String with the escape sequences undone.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

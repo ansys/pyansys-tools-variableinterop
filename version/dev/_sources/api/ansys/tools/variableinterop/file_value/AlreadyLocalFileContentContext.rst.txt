@@ -1,0 +1,204 @@
+
+
+
+
+
+
+:class:`AlreadyLocalFileContentContext`
+=======================================
+
+
+.. py:class:: ansys.tools.variableinterop.file_value.AlreadyLocalFileContentContext(local_content_path: Optional[anyio.Path] = None)
+
+   Bases: :py:obj:`LocalFileContentContext`, :py:obj:`AsyncLocalFileContentContext`
+
+
+   
+   Provides a default local file context for when the file is already hosted locally.
+
+   Because the file is already hosted and managed locally, there is no need to create a
+   new copy. Therefore, this implementation basically does nothing but provide a way to
+   abstract away the difference between a locally and remotely hosted file content.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: AlreadyLocalFileContentContext
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~keep_file_on_exit`
+            - Call this method before exiting to prevent deleting the file on exit.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~content_path`
+            - Get the local path to the content.
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__exit__`
+            - Exit the context.
+          * - :py:attr:`~__aexit__`
+            - Asynchronously exit the context.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_value import AlreadyLocalFileContentContext
+
+Property detail
+---------------
+
+.. py:property:: content_path
+   :type: Optional[os.PathLike]
+
+
+   
+   Get the local path to the content.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: keep_file_on_exit() -> None
+
+   
+   Call this method before exiting to prevent deleting the file on exit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __exit__(exc_type, exc_val, exc_tb) -> None
+
+   
+   Exit the context.
+
+   This does nothing as no additional temporary file was created.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __aexit__(exc_type, exc_val, exc_tb) -> None
+   :async:
+
+
+   
+   Asynchronously exit the context.
+
+   This does nothing as no additional temporary file was created.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

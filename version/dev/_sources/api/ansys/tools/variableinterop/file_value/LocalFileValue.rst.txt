@@ -1,0 +1,218 @@
+
+
+
+
+
+
+:class:`LocalFileValue`
+=======================
+
+
+.. py:class:: ansys.tools.variableinterop.file_value.LocalFileValue(original_path: Optional[os.PathLike] = None, mime_type: Optional[str] = None, encoding: Optional[str] = None, value_id: Optional[uuid.UUID] = None, file_size: Optional[int] = None, actual_content_file_name: Optional[os.PathLike] = None)
+
+   Bases: :py:obj:`FileValue`, :py:obj:`abc.ABC`
+
+
+   
+   Base class for file values where the file contents already exist on the local disk.
+
+   Generally speaking, clients of this library should not attempt to use this class. It
+   is intended for dependents of this library who are attempting to implement a new
+   ``FileScope`` instance that always stores the content of a file on the local disk.
+   Clients are discouraged from attempting to introspect a ``FileValues``instance to
+   determine if they are instances of ``LocalFileValue`` for the purpose of getting a path to the
+   locally stored content. Instead, always correctly use the
+   ``get_reference_to_actual_content_file`` method for the ``FileValue`` instance to
+   allow the code in question to get the local path, even for files that are not
+   originally hosted locally. For files that are originally hosted locally, this
+   does not produce an additional copy but rather gives a context manager that does
+   nothing on enter or exit but still allows access to the actual content path.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: LocalFileValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~get_reference_to_actual_content_file_async`
+            - Realize the file contents to a local filesystem if needed.
+          * - :py:attr:`~get_reference_to_actual_content_file`
+            - Realizes the file contents to a local filesystem if needed.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~actual_content_file_name`
+            - Get the path to the file that this ``FileValue`` instance wraps.
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_value import LocalFileValue
+
+Property detail
+---------------
+
+.. py:property:: actual_content_file_name
+   :type: Optional[os.PathLike]
+
+
+   
+   Get the path to the file that this ``FileValue`` instance wraps.
+
+
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:obj:`PathLike`]
+           PathLike to the file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: get_reference_to_actual_content_file_async(progress_callback: Optional[Callable[[int], None]] = None) -> AsyncLocalFileContentContext
+   :async:
+
+
+   
+   Realize the file contents to a local filesystem if needed.
+
+   The ``FileValue`` instance is intended to represent an immutable value. The file
+   returned by this call may point to a cached file or even the original file. Callers
+   must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+   may occur. If the caller needs to modify the file, consider using the ``write_file``
+   method or copying the file before modifying it.
+
+   :Parameters:
+
+       **progress_callback** : :obj:`Optional`\[:obj:`Callable`\[[:class:`python:int`], :data:`python:None`]], :obj:`optional`
+           Callback that can be called to indicate progress in realizing the local copy.
+           The default is ``None``, in which case this method makes no attempt
+           to report its progress. This method may call a provided callback with a
+           percentage value between 0 and 100 inclusive. The provided callback may not
+           necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+           even if other calls occur.
+
+
+
+   :Returns:
+
+       :obj:`AsyncLocalFileContentContext`
+           Context manager that, when exited, deletes the local copy
+           if it is a temporary file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_reference_to_actual_content_file(progress_callback: Optional[Callable[[int], None]] = None) -> LocalFileContentContext
+
+   
+   Realizes the file contents to a local filesystem if needed.
+
+   The ``FileValue`` instance is intended to represent an immutable value. The file
+   returned by this call may point to a cached file or even the original file. Callers
+   must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+   may occur. If the caller needs to modify the file, consider using the ``write_file``
+   method or copying the file before modifying it.
+
+   :Parameters:
+
+       **progress_callback** : :obj:`Optional`\[:obj:`Callable`\[[:class:`python:int`], :data:`python:None`]], :obj:`optional`
+           Callback that can be called to indicate progress in realizing the local copy.
+           The default is ``None``, in which case this method makes no attempt
+           to report its progress. This method may call a provided callback with a
+           percentage value between 0 and 100 inclusive. The provided callback may not
+           necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+           even if other calls occur.
+
+
+
+   :Returns:
+
+       :obj:`LocalFileContentContext`
+           Context manager that, when exited, deletes the local copy
+           if it is a temporary file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

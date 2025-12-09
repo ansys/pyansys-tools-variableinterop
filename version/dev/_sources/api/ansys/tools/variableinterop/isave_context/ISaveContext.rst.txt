@@ -1,0 +1,212 @@
+
+
+
+
+
+
+:class:`ISaveContext`
+=====================
+
+
+.. py:class:: ansys.tools.variableinterop.isave_context.ISaveContext
+
+   Bases: :py:obj:`contextlib.AbstractContextManager`, :py:obj:`abc.ABC`
+
+
+   
+   Defines an abstraction for a save medium.
+
+   This interface was defined to separate the concerns of being able to save large
+   associated content in other transfer mediums. It allows out-of-bound data to be
+   transferred. Examples include saving to a ZIP file or using an SCP side-channel on
+   an SSH connection to send files or other large data objects.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+.. py:currentmodule:: ISaveContext
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~save_file`
+            - Save a file to the save medium.
+          * - :py:attr:`~flush`
+            - Flush any changes in the context to the underlying stream or file.
+          * - :py:attr:`~close`
+            - Close the context.
+
+
+
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__exit__`
+            - Magic method exit.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.isave_context import ISaveContext
+
+
+
+Method detail
+-------------
+
+.. py:method:: __exit__(__exc_type: Type[BaseException] | None, __exc_value: BaseException | None, __traceback: types.TracebackType | None) -> bool | None
+
+   
+   Magic method exit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: save_file(source: Union[os.PathLike, str], content_id: Optional[str] = None) -> str
+   :abstractmethod:
+
+
+   
+   Save a file to the save medium.
+
+   It is up to the ``ISaveContext`` implementation to decide how or when to send the actual
+   data. Some ``ISaveContext`` implementations may merely collect metadata as part of this
+   call and send the data on flush.
+
+   :Parameters:
+
+       **source** : :obj:`Union`\[:obj:`PathLike`, :class:`python:str`]
+           File on disk to send or include in the save.
+
+       **content_id** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Unique ID for the file. The default value is ``None``, in which case an ID
+           is automatically generated and returned. This ID can be used with an equivalent
+           ``ILoadContext`` instance to load the contents on deserialization.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           ID, either the one provided or the one otherwise generated.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: flush() -> None
+   :abstractmethod:
+
+
+   
+   Flush any changes in the context to the underlying stream or file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: close() -> None
+   :abstractmethod:
+
+
+   
+   Close the context.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

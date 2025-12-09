@@ -1,0 +1,112 @@
+
+
+
+
+
+
+:class:`LocaleUtils`
+====================
+
+
+.. py:class:: ansys.tools.variableinterop.utils.locale_utils.LocaleUtils
+
+   
+   Provides utilities for dealing with locales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: LocaleUtils
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~perform_safe_locale_action`
+            - Switches to the correct locale, performs the specified action, and then switches
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.utils.locale_utils import LocaleUtils
+
+
+
+Method detail
+-------------
+
+.. py:method:: perform_safe_locale_action(locale_name: str, action: Callable) -> Any
+   :staticmethod:
+
+
+   
+   Switches to the correct locale, performs the specified action, and then switches
+   back safely.
+
+
+   :Parameters:
+
+       **locale_name: str**
+           Name of the locale to perform the action in.
+
+       **action** : :obj:`Callable`
+           Action to perform.
+
+
+
+   :Returns:
+
+       :obj:`Any`
+           Object returned by the action.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

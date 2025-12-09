@@ -1,0 +1,341 @@
+
+
+
+
+
+
+:class:`RealValue`
+==================
+
+
+.. py:class:: ansys.tools.variableinterop.scalar_values.RealValue
+
+   Bases: :py:obj:`numpy.float64`, :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`
+
+
+   
+   Stores a value as a ``RealValue`` variable type.
+
+   In Python, the ``RealValue`` type is implemented by extending NumPy's float64 type. This means
+   that they decay naturally into ``numpy.float64`` objects when using NumPy's
+   arithmetic operators. It also means that they inherit many of the NumPy behaviors,
+   which may be slightly different from the behaviors specified in the variable interop
+   standards. For example, when converting from real to integer, the value is
+   floored instead of rounded. If you want the variable interop standard conversions,
+   use the :meth:`to_int_value()` method to get an ``IntegerValue`` type with variable
+   interop standard rounding (away from zero). The ``IntegerValue`` type decomposes naturally to
+   ``numpy.int64`` objects.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: RealValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string.
+          * - :py:attr:`~to_int_value`
+            - Convert this ``RealValue`` type to an ``IntegerValue`` type.
+          * - :py:attr:`~to_boolean_value`
+            - Convert this ``RealValue``type to a ``BooleanValue`` type.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Convert an API string back into a ``RealValue`` type.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__str__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.scalar_values import RealValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[ansys.tools.variableinterop.ivariable_visitor.T]) -> ansys.tools.variableinterop.ivariable_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert the value to an API string.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __str__() -> str
+
+.. py:method:: from_api_string(value: str) -> RealValue
+   :staticmethod:
+
+
+   
+   Convert an API string back into a ``RealValue`` type.
+
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           String to convert.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_int_value() -> IntegerValue
+
+   
+   Convert this ``RealValue`` type to an ``IntegerValue`` type.
+
+   The conversion is performed according to the type
+   interoperability specifications. The value is rounded to the
+   nearest integer, where values with a 5 in the tenths place are
+   always rounded away from zero. (Note that this is different
+   from the default Python rounding behavior.)
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerValue`
+           ``IntegerValue`` type that is the result of rounding this value
+           to the nearest integer. (Values with a 5 in the tenths place
+           are rounded away from zero.)
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_boolean_value() -> BooleanValue
+
+   
+   Convert this ``RealValue``type to a ``BooleanValue`` type.
+
+   The conversion is performed according to the type
+   interoperability specifications. Any value other than exactly 0
+   is considered to be ``True``.
+
+
+
+
+   :Returns:
+
+       :obj:`BooleanValue`
+           ``BooleanValue`` type that is the result of converting the ``RealValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

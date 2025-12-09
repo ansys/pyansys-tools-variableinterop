@@ -1,0 +1,38 @@
+
+
+
+
+IncompatibleTypesException
+==========================
+
+.. py:exception:: IncompatibleTypesException(from_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str], to_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str])
+   :canonical: ansys.tools.variableinterop.exceptions.IncompatibleTypesException
+
+
+
+Bases: :py:obj:`BaseException`
+
+Indicates that the types used in a conversion are incompatible.
+
+
+
+
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.exceptions import IncompatibleTypesException
+
+
+
+
+

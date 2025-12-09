@@ -1,0 +1,159 @@
+
+
+
+
+
+
+:class:`ArrayToFromStringUtil`
+==============================
+
+
+.. py:class:: ansys.tools.variableinterop.utils.array_to_from_string_util.ArrayToFromStringUtil
+
+   
+   Provides utility methods for converting ``CommonValueArray`` objects to and from
+   string representations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: ArrayToFromStringUtil
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~value_to_string`
+            - Convert an array value to a string representation of it.
+          * - :py:attr:`~string_to_value`
+            - Convert a string into a ``CommonValueArray`` object.
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.utils.array_to_from_string_util import ArrayToFromStringUtil
+
+
+
+Method detail
+-------------
+
+.. py:method:: value_to_string(value: numpy.typing.NDArray, stringify_action: Callable) -> str
+   :staticmethod:
+
+
+   
+   Convert an array value to a string representation of it.
+
+   The :meth:`stringify_action` method allows converting the value arbitrarily, so both
+   API and display strings can use this method.
+
+   :Parameters:
+
+       **value** : :obj:`NDArray`
+           Array value to convert.
+
+       **stringify_action** : :obj:`Callable`
+           Action to use to convert each individual value in the array.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           Generated string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: string_to_value(value: str, create_action: Callable[[Any], ansys.tools.variableinterop.variable_value.CommonArrayValue], valueify_action: Callable[[str], ansys.tools.variableinterop.variable_value.IVariableValue]) -> ansys.tools.variableinterop.variable_value.CommonArrayValue
+   :staticmethod:
+
+
+   
+   Convert a string into a ``CommonValueArray`` object.
+
+   The :meth:`valueify_action` method allows converting the value arbitrarily, so both
+   API and display strings can use this method.
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           String value to parse.
+
+       **create_action** : :obj:`Callable`\[[:obj:`Any`], :obj:`CommonArrayValue`]
+           Action that takes either a shape or a list of initial values and creates a new
+           array of the correct type.
+
+       **valueify_action** : :obj:`Callable`\[[:class:`python:str`], :obj:`IVariableValue`]
+           Action used to parse each individual value to the correct type.
+
+
+
+   :Returns:
+
+       :obj:`CommonArrayValue`
+           A new array object with the parsed values.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

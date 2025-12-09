@@ -1,0 +1,145 @@
+
+
+
+
+
+
+:class:`AsyncLocalFileContentContext`
+=====================================
+
+
+.. py:class:: ansys.tools.variableinterop.file_value.AsyncLocalFileContentContext
+
+   Bases: :py:obj:`contextlib.AbstractAsyncContextManager`, :py:obj:`abc.ABC`
+
+
+   
+   Represents the context during which a locally available copy of file value content
+   should exist.
+
+   This is intended for use with an async implementation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: AsyncLocalFileContentContext
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~keep_file_on_exit`
+            - Call this method before exiting to prevent deleting the file on exit.
+
+
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~content_path`
+            - Get the local path to the content.
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_value import AsyncLocalFileContentContext
+
+Property detail
+---------------
+
+.. py:property:: content_path
+   :type: anyio.Path
+
+   :abstractmethod:
+
+
+   
+   Get the local path to the content.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: keep_file_on_exit() -> None
+   :abstractmethod:
+
+
+   
+   Call this method before exiting to prevent deleting the file on exit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

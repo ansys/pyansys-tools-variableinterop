@@ -1,0 +1,253 @@
+
+
+
+
+
+
+:class:`BooleanArrayValue`
+==========================
+
+
+.. py:class:: ansys.tools.variableinterop.array_values.BooleanArrayValue
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.CommonArrayValue`\ [\ :py:obj:`numpy.bool_`\ ]
+
+
+   
+   Stores a value as a ``BooleanArrayValue`` variable type.
+
+   In Python, a ``BooleanArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+   This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+   array operators.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: BooleanArrayValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~clone`
+            - 
+          * - :py:attr:`~accept`
+            - 
+          * - :py:attr:`~to_real_array_value`
+            - Convert this value to a ``RealArrayValue`` type.
+          * - :py:attr:`~to_integer_array_value`
+            - Convert this value to an ``IntegerArrayValue`` type.
+          * - :py:attr:`~to_string_array_value`
+            - Convert this value to a ``StringArrayValue`` type.
+          * - :py:attr:`~to_api_string`
+            - 
+          * - :py:attr:`~to_display_string`
+            - 
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - 
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Convert an API-formatted string to a ``BooleanArrayValue`` type.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.array_values import BooleanArrayValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other) -> bool
+
+.. py:method:: clone() -> BooleanArrayValue
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+.. py:method:: to_real_array_value() -> RealArrayValue
+
+   
+   Convert this value to a ``RealArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`RealArrayValue`
+           ``RealArrayValue`` type with the same values converted to real numbers.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_integer_array_value() -> IntegerArrayValue
+
+   
+   Convert this value to an ``IntegerArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerArrayValue`
+           ``IntegerArrayValue`` type with the same values converted to integers.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_string_array_value() -> StringArrayValue
+
+   
+   Convert this value to a ``StringArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`StringArrayValue`
+           ``StringArrayValue`` type with the same values converted to strings.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+.. py:method:: from_api_string(value: str) -> BooleanArrayValue
+   :staticmethod:
+
+
+   
+   Convert an API-formatted string to a ``BooleanArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           API string to parse.
+
+
+
+   :Returns:
+
+       :obj:`BooleanArrayValue`
+           Result of parsing the ``BooleanArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+
+
+

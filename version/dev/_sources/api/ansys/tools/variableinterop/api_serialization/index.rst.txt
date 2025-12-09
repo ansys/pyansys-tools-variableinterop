@@ -1,0 +1,177 @@
+
+
+
+
+
+
+The ``api_serialization.py`` module
+===================================
+
+.. py:module:: ansys.tools.variableinterop.api_serialization
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: api_serialization
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.api_serialization.ToAPIStringVisitor`
+            - Visits values and converts them to an API string.
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~to_api_string`
+            - Convert a variable value to an API string.
+
+
+          * - :py:obj:`~from_api_string`
+            - Generate a value from an API string.
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> ToAPIStringVisitor</api/ansys/tools/variableinterop/api_serialization/ToAPIStringVisitor>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``ToAPIStringVisitor`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: to_api_string(value: ansys.tools.variableinterop.variable_value.IVariableValue, save_context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert a variable value to an API string.
+
+
+   :Parameters:
+
+       **value** : :obj:`IVariableValue`
+           Value to convert to an API string.
+
+       **save_context** : :obj:`Optional`\[:obj:`ISaveContext`], :obj:`optional`
+           Save context to use for conversion. The default value is ``None``, which indicates
+           that you do not want to support file values.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           Serialized form of the value.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: from_api_string(var_type: ansys.tools.variableinterop.variable_type.VariableType, source: str, fscope: Optional[ansys.tools.variableinterop.file_scope.FileScope] = None, load_context: Optional[ansys.tools.variableinterop.isave_context.ILoadContext] = None) -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Generate a value from an API string.
+
+
+   :Parameters:
+
+       **var_type** : :obj:`VariableType`
+           Variable type to generate.
+
+       **source** : :class:`python:str`
+           Source string.
+
+       **fscope** : :obj:`Optional`\[:obj:`FileScope`], :obj:`optional`
+           File scope to use to deserialize file variables. The default is ``None``,
+           which indictates that file variables are not needed.
+
+       **load_context** : :obj:`Optional`\[:obj:`ILoadContext`], :obj:`optional`
+           Load context to read file contents from. The default is ``None``, which
+           indicates file variables are not needed.
+
+
+
+   :Returns:
+
+       :obj:`IVariableValue`
+           Implementation of ``IVariableValue`` of the correct type with a value parsed from the
+           specified string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

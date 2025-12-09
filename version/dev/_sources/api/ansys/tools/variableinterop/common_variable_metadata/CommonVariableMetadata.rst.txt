@@ -1,0 +1,383 @@
+
+
+
+
+
+
+:class:`CommonVariableMetadata`
+===============================
+
+
+.. py:class:: ansys.tools.variableinterop.common_variable_metadata.CommonVariableMetadata
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   
+   Provides metadata common to all variables.
+
+   While users may have additional metadata, this core set is defined by Ansys
+   interoperability guidelines to allow a common understanding between products of some
+   high-use properties. These guidelines do not exclude defining additional or more
+   specific metadata as needed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: CommonVariableMetadata
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~equals`
+            - Determine if the object is equal to the metadata.
+          * - :py:attr:`~clone`
+            - Get a deep copy of the metadata.
+          * - :py:attr:`~get_default_value`
+            - Get the default value that should be used for a variable described by this
+          * - :py:attr:`~runtime_convert`
+            - Convert the value of the variable to the appropriate type for this metadata.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~description`
+            - Description of the variable.
+          * - :py:attr:`~custom_metadata`
+            - Custom metadata stored in a dictionary.
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - Determine if the object is equal to the metadata.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.common_variable_metadata import CommonVariableMetadata
+
+Property detail
+---------------
+
+.. py:property:: description
+   :type: str
+
+
+   
+   Description of the variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: custom_metadata
+   :type: Dict[str, ansys.tools.variableinterop.variable_value.IVariableValue]
+
+
+   
+   Custom metadata stored in a dictionary.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+   :abstractmethod:
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+   
+   Determine if the object is equal to the metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: equals(other: Any) -> bool
+
+   
+   Determine if the object is equal to the metadata.
+
+
+   :Parameters:
+
+       **other** : :obj:`Any`
+           Other object to compare this object to.
+
+
+
+   :Returns:
+
+       :ref:`bool <python:bltin-boolean-values>`
+           ``True`` if the metadata objects are equal, ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: clone() -> CommonVariableMetadata
+
+   
+   Get a deep copy of the metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+   :abstractmethod:
+
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_default_value() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Get the default value that should be used for a variable described by this
+   metadata.
+
+   The metadata may have set the lower bound, upper bound, or
+   enumerated values, which restricts what values are valid. This
+   method selects a valid default value.
+
+   - If the type's default value (such as ``0`` or an empty string) is a
+     valid value for the metadata, use it.
+   - If the metadata has enumerated values, select the first
+     enumerated value that is valid per the other restrictions.
+   - If the metadata has a lower bound and it is valid, use it.
+   - If metadata does not have a lower bound but does have an
+     upper bound, use the upper bound.
+   - If no value is valid, use the type's default value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: runtime_convert(source: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Convert the value of the variable to the appropriate type for this metadata.
+
+
+   :Parameters:
+
+       **source** : :obj:`IVariableValue`
+           Value to convert
+
+
+
+   :Returns:
+
+       :obj:`IVariableValue`
+           Value converted to the appropriate type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

@@ -1,0 +1,281 @@
+
+
+
+
+
+
+:class:`FileArrayValue`
+=======================
+
+
+.. py:class:: ansys.tools.variableinterop.file_array_value.FileArrayValue(shape, dtype=float, buffer=None, offset=0, strides=None, order=None)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.CommonArrayValue`\ [\ :py:obj:`ansys.tools.variableinterop.file_value.FileValue`\ ]
+
+
+   
+   Stores a value for the ``FileArrayValue`` variable type.
+
+   In Python, the ``FileArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+   This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+   array operators.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: FileArrayValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert this value to an API string.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_object`
+            - Initialize a new ``FileArrayValue`` type from a list of API strings.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_array_value import FileArrayValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert this value to an API string.
+
+
+   :Parameters:
+
+       **context** : :obj:`ISaveContext`
+           Context used for saving.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_object(value: Any, context: ansys.tools.variableinterop.isave_context.ILoadContext, scope: ansys.tools.variableinterop.file_scope.FileScope) -> FileArrayValue
+   :staticmethod:
+
+
+   
+   Initialize a new ``FileArrayValue`` type from a list of API strings.
+
+
+   :Parameters:
+
+       **value** : :obj:`Any`
+           Value to use.
+
+       **context** : :obj:`ILoadContext`
+           Load context to initialize the value with.
+
+       **scope** : :obj:`FileScope`
+           Scope to initialize the value in.
+
+
+
+   :Returns:
+
+       :obj:`FileArrayValue`
+           New ``FileArrayValue`` type initialized from the value.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

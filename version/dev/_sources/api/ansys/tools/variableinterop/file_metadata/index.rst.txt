@@ -1,0 +1,97 @@
+
+
+
+
+
+
+The ``file_metadata.py`` module
+===============================
+
+.. py:module:: ansys.tools.variableinterop.file_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_metadata.FileMetadata`
+            - Provides metadata for the ``File`` variable type.
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> FileMetadata</api/ansys/tools/variableinterop/file_metadata/FileMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FileMetadata`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

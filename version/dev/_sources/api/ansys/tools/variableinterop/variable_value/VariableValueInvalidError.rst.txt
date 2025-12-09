@@ -1,0 +1,49 @@
+
+
+
+
+
+
+:class:`VariableValueInvalidError`
+==================================
+
+
+.. py:exception:: ansys.tools.variableinterop.variable_value.VariableValueInvalidError
+
+   Bases: :py:obj:`Exception`
+
+
+   
+   Raises an error to indicate that a required variable value is invalid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_value import VariableValueInvalidError
+
+
+
+
+
