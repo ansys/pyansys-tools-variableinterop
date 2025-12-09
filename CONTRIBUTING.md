@@ -1,15 +1,12 @@
-# Contributing
+# Contribute
 
-All code contributions are welcome. While PyAnsys Tools Variable Interop is
-maintained by Ansys and all submissions are thoroughly reviewed by project maintainers
-before merging, the goal is to foster a community that can support user questions and develop
-new features to make this tool useful to all. As such, project maintainers encourage questions
-and submissions.
+Overall guidance on contributing to a PyAnsys library appears in the
+[Contributing] topic in the *PyAnsys developer's guide*. Ensure that you
+are thoroughly familiar with this guide before attempting to contribute to
+PyAnsys Tools Variable Interop.
 
-For contributing to this project, see the [PyAnsys Developer's Guide].
-Further information about contributing to PyAnsys Tools Variable Interop
-can be found in [Contributing].
+The following contribution information is specific to PyAnsys Tools Variable Interop.
 
-[PyAnsys Developer's Guide]: https://dev.docs.pyansys.com/how-to/contributing.html
-[Contributing]: https://variableinterop.docs.pyansys.com/version/dev/contributing/index.html
+[Contributing]: https://dev.docs.pyansys.com/how-to/contributing.html
 
+<!-- Begin content specific to your library here. -->
