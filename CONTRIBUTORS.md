@@ -9,6 +9,7 @@
 * [Brandon Fairburn](https://github.com/bfairburn-phx)
 * [Brielle Almonte](https://github.com/ansbalmonte)
 * [Camille](https://github.com/clatapie)
+* [Cody Leftwich](https://github.com/cleftwich)
 * [Gabriel Garcia](https://github.com/ansggarcia)
 * [Kathy Pippert](https://github.com/PipKat)
 * [Kerry McAdams](https://github.com/klmcadams)
