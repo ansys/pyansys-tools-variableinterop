@@ -11,6 +11,7 @@
 * [Camille](https://github.com/clatapie)
 * [Cody Leftwich](https://github.com/cleftwich)
 * [Gabriel Garcia](https://github.com/ansggarcia)
+* [John Howard (JHH)](https://github.com/TheZaphod-Beeblebrox)
 * [Kathy Pippert](https://github.com/PipKat)
 * [Kerry McAdams](https://github.com/klmcadams)
 * [Mark Potter](https://github.com/potterphx)
