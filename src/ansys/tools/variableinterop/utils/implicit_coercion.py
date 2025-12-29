@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -343,7 +343,6 @@ def implicit_coerce(func: Any) -> Any:
     Any
         Wrapper function.
     """
-    assert inspect.isfunction(func), "Decorator must be used on functions."
     signature = inspect.signature(func)
     type_hints = get_type_hints(func)
 

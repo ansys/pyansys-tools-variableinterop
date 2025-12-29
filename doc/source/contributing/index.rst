@@ -14,7 +14,7 @@ Installation
 ------------
 
 The ``pyansys-tools-variableinterop`` package currently supports Python
-3.9 through 3.12 on Windows, MacOS, and Linux.
+3.10 through 3.13 on Windows, MacOS, and Linux.
 
 You can install the ``pyansys-tools-variableinterop`` package with this command:
 
@@ -165,15 +165,11 @@ This way, it's not possible for you to push code that fails the style checks:
 .. code:: text
 
   $ git commit -am "added my cool feature"
+  Add License Headers......................................................Passed
   black....................................................................Passed
   blacken-docs.............................................................Passed
   isort....................................................................Passed
   flake8...................................................................Passed
   docformatter.............................................................Passed
   codespell................................................................Passed
-  check for merge conflicts................................................Passed
-  debug statements (python)................................................Passed
-  check yaml...............................................................Passed
-  trim trailing whitespace.................................................Passed
-  Add License Headers......................................................Passed
   Validate GitHub Workflows................................................Passed

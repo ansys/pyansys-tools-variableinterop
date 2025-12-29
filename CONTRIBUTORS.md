@@ -1,19 +1,22 @@
 # Contributors
 
-## Project lead
+## Project Lead
 
 * [Mark Koninckx](https://github.com/phx-mkoninckx)
 
-## Individual contributors
+## Individual Contributors
 
-* [Mike Belcher](https://github.com/mike-belcher)
-* [Michel Pascale](https://github.com/phx-mpascale)
 * [Brandon Fairburn](https://github.com/bfairburn-phx)
-* [Nathan Sharp](https://github.com/phxnsharp)
-* [Mateusz Jasiak](https://github.com/mobigliani)
-* [Mark Potter](https://github.com/potterphx)
+* [Brielle Almonte](https://github.com/ansbalmonte)
+* [Camille](https://github.com/clatapie)
+* [Cody Leftwich](https://github.com/cleftwich)
 * [Gabriel Garcia](https://github.com/ansggarcia)
-* [Roberto Pastor Muela](https://github.com/RobPasMue)
-* [Camille Latapie](https://github.com/clatapie)
+* [John Howard (JHH)](https://github.com/TheZaphod-Beeblebrox)
 * [Kathy Pippert](https://github.com/PipKat)
-* [Maxime Rey](http://github.com/MaxJPRey)
+* [Kerry McAdams](https://github.com/klmcadams)
+* [Mark Potter](https://github.com/potterphx)
+* [Mateusz Jasiak](https://github.com/mobigliani)
+* [Michel Pascale](https://github.com/phx-mpascale)
+* [Nathan Sharp](https://github.com/phxnsharp)
+* [Revathy Venugopal](https://github.com/Revathyvenugopal162)
+* [Roberto Pastor Muela](https://github.com/RobPasMue)

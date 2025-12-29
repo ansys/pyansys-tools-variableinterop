@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -51,7 +51,7 @@ class FileArrayValue(CommonArrayValue[FileValue]):
     """
 
     @overrides
-    def __new__(cls, shape_: ArrayLike = None, values: ArrayLike = None):
+    def __new__(cls, shape_: ArrayLike = (), values: ArrayLike = None):
         if values is not None:
             return np.array(values, dtype=FileValue).view(cls)
         return super().__new__(cls, shape=shape_, dtype=FileValue).view(cls)

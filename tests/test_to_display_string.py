@@ -1,4 +1,4 @@
-# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -69,8 +69,8 @@ from ansys.tools.variableinterop import (
             "-1,79769313486232E+308",
             id="Min Value, de_DE",
         ),
-        pytest.param(RealValue(np.NINF), "en_US.UTF-8", "-INF", id="Neg Infinity, en_US"),
-        pytest.param(RealValue(np.NINF), "de_DE.UTF-8", "-INF", id="Neg Infinity, de_DE"),
+        pytest.param(RealValue(-np.inf), "en_US.UTF-8", "-INF", id="Neg Infinity, en_US"),
+        pytest.param(RealValue(-np.inf), "de_DE.UTF-8", "-INF", id="Neg Infinity, de_DE"),
         pytest.param(RealValue(np.nan), "en_US.UTF-8", "NAN", id="NAN, en_US"),
         pytest.param(RealValue(np.nan), "de_DE.UTF-8", "NAN", id="NAN, de_DE"),
         # Note that epsilon can vary between systems, so this is just testing tiny values
