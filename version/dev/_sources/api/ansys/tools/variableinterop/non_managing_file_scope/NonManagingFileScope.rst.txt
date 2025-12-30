@@ -1,0 +1,337 @@
+
+
+
+
+
+
+:class:`NonManagingFileScope`
+=============================
+
+.. toctree::
+   :hidden:
+
+    NonManagingFileValue</api/ansys/tools/variableinterop/non_managing_file_scope/NonManagingFileScope.NonManagingFileValue>
+
+
+.. py:class:: ansys.tools.variableinterop.non_managing_file_scope.NonManagingFileScope
+
+   Bases: :py:obj:`ansys.tools.variableinterop.file_scope.FileScope`, :py:obj:`ansys.tools.variableinterop.isave_context.ISaveContext`, :py:obj:`ansys.tools.variableinterop.isave_context.ILoadContext`
+
+
+   
+   Provides a simple file scope implementation that performs no management.
+
+   This file scope allows you to create ``FileValue`` instances that are backed by arbitrary
+   preexisting files on disk. It is up to the caller to ensure that the file remains in place
+   and unchanged for the lifespan of the ``FileValue`` instance and that the file is deleted at
+   an appropriate time. Because of these restrictions, it is generally not recommended using
+   this file scope except for referencing permanently installed files.
+
+   This file scope also serves as a "pass-through" save context. Because the files are
+   assumed to be managed externally such that they are permanent (or at least not deleted
+   while in use), the save context takes no action to save them but simply passes through
+   their current location on disk as an identifier.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: NonManagingFileScope
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~read_from_file`
+            - Read the contents of a file and create a new ``FileValue`` object backed by a
+          * - :py:attr:`~to_api_string_file_store`
+            - Serialize a ``FileValue`` instance in this scope to an API string.
+          * - :py:attr:`~from_api_object`
+            - Create a ``FileScope`` instance from a map of API strings.
+          * - :py:attr:`~save_file`
+            - Save a file to the save medium.
+          * - :py:attr:`~load_file`
+            - Load a file from the load medium.
+          * - :py:attr:`~flush`
+            - Flush any changes in the context to the underlying stream or file.
+          * - :py:attr:`~close`
+            - Close the ``FileScope`` instance, cleaning up any files it contains.
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.non_managing_file_scope import NonManagingFileScope
+
+
+
+Method detail
+-------------
+
+.. py:method:: read_from_file(to_read: os.PathLike, mime_type: Optional[str], encoding: Optional[str]) -> ansys.tools.variableinterop.file_value.FileValue
+
+   
+   Read the contents of a file and create a new ``FileValue`` object backed by a
+   file in this scope.
+
+
+   :Parameters:
+
+       **to_read** : :obj:`PathLike`
+           Path to the file to read.
+
+       **mime_type** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           MIME type of the file. The default is `None`, which indicates that the file
+           does not have a MIME type or that the type is not known.
+
+       **encoding** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Encoding of the file. The default is `None`, which indicates that the file
+           does not have a text encoding (for example, because it is a binary file.)
+
+
+
+   :Returns:
+
+       :obj:`FileValue`
+           New ``FileValue`` object with the contents of the specified file, backed by this scope.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string_file_store(file_var: ansys.tools.variableinterop.file_value.FileValue) -> str
+
+   
+   Serialize a ``FileValue`` instance in this scope to an API string.
+
+
+   :Parameters:
+
+       **file_var** : :obj:`FileValue`
+           ``FileValue`` instance to serialize.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           API string representing the ``FileValue`` instance.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_object(api_object: Dict[str, Optional[str]], load_context: ansys.tools.variableinterop.isave_context.ILoadContext) -> ansys.tools.variableinterop.file_value.FileValue
+
+   
+   Create a ``FileScope`` instance from a map of API strings.
+
+
+   :Parameters:
+
+       **api_object** : :obj:`Dict`\[:class:`python:str`, :obj:`Optional`\[:class:`python:str`]]
+           Map of API strings that define the scope.
+
+       **load_context** : :obj:`ILoadContext`
+           Load context to read the file contents from.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: save_file(source: Union[os.PathLike, str], content_id: Optional[str]) -> str
+
+   
+   Save a file to the save medium.
+
+   It is up to the ``ISaveContext`` implementation to decide how or when to send the actual
+   data. Some ``ISaveContext`` implementations may merely collect metadata as part of this
+   call and send the data on flush.
+
+   :Parameters:
+
+       **source** : :obj:`Union`\[:obj:`PathLike`, :class:`python:str`]
+           File on disk to send or include in the save.
+
+       **content_id** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Unique ID for the file. The default value is ``None``, in which case an ID
+           is automatically generated and returned. This ID can be used with an equivalent
+           ``ILoadContext`` instance to load the contents on deserialization.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           ID, either the one provided or the one otherwise generated.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: load_file(content_id: Optional[str]) -> Optional[os.PathLike]
+
+   
+   Load a file from the load medium.
+
+   The ``ILoadContext`` implementation decides how or when to send the actual
+   data. Some ``ILoadContexts`` implementations may merely collect metadata as
+   part of this call and send the data on flush.
+
+   :Parameters:
+
+       **content_id** : :obj:`Optional`\[:class:`python:str`]
+           ID generated by an equivalent ``ISaveContext`` instance to save a file into this
+           context.
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:obj:`PathLike`]
+           Path to the loaded file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: flush() -> None
+
+   
+   Flush any changes in the context to the underlying stream or file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: close() -> None
+
+   
+   Close the ``FileScope`` instance, cleaning up any files it contains.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+    ansys.tools.variableinterop.non_managing_file_scope.NonManagingFileScope.NonManagingFileValue
+
+
+
+

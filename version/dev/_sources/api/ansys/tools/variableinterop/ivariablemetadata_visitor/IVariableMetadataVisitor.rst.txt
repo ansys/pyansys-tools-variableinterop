@@ -1,0 +1,448 @@
+
+
+
+
+
+
+:class:`IVariableMetadataVisitor`
+=================================
+
+
+.. py:class:: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`Generic`\ [\ :py:obj:`T`\ ]
+
+
+   
+   Defines the interface to be implemented for using the visitor pattern with variable
+   metadata.
+
+   To use an implementation of this interface, create and pass an instance to the
+   :meth:`IVariableValue.accept()` method.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: IVariableMetadataVisitor
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_integer`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on an
+          * - :py:attr:`~visit_real`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_boolean`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_string`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_file`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_integer_array`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on an
+          * - :py:attr:`~visit_real_array`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_boolean_array`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_string_array`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+          * - :py:attr:`~visit_file_array`
+            - Method that is called if the ``IVariableValue.accept()`` method is called on a
+
+
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.ivariablemetadata_visitor import IVariableMetadataVisitor
+
+
+
+Method detail
+-------------
+
+.. py:method:: visit_integer(metadata: ansys.tools.variableinterop.scalar_metadata.IntegerMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on an
+   ``IntegerMetadata`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`IntegerMetadata`
+           ``IntegerMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real(metadata: ansys.tools.variableinterop.scalar_metadata.RealMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``RealMetadata`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`RealMetadata`
+           ``RealMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean(metadata: ansys.tools.variableinterop.scalar_metadata.BooleanMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``BooleanMetadata`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`BooleanMetadata`
+           ``BooleanMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string(metadata: ansys.tools.variableinterop.scalar_metadata.StringMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``StringMetadata`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`StringMetadata`
+           ``StringMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file(metadata: ansys.tools.variableinterop.file_metadata.FileMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``FileMetadata`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`FileMetadata`
+           ``FileMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_integer_array(metadata: ansys.tools.variableinterop.array_metadata.IntegerArrayMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on an
+   ``IntegerArrayMetaData`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`IntegerArrayMetadata`
+           ``IntegerArrayMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real_array(metadata: ansys.tools.variableinterop.array_metadata.RealArrayMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``RealArrayMetaData`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`RealArrayMetadata`
+           ``RealArrayMetaData`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean_array(metadata: ansys.tools.variableinterop.array_metadata.BooleanArrayMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``BooleanArrayMetaData`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`BooleanArrayMetadata`
+           ``BooleanArrayMetaData`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string_array(metadata: ansys.tools.variableinterop.array_metadata.StringArrayMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``StringArrayMetaData`` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`StringArrayMetadata`
+           ``StringArrayMetaData`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file_array(metadata: ansys.tools.variableinterop.file_array_metadata.FileArrayMetadata) -> T
+   :abstractmethod:
+
+
+   
+   Method that is called if the ``IVariableValue.accept()`` method is called on a
+   ``FileArrayMetadata``` type.
+
+
+   :Parameters:
+
+       **metadata** : :obj:`FileArrayMetadata`
+           ``FileArrayMetadata`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

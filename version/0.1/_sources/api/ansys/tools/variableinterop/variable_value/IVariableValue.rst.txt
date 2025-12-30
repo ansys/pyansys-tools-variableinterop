@@ -1,0 +1,256 @@
+
+
+
+
+
+
+:class:`IVariableValue`
+=======================
+
+
+.. py:class:: ansys.tools.variableinterop.variable_value.IVariableValue
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   
+   Defines an interface for the behavior common among all variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+.. py:currentmodule:: IVariableValue
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~clone`
+            - Get a deep copy of this value.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_value import IVariableValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+   :abstractmethod:
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: clone() -> IVariableValue
+
+   
+   Get a deep copy of this value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+   :abstractmethod:
+
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+   :abstractmethod:
+
+
+   
+   Convert the value to an API string.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+   :abstractmethod:
+
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

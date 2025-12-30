@@ -1,0 +1,88 @@
+
+
+
+
+
+
+The ``exceptions.py`` module
+============================
+
+.. py:module:: ansys.tools.variableinterop.exceptions
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: exceptions
+.. tab-set::
+
+
+
+
+
+
+    .. tab-item:: Exceptions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.exceptions.IncompatibleTypesException`
+            - Indicates that the types used in a conversion are incompatible.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.exceptions.FormatException`
+            - Indicates that the string used to create a variable value was incorrectly
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.exceptions.ValueDeserializationUnsupportedException`
+            - Indicates that deserializing a value is not allowed.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-md-lightning_bolt"></span> IncompatibleTypesException</api/ansys/tools/variableinterop/exceptions/IncompatibleTypesException>
+    <span class="nf nf-md-lightning_bolt"></span> FormatException</api/ansys/tools/variableinterop/exceptions/FormatException>
+    <span class="nf nf-md-lightning_bolt"></span> ValueDeserializationUnsupportedException</api/ansys/tools/variableinterop/exceptions/ValueDeserializationUnsupportedException>
+
+
+
+
+
+
+
+Description
+-----------
+
+Provides custom exception types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``numeric_metadata.py`` module
+==================================
+
+.. py:module:: ansys.tools.variableinterop.numeric_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: numeric_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.numeric_metadata.NumericMetadata`
+            - Provides a generic base for all numeric metadata implementations.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> NumericMetadata</api/ansys/tools/variableinterop/numeric_metadata/NumericMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``NumericMetadata`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

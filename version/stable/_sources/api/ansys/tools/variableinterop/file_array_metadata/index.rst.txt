@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``file_array_metadata.py`` module
+=====================================
+
+.. py:module:: ansys.tools.variableinterop.file_array_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_array_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_array_metadata.FileArrayMetadata`
+            - Provides metadata for the ``FileArray`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> FileArrayMetadata</api/ansys/tools/variableinterop/file_array_metadata/FileArrayMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FileArrayMetadata`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

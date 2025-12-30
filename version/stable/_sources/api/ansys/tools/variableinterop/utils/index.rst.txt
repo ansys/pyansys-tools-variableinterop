@@ -1,0 +1,112 @@
+
+
+
+
+
+
+The ``utils`` package
+=========================
+
+.. py:module:: ansys.tools.variableinterop.utils
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: utils
+.. tab-set::
+
+
+    .. tab-item:: Submodules
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.array_to_from_string_util`
+            - Defines the ``ArrayToFromStringUtil`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.implicit_coercion`
+            - Provides utilities for implicitly coercing arbitrary Python objects \ into the
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.locale_utils`
+            - Provides utilities for dealing with locales.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.string_escaping`
+            - Provides functions for ModelCenter-standard string escaping.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.variable_type_util`
+            - Defines the ``VariableType`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-fa-file"></span> array_to_from_string_util</api/ansys/tools/variableinterop/utils/array_to_from_string_util/index>
+    <span class="nf nf-fa-file"></span> implicit_coercion</api/ansys/tools/variableinterop/utils/implicit_coercion/index>
+    <span class="nf nf-fa-file"></span> locale_utils</api/ansys/tools/variableinterop/utils/locale_utils/index>
+    <span class="nf nf-fa-file"></span> string_escaping</api/ansys/tools/variableinterop/utils/string_escaping/index>
+    <span class="nf nf-fa-file"></span> variable_type_util</api/ansys/tools/variableinterop/utils/variable_type_util/index>
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+
+Provides utility methods and classes used by the main package.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+

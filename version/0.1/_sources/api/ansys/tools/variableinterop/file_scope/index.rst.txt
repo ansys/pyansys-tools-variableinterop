@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``file_scope.py`` module
+============================
+
+.. py:module:: ansys.tools.variableinterop.file_scope
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_scope
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_scope.FileScope`
+            - Provides an abstract base for file scopes.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> FileScope</api/ansys/tools/variableinterop/file_scope/FileScope>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Implements the ``FileScope`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

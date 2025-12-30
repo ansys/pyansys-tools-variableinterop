@@ -1,0 +1,289 @@
+
+
+
+
+
+
+The ``ansys.tools.variableinterop`` library
+===========================================
+
+.. py:module:: ansys.tools.variableinterop
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variableinterop
+.. tab-set::
+
+    .. tab-item:: Subpackages
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils`
+            - Provides utility methods and classes used by the main package.
+
+
+
+    .. tab-item:: Submodules
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.api_serialization`
+            - Defines the ``ToAPIStringVisitor`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.api_string_to_value_visitor`
+            - Provides a variable type pseudo-visitor that parses values from strings.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_metadata`
+            - Defines array metadata types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_value_conversion`
+            - Defines array value visitors.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_values`
+            - Defines all array value implementations of the ``IVariableValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.common_variable_metadata`
+            - Defines the ``CommonVariableMetadata`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.exceptions`
+            - Provides custom exception types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_array_metadata`
+            - Defines the ``FileArrayMetadata`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_array_value`
+            - Defines the ``FileArrayValue`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_metadata`
+            - Defines the ``FileMetadata`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_scope`
+            - Implements the ``FileScope`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value`
+            - Defines the ``FileValue`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.from_formatted_string_visitor`
+            - Defines the ``FromFormattedStringVisitor`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.isave_context`
+            - Defines the ``ISaveContext`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariable_type_pseudovisitor`
+            - Defines and implements a pseudo-visitor pattern for variable types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariable_visitor`
+            - Defines the ``IVariableValueVisitor`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariablemetadata_visitor`
+            - Defines the ``IVariableMetadataVisitor`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.non_managing_file_scope`
+            - Defines the ``NonManagingFileScope`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.numeric_metadata`
+            - Defines the ``NumericMetadata`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_metadata`
+            - Defines scalar metadata types.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_value_conversion`
+            - Defines scalar value visitors.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_values`
+            - Defines all scalar value implementations of the ``IVariableValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.value_from_formatted_string`
+            - Provides a method for converting a formatted string to a value.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.var_type_array_check`
+            - Provides a method for checking whether a variable type is an array type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_state`
+            - Defines the ``VariableState`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_type`
+            - Defines the ``VariableType`` class.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value`
+            - Defines the ``IVariableValue`` class and related classes.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.vartype_arrays_and_elements`
+            - Defines functions for determining the correct array type for a scalar type and vice-
+
+
+
+
+
+
+
+
+    .. tab-item:: Attributes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~__version__`
+            - ansys.tools.variableinterop version.
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-md-package"></span> utils</api/ansys/tools/variableinterop/utils/index>
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-fa-file"></span> api_serialization</api/ansys/tools/variableinterop/api_serialization/index>
+    <span class="nf nf-fa-file"></span> api_string_to_value_visitor</api/ansys/tools/variableinterop/api_string_to_value_visitor/index>
+    <span class="nf nf-fa-file"></span> array_metadata</api/ansys/tools/variableinterop/array_metadata/index>
+    <span class="nf nf-fa-file"></span> array_value_conversion</api/ansys/tools/variableinterop/array_value_conversion/index>
+    <span class="nf nf-fa-file"></span> array_values</api/ansys/tools/variableinterop/array_values/index>
+    <span class="nf nf-fa-file"></span> common_variable_metadata</api/ansys/tools/variableinterop/common_variable_metadata/index>
+    <span class="nf nf-fa-file"></span> exceptions</api/ansys/tools/variableinterop/exceptions/index>
+    <span class="nf nf-fa-file"></span> file_array_metadata</api/ansys/tools/variableinterop/file_array_metadata/index>
+    <span class="nf nf-fa-file"></span> file_array_value</api/ansys/tools/variableinterop/file_array_value/index>
+    <span class="nf nf-fa-file"></span> file_metadata</api/ansys/tools/variableinterop/file_metadata/index>
+    <span class="nf nf-fa-file"></span> file_scope</api/ansys/tools/variableinterop/file_scope/index>
+    <span class="nf nf-fa-file"></span> file_value</api/ansys/tools/variableinterop/file_value/index>
+    <span class="nf nf-fa-file"></span> from_formatted_string_visitor</api/ansys/tools/variableinterop/from_formatted_string_visitor/index>
+    <span class="nf nf-fa-file"></span> isave_context</api/ansys/tools/variableinterop/isave_context/index>
+    <span class="nf nf-fa-file"></span> ivariable_type_pseudovisitor</api/ansys/tools/variableinterop/ivariable_type_pseudovisitor/index>
+    <span class="nf nf-fa-file"></span> ivariable_visitor</api/ansys/tools/variableinterop/ivariable_visitor/index>
+    <span class="nf nf-fa-file"></span> ivariablemetadata_visitor</api/ansys/tools/variableinterop/ivariablemetadata_visitor/index>
+    <span class="nf nf-fa-file"></span> non_managing_file_scope</api/ansys/tools/variableinterop/non_managing_file_scope/index>
+    <span class="nf nf-fa-file"></span> numeric_metadata</api/ansys/tools/variableinterop/numeric_metadata/index>
+    <span class="nf nf-fa-file"></span> scalar_metadata</api/ansys/tools/variableinterop/scalar_metadata/index>
+    <span class="nf nf-fa-file"></span> scalar_value_conversion</api/ansys/tools/variableinterop/scalar_value_conversion/index>
+    <span class="nf nf-fa-file"></span> scalar_values</api/ansys/tools/variableinterop/scalar_values/index>
+    <span class="nf nf-fa-file"></span> value_from_formatted_string</api/ansys/tools/variableinterop/value_from_formatted_string/index>
+    <span class="nf nf-fa-file"></span> var_type_array_check</api/ansys/tools/variableinterop/var_type_array_check/index>
+    <span class="nf nf-fa-file"></span> variable_state</api/ansys/tools/variableinterop/variable_state/index>
+    <span class="nf nf-fa-file"></span> variable_type</api/ansys/tools/variableinterop/variable_type/index>
+    <span class="nf nf-fa-file"></span> variable_value</api/ansys/tools/variableinterop/variable_value/index>
+    <span class="nf nf-fa-file"></span> vartype_arrays_and_elements</api/ansys/tools/variableinterop/vartype_arrays_and_elements/index>
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+
+This library contains definitions of the basic variables, types, metadata, and values
+intended to provide interoperability between all products that optionally choose to
+participate.
+
+For high-level project documentation with examples and installation instructions, see
+http://variableinterop.docs.pyansys.com.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: __version__
+
+   
+   ansys.tools.variableinterop version.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

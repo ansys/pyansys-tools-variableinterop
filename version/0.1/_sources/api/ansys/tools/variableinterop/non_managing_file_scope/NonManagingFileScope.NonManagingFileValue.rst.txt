@@ -1,0 +1,49 @@
+
+
+
+
+
+
+:class:`NonManagingFileValue`
+=============================
+
+
+.. py:class:: ansys.tools.variableinterop.non_managing_file_scope.NonManagingFileScope.NonManagingFileValue(to_read: os.PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.file_value.LocalFileValue`
+
+
+   
+   Implementation of a ``FileValue`` instance used by this scope.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.non_managing_file_scope.NonManagingFileScope import NonManagingFileValue
+
+
+
+
+

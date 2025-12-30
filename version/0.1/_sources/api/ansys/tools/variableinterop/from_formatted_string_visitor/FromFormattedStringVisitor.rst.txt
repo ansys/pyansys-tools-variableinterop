@@ -1,0 +1,395 @@
+
+
+
+
+
+
+:class:`FromFormattedStringVisitor`
+===================================
+
+
+.. py:class:: ansys.tools.variableinterop.from_formatted_string_visitor.FromFormattedStringVisitor(value: numpy.str_, locale_name: str)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.ivariable_type_pseudovisitor.IVariableTypePseudoVisitor`\ [\ :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`\ ]
+
+
+   
+   Converts a string formatted for a locale to the ``IVariableValue`` variable
+   type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: FromFormattedStringVisitor
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_unknown`
+            - Visit the ``UNKNOWN`` variable type.
+          * - :py:attr:`~visit_int`
+            - Visit the ``INTEGER`` variable type.
+          * - :py:attr:`~visit_real`
+            - Visit the ``REAL`` variable type.
+          * - :py:attr:`~visit_boolean`
+            - Visit the ``BOOLEAN`` variable type.
+          * - :py:attr:`~visit_string`
+            - Visit the ``STRING`` variable type.
+          * - :py:attr:`~visit_file`
+            - Visit the ``FILE`` variable type.
+          * - :py:attr:`~visit_int_array`
+            - Visit the ``INTEGER_ARRAY`` variable type.
+          * - :py:attr:`~visit_real_array`
+            - Visit the ``REAL_ARRAY`` variable type.
+          * - :py:attr:`~visit_bool_array`
+            - Visit the ``BOOLEAN_ARRAY`` variable type.
+          * - :py:attr:`~visit_string_array`
+            - Visit the ``STRING_ARRAY`` variable type.
+          * - :py:attr:`~visit_file_array`
+            - Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.from_formatted_string_visitor import FromFormattedStringVisitor
+
+
+
+Method detail
+-------------
+
+.. py:method:: visit_unknown() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``UNKNOWN`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int() -> ansys.tools.variableinterop.scalar_values.IntegerValue
+
+   
+   Visit the ``INTEGER`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real() -> ansys.tools.variableinterop.scalar_values.RealValue
+
+   
+   Visit the ``REAL`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean() -> ansys.tools.variableinterop.scalar_values.BooleanValue
+
+   
+   Visit the ``BOOLEAN`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string() -> ansys.tools.variableinterop.scalar_values.StringValue
+
+   
+   Visit the ``STRING`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``FILE`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``INTEGER_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``REAL_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_bool_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``BOOLEAN_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``STRING_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file_array() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

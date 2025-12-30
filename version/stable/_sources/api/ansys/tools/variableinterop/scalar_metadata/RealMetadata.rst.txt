@@ -1,0 +1,355 @@
+
+
+
+
+
+
+:class:`RealMetadata`
+=====================
+
+
+.. py:class:: ansys.tools.variableinterop.scalar_metadata.RealMetadata
+
+   Bases: :py:obj:`ansys.tools.variableinterop.numeric_metadata.NumericMetadata`
+
+
+   
+   Provides metadata for ``REAL`` and ``REAL_ARRAY`` variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: RealMetadata
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~equals`
+            - Determine if a given metadata is equal to this metadata.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+          * - :py:attr:`~lower_bound`
+            - Hard lower bound for the variable.
+          * - :py:attr:`~upper_bound`
+            - Hard upper bound for the variable.
+          * - :py:attr:`~enumerated_values`
+            - List of enumerated values.
+          * - :py:attr:`~enumerated_aliases`
+            - List of enumerated aliases.
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - Determine if the object is equal to the metadata.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.scalar_metadata import RealMetadata
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: lower_bound
+   :type: Optional[ansys.tools.variableinterop.scalar_values.RealValue]
+
+
+   
+   Hard lower bound for the variable.
+
+   Systems utilizing this variable should prevent setting the
+   value below this lower bound. This is typically used to
+   represent physical impossibilities (negative length) or limits
+   of the simulation software. Values below this hard lower bound
+   cause an error or invalid result. This may not be the soft bounds
+   used for an optimization design parameter or DOE exploration.
+
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:obj:`RealValue`]
+           Lower bound or ``None`` if no lower bound is specified.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: upper_bound
+   :type: Optional[ansys.tools.variableinterop.scalar_values.RealValue]
+
+
+   
+   Hard upper bound for the variable.
+
+   Systems utilizing this variable should prevent setting the
+   value above this upper bound. This is typically used
+   to represent physical impossibilities (100%) or limits of the
+   simulation software. Values above this hard upper bound cause an error or
+   invalid result. This may not be the soft bounds used for an
+   optimization design parameter or DOE exploration.
+
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:obj:`RealValue`]
+           Upper bound or ``None`` if no upper bound is specified.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: enumerated_values
+   :type: List[ansys.tools.variableinterop.scalar_values.RealValue]
+
+
+   
+   List of enumerated values.
+
+   This list may be empty to imply that there are no enumerated values.
+
+
+
+
+   :Returns:
+
+       :obj:`List`\[:obj:`RealValue`]
+           List of enumerated values.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: enumerated_aliases
+   :type: List[str]
+
+
+   
+   List of enumerated aliases.
+
+   This list may be empty to imply that there are no enumerated aliases.
+
+
+
+
+   :Returns:
+
+       :obj:`List`\[:class:`python:str`]
+           List of enumerated aliases.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+   
+   Determine if the object is equal to the metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: equals(other: Any) -> bool
+
+   
+   Determine if a given metadata is equal to this metadata.
+
+
+   :Parameters:
+
+       **other** : :obj:`Any`
+           Given metadata to compare this metadate to.
+
+
+
+   :Returns:
+
+       :ref:`bool <python:bltin-boolean-values>`
+           ``True`` if the two objects are equal, ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

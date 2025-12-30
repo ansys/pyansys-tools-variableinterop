@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>FileValue &#8212; PyAnsys Tools Variable Interop</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/ansys-sphinx-theme.css?v=9e79609d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/ansys-sphinx-theme.css?v=9e79609d" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../../../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../../../../_static/documentation_options.js?v=b14783f5"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ansys/tools/variableinterop/file_value/FileValue';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://variableinterop.docs.pyansys.com/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../../../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="LocalFileValue" href="LocalFileValue.html" />
+    <link rel="prev" title="AlreadyLocalFileContentContext" href="AlreadyLocalFileContentContext.html" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.2" />
+  <link rel="canonical" href="https://variableinterop.docs.pyansys.com/version/stable/api/ansys/tools/variableinterop/file_value/FileValue.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/pyansys_logo_transparent_black.png" class="logo__image only-light" alt="PyAnsys Tools Variable Interop - Home"/>
+    <img src="../../../../../_static/pyansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="PyAnsys Tools Variable Interop - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../index.html" title="PyAnsys Tools Variable Interop home">Home</a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../user_guide/index.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../../index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../contributing/index.html">
+    Contribute
+  </a>
+</li>
+
+  </ul>
+</nav>
+</div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+        <div class="navbar-item">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../../../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pyansys-tools-variableinterop" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pyansys-tools-variableinterop/issues" title="Support" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa fa-comment fa-fw fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Support</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../index.html" title="PyAnsys Tools Variable Interop home">Home</a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../user_guide/index.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../../index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../contributing/index.html">
+    Contribute
+  </a>
+</li>
+
+  </ul>
+</nav>
+</div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../../../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pyansys-tools-variableinterop" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/pyansys-tools-variableinterop/issues" title="Support" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa fa-comment fa-fw fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Support</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html"><span class="nf nf-md-package"></span> ansys.tools.variableinterop</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html"> <span class="nf nf-md-package"></span> utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_serialization/index.html"> <span class="nf nf-fa-file"></span> api_serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_string_to_value_visitor/index.html"> <span class="nf nf-fa-file"></span> api_string_to_value_visitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../array_metadata/index.html"> <span class="nf nf-fa-file"></span> array_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../array_value_conversion/index.html"> <span class="nf nf-fa-file"></span> array_value_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../array_values/index.html"> <span class="nf nf-fa-file"></span> array_values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_variable_metadata/index.html"> <span class="nf nf-fa-file"></span> common_variable_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exceptions/index.html"> <span class="nf nf-fa-file"></span> exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file_array_metadata/index.html"> <span class="nf nf-fa-file"></span> file_array_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file_array_value/index.html"> <span class="nf nf-fa-file"></span> file_array_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file_metadata/index.html"> <span class="nf nf-fa-file"></span> file_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file_scope/index.html"> <span class="nf nf-fa-file"></span> file_scope</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html"> <span class="nf nf-fa-file"></span> file_value</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="AsyncLocalFileContentContext.html"> <span class="nf nf-cod-symbol_class"></span> AsyncLocalFileContentContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LocalFileContentContext.html"> <span class="nf nf-cod-symbol_class"></span> LocalFileContentContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AlreadyLocalFileContentContext.html"> <span class="nf nf-cod-symbol_class"></span> AlreadyLocalFileContentContext</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#"> <span class="nf nf-cod-symbol_class"></span> FileValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LocalFileValue.html"> <span class="nf nf-cod-symbol_class"></span> LocalFileValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="EmptyFileValue.html"> <span class="nf nf-cod-symbol_class"></span> EmptyFileValue</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../from_formatted_string_visitor/index.html"> <span class="nf nf-fa-file"></span> from_formatted_string_visitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../isave_context/index.html"> <span class="nf nf-fa-file"></span> isave_context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ivariable_type_pseudovisitor/index.html"> <span class="nf nf-fa-file"></span> ivariable_type_pseudovisitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ivariable_visitor/index.html"> <span class="nf nf-fa-file"></span> ivariable_visitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ivariablemetadata_visitor/index.html"> <span class="nf nf-fa-file"></span> ivariablemetadata_visitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../non_managing_file_scope/index.html"> <span class="nf nf-fa-file"></span> non_managing_file_scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../numeric_metadata/index.html"> <span class="nf nf-fa-file"></span> numeric_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalar_metadata/index.html"> <span class="nf nf-fa-file"></span> scalar_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalar_value_conversion/index.html"> <span class="nf nf-fa-file"></span> scalar_value_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalar_values/index.html"> <span class="nf nf-fa-file"></span> scalar_values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../value_from_formatted_string/index.html"> <span class="nf nf-fa-file"></span> value_from_formatted_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../var_type_array_check/index.html"> <span class="nf nf-fa-file"></span> var_type_array_check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../variable_state/index.html"> <span class="nf nf-fa-file"></span> variable_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../variable_type/index.html"> <span class="nf nf-fa-file"></span> variable_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../variable_value/index.html"> <span class="nf nf-fa-file"></span> variable_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vartype_arrays_and_elements/index.html"> <span class="nf nf-fa-file"></span> vartype_arrays_and_elements</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://docs.pyansys.com/" class="nav-link">PyAnsys</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../../../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../../../../index.html" class="nav-link">API reference</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">The <code class="docutils literal notranslate"><span class="pre">ansys.tools.variableinterop</span></code> library</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="index.html" class="nav-link">The <code class="docutils literal notranslate"><span class="pre">file_value.py</span></code> module</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileValue</span></code></span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="filevalue">
+<h1><code class="xref py py-class docutils literal notranslate"><span class="pre">FileValue</span></code><a class="headerlink" href="#filevalue" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys.tools.variableinterop.file_value.FileValue">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.tools.variableinterop.file_value.</span></span><span class="sig-name descname"><span class="pre">FileValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.14)"><span class="pre">os.PathLike</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mime_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.14)"><span class="pre">uuid.UUID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ansys.tools.variableinterop.file_value.FileValue" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../variable_value/IVariableValue.html#ansys.tools.variableinterop.variable_value.IVariableValue" title="ansys.tools.variableinterop.variable_value.IVariableValue"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ansys.tools.variableinterop.variable_value.IVariableValue</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Provides an abstract base class for <code class="docutils literal notranslate"><span class="pre">FileValue</span></code> implementations.</p>
+<p>To create instances, use the <code class="docutils literal notranslate"><span class="pre">FileScope</span></code> class.</p>
+</dd></dl>
+
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Abstract methods</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.get_reference_to_actual_content_file_async" title="FileValue.get_reference_to_actual_content_file_async"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_reference_to_actual_content_file_async</span></code></a></p></td>
+<td><p>Realize the file contents to a local filesystem if needed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.get_reference_to_actual_content_file" title="FileValue.get_reference_to_actual_content_file"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_reference_to_actual_content_file</span></code></a></p></td>
+<td><p>Realizes the file contents to a local filesystem if needed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Constructors</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.is_text_based_static" title="FileValue.is_text_based_static"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_text_based_static</span></code></a></p></td>
+<td><p>Determines if a file is text-based via its MIME type.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Methods</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.accept" title="FileValue.accept"><code class="xref py py-attr docutils literal notranslate"><span class="pre">accept</span></code></a></p></td>
+<td><p>Invoke the visitor pattern of this object using the passed-in visitor</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.to_display_string" title="FileValue.to_display_string"><code class="xref py py-attr docutils literal notranslate"><span class="pre">to_display_string</span></code></a></p></td>
+<td><p>Convert the value to a formatted string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.write_file" title="FileValue.write_file"><code class="xref py py-attr docutils literal notranslate"><span class="pre">write_file</span></code></a></p></td>
+<td><p>Write the file’s contents to a new file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.get_contents" title="FileValue.get_contents"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_contents</span></code></a></p></td>
+<td><p>Read the contents of the file as a string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.to_api_string" title="FileValue.to_api_string"><code class="xref py py-attr docutils literal notranslate"><span class="pre">to_api_string</span></code></a></p></td>
+<td><p>Convert the value to an API string using a save context.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.to_api_object" title="FileValue.to_api_object"><code class="xref py py-attr docutils literal notranslate"><span class="pre">to_api_object</span></code></a></p></td>
+<td><p>Convert this file to an API object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.get_extension" title="FileValue.get_extension"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_extension</span></code></a></p></td>
+<td><p>Get the file extension of the file, including the period.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Properties</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.variable_type" title="FileValue.variable_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">variable_type</span></code></a></p></td>
+<td><p>Variable type of the object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.mime_type" title="FileValue.mime_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mime_type</span></code></a></p></td>
+<td><p>MIME type of the file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.original_file_name" title="FileValue.original_file_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">original_file_name</span></code></a></p></td>
+<td><p>Name of the original file that was wrapped.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.extension" title="FileValue.extension"><code class="xref py py-attr docutils literal notranslate"><span class="pre">extension</span></code></a></p></td>
+<td><p>Extension of the file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.file_encoding" title="FileValue.file_encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">file_encoding</span></code></a></p></td>
+<td><p>Encoding of the file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.id" title="FileValue.id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">id</span></code></a></p></td>
+<td><p>ID of the file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.file_size" title="FileValue.file_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">file_size</span></code></a></p></td>
+<td><p>Size of the file in bytes if known.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.is_text_based" title="FileValue.is_text_based"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_text_based</span></code></a></p></td>
+<td><p>Flag indicating if this file is text-based via its MIME type.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Attributes</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.BINARY_MIMETYPE" title="FileValue.BINARY_MIMETYPE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BINARY_MIMETYPE</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.TEXT_MIMETYPE" title="FileValue.TEXT_MIMETYPE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TEXT_MIMETYPE</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.ORIGINAL_FILENAME_KEY" title="FileValue.ORIGINAL_FILENAME_KEY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ORIGINAL_FILENAME_KEY</span></code></a></p></td>
+<td><p>JSON key for API serialization representing the original file name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.MIMETYPE_KEY" title="FileValue.MIMETYPE_KEY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MIMETYPE_KEY</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.ENCODING_KEY" title="FileValue.ENCODING_KEY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ENCODING_KEY</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.CONTENTS_KEY" title="FileValue.CONTENTS_KEY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CONTENTS_KEY</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.SIZE_KEY" title="FileValue.SIZE_KEY"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SIZE_KEY</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+Static methods</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.read_bom" title="FileValue.read_bom"><code class="xref py py-attr docutils literal notranslate"><span class="pre">read_bom</span></code></a></p></td>
+<td><p>Open a file for reading and detect a byte order mark at the beginning.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+Special methods</label><div class="sd-tab-content docutils">
+<div class="pst-scrollable-table-container"><table class="table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FileValue.__eq__" title="FileValue.__eq__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__eq__</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FileValue.__hash__" title="FileValue.__hash__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__hash__</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="import-detail">
+<h2>Import detail<a class="headerlink" href="#import-detail" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ansys.tools.variableinterop.file_value</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileValue</span>
+</pre></div>
+</div>
+</section>
+<section id="property-detail">
+<h2>Property detail<a class="headerlink" href="#property-detail" title="Link to this heading">#</a></h2>
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.variable_type">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">variable_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../variable_type/VariableType.html#ansys.tools.variableinterop.variable_type.VariableType" title="ansys.tools.variableinterop.variable_type.VariableType"><span class="pre">ansys.tools.variableinterop.variable_type.VariableType</span></a></em><a class="headerlink" href="#FileValue.variable_type" title="Link to this definition">#</a></dt>
+<dd><p>Variable type of the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">VariableType</span></code></dt><dd><p>Variable type of the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.mime_type">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">mime_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#FileValue.mime_type" title="Link to this definition">#</a></dt>
+<dd><p>MIME type of the file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.original_file_name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">original_file_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.14)"><span class="pre">os.PathLike</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#FileValue.original_file_name" title="Link to this definition">#</a></dt>
+<dd><p>Name of the original file that was wrapped.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.extension">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">extension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#FileValue.extension" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Abstractmethod<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>Extension of the file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.file_encoding">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">file_encoding</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#FileValue.file_encoding" title="Link to this definition">#</a></dt>
+<dd><p>Encoding of the file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.id">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.14)"><span class="pre">uuid.UUID</span></a></em><a class="headerlink" href="#FileValue.id" title="Link to this definition">#</a></dt>
+<dd><p>ID of the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">UUID</span></code></dt><dd><p>ID that identifies the file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.file_size">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">file_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#FileValue.file_size" title="Link to this definition">#</a></dt>
+<dd><p>Size of the file in bytes if known.</p>
+<p>A value of <code class="docutils literal notranslate"><span class="pre">None</span></code> indicates that the file size is not known,
+not that the file size is zero bytes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="FileValue.is_text_based">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">is_text_based</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#FileValue.is_text_based" title="Link to this definition">#</a></dt>
+<dd><p>Flag indicating if this file is text-based via its MIME type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.14)"><span class="xref std std-ref">bool</span></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the MIME type starts with <code class="docutils literal notranslate"><span class="pre">text</span></code> or is <code class="docutils literal notranslate"><span class="pre">application/json</span></code>,
+<code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="attribute-detail">
+<h2>Attribute detail<a class="headerlink" href="#attribute-detail" title="Link to this heading">#</a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.BINARY_MIMETYPE">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">BINARY_MIMETYPE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'application/octet-stream'</span></em><a class="headerlink" href="#FileValue.BINARY_MIMETYPE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.TEXT_MIMETYPE">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">TEXT_MIMETYPE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text/plain'</span></em><a class="headerlink" href="#FileValue.TEXT_MIMETYPE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.ORIGINAL_FILENAME_KEY">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">ORIGINAL_FILENAME_KEY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'originalFilename'</span></em><a class="headerlink" href="#FileValue.ORIGINAL_FILENAME_KEY" title="Link to this definition">#</a></dt>
+<dd><p>JSON key for API serialization representing the original file name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.MIMETYPE_KEY">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">MIMETYPE_KEY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mimeType'</span></em><a class="headerlink" href="#FileValue.MIMETYPE_KEY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.ENCODING_KEY">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">ENCODING_KEY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'encoding'</span></em><a class="headerlink" href="#FileValue.ENCODING_KEY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.CONTENTS_KEY">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">CONTENTS_KEY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'contents'</span></em><a class="headerlink" href="#FileValue.CONTENTS_KEY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FileValue.SIZE_KEY">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">SIZE_KEY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'size'</span></em><a class="headerlink" href="#FileValue.SIZE_KEY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="method-detail">
+<h2>Method detail<a class="headerlink" href="#method-detail" title="Link to this heading">#</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.__eq__">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FileValue.__eq__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.__hash__">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FileValue.__hash__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.accept">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visitor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../ivariable_visitor/IVariableValueVisitor.html#ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor" title="ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor"><span class="pre">ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="headerlink" href="#FileValue.accept" title="Link to this definition">#</a></dt>
+<dd><p>Invoke the visitor pattern of this object using the passed-in visitor
+implementation.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>visitor</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IVariableValueVisitor</span></code></span></dt><dd><p>Visitor object to call.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></dt><dd><p>Results of the visitor invocation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.to_display_string">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">to_display_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locale_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#FileValue.to_display_string" title="Link to this definition">#</a></dt>
+<dd><p>Convert the value to a formatted string.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>locale_name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Locale to format the string in.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>String appropriate for use in user-facing areas.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.read_bom">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">read_bom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#FileValue.read_bom" title="Link to this definition">#</a></dt>
+<dd><p>Open a file for reading and detect a byte order mark at the beginning.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>filename</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>File to read.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>If the file contains a BOM, an appropriate encoding is returned.
+If the file does not contain a BOM, <code class="docutils literal notranslate"><span class="pre">None</span></code> is returned.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.write_file">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.14)"><span class="pre">os.PathLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#FileValue.write_file" title="Link to this definition">#</a></dt>
+<dd><p>Write the file’s contents to a new file.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>file_name</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathLike</span></code></span></dt><dd><p>Path to the file to create.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.get_reference_to_actual_content_file_async">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">get_reference_to_actual_content_file_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="AsyncLocalFileContentContext.html#ansys.tools.variableinterop.file_value.AsyncLocalFileContentContext" title="ansys.tools.variableinterop.file_value.AsyncLocalFileContentContext"><span class="pre">AsyncLocalFileContentContext</span></a></span></span><a class="headerlink" href="#FileValue.get_reference_to_actual_content_file_async" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Async<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>Realize the file contents to a local filesystem if needed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">FileValue</span></code> instance is intended to represent an immutable value. The file
+returned by this call may point to a cached file or even the original file. Callers
+must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+may occur. If the caller needs to modify the file, consider using the <code class="docutils literal notranslate"><span class="pre">write_file</span></code>
+method or copying the file before modifying it.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>progress_callback</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>[[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Callback that can be called to indicate progress in realizing the local copy.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case this method makes no attempt
+to report its progress. This method may call a provided callback with a
+percentage value between 0 and 100 inclusive. The provided callback may not
+necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+even if other calls occur.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsyncLocalFileContentContext</span></code></dt><dd><p>Context manager that, when exited, deletes the local copy
+if it is a temporary file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.get_reference_to_actual_content_file">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">get_reference_to_actual_content_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="LocalFileContentContext.html#ansys.tools.variableinterop.file_value.LocalFileContentContext" title="ansys.tools.variableinterop.file_value.LocalFileContentContext"><span class="pre">LocalFileContentContext</span></a></span></span><a class="headerlink" href="#FileValue.get_reference_to_actual_content_file" title="Link to this definition">#</a></dt>
+<dd><p>Realizes the file contents to a local filesystem if needed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">FileValue</span></code> instance is intended to represent an immutable value. The file
+returned by this call may point to a cached file or even the original file. Callers
+must not modify the file on disk. Otherwise, undefined behaviors, including class 3 errors,
+may occur. If the caller needs to modify the file, consider using the <code class="docutils literal notranslate"><span class="pre">write_file</span></code>
+method or copying the file before modifying it.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>progress_callback</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>[[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Callback that can be called to indicate progress in realizing the local copy.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case this method makes no attempt
+to report its progress. This method may call a provided callback with a
+percentage value between 0 and 100 inclusive. The provided callback may not
+necessarily be called at all, and calls for 0 or 100 percent are not guaranteed,
+even if other calls occur.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalFileContentContext</span></code></dt><dd><p>Context manager that, when exited, deletes the local copy
+if it is a temporary file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.is_text_based_static">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">is_text_based_static</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mimetype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#FileValue.is_text_based_static" title="Link to this definition">#</a></dt>
+<dd><p>Determines if a file is text-based via its MIME type.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>mimetype</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>File’s MIME type.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.14)"><span class="xref std std-ref">bool</span></a>]</dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the MIME type starts with text or is an application (JSON),
+<code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.get_contents">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">get_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#FileValue.get_contents" title="Link to this definition">#</a></dt>
+<dd><p>Read the contents of the file as a string.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>encoding</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Encoding to use when reading. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case the
+current locale’s encoding is used.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>Contents of the file as a string.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.to_api_string">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">to_api_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../isave_context/ISaveContext.html#ansys.tools.variableinterop.isave_context.ISaveContext" title="ansys.tools.variableinterop.isave_context.ISaveContext"><span class="pre">ansys.tools.variableinterop.isave_context.ISaveContext</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#FileValue.to_api_string" title="Link to this definition">#</a></dt>
+<dd><p>Convert the value to an API string using a save context.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ISaveContext</span></code>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Save context to use. The default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+in which case file values are not supported.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>String appropriate for use in files and APIs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.to_api_object">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">to_api_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../isave_context/ISaveContext.html#ansys.tools.variableinterop.isave_context.ISaveContext" title="ansys.tools.variableinterop.isave_context.ISaveContext"><span class="pre">ansys.tools.variableinterop.isave_context.ISaveContext</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#FileValue.to_api_object" title="Link to this definition">#</a></dt>
+<dd><p>Convert this file to an API object.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>save_context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ISaveContext</span></code></span></dt><dd><p>Save context to use for the conversion.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>]]</dt><dd><p>API object that matches this <code class="docutils literal notranslate"><span class="pre">FileValue</span></code> instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileValue.get_extension">
+<span class="sig-prename descclassname"><span class="pre">FileValue.</span></span><span class="sig-name descname"><span class="pre">get_extension</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#FileValue.get_extension" title="Link to this definition">#</a></dt>
+<dd><p>Get the file extension of the file, including the period.</p>
+<p>If the file extension is not known, <code class="docutils literal notranslate"><span class="pre">.tmp</span></code> is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>File extension of the file if known, <code class="docutils literal notranslate"><span class="pre">&quot;.tmp&quot;</span></code> otherwise.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ansys.tools.variableinterop.file_value.FileValue"><code class="docutils literal notranslate"><span class="pre">ansys.tools.variableinterop.file_value.FileValue</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-detail">Import detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#property-detail">Property detail</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.variable_type"><code class="docutils literal notranslate"><span class="pre">variable_type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.mime_type"><code class="docutils literal notranslate"><span class="pre">mime_type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.original_file_name"><code class="docutils literal notranslate"><span class="pre">original_file_name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.extension"><code class="docutils literal notranslate"><span class="pre">extension</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.file_encoding"><code class="docutils literal notranslate"><span class="pre">file_encoding</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.id"><code class="docutils literal notranslate"><span class="pre">id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.file_size"><code class="docutils literal notranslate"><span class="pre">file_size</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.is_text_based"><code class="docutils literal notranslate"><span class="pre">is_text_based</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-detail">Attribute detail</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.BINARY_MIMETYPE"><code class="docutils literal notranslate"><span class="pre">BINARY_MIMETYPE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.TEXT_MIMETYPE"><code class="docutils literal notranslate"><span class="pre">TEXT_MIMETYPE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.ORIGINAL_FILENAME_KEY"><code class="docutils literal notranslate"><span class="pre">ORIGINAL_FILENAME_KEY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.MIMETYPE_KEY"><code class="docutils literal notranslate"><span class="pre">MIMETYPE_KEY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.ENCODING_KEY"><code class="docutils literal notranslate"><span class="pre">ENCODING_KEY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.CONTENTS_KEY"><code class="docutils literal notranslate"><span class="pre">CONTENTS_KEY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.SIZE_KEY"><code class="docutils literal notranslate"><span class="pre">SIZE_KEY</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-detail">Method detail</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.__eq__"><code class="docutils literal notranslate"><span class="pre">__eq__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.__hash__"><code class="docutils literal notranslate"><span class="pre">__hash__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.accept"><code class="docutils literal notranslate"><span class="pre">accept()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.to_display_string"><code class="docutils literal notranslate"><span class="pre">to_display_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.read_bom"><code class="docutils literal notranslate"><span class="pre">read_bom()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.get_reference_to_actual_content_file_async"><code class="docutils literal notranslate"><span class="pre">get_reference_to_actual_content_file_async()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.get_reference_to_actual_content_file"><code class="docutils literal notranslate"><span class="pre">get_reference_to_actual_content_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.is_text_based_static"><code class="docutils literal notranslate"><span class="pre">is_text_based_static()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.get_contents"><code class="docutils literal notranslate"><span class="pre">get_contents()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.to_api_string"><code class="docutils literal notranslate"><span class="pre">to_api_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.to_api_object"><code class="docutils literal notranslate"><span class="pre">to_api_object()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#FileValue.get_extension"><code class="docutils literal notranslate"><span class="pre">get_extension()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="http://github.com/ansys/pyansys-tools-variableinterop/edit/main/ansys/tools/variableinterop/file_value/FileValue.py">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/api/ansys/tools/variableinterop/file_value/FileValue.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text", "objectID"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../../../../_static/search.json";
+const ADVANCE_SEARCH_PATH = "../../../../../search.html";
+const EXTRA_SOURCES = JSON.parse('""');
+</script>
+
+
+<script src="../../../../../_static/js/search.js"></script>
+
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.6.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

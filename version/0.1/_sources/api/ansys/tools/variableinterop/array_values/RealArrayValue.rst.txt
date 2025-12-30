@@ -1,0 +1,258 @@
+
+
+
+
+
+
+:class:`RealArrayValue`
+=======================
+
+
+.. py:class:: ansys.tools.variableinterop.array_values.RealArrayValue
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.CommonArrayValue`\ [\ :py:obj:`numpy.float64`\ ]
+
+
+   
+   Stores a value as a ``RealArrayValue`` variable type.
+
+   In Python, the ``RealArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+   This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+   array operators. It also means that they inherit many of the NumPy behaviors, which
+   may be slightly different from the behaviors specified in the variable interop
+   standards. For example, when converting from real to integer, the value is
+   floored instead of rounded. If you want the variable interop standard conversions,
+   call the ``to_integer_array_value`` method on the ``RealArrayValue`` type and use the resulting
+   ``IntegerArrayValue`` type as you would a NumPy ``ndarray`` of int64 values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: RealArrayValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~clone`
+            - 
+          * - :py:attr:`~accept`
+            - 
+          * - :py:attr:`~to_boolean_array_value`
+            - Convert this value to a ``BooleanArrayValue`` type.
+          * - :py:attr:`~to_integer_array_value`
+            - Convert this value to an ``IntegerArrayValue`` type.
+          * - :py:attr:`~to_string_array_value`
+            - Convert the value to a ``StringArrayValue`` type.
+          * - :py:attr:`~to_api_string`
+            - 
+          * - :py:attr:`~to_display_string`
+            - 
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - 
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Convert an API-formatted string to the ``RealArrayValue`` type.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.array_values import RealArrayValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other: RealArrayValue) -> bool
+
+.. py:method:: clone() -> RealArrayValue
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+.. py:method:: to_boolean_array_value() -> BooleanArrayValue
+
+   
+   Convert this value to a ``BooleanArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`BooleanArrayValue`
+           ``BooleanArrayValue`` type with the same values converted to Boolean values.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_integer_array_value() -> IntegerArrayValue
+
+   
+   Convert this value to an ``IntegerArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerArrayValue`
+           ``IntegerArrayValue`` type with the same values converted to integers.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_string_array_value() -> StringArrayValue
+
+   
+   Convert the value to a ``StringArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`StringArrayValue`
+           ``StringArrayValue`` type with the same value converted to strings.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+.. py:method:: from_api_string(value: str) -> RealArrayValue
+   :staticmethod:
+
+
+   
+   Convert an API-formatted string to the ``RealArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           API string to parse.
+
+
+
+   :Returns:
+
+       :obj:`RealArrayValue`
+           Result of parsing the ``RealArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+
+
+

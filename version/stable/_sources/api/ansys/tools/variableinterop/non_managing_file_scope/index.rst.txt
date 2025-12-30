@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``non_managing_file_scope.py`` module
+=========================================
+
+.. py:module:: ansys.tools.variableinterop.non_managing_file_scope
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: non_managing_file_scope
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.non_managing_file_scope.NonManagingFileScope`
+            - Provides a simple file scope implementation that performs no management.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> NonManagingFileScope</api/ansys/tools/variableinterop/non_managing_file_scope/NonManagingFileScope>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``NonManagingFileScope`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

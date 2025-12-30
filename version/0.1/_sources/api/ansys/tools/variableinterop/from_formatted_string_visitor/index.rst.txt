@@ -1,0 +1,120 @@
+
+
+
+
+
+
+The ``from_formatted_string_visitor.py`` module
+===============================================
+
+.. py:module:: ansys.tools.variableinterop.from_formatted_string_visitor
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: from_formatted_string_visitor
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.from_formatted_string_visitor.FromFormattedStringVisitor`
+            - Converts a string formatted for a locale to the ``IVariableValue`` variable
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~strtobool`
+            - Convert a string representation of truth to true (1) or false (0).
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> FromFormattedStringVisitor</api/ansys/tools/variableinterop/from_formatted_string_visitor/FromFormattedStringVisitor>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FromFormattedStringVisitor`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: strtobool(val)
+
+   
+   Convert a string representation of truth to true (1) or false (0).
+
+   True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values are 'n', 'no',
+   'f', 'false', 'off', and '0'.  Raises ValueError if 'val' is anything else.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

@@ -1,0 +1,87 @@
+
+
+
+
+
+
+The ``locale_utils.py`` module
+==============================
+
+.. py:module:: ansys.tools.variableinterop.utils.locale_utils
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: locale_utils
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.locale_utils.LocaleUtils`
+            - Provides utilities for dealing with locales.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.utils.locale_utils.Strings`
+            - Provides utilities for obtaining string resources.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> LocaleUtils</api/ansys/tools/variableinterop/utils/locale_utils/LocaleUtils>
+    <span class="nf nf-cod-symbol_class"></span> Strings</api/ansys/tools/variableinterop/utils/locale_utils/Strings>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Provides utilities for dealing with locales.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

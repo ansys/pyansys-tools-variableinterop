@@ -1,0 +1,80 @@
+
+
+
+
+
+
+The ``variable_type.py`` module
+===============================
+
+.. py:module:: ansys.tools.variableinterop.variable_type
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_type
+.. tab-set::
+
+
+
+
+
+    .. tab-item:: Enums
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_type.VariableType`
+            - Provides an enumeration of the possible variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_enum"></span> VariableType</api/ansys/tools/variableinterop/variable_type/VariableType>
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``VariableType`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

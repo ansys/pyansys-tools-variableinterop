@@ -1,0 +1,250 @@
+
+
+
+
+
+
+:class:`NumericMetadata`
+========================
+
+
+.. py:class:: ansys.tools.variableinterop.numeric_metadata.NumericMetadata
+
+   Bases: :py:obj:`ansys.tools.variableinterop.common_variable_metadata.CommonVariableMetadata`, :py:obj:`abc.ABC`
+
+
+   
+   Provides a generic base for all numeric metadata implementations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: NumericMetadata
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~equals`
+            - Determine if a given metadata is equal to this metadata.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~units`
+            - Units of the variable.
+          * - :py:attr:`~display_format`
+            - Display format of the variable.
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - Determine if the object is equal to the metadata.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.numeric_metadata import NumericMetadata
+
+Property detail
+---------------
+
+.. py:property:: units
+   :type: str
+
+
+   
+   Units of the variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: display_format
+   :type: str
+
+
+   
+   Display format of the variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+   
+   Determine if the object is equal to the metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: equals(other: Any) -> bool
+
+   
+   Determine if a given metadata is equal to this metadata.
+
+
+   :Parameters:
+
+       **other** : :obj:`Any`
+           Given metadata to compare this metadate to.
+
+
+
+   :Returns:
+
+       :ref:`bool <python:bltin-boolean-values>`
+           ``True`` if the two objects are equal, ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+   :abstractmethod:
+
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

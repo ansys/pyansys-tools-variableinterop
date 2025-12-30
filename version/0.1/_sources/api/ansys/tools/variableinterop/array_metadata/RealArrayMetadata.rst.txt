@@ -1,0 +1,151 @@
+
+
+
+
+
+
+:class:`RealArrayMetadata`
+==========================
+
+
+.. py:class:: ansys.tools.variableinterop.array_metadata.RealArrayMetadata
+
+   Bases: :py:obj:`ansys.tools.variableinterop.scalar_metadata.RealMetadata`
+
+
+   
+   Provides metadata for the ``RealArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: RealArrayMetadata
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.array_metadata import RealArrayMetadata
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor[ansys.tools.variableinterop.ivariablemetadata_visitor.T]) -> ansys.tools.variableinterop.ivariablemetadata_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableMetadataVisitor`\[:obj:`T`]
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

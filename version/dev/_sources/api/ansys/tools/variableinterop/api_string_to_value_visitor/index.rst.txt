@@ -1,0 +1,85 @@
+
+
+
+
+
+
+The ``api_string_to_value_visitor.py`` module
+=============================================
+
+.. py:module:: ansys.tools.variableinterop.api_string_to_value_visitor
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: api_string_to_value_visitor
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.api_string_to_value_visitor.APIStringToValueVisitor`
+            - Visits variable type enumeration values, producing a variable value from a
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> APIStringToValueVisitor</api/ansys/tools/variableinterop/api_string_to_value_visitor/APIStringToValueVisitor>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Provides a variable type pseudo-visitor that parses values from strings.
+
+The pseudo-visitor is constructed with the string to parse and then accepted by the
+appropriate variable type. When visiting, it attempts to parse the string into the
+visited type. For more information on why this pattern is better than bare switch
+statements, see :class:`IVariableTypePseudoVisitor`.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

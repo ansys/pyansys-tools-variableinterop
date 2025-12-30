@@ -1,0 +1,144 @@
+
+
+
+
+
+
+The ``file_value.py`` module
+============================
+
+.. py:module:: ansys.tools.variableinterop.file_value
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_value
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.AsyncLocalFileContentContext`
+            - Represents the context during which a locally available copy of file value content
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.LocalFileContentContext`
+            - Represents the context during which a locally available copy of file value content
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.AlreadyLocalFileContentContext`
+            - Provides a default local file context for when the file is already hosted locally.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.FileValue`
+            - Provides an abstract base class for ``FileValue`` implementations.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.LocalFileValue`
+            - Base class for file values where the file contents already exist on the local disk.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_value.EmptyFileValue`
+            - Represents an empty file value.
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+          * - :py:obj:`~RESOURCE_PARSER`
+            - 
+
+
+          * - :py:obj:`~EMPTY_FILE`
+            - 
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> AsyncLocalFileContentContext</api/ansys/tools/variableinterop/file_value/AsyncLocalFileContentContext>
+    <span class="nf nf-cod-symbol_class"></span> LocalFileContentContext</api/ansys/tools/variableinterop/file_value/LocalFileContentContext>
+    <span class="nf nf-cod-symbol_class"></span> AlreadyLocalFileContentContext</api/ansys/tools/variableinterop/file_value/AlreadyLocalFileContentContext>
+    <span class="nf nf-cod-symbol_class"></span> FileValue</api/ansys/tools/variableinterop/file_value/FileValue>
+    <span class="nf nf-cod-symbol_class"></span> LocalFileValue</api/ansys/tools/variableinterop/file_value/LocalFileValue>
+    <span class="nf nf-cod-symbol_class"></span> EmptyFileValue</api/ansys/tools/variableinterop/file_value/EmptyFileValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FileValue`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+.. py:data:: RESOURCE_PARSER
+
+.. py:data:: EMPTY_FILE
+
+
+

@@ -1,0 +1,196 @@
+
+
+
+
+
+
+:class:`EmptyFileValue`
+=======================
+
+
+.. py:class:: ansys.tools.variableinterop.file_value.EmptyFileValue
+
+   Bases: :py:obj:`LocalFileValue`
+
+
+   
+   Represents an empty file value.
+
+   Generally speaking, you should not create an instance of this class but instead use
+   ``ansys.tools.variableinterop.EMPTY_FILE``.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: EmptyFileValue
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~write_file`
+            - Write the file's contents to a new file.
+          * - :py:attr:`~get_contents`
+            - Read the contents of the file as a string.
+
+
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~actual_content_file_name`
+            - Get the path to the file that this ``FileValue`` instance wraps.
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_value import EmptyFileValue
+
+Property detail
+---------------
+
+.. py:property:: actual_content_file_name
+   :type: Optional[os.PathLike]
+
+
+   
+   Get the path to the file that this ``FileValue`` instance wraps.
+
+
+
+
+
+   :Returns:
+
+       :obj:`Optional`\[:obj:`PathLike`]
+           PathLike to the file.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: write_file(file_name: os.PathLike) -> None
+   :abstractmethod:
+
+   :async:
+
+
+   
+   Write the file's contents to a new file.
+
+
+   :Parameters:
+
+       **file_name** : :obj:`PathLike`
+           Path to the file to create.
+
+
+
+   :Returns:
+
+       :data:`python:None`
+           ..
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_contents(encoding: Optional[str]) -> str
+   :abstractmethod:
+
+   :async:
+
+
+   
+   Read the contents of the file as a string.
+
+
+   :Parameters:
+
+       **encoding** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Encoding to use when reading. The default is ``None``, in which case the
+           current locale's encoding is used.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           Contents of the file as a string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
