@@ -28,11 +28,11 @@ import numpy as np
 from overrides import overrides
 
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
-from .exceptions import ValueDeserializationUnsupportedException, _error
+from .exceptions import ValueDeserializationUnsupportedException
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
-from .utils.locale_utils import LocaleUtils
+from .utils.locale_utils import LocaleUtils, Strings
 from .variable_value import IVariableValue
 
 
@@ -93,7 +93,9 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
 
     @overrides
     def visit_file(self) -> IVariableValue:
-        raise ValueDeserializationUnsupportedException(_error("ERROR_FILE_FROM_DISPLAY_STR"))
+        raise ValueDeserializationUnsupportedException(
+            Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR")
+        )
 
     @overrides
     def visit_int_array(self) -> IVariableValue:
@@ -129,4 +131,6 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
 
     @overrides
     def visit_file_array(self) -> IVariableValue:
-        raise ValueDeserializationUnsupportedException(_error("ERROR_FILE_FROM_DISPLAY_STR"))
+        raise ValueDeserializationUnsupportedException(
+            Strings.get("Errors", "ERROR_FILE_FROM_DISPLAY_STR")
+        )

@@ -26,8 +26,10 @@ from typing import Optional
 
 from overrides import overrides
 
-from .exceptions import _error
+from ansys.tools.variableinterop.variable_factory import VariableFactory
+
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor, vartype_accept
+from .utils.locale_utils import Strings
 from .variable_type import VariableType
 
 
@@ -158,7 +160,11 @@ def to_array_type(vartype: VariableType) -> VariableType:
     result: Optional[VariableType] = vartype_accept(__ScalarToArrayPseudoVisitor(), vartype)
 
     if result is None:
-        raise ValueError(_error("ERROR_NO_ARRAY_TYPE", vartype.associated_type_name))
+        raise ValueError(
+            Strings.get(
+                "Errors", "ERROR_NO_ARRAY_TYPE", VariableFactory.associated_type_name(vartype)
+            )
+        )
     else:
         return result
 
@@ -187,6 +193,10 @@ def get_element_type(vartype: VariableType) -> VariableType:
     result: Optional[VariableType] = vartype_accept(__ElementTypePseudoVisitor(), vartype)
 
     if result is None:
-        raise ValueError(_error("ERROR_NO_SCALAR_TYPE", vartype.associated_type_name))
+        raise ValueError(
+            Strings.get(
+                "Errors", "ERROR_NO_SCALAR_TYPE", VariableFactory.associated_type_name(vartype)
+            )
+        )
     else:
         return result

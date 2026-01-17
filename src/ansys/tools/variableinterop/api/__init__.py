@@ -1,4 +1,4 @@
-# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -19,29 +19,23 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Provides custom exception types."""
+"""Creates an abstraction for a type library such that an STC such as Laki can
+generically handle data."""
 
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:
+    import importlib_metadata
 
-from .utils.locale_utils import Strings
+__version__ = importlib_metadata.version("pyansys-tools-variableinterop")
+"""ansys.tools.variableinterop.api version."""
 
-
-class FormatException(BaseException):
-    """Indicates that the string used to create a variable value was incorrectly
-    formatted."""
-
-    def __init__(self):
-        """Construct exception."""
-        message: str = Strings.get("Errors", "ERROR_FORMAT")
-        super().__init__(message)
-
-
-class ValueDeserializationUnsupportedException(Exception):
-    """Indicates that deserializing a value is not allowed."""
-
-    def __init__(self, message: str):
-        """Construct a new instance."""
-        super().__init__(message)
-
-
-class VariableTypeUnknownError(Exception):
-    """Indicates that `VariableType.UNKNOWN` was used when a type was needed."""
+from .abstract_initializer_type_library import AbstractInitializerTypeLibrary
+from .exceptions import IncompatibleTypesError
+from .itype_library import (
+    INCOMPATIBLE,
+    ITypeInformation,
+    ITypeLibrary,
+    RequiredTypes,
+    TypeCompatibility,
+)

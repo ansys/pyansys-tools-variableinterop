@@ -45,7 +45,11 @@ from .array_metadata import (
 )
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .common_variable_metadata import CommonVariableMetadata
-from .exceptions import IncompatibleTypesException, ValueDeserializationUnsupportedException
+from .exceptions import (
+    FormatException,
+    ValueDeserializationUnsupportedException,
+    VariableTypeUnknownError,
+)
 from .file_array_metadata import FileArrayMetadata
 from .file_array_value import FileArrayValue
 from .file_metadata import FileMetadata
@@ -72,9 +76,11 @@ from .scalar_value_conversion import (
     to_string_value,
 )
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
+from .uniform_type_library import UniformTypeLibrary
 from .utils.implicit_coercion import implicit_coerce, implicit_coerce_single
 from .utils.string_escaping import escape_string, unescape_string
 from .var_type_array_check import var_type_is_array
+from .variable_factory import VariableFactory
 from .variable_state import VariableState
 from .variable_type import VariableType
 from .variable_value import CommonArrayValue, IVariableValue, VariableValueInvalidError

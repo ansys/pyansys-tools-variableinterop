@@ -19,19 +19,21 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Tests for VarType.get_default_value."""
+"""Tests for VariableFactory.construct_variable_metadata."""
 from typing import Type
 
 import pytest
 
 import ansys.tools.variableinterop as interop
+from ansys.tools.variableinterop.exceptions import VariableTypeUnknownError
+from ansys.tools.variableinterop.variable_factory import VariableFactory
 from test_utils import _create_exception_context
 
 
 @pytest.mark.parametrize(
     "source,expect,expect_exception",
     [
-        pytest.param(interop.VariableType.UNKNOWN, None, TypeError, id="Unknown"),
+        pytest.param(interop.VariableType.UNKNOWN, None, VariableTypeUnknownError, id="Unknown"),
         pytest.param(interop.VariableType.INTEGER, interop.IntegerMetadata(), None, id="Integer"),
         pytest.param(interop.VariableType.REAL, interop.RealMetadata(), None, id="Real"),
         pytest.param(interop.VariableType.BOOLEAN, interop.BooleanMetadata(), None, id="Boolean"),
@@ -81,6 +83,6 @@ def test_construct_variable_metadata(
     None
     """
     with _create_exception_context(expect_exception):
-        result: interop.CommonVariableMetadata = source.construct_variable_metadata()
+        result: interop.CommonVariableMetadata = VariableFactory.construct_variable_metadata(source)
         assert type(expect) == type(result)
         assert expect == result

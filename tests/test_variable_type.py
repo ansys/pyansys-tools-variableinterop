@@ -25,6 +25,7 @@ from typing import Iterable, Tuple
 import pytest
 
 from ansys.tools.variableinterop import VariableType
+from ansys.tools.variableinterop.variable_factory import VariableFactory
 
 
 @pytest.mark.parametrize(
@@ -54,7 +55,7 @@ from ansys.tools.variableinterop import VariableType
 )
 def test_var_type_from_string(inp: str, expected_result: VariableType):
     """
-    Tests that VariableType.from_string() returns the correct type.
+    Tests that VariableFactory.from_string() returns the correct type.
 
     Parameters
     ----------
@@ -69,7 +70,9 @@ def test_var_type_from_string(inp: str, expected_result: VariableType):
 
     # SUT
     # Store results as a tuple where [0]=the input string and [1]=the actual result of the SUT.
-    results: Iterable[Tuple[str, VariableType]] = ((i, VariableType.from_string(i)) for i in inputs)
+    results: Iterable[Tuple[str, VariableType]] = (
+        (i, VariableFactory.from_string(i)) for i in inputs
+    )
 
     # Verify
     for result in results:
