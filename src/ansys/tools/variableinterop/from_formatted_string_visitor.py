@@ -27,9 +27,10 @@ import locale
 import numpy as np
 from overrides import overrides
 
-from . import FileArrayValue, FileValue
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .exceptions import ValueDeserializationUnsupportedException, _error
+from .file_value import FileValue
+from .file_array_value import FileArrayValue
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
 from .scalar_values import BooleanValue, IntegerValue, RealValue, StringValue
 from .utils.array_to_from_string_util import ArrayToFromStringUtil
