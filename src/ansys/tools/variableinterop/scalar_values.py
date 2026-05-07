@@ -600,6 +600,10 @@ class StringValue(np.str_, IVariableValue):
     naturally to the analogous NumPy type.
     """
 
+    def __init__(self, value=..., /):
+        # Need to override init to make this not abstract, but np.str_ objects are immutable.
+        pass
+
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_string(self)

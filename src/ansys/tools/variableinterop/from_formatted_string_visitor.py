@@ -27,6 +27,7 @@ import locale
 import numpy as np
 from overrides import overrides
 
+from . import FileArrayValue, FileValue
 from .array_values import BooleanArrayValue, IntegerArrayValue, RealArrayValue, StringArrayValue
 from .exceptions import ValueDeserializationUnsupportedException, _error
 from .ivariable_type_pseudovisitor import IVariableTypePseudoVisitor
@@ -71,32 +72,32 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
         result: IntegerValue = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: np.int64(locale.atof(self._value))
         )
-        return result
+        return IntegerValue(result)
 
     @overrides
     def visit_real(self) -> RealValue:
         result: np.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: locale.atof(self._value)
         )
-        return result
+        return RealValue(result)
 
     @overrides
     def visit_boolean(self) -> BooleanValue:
         result: np.str_ = LocaleUtils.perform_safe_locale_action(
             self._locale_name, lambda: bool(strtobool(self._value))
         )
-        return result
+        return BooleanValue(result)
 
     @overrides
     def visit_string(self) -> StringValue:
-        return self._value
+        return StringValue(self._value)
 
     @overrides
-    def visit_file(self) -> IVariableValue:
+    def visit_file(self) -> FileValue:
         raise ValueDeserializationUnsupportedException(_error("ERROR_FILE_FROM_DISPLAY_STR"))
 
     @overrides
-    def visit_int_array(self) -> IVariableValue:
+    def visit_int_array(self) -> IntegerArrayValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
             lambda val: IntegerArrayValue(values=val),
@@ -104,7 +105,7 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
         )
 
     @overrides
-    def visit_real_array(self) -> IVariableValue:
+    def visit_real_array(self) -> RealArrayValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
             lambda val: RealArrayValue(values=val),
@@ -112,7 +113,7 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
         )
 
     @overrides
-    def visit_bool_array(self) -> IVariableValue:
+    def visit_bool_array(self) -> BooleanArrayValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
             lambda val: BooleanArrayValue(values=val),
@@ -120,7 +121,7 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
         )
 
     @overrides
-    def visit_string_array(self) -> IVariableValue:
+    def visit_string_array(self) -> StringArrayValue:
         return ArrayToFromStringUtil.string_to_value(
             self._value,
             lambda val: StringArrayValue(values=val),
@@ -128,5 +129,5 @@ class FromFormattedStringVisitor(IVariableTypePseudoVisitor[IVariableValue]):
         )
 
     @overrides
-    def visit_file_array(self) -> IVariableValue:
+    def visit_file_array(self) -> FileArrayValue:
         raise ValueDeserializationUnsupportedException(_error("ERROR_FILE_FROM_DISPLAY_STR"))
