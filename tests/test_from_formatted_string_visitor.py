@@ -1,4 +1,4 @@
-# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -78,6 +78,7 @@ def test_converting_from_an_integer(value: str, locale_value: str, expected: Int
 
     # Verification
     assert result == expected
+    assert isinstance(result, IntegerValue)
 
 
 @pytest.mark.parametrize(
@@ -153,6 +154,7 @@ def test_converting_from_a_real(value: str, locale_value: str, expected: RealVal
         assert np.isnan(result)
     else:
         assert result == expected
+    assert isinstance(result, RealValue)
 
 
 @pytest.mark.parametrize(
@@ -194,6 +196,7 @@ def test_converting_from_a_boolean(value: str, locale_value: str, expected: Bool
 
     # Verification
     assert result == expected
+    assert isinstance(result, BooleanValue)
 
 
 @pytest.mark.parametrize(
@@ -247,6 +250,7 @@ def test_converting_from_a_string(value: str, locale_value: str, expected: Strin
 
     # Verification
     assert result == expected
+    assert isinstance(result, StringValue)
 
 
 @pytest.mark.parametrize(
@@ -292,6 +296,7 @@ def test_converting_from_an_integer_array(
 
     # Verification
     assert np.array_equal(result, expected)
+    assert isinstance(result, IntegerArrayValue)
 
 
 @pytest.mark.parametrize(
@@ -340,6 +345,7 @@ def test_converting_from_a_real_array(
 
     # Verification
     assert np.array_equal(result, expected)
+    assert isinstance(result, RealArrayValue)
 
 
 @pytest.mark.parametrize(
@@ -395,6 +401,7 @@ def test_converting_from_a_boolean_array(
 
     # Verification
     assert np.array_equal(result, expected)
+    assert isinstance(result, BooleanArrayValue)
 
 
 @pytest.mark.parametrize(
@@ -446,6 +453,7 @@ def test_converting_from_a_string_array(
 
     # Verification
     assert np.array_equal(result, expected)
+    assert isinstance(result, StringArrayValue)
 
 
 def test_converting_file_value():

@@ -1,4 +1,4 @@
-# Copyright (C) 2024 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2024 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -599,6 +599,10 @@ class StringValue(np.str_, IVariableValue):
     variable interop type to get an instance of that type, which should decompose
     naturally to the analogous NumPy type.
     """
+
+    def __init__(self, value=..., /):
+        # Need to override init to make this not abstract, but np.str_ objects are immutable.
+        pass
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
