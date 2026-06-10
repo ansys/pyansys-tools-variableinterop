@@ -23,6 +23,7 @@
 from overrides import overrides
 
 from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
+from .numeric_metadata import NumericMetadata
 from .scalar_metadata import BooleanMetadata, IntegerMetadata, RealMetadata, StringMetadata
 from .variable_type import VariableType
 
@@ -39,6 +40,15 @@ class BooleanArrayMetadata(BooleanMetadata):
     def variable_type(self) -> VariableType:
         return VariableType.BOOLEAN_ARRAY
 
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "BooleanArrayMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+        return result
+
 
 class IntegerArrayMetadata(IntegerMetadata):
     """Provides metadata for the ``IntegerArrayValue`` variable type."""
@@ -51,6 +61,27 @@ class IntegerArrayMetadata(IntegerMetadata):
     @overrides
     def variable_type(self) -> VariableType:
         return VariableType.INTEGER_ARRAY
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "IntegerArrayMetadata":
+        from . import CommonVariableMetadata
+
+        description, custom_metadata = CommonVariableMetadata._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        units, display_format = NumericMetadata._from_dict(data)
+        result.units = units
+        result.display_format = display_format
+
+        result.lower_bound = data.get(IntegerMetadata._lower_bound_json_key)
+        result.upper_bound = data.get(IntegerMetadata._upper_bound_json_key)
+        result.enumerated_values = data.get(IntegerMetadata._enumerated_values_json_key, [])
+        result.enumerated_aliases = data.get(IntegerMetadata._enumerated_aliases_json_key, [])
+
+        return result
 
 
 class RealArrayMetadata(RealMetadata):
@@ -65,6 +96,27 @@ class RealArrayMetadata(RealMetadata):
     def variable_type(self) -> VariableType:
         return VariableType.REAL_ARRAY
 
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "RealArrayMetadata":
+        from . import CommonVariableMetadata
+
+        description, custom_metadata = CommonVariableMetadata._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        units, display_format = NumericMetadata._from_dict(data)
+        result.units = units
+        result.display_format = display_format
+
+        result.lower_bound = data.get(RealMetadata._lower_bound_json_key)
+        result.upper_bound = data.get(RealMetadata._upper_bound_json_key)
+        result.enumerated_values = data.get(RealMetadata._enumerated_values_json_key, [])
+        result.enumerated_aliases = data.get(RealMetadata._enumerated_aliases_json_key, [])
+
+        return result
+
 
 class StringArrayMetadata(StringMetadata):
     """Provides metadata for the ``StringArrayValue`` variable type."""
@@ -77,3 +129,16 @@ class StringArrayMetadata(StringMetadata):
     @overrides
     def variable_type(self) -> VariableType:
         return VariableType.STRING_ARRAY
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "StringArrayMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        result.enumerated_values = data.get(StringMetadata._enumerated_values_json_key, [])
+        result.enumerated_aliases = data.get(StringMetadata._enumerated_aliases_json_key, [])
+
+        return result

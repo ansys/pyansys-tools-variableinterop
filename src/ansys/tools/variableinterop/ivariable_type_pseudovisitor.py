@@ -48,7 +48,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_int(self) -> T:
@@ -60,7 +60,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real(self) -> T:
@@ -72,7 +72,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_boolean(self) -> T:
@@ -84,7 +84,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string(self) -> T:
@@ -96,7 +96,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file(self) -> T:
@@ -108,7 +108,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_int_array(self) -> T:
@@ -120,7 +120,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real_array(self) -> T:
@@ -132,7 +132,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_bool_array(self) -> T:
@@ -144,7 +144,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string_array(self) -> T:
@@ -156,7 +156,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file_array(self) -> T:
@@ -168,7 +168,7 @@ class IVariableTypePseudoVisitor(ABC, Generic[T]):
         T
             Result, as documented by the implementing class.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
 
 def __accept_unknown(visitor: "IVariableTypePseudoVisitor[T]") -> T:

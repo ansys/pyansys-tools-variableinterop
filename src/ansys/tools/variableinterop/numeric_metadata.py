@@ -22,7 +22,7 @@
 """Defines the ``NumericMetadata`` class."""
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Any
 
 from overrides import overrides
@@ -34,6 +34,9 @@ from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
 class NumericMetadata(CommonVariableMetadata, ABC):
     """Provides a generic base for all numeric metadata implementations."""
 
+    _units_json_key = "units"
+    _display_format_json_key = "format"
+
     @overrides
     def __init__(self) -> None:
         super().__init__()
@@ -42,7 +45,7 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
     @overrides
     def __eq__(self, other):
-        return self.are_equal(other)
+        return self.equals(other)
 
     @overrides
     def equals(self, other: Any) -> bool:
@@ -52,7 +55,7 @@ class NumericMetadata(CommonVariableMetadata, ABC):
         Parameters
         ----------
         other : Any
-            Given metadata to compare this metadate to.
+            Given metadata to compare this metadata to.
 
         Returns
         -------
@@ -69,7 +72,7 @@ class NumericMetadata(CommonVariableMetadata, ABC):
 
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @property
     def units(self) -> str:
@@ -89,3 +92,29 @@ class NumericMetadata(CommonVariableMetadata, ABC):
     @display_format.setter
     def display_format(self, value: str) -> None:
         self._display_format = value
+
+    @overrides
+    @abstractmethod
+    def to_dict(self) -> dict:
+        result = super().to_dict()
+        if self._units != "" and not str.isspace(self._units):
+            result[NumericMetadata._units_json_key] = self._units
+        if self._display_format != "" and not str.isspace(self._display_format):
+            result[NumericMetadata._display_format_json_key] = self._display_format
+        return result
+
+    @staticmethod
+    def _from_dict(data: dict) -> tuple[str, str]:
+        """
+        Helper method for subclasses to extract numeric metadata information from a JSON
+        dictionary.
+
+        Returns
+        -------
+        tuple[str, str]
+            A tuple containing the units and display format.
+        """
+        units: str = data.get(NumericMetadata._units_json_key, "")
+        display_format: str = data.get(NumericMetadata._display_format_json_key, "")
+
+        return units, display_format
