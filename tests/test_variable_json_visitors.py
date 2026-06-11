@@ -110,11 +110,11 @@ def test_unsupported_variable_type_to_json(value: IVariableValue) -> None:
         pytest.param(BooleanValue(True), True),
         pytest.param(IntegerValue(12345), 12345),
         pytest.param(RealValue(0.12345), 0.12345),
-        pytest.param(StringValue("test"), "test"),
+        pytest.param(StringValue(" test string"), " test string"),
         pytest.param(BooleanArrayValue(values=[True, False, True]), "True,False,True"),
         pytest.param(IntegerArrayValue(values=[1, 2, 3]), "1,2,3"),
         pytest.param(RealArrayValue(values=[0.1, 2.3, 4.5]), "0.1,2.3,4.5"),
-        pytest.param(StringArrayValue(values=["a", "b", "c"]), '"a","b","c"'),
+        pytest.param(StringArrayValue(values=["aaa a", "b b b", "cc "]), '"aaa a","b b b","cc "'),
     ],
 )
 def test_json_variable_value(value: str, expected: IVariableValue) -> None:
