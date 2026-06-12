@@ -245,7 +245,7 @@ class IntegerMetadata(NumericMetadata):
 
         result.lower_bound = data.get(IntegerMetadata._lower_bound_json_key)
         result.upper_bound = data.get(IntegerMetadata._upper_bound_json_key)
-        result.enumerated_values = data.get(IntegerMetadata._enumerated_values_json_key, [])
+        result.enumerated_values = [IntegerValue(val) for val in data.get(IntegerMetadata._enumerated_values_json_key, [])]
         result.enumerated_aliases = data.get(IntegerMetadata._enumerated_aliases_json_key, [])
 
         return result
@@ -426,7 +426,7 @@ class RealMetadata(NumericMetadata):
 
         result.lower_bound = data.get(RealMetadata._lower_bound_json_key)
         result.upper_bound = data.get(RealMetadata._upper_bound_json_key)
-        result.enumerated_values = data.get(RealMetadata._enumerated_values_json_key, [])
+        result.enumerated_values = [RealValue(val) for val in data.get(RealMetadata._enumerated_values_json_key, [])]
         result.enumerated_aliases = data.get(RealMetadata._enumerated_aliases_json_key, [])
 
         return result
@@ -542,7 +542,7 @@ class StringMetadata(CommonVariableMetadata):
         result.description = description
         # result.custom_metadata = custom_metadata
 
-        result.enumerated_values = data.get(StringMetadata._enumerated_values_json_key, [])
+        result.enumerated_values = [StringValue(val) for val in data.get(StringMetadata._enumerated_values_json_key, [])]
         result.enumerated_aliases = data.get(StringMetadata._enumerated_aliases_json_key, [])
 
         return result

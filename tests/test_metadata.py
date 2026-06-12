@@ -778,3 +778,5 @@ def test_metadata_to_from_dict(type_name: str, expected_typename: str, enum_type
     result = metadata_type.from_dict(value)
 
     assert result == metadata
+    if enum_type is not None:
+        assert all(isinstance(val, enum_type) for val in result.enumerated_values)
