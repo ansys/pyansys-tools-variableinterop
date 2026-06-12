@@ -65,8 +65,7 @@ class IntegerArrayMetadata(IntegerMetadata):
     @classmethod
     @overrides
     def from_dict(cls, data) -> "IntegerArrayMetadata":
-        from . import CommonVariableMetadata
-        from . import IntegerValue
+        from . import CommonVariableMetadata, IntegerValue
 
         description, custom_metadata = CommonVariableMetadata._from_dict(data)
         result = cls()
@@ -79,7 +78,9 @@ class IntegerArrayMetadata(IntegerMetadata):
 
         result.lower_bound = data.get(IntegerMetadata._lower_bound_json_key)
         result.upper_bound = data.get(IntegerMetadata._upper_bound_json_key)
-        result.enumerated_values = [IntegerValue(val) for val in data.get(IntegerMetadata._enumerated_values_json_key, [])]
+        result.enumerated_values = [
+            IntegerValue(val) for val in data.get(IntegerMetadata._enumerated_values_json_key, [])
+        ]
         result.enumerated_aliases = data.get(IntegerMetadata._enumerated_aliases_json_key, [])
 
         return result
@@ -100,8 +101,7 @@ class RealArrayMetadata(RealMetadata):
     @classmethod
     @overrides
     def from_dict(cls, data) -> "RealArrayMetadata":
-        from . import CommonVariableMetadata
-        from . import RealValue
+        from . import CommonVariableMetadata, RealValue
 
         description, custom_metadata = CommonVariableMetadata._from_dict(data)
         result = cls()
@@ -114,7 +114,9 @@ class RealArrayMetadata(RealMetadata):
 
         result.lower_bound = data.get(RealMetadata._lower_bound_json_key)
         result.upper_bound = data.get(RealMetadata._upper_bound_json_key)
-        result.enumerated_values = [RealValue(val) for val in data.get(RealMetadata._enumerated_values_json_key, [])]
+        result.enumerated_values = [
+            RealValue(val) for val in data.get(RealMetadata._enumerated_values_json_key, [])
+        ]
         result.enumerated_aliases = data.get(RealMetadata._enumerated_aliases_json_key, [])
 
         return result
@@ -136,12 +138,15 @@ class StringArrayMetadata(StringMetadata):
     @overrides
     def from_dict(cls, data) -> "StringArrayMetadata":
         from . import StringValue
+
         description, custom_metadata = super()._from_dict(data)
         result = cls()
         result.description = description
         # result.custom_metadata = custom_metadata
 
-        result.enumerated_values = [StringValue(val) for val in data.get(StringMetadata._enumerated_values_json_key, [])]
+        result.enumerated_values = [
+            StringValue(val) for val in data.get(StringMetadata._enumerated_values_json_key, [])
+        ]
         result.enumerated_aliases = data.get(StringMetadata._enumerated_aliases_json_key, [])
 
         return result
