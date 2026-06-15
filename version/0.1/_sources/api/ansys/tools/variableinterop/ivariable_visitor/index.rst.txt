@@ -1,0 +1,97 @@
+
+
+
+
+
+
+The ``ivariable_visitor.py`` module
+===================================
+
+.. py:module:: ansys.tools.variableinterop.ivariable_visitor
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: ivariable_visitor
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor`
+            - Defines the interface to be implemented for using the visitor pattern with variable
+
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_interface"></span> IVariableValueVisitor</api/ansys/tools/variableinterop/ivariable_visitor/IVariableValueVisitor>
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``IVariableValueVisitor`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

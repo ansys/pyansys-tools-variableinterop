@@ -1,0 +1,97 @@
+
+
+
+
+
+
+The ``file_array_value.py`` module
+==================================
+
+.. py:module:: ansys.tools.variableinterop.file_array_value
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: file_array_value
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.file_array_value.FileArrayValue`
+            - Stores a value for the ``FileArrayValue`` variable type.
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> FileArrayValue</api/ansys/tools/variableinterop/file_array_value/FileArrayValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``FileArrayValue`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

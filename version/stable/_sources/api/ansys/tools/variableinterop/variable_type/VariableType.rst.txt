@@ -1,0 +1,559 @@
+
+
+
+
+
+
+:class:`VariableType`
+=====================
+
+
+.. py:class:: ansys.tools.variableinterop.variable_type.VariableType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   
+   Provides an enumeration of the possible variable types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: VariableType
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~to_display_string`
+            - Get the display string for the ``VariableType`` value.
+          * - :py:attr:`~get_default_value`
+            - Construct the default value for this type.
+          * - :py:attr:`~construct_variable_metadata`
+            - Construct the default metadata for this type.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~associated_type_name`
+            - Get the name of the associated ``IVariableValue`` type.
+
+
+   .. tab-item:: Attributes
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~UNKNOWN`
+            - Type is unknown.
+          * - :py:attr:`~INTEGER`
+            - Integer values.
+          * - :py:attr:`~REAL`
+            - Real values.
+          * - :py:attr:`~BOOLEAN`
+            - Boolean values.
+          * - :py:attr:`~STRING`
+            - String values.
+          * - :py:attr:`~FILE`
+            - File values.
+          * - :py:attr:`~INTEGER_ARRAY`
+            - Array of integer values.
+          * - :py:attr:`~REAL_ARRAY`
+            - Array of real values.
+          * - :py:attr:`~BOOLEAN_ARRAY`
+            - Array of Boolean values.
+          * - :py:attr:`~STRING_ARRAY`
+            - Array of string values.
+          * - :py:attr:`~FILE_ARRAY`
+            - Array of file values.
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_string`
+            - Get the ``VariableType`` value from a string.
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_type import VariableType
+
+Property detail
+---------------
+
+.. py:property:: associated_type_name
+   :type: str
+
+
+   
+   Get the name of the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Attribute detail
+----------------
+
+.. py:attribute:: UNKNOWN
+   :value: 0
+
+
+   
+   Type is unknown.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: INTEGER
+   :value: 1
+
+
+   
+   Integer values.
+
+   These are stored as 64-bit signed integers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: REAL
+   :value: 2
+
+
+   
+   Real values.
+
+   These are stored as 64-bit floating point numbers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: BOOLEAN
+   :value: 3
+
+
+   
+   Boolean values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: STRING
+   :value: 4
+
+
+   
+   String values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: FILE
+   :value: 5
+
+
+   
+   File values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: INTEGER_ARRAY
+   :value: 6
+
+
+   
+   Array of integer values.
+
+   These are stored as 64-bit signed integers. Multidimensional arrays are supported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: REAL_ARRAY
+   :value: 7
+
+
+   
+   Array of real values.
+
+   These are stored as 64-bit floating point numbers. Multidimensional arrays are
+   supported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: BOOLEAN_ARRAY
+   :value: 8
+
+
+   
+   Array of Boolean values.
+
+   Multidimensional arrays are supported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: STRING_ARRAY
+   :value: 9
+
+
+   
+   Array of string values.
+
+   Multidimensional arrays are supported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:attribute:: FILE_ARRAY
+   :value: 10
+
+
+   
+   Array of file values.
+
+   Multidimensional arrays are supported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Method detail
+-------------
+
+.. py:method:: from_string(s: str) -> VariableType
+   :staticmethod:
+
+
+   
+   Get the ``VariableType`` value from a string.
+
+
+   :Parameters:
+
+       **s** : :class:`python:str`
+           String to convert to a ``VariableType`` value.
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string() -> str
+
+   
+   Get the display string for the ``VariableType`` value.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           Display string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: get_default_value() -> ansys.tools.variableinterop.variable_value.IVariableValue
+
+   
+   Construct the default value for this type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IVariableValue`
+           New value object whose type matches this type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: construct_variable_metadata() -> ansys.tools.variableinterop.common_variable_metadata.CommonVariableMetadata
+
+   
+   Construct the default metadata for this type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`CommonVariableMetadata`
+           New metadata object whose type matches this type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

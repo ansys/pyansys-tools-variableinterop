@@ -1,0 +1,101 @@
+
+
+
+
+
+
+The ``scalar_values.py`` module
+===============================
+
+.. py:module:: ansys.tools.variableinterop.scalar_values
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: scalar_values
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_values.BooleanValue`
+            - Stores a value as a ``BooleanValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_values.IntegerValue`
+            - Stores a value as an ``IntegerValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_values.RealValue`
+            - Stores a value as a ``RealValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.scalar_values.StringValue`
+            - Stores a value as an ``IVariableValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> BooleanValue</api/ansys/tools/variableinterop/scalar_values/BooleanValue>
+    <span class="nf nf-cod-symbol_class"></span> IntegerValue</api/ansys/tools/variableinterop/scalar_values/IntegerValue>
+    <span class="nf nf-cod-symbol_class"></span> RealValue</api/ansys/tools/variableinterop/scalar_values/RealValue>
+    <span class="nf nf-cod-symbol_class"></span> StringValue</api/ansys/tools/variableinterop/scalar_values/StringValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines all scalar value implementations of the ``IVariableValue`` variable type.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

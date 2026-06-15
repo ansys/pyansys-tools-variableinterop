@@ -1,0 +1,223 @@
+
+
+
+
+
+
+The ``array_value_conversion.py`` module
+========================================
+
+.. py:module:: ansys.tools.variableinterop.array_value_conversion
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: array_value_conversion
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~to_boolean_array_value`
+            - Convert the given value to a ``BooleanArrayValue`` type.
+
+
+          * - :py:obj:`~to_integer_array_value`
+            - Convert the given value to an ``IntegerArrayValue`` type.
+
+
+          * - :py:obj:`~to_real_array_value`
+            - Convert the given value to a ``RealArrayValue`` type.
+
+
+          * - :py:obj:`~to_string_array_value`
+            - Convert the given value to a ``StringArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines array value visitors.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: to_boolean_array_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.array_values.BooleanArrayValue
+
+   
+   Convert the given value to a ``BooleanArrayValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises ``IncompatibleTypesException``).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``BooleanArrayValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`BooleanArrayValue`
+           Value as a ``BooleanArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_integer_array_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.array_values.IntegerArrayValue
+
+   
+   Convert the given value to an ``IntegerArrayValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises ``IncompatibleTypesException``).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to an ``IntegerArrayValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`IntegerArrayValue`
+           Value as an ``IntegerArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_real_array_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.array_values.RealArrayValue
+
+   
+   Convert the given value to a ``RealArrayValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises ``IncompatibleTypesException``).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``RealArrayValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`RealArrayValue`
+           Value as a ``RealArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_string_array_value(other: ansys.tools.variableinterop.variable_value.IVariableValue) -> ansys.tools.variableinterop.array_values.StringArrayValue
+
+   
+   Convert the given value to a ``StringArrayValue`` type.
+
+   The conversion is performed according to the type interoperability specifications.
+   Note that some conversions are lossy (resulting in a loss of precision),
+   and some conversions are not possible (raises ``IncompatibleTypesException``).
+
+   :Parameters:
+
+       **other** : :obj:`IVariableValue`
+           Other value to convert to a ``StringArrayValue`` type.
+
+
+
+   :Returns:
+
+       :obj:`StringArrayValue`
+           Value as a ``StringArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+

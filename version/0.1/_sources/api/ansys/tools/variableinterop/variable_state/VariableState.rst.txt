@@ -1,0 +1,237 @@
+
+
+
+
+
+
+:class:`VariableState`
+======================
+
+
+.. py:class:: ansys.tools.variableinterop.variable_state.VariableState(value: ansys.tools.variableinterop.variable_value.IVariableValue, is_valid: bool)
+
+   
+   Bundles a variable value with a validity flag.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+.. py:currentmodule:: VariableState
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~clone`
+            - Clone the instance.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~value`
+            - Get the variable value.
+          * - :py:attr:`~is_valid`
+            - Flag indicating that the object is equal to the other object.
+          * - :py:attr:`~safe_value`
+            - Variable value.
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - Check if this object is equal to another object.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_state import VariableState
+
+Property detail
+---------------
+
+.. py:property:: value
+   :type: ansys.tools.variableinterop.variable_value.IVariableValue
+
+
+   
+   Get the variable value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: is_valid
+   :type: bool
+
+
+   
+   Flag indicating that the object is equal to the other object.
+
+   ``True`` indicates that the objects are equal.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:property:: safe_value
+   :type: ansys.tools.variableinterop.variable_value.IVariableValue
+
+
+   
+   Variable value.
+
+   ``VariableValueInvalidError`` is raised if the variable value is not valid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other) -> bool
+
+   
+   Check if this object is equal to another object.
+
+
+   :Parameters:
+
+       **other** : :obj:`Any`
+           Other object to compare.
+
+
+
+   :Returns:
+
+       :ref:`bool <python:bltin-boolean-values>`
+           ``True`` if the objects are equal, ``False`` otherwise.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: clone() -> VariableState
+
+   
+   Clone the instance.
+
+   The returned instance contains a clone of this instance's value.
+
+
+
+
+   :Returns:
+
+       :obj:`VariableState`
+           Deep copy of the instance.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

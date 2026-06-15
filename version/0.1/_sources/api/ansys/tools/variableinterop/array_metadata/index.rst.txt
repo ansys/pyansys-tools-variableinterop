@@ -1,0 +1,101 @@
+
+
+
+
+
+
+The ``array_metadata.py`` module
+================================
+
+.. py:module:: ansys.tools.variableinterop.array_metadata
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: array_metadata
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_metadata.BooleanArrayMetadata`
+            - Provides metadata for the ``BooleanArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_metadata.IntegerArrayMetadata`
+            - Provides metadata for the ``IntegerArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_metadata.RealArrayMetadata`
+            - Provides metadata for the ``RealArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_metadata.StringArrayMetadata`
+            - Provides metadata for the ``StringArrayValue`` variable type.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> BooleanArrayMetadata</api/ansys/tools/variableinterop/array_metadata/BooleanArrayMetadata>
+    <span class="nf nf-cod-symbol_class"></span> IntegerArrayMetadata</api/ansys/tools/variableinterop/array_metadata/IntegerArrayMetadata>
+    <span class="nf nf-cod-symbol_class"></span> RealArrayMetadata</api/ansys/tools/variableinterop/array_metadata/RealArrayMetadata>
+    <span class="nf nf-cod-symbol_class"></span> StringArrayMetadata</api/ansys/tools/variableinterop/array_metadata/StringArrayMetadata>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines array metadata types.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

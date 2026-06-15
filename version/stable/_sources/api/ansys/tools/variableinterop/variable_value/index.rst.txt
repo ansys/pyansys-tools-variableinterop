@@ -1,0 +1,135 @@
+
+
+
+
+
+
+The ``variable_value.py`` module
+================================
+
+.. py:module:: ansys.tools.variableinterop.variable_value
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_value
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value.IVariableValue`
+            - Defines an interface for the behavior common among all variable types.
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value.CommonArrayValue`
+            - Defines an interface for the behavior common among all array types.
+
+
+
+
+    .. tab-item:: Exceptions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value.VariableValueInvalidError`
+            - Raises an error to indicate that a required variable value is invalid.
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_interface"></span> IVariableValue</api/ansys/tools/variableinterop/variable_value/IVariableValue>
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> CommonArrayValue</api/ansys/tools/variableinterop/variable_value/CommonArrayValue>
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-md-lightning_bolt"></span> VariableValueInvalidError</api/ansys/tools/variableinterop/variable_value/VariableValueInvalidError>
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``IVariableValue`` class and related classes.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

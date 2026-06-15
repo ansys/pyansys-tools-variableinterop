@@ -1,0 +1,415 @@
+
+
+
+
+
+
+:class:`ToAPIStringVisitor`
+===========================
+
+
+.. py:class:: ansys.tools.variableinterop.api_serialization.ToAPIStringVisitor(save_context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext])
+
+   Bases: :py:obj:`ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor`\ [\ :py:obj:`str`\ ]
+
+
+   
+   Visits values and converts them to an API string.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: ToAPIStringVisitor
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_integer`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_real`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_boolean`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_string`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_integer_array`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_file`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_real_array`
+            - Method that is called if the `:meth:`IVariableValue.accept()` method is called
+          * - :py:attr:`~visit_boolean_array`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_string_array`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+          * - :py:attr:`~visit_file_array`
+            - Method that is called if the :meth:`IVariableValue.accept()` method is called on
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.api_serialization import ToAPIStringVisitor
+
+
+
+Method detail
+-------------
+
+.. py:method:: visit_integer(value: ansys.tools.variableinterop.scalar_values.IntegerValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   an ``IntegerValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`IntegerValue`
+           ``IntegerValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real(value: ansys.tools.variableinterop.scalar_values.RealValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``RealValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`RealValue`
+           ``RealValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean(value: ansys.tools.variableinterop.scalar_values.BooleanValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``BooleanValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`BooleanValue`
+           ``BooleanValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string(value: ansys.tools.variableinterop.scalar_values.StringValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``StringValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`StringValue`
+           ``StringValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_integer_array(value: ansys.tools.variableinterop.array_values.IntegerArrayValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   an ``IntegerArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`IntegerArrayValue`
+           ``IntegerArrayValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file(value: ansys.tools.variableinterop.file_value.FileValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``FileValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`FileValue`
+           ``FileValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real_array(value: ansys.tools.variableinterop.array_values.RealArrayValue) -> str
+
+   
+   Method that is called if the `:meth:`IVariableValue.accept()` method is called
+   on a ``RealArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`RealArrayValue`
+           ``RealArrayValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean_array(value: ansys.tools.variableinterop.array_values.BooleanArrayValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``BooleanArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`BooleanArrayValue`
+           ``BooleanArrayValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string_array(value: ansys.tools.variableinterop.array_values.StringArrayValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``StringArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`StringArrayValue`
+           ``StringArrayValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file_array(value: ansys.tools.variableinterop.file_array_value.FileArrayValue) -> str
+
+   
+   Method that is called if the :meth:`IVariableValue.accept()` method is called on
+   a ``FileArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :obj:`FileArrayValue`
+           ``FileArrayValue`` type to visit.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

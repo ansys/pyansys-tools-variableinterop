@@ -1,0 +1,94 @@
+
+
+
+
+
+
+The ``variable_value_json_visitors.py`` module
+==============================================
+
+.. py:module:: ansys.tools.variableinterop.variable_value_json_visitors
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_value_json_visitors
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value_json_visitors.VariableValueToJsonVisitor`
+            - Visitor that returns a JSON serializable representation of an IVariableValue.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value_json_visitors.JsonToVariableValueVisitor`
+            - Visitor that takes a JSON serializable representation of an IVariableValue and
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.variable_value_json_visitors.VariableTypeToJsonVisitor`
+            - Visitor that returns a JSON serializable representation of an VariableType.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> VariableValueToJsonVisitor</api/ansys/tools/variableinterop/variable_value_json_visitors/VariableValueToJsonVisitor>
+    <span class="nf nf-cod-symbol_class"></span> JsonToVariableValueVisitor</api/ansys/tools/variableinterop/variable_value_json_visitors/JsonToVariableValueVisitor>
+    <span class="nf nf-cod-symbol_class"></span> VariableTypeToJsonVisitor</api/ansys/tools/variableinterop/variable_value_json_visitors/VariableTypeToJsonVisitor>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines visitors for translating variable types and values to/from JSON.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+
