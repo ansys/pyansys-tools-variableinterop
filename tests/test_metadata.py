@@ -45,11 +45,7 @@ from ansys.tools.variableinterop.scalar_values import (
     StringValue,
 )
 
-all_metadata_types = [
-    IntegerMetadata.__name__,
-    IntegerArrayMetadata.__name__,
-    RealMetadata.__name__,
-    RealArrayMetadata.__name__,
+non_numeric_metadata_types = [
     BooleanMetadata.__name__,
     BooleanArrayMetadata.__name__,
     StringMetadata.__name__,
@@ -57,6 +53,48 @@ all_metadata_types = [
     FileMetadata.__name__,
     FileArrayMetadata.__name__,
 ]
+"""Names of all non-numeric metadata types."""
+
+
+numeric_metadata_types = [
+    IntegerMetadata.__name__,
+    IntegerArrayMetadata.__name__,
+    RealMetadata.__name__,
+    RealArrayMetadata.__name__,
+]
+"""Names of all numeric metadata types."""
+
+
+all_metadata_types = [*numeric_metadata_types, *non_numeric_metadata_types]
+"""Names of all metadata types."""
+
+
+non_numeric_metadata_json_names = [
+    "Boolean",
+    "BooleanArray",
+    "String",
+    "StringArray",
+    "File",
+    "FileArray",
+]
+"""Names of all non-numeric metadata types when translated to JSON."""
+
+
+numeric_metadata_json_names = [
+    "Integer",
+    "IntegerArray",
+    "Double",
+    "DoubleArray",
+]
+"""Names of all numeric metadata types when translated to JSON."""
+
+
+all_metadata_json_names = [*numeric_metadata_json_names, *non_numeric_metadata_json_names]
+"""Names of all metadata types when translated to JSON."""
+
+
+numeric_metadata_enumeration_types = [IntegerValue, IntegerValue, RealValue, RealValue]
+"""Scalar types used by all numeric metadata types in enumerated values."""
 
 
 def assert_equals(metadata1, metadata2) -> None:
@@ -625,3 +663,120 @@ def test_clone_custom_metadata(type_name: str) -> None:
     assert_equals(metadata1, metadata2)
     assert metadata1.custom_metadata["key1"] is not metadata2.custom_metadata["key1"]
     assert metadata1.custom_metadata["key2"] is not metadata2.custom_metadata["key2"]
+
+
+@pytest.mark.parametrize(
+    "type_name,expected_typename", zip(all_metadata_types, all_metadata_json_names)
+)
+def test_default_metadata_to_dict(type_name: str, expected_typename: str) -> None:
+    """Tests that no extra keys are added for metadata values that are not set."""
+    metadata_type = globals()[type_name]
+    metadata = metadata_type()
+
+    result = metadata.to_dict()
+
+    expected_empty_metadata = {
+        "type": expected_typename,
+    }
+    assert result == expected_empty_metadata
+
+
+@pytest.mark.parametrize(
+    "type_name,expected_typename", zip(non_numeric_metadata_types, non_numeric_metadata_json_names)
+)
+def test_non_numeric_metadata_to_dict(type_name: str, expected_typename: str) -> None:
+    """Tests that all non-numeric metadata values are serialized correctly."""
+    metadata_type = globals()[type_name]
+    metadata = metadata_type()
+    metadata.description = "djmike"
+    if "String" in expected_typename:
+        metadata.enumerated_aliases = ["a", "b", "c", "d", "e"]
+        metadata.enumerated_values = [
+            StringValue("v"),
+            StringValue("w"),
+            StringValue("x"),
+            StringValue("y"),
+            StringValue("z"),
+        ]
+
+    result = metadata.to_dict()
+
+    expected_non_numeric_metadata: dict = {
+        "type": expected_typename,
+        "description": "djmike",
+    }
+    if "String" in expected_typename:
+        expected_non_numeric_metadata["enumAliases"] = ["a", "b", "c", "d", "e"]
+        expected_non_numeric_metadata["enumValues"] = ["v", "w", "x", "y", "z"]
+    assert result == expected_non_numeric_metadata
+
+
+@pytest.mark.parametrize(
+    "type_name,expected_typename,enum_type",
+    zip(numeric_metadata_types, numeric_metadata_json_names, numeric_metadata_enumeration_types),
+)
+def test_numeric_metadata_to_dict(type_name: str, expected_typename: str, enum_type: type) -> None:
+    """Tests that all numeric metadata values are serialized correctly."""
+    metadata_type = globals()[type_name]
+    metadata = metadata_type()
+    metadata.description = "djmike"
+    metadata.units = "tacos/hr"
+    metadata.display_format = "oough"
+    metadata.lower_bound = enum_type(1)
+    metadata.upper_bound = enum_type(5)
+    metadata.enumerated_aliases = ["a", "b", "c", "d", "e"]
+    metadata.enumerated_values = [
+        enum_type(1),
+        enum_type(2),
+        enum_type(3),
+        enum_type(4),
+        enum_type(5),
+    ]
+
+    result = metadata.to_dict()
+
+    expected_non_numeric_metadata = {
+        "type": expected_typename,
+        "description": "djmike",
+        "units": "tacos/hr",
+        "format": "oough",
+        "lowerBound": 1,
+        "upperBound": 5,
+        "enumAliases": ["a", "b", "c", "d", "e"],
+        "enumValues": [1, 2, 3, 4, 5],
+    }
+    assert result == expected_non_numeric_metadata
+
+
+@pytest.mark.parametrize(
+    "type_name,expected_typename,enum_type",
+    zip(
+        all_metadata_types,
+        all_metadata_json_names,
+        [*numeric_metadata_enumeration_types, *[None] * len(non_numeric_metadata_json_names)],
+    ),
+)
+def test_metadata_to_from_dict(type_name: str, expected_typename: str, enum_type: type):
+    metadata_type = globals()[type_name]
+    metadata = metadata_type()
+    metadata.description = "djmike"
+    if enum_type is not None:
+        metadata.units = "tacos/hr"
+        metadata.display_format = "oough"
+        metadata.lower_bound = enum_type(1)
+        metadata.upper_bound = enum_type(5)
+        metadata.enumerated_aliases = ["a", "b", "c", "d", "e"]
+        metadata.enumerated_values = [
+            enum_type(1),
+            enum_type(2),
+            enum_type(3),
+            enum_type(4),
+            enum_type(5),
+        ]
+
+    value = metadata.to_dict()
+    result = metadata_type.from_dict(value)
+
+    assert result == metadata
+    if enum_type is not None:
+        assert all(isinstance(val, enum_type) for val in result.enumerated_values)

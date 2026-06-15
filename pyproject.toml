@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "pyansys-tools-variableinterop"
-version = "0.1.3"
+version = "0.1.4"
 description = "Optional variable specifications for interoperability between languages and capabilities."
 readme = "README.rst"
 requires-python = ">=3.10,<4"
@@ -82,6 +82,7 @@ show_missing = true
 
 [tool.pytest.ini_options]
 minversion = "7.1"
+# comment addopts out if you need to debug tests (codecoverage breaks debugging)
 addopts = "-ra --cov=ansys.tools.variableinterop --cov-report html:.cov/html --cov-report xml:.cov/xml --cov-report term -vv"
 testpaths = [
     "tests",

@@ -59,7 +59,7 @@ class IVariableValue(ABC):
         T
             Results of the visitor invocation.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @property
     @abstractmethod
@@ -72,7 +72,7 @@ class IVariableValue(ABC):
         VariableType
             Variable type of the object.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def to_api_string(self, context: Optional[ISaveContext] = None) -> str:
@@ -84,7 +84,7 @@ class IVariableValue(ABC):
         str
             String appropriate for use in files and APIs.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def to_display_string(self, locale_name: str) -> str:
@@ -101,7 +101,7 @@ class IVariableValue(ABC):
         str
             String appropriate for use in user-facing areas.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
 
 class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):

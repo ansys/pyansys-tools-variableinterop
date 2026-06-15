@@ -55,9 +55,28 @@ class BooleanMetadata(CommonVariableMetadata):
         equal: bool = isinstance(other, BooleanMetadata) and super().equals(other)
         return equal
 
+    @overrides
+    def to_dict(self) -> dict:
+        result = super().to_dict()
+        return result
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "BooleanMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+        return result
+
 
 class IntegerMetadata(NumericMetadata):
     """Provides metadata for ``INTEGER`` and ``INTEGER_ARRAY`` variable types."""
+
+    _lower_bound_json_key = "lowerBound"
+    _upper_bound_json_key = "upperBound"
+    _enumerated_values_json_key = "enumValues"
+    _enumerated_aliases_json_key = "enumAliases"
 
     @overrides
     def __init__(self) -> None:
@@ -192,9 +211,55 @@ class IntegerMetadata(NumericMetadata):
         )
         return equal
 
+    @overrides
+    def to_dict(self) -> dict:
+        from . import VariableValueToJsonVisitor
+
+        visitor = VariableValueToJsonVisitor()
+
+        result = super().to_dict()
+
+        if self._lower_bound is not None:
+            result[IntegerMetadata._lower_bound_json_key] = self._lower_bound.accept(visitor)
+        if self._upper_bound is not None:
+            result[IntegerMetadata._upper_bound_json_key] = self._upper_bound.accept(visitor)
+        if len(self._enumerated_values) > 0:
+            result[IntegerMetadata._enumerated_values_json_key] = [
+                value.accept(visitor) for value in self._enumerated_values
+            ]
+        if len(self._enumerated_aliases) > 0:
+            result[IntegerMetadata._enumerated_aliases_json_key] = self._enumerated_aliases
+        return result
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data: dict) -> "IntegerMetadata":
+        description, custom_metadata = CommonVariableMetadata._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        units, display_format = NumericMetadata._from_dict(data)
+        result.units = units
+        result.display_format = display_format
+
+        result.lower_bound = data.get(IntegerMetadata._lower_bound_json_key)
+        result.upper_bound = data.get(IntegerMetadata._upper_bound_json_key)
+        result.enumerated_values = [
+            IntegerValue(val) for val in data.get(IntegerMetadata._enumerated_values_json_key, [])
+        ]
+        result.enumerated_aliases = data.get(IntegerMetadata._enumerated_aliases_json_key, [])
+
+        return result
+
 
 class RealMetadata(NumericMetadata):
     """Provides metadata for ``REAL`` and ``REAL_ARRAY`` variable types."""
+
+    _lower_bound_json_key = "lowerBound"
+    _upper_bound_json_key = "upperBound"
+    _enumerated_values_json_key = "enumValues"
+    _enumerated_aliases_json_key = "enumAliases"
 
     @overrides
     def __init__(self) -> None:
@@ -329,9 +394,53 @@ class RealMetadata(NumericMetadata):
         )
         return equal
 
+    @overrides
+    def to_dict(self) -> dict:
+        from . import VariableValueToJsonVisitor
+
+        visitor = VariableValueToJsonVisitor()
+
+        result = super().to_dict()
+
+        if self._lower_bound is not None:
+            result[RealMetadata._lower_bound_json_key] = self._lower_bound.accept(visitor)
+        if self._upper_bound is not None:
+            result[RealMetadata._upper_bound_json_key] = self._upper_bound.accept(visitor)
+        if len(self._enumerated_values) > 0:
+            result[RealMetadata._enumerated_values_json_key] = [
+                value.accept(visitor) for value in self._enumerated_values
+            ]
+        if len(self._enumerated_aliases) > 0:
+            result[RealMetadata._enumerated_aliases_json_key] = self._enumerated_aliases
+        return result
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "RealMetadata":
+        description, custom_metadata = CommonVariableMetadata._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        units, display_format = NumericMetadata._from_dict(data)
+        result.units = units
+        result.display_format = display_format
+
+        result.lower_bound = data.get(RealMetadata._lower_bound_json_key)
+        result.upper_bound = data.get(RealMetadata._upper_bound_json_key)
+        result.enumerated_values = [
+            RealValue(val) for val in data.get(RealMetadata._enumerated_values_json_key, [])
+        ]
+        result.enumerated_aliases = data.get(RealMetadata._enumerated_aliases_json_key, [])
+
+        return result
+
 
 class StringMetadata(CommonVariableMetadata):
     """Provides common metadata for ``STRING`` and ``STRING_ARRAY`` variable types."""
+
+    _enumerated_values_json_key = "enumValues"
+    _enumerated_aliases_json_key = "enumAliases"
 
     @overrides
     def __init__(self) -> None:
@@ -413,3 +522,33 @@ class StringMetadata(CommonVariableMetadata):
             and self._enumerated_aliases == other._enumerated_aliases
         )
         return equal
+
+    @overrides
+    def to_dict(self) -> dict:
+        from . import VariableValueToJsonVisitor
+
+        visitor = VariableValueToJsonVisitor()
+
+        result = super().to_dict()
+        if len(self._enumerated_values) > 0:
+            result[StringMetadata._enumerated_values_json_key] = [
+                value.accept(visitor) for value in self._enumerated_values
+            ]
+        if len(self._enumerated_aliases) > 0:
+            result[StringMetadata._enumerated_aliases_json_key] = self._enumerated_aliases
+        return result
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "StringMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+
+        result.enumerated_values = [
+            StringValue(val) for val in data.get(StringMetadata._enumerated_values_json_key, [])
+        ]
+        result.enumerated_aliases = data.get(StringMetadata._enumerated_aliases_json_key, [])
+
+        return result

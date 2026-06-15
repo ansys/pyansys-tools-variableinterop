@@ -68,7 +68,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real(self, metadata: RealMetadata) -> T:
@@ -86,7 +86,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_boolean(self, metadata: BooleanMetadata) -> T:
@@ -104,7 +104,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string(self, metadata: StringMetadata) -> T:
@@ -122,7 +122,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file(self, metadata: FileMetadata) -> T:
@@ -140,7 +140,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_integer_array(self, metadata: IntegerArrayMetadata) -> T:
@@ -158,7 +158,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real_array(self, metadata: RealArrayMetadata) -> T:
@@ -176,7 +176,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_boolean_array(self, metadata: BooleanArrayMetadata) -> T:
@@ -194,7 +194,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string_array(self, metadata: StringArrayMetadata) -> T:
@@ -212,7 +212,7 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file_array(self, metadata: FileArrayMetadata) -> T:
@@ -230,4 +230,4 @@ class IVariableMetadataVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
