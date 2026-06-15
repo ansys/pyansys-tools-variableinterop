@@ -53,3 +53,17 @@ class FileMetadata(CommonVariableMetadata):
     def equals(self, other: Any) -> bool:
         equal: bool = isinstance(other, FileMetadata) and super().equals(other)
         return equal
+
+    @overrides
+    def to_dict(self) -> dict:
+        result = super().to_dict()
+        return result
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "FileMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+        return result

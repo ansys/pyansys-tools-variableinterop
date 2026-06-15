@@ -252,9 +252,7 @@ class VariableType(Enum):
         visitor = __DefaultValueVisitor()
         return vartype_accept(visitor, self)
 
-    from .common_variable_metadata import CommonVariableMetadata
-
-    def construct_variable_metadata(self) -> CommonVariableMetadata:
+    def construct_variable_metadata(self) -> "CommonVariableMetadata":
         """
         Construct the default metadata for this type.
 

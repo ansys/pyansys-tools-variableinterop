@@ -38,3 +38,12 @@ class FileArrayMetadata(FileMetadata):
     @overrides
     def accept(self, visitor: IVariableMetadataVisitor[T]) -> T:
         return visitor.visit_file_array(self)
+
+    @classmethod
+    @overrides
+    def from_dict(cls, data) -> "FileArrayMetadata":
+        description, custom_metadata = super()._from_dict(data)
+        result = cls()
+        result.description = description
+        # result.custom_metadata = custom_metadata
+        return result

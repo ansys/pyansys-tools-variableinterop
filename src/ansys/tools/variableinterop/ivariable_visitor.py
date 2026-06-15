@@ -63,7 +63,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real(self, value: RealValue) -> T:
@@ -81,7 +81,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_boolean(self, value: BooleanValue) -> T:
@@ -99,7 +99,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string(self, value: StringValue) -> T:
@@ -117,7 +117,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_integer_array(self, value: IntegerArrayValue) -> T:
@@ -135,7 +135,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file(self, value: FileValue) -> T:
@@ -153,7 +153,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_real_array(self, value: RealArrayValue) -> T:
@@ -171,7 +171,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_boolean_array(self, value: BooleanArrayValue) -> T:
@@ -189,7 +189,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_string_array(self, value: StringArrayValue) -> T:
@@ -207,7 +207,7 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def visit_file_array(self, value: FileArrayValue) -> T:
@@ -225,4 +225,4 @@ class IVariableValueVisitor(ABC, Generic[T]):
         T
             Result.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover

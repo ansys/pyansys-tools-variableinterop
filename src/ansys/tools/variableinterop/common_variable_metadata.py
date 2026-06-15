@@ -28,10 +28,9 @@ from typing import Any, Dict, Type, TypeVar
 
 from overrides import overrides
 
-from ansys.tools.variableinterop import exceptions
-import ansys.tools.variableinterop.ivariablemetadata_visitor as ivariablemetadata_visitor
-import ansys.tools.variableinterop.variable_type as variable_type_lib
-
+from .exceptions import IncompatibleTypesException
+from .ivariablemetadata_visitor import IVariableMetadataVisitor, T
+from .variable_type import VariableType
 from .variable_value import IVariableValue
 
 
@@ -44,6 +43,12 @@ class CommonVariableMetadata(ABC):
     high-use properties. These guidelines do not exclude defining additional or more
     specific metadata as needed.
     """
+
+    variable_type_json_key = "type"
+    """The JSON key for the variable type."""
+
+    _description_json_key = "description"
+    _custom_metadata_json_key = "customMetadata"
 
     def __init__(self) -> None:
         """Initialize all members."""
@@ -83,8 +88,8 @@ class CommonVariableMetadata(ABC):
     @abstractmethod
     def accept(
         self,
-        visitor: ivariablemetadata_visitor.IVariableMetadataVisitor[ivariablemetadata_visitor.T],
-    ) -> ivariablemetadata_visitor.T:
+        visitor: IVariableMetadataVisitor[T],
+    ) -> T:
         """
         Invoke the visitor pattern of this object using the passed-in visitor
         implementation.
@@ -99,7 +104,7 @@ class CommonVariableMetadata(ABC):
         T
             Results of the visitor invocation.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @property
     def description(self) -> str:
@@ -152,9 +157,7 @@ class CommonVariableMetadata(ABC):
             scalar_values,
         )
 
-        class __DefaultValueVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
-        ):
+        class __DefaultValueVisitor(IVariableMetadataVisitor[IVariableValue]):
             """Implements the metadata visitor for getting the default value."""
 
             @staticmethod
@@ -335,9 +338,7 @@ class CommonVariableMetadata(ABC):
             scalar_values,
         )
 
-        class __RuntimeConvertVisitor(
-            ivariablemetadata_visitor.IVariableMetadataVisitor[IVariableValue]
-        ):
+        class __RuntimeConvertVisitor(IVariableMetadataVisitor[IVariableValue]):
             @overrides
             def visit_integer(self, metadata) -> scalar_values.IntegerValue:
                 return scalar_value_conversion.to_integer_value(source)
@@ -356,9 +357,7 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file(self, metadata) -> file_value.FileValue:
-                raise exceptions.IncompatibleTypesException(
-                    source.variable_type, variable_type_lib.VariableType.FILE
-                )
+                raise IncompatibleTypesException(source.variable_type, VariableType.FILE)
 
             @overrides
             def visit_integer_array(self, metadata) -> array_values.IntegerArrayValue:
@@ -378,16 +377,14 @@ class CommonVariableMetadata(ABC):
 
             @overrides
             def visit_file_array(self, metadata) -> file_array_value.FileArrayValue:
-                raise exceptions.IncompatibleTypesException(
-                    source.variable_type, variable_type_lib.VariableType.FILE_ARRAY
-                )
+                raise IncompatibleTypesException(source.variable_type, VariableType.FILE_ARRAY)
 
         visitor = __RuntimeConvertVisitor()
         return self.accept(visitor)
 
     @property
     @abstractmethod
-    def variable_type(self) -> variable_type_lib.VariableType:
+    def variable_type(self) -> VariableType:
         """
         Variable type of the object.
 
@@ -396,4 +393,69 @@ class CommonVariableMetadata(ABC):
         VariableType
             Variable type of the object.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
+
+    @abstractmethod
+    def to_dict(self) -> dict:
+        """
+        Creates a dictionary representation of this object suitable for JSON
+        serialization.
+
+        Returns
+        -------
+        dict
+            The generated dictionary
+        """
+        from .ivariable_type_pseudovisitor import vartype_accept
+        from .variable_value_json_visitors import VariableTypeToJsonVisitor
+
+        type_visitor = VariableTypeToJsonVisitor()
+        result = {
+            CommonVariableMetadata.variable_type_json_key:
+            vartype_accept(type_visitor, self.variable_type),  # fmt: skip
+        }
+        if len(self._description) > 0 and not str.isspace(self._description):
+            result[CommonVariableMetadata._description_json_key] = self._description
+        # LTTODO: implement custom metadata
+        return result
+
+    @classmethod
+    @abstractmethod
+    def from_dict(cls, data) -> "CommonVariableMetadata":
+        """
+        Creates a new metadata object from the data from a call to to_dict().
+
+        Parameters
+        ----------
+        data
+            The serialized dictionary data.
+
+        Returns
+        -------
+        CommonVariableMetadata
+            The new metadata object.
+        """
+        raise NotImplementedError  # pragma: no cover
+
+    @staticmethod
+    def _from_dict(data: dict) -> tuple[str, dict[str, VariableType]]:
+        """
+        Helper method for subclasses to extract common metadata information from a JSON
+        dictionary.
+
+        Parameters
+        ----------
+        data
+            The serialized dictionary data.
+
+        Returns
+        -------
+        tuple[str, dict[str, variable_type_lib.VariableType]]
+            A tuple containing the description and custom metadata dictionary.
+        """
+        description: str = data.get(CommonVariableMetadata._description_json_key, "")
+
+        # LTTODO: implement custom metadata
+        custom_metadata = {}
+
+        return description, custom_metadata
