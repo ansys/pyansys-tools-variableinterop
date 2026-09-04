@@ -388,6 +388,24 @@ class IntegerValue(np.int64, IVariableValue):
             # For non-IVariableValues, use the superclass behavior.
             return super().__new__(cls, arg)
 
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> IntegerValue:
+        """
+        Get a deep copy of this value.
+
+        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
+        on the grounds that scalars are immutable. That assumption does not hold for
+        this class: extending ``numpy.int64`` in Python gives instances a ``__dict__``,
+        so attributes set on a value would be shared with its copies. Construct a new
+        instance instead, which preserves the deep copy semantics this library had
+        before NumPy 2.5.
+
+        Returns
+        -------
+        IntegerValue
+            Deep copy of this value.
+        """
+        return IntegerValue(self)
+
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_integer(self)
@@ -508,6 +526,24 @@ class RealValue(np.float64, IVariableValue):
     The :meth:`from_api_string` method accepts other values provided they are unambiguously NaN.
     """
 
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> RealValue:
+        """
+        Get a deep copy of this value.
+
+        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
+        on the grounds that scalars are immutable. That assumption does not hold for
+        this class: extending ``numpy.float64`` in Python gives instances a
+        ``__dict__``, so attributes set on a value would be shared with its copies.
+        Construct a new instance instead, which preserves the deep copy semantics this
+        library had before NumPy 2.5.
+
+        Returns
+        -------
+        RealValue
+            Deep copy of this value.
+        """
+        return RealValue(self)
+
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
         return visitor.visit_real(self)
@@ -603,6 +639,24 @@ class StringValue(np.str_, IVariableValue):
     def __init__(self, value=..., /):
         # Need to override init to make this not abstract, but np.str_ objects are immutable.
         pass
+
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> StringValue:
+        """
+        Get a deep copy of this value.
+
+        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
+        on the grounds that scalars are immutable. The string payload is indeed
+        immutable, but extending ``numpy.str_`` in Python gives instances a
+        ``__dict__``, so attributes set on a value would be shared with its copies.
+        Construct a new instance instead, which preserves the deep copy semantics this
+        library had before NumPy 2.5.
+
+        Returns
+        -------
+        StringValue
+            Deep copy of this value.
+        """
+        return StringValue(self)
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
