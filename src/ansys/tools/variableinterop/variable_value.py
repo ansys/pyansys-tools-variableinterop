@@ -39,6 +39,21 @@ T = TypeVar("T")
 class IVariableValue(ABC):
     """Defines an interface for the behavior common among all variable types."""
 
+    __slots__ = ("__weakref__",)
+    """
+    Declaring ``__slots__`` here is what allows the scalar value types to be immutable.
+
+    ``__slots__`` only stops Python from adding a ``__dict__`` to the class being
+    defined; it cannot remove one contributed by a base class. Without this
+    declaration, every ``IVariableValue`` instance would get a ``__dict__``, and the
+    ``__slots__`` declarations on the scalar types below would have no effect.
+
+    ``__weakref__`` is listed so that value types remain weak-referenceable, which they
+    were before this class declared ``__slots__``. Subclasses that do not declare
+    ``__slots__`` of their own, such as :class:`CommonArrayValue` and the file value
+    types, still get a ``__dict__`` and are unaffected.
+    """
+
     def clone(self) -> IVariableValue:
         """Get a deep copy of this value."""
         return copy.deepcopy(self)

@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 import locale
-from typing import Any, Dict, Optional, cast
+from typing import Any, Dict, Optional, Tuple, cast
 
 import numpy as np
 from overrides import overrides
@@ -43,6 +43,16 @@ class BooleanValue(IVariableValue):
 
     This type is treated by Python as if it were any other Boolean type, such as
     ``numpy.bool\_`` or a built-in Boolean.
+    """
+
+    __slots__ = ("__value",)
+    """
+    Makes this type immutable.
+
+    Unlike the other scalar types, this one is not a NumPy scalar subclass and keeps its
+    payload in a Python attribute. Suppressing the ``__dict__`` is therefore not enough
+    on its own, because a slot is still reassignable, so :meth:`__setattr__` and
+    :meth:`__delattr__` are overridden to reject writes after construction.
     """
 
     @staticmethod
@@ -102,15 +112,15 @@ class BooleanValue(IVariableValue):
 
             Any other option raises an exception.
         """
-        self.__value: np.bool_
+        value: np.bool_
         if source is None:
-            self.__value = np.False_
+            value = np.False_
         elif isinstance(source, (bool, np.bool_)):
-            self.__value = np.bool_(source)
+            value = np.bool_(source)
         elif isinstance(source, IVariableValue):
             from ansys.tools.variableinterop.scalar_value_conversion import to_boolean_value
 
-            self.__value = np.bool_(to_boolean_value(source))
+            value = np.bool_(to_boolean_value(source))
         elif isinstance(
             source,
             (
@@ -127,11 +137,51 @@ class BooleanValue(IVariableValue):
                 np.ulonglong,
             ),
         ):
-            self.__value = np.bool_(source != 0)
+            value = np.bool_(source != 0)
         elif isinstance(source, (float, np.half, np.float16, np.single, np.double, np.longdouble)):
-            self.__value = np.bool_(source != 0.0)
+            value = np.bool_(source != 0.0)
         else:
             raise IncompatibleTypesException(type(source).__name__, VariableType.BOOLEAN)
+
+        # Bypass the __setattr__ guard below, which rejects every other write.
+        object.__setattr__(self, "_BooleanValue__value", value)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        """
+        Reject attribute assignment, because this type is immutable.
+
+        Raises
+        ------
+        AttributeError
+            Always.
+        """
+        raise AttributeError(f"{type(self).__name__} objects are immutable.")
+
+    def __delattr__(self, name: str) -> None:
+        """
+        Reject attribute deletion, because this type is immutable.
+
+        Raises
+        ------
+        AttributeError
+            Always.
+        """
+        raise AttributeError(f"{type(self).__name__} objects are immutable.")
+
+    def __reduce__(self) -> Tuple[Any, ...]:
+        """
+        Reduce this value to a form that can be reconstructed.
+
+        The default reduction for a class using ``__slots__`` restores state with
+        ``setattr``, which :meth:`__setattr__` rejects. Reconstructing through the
+        constructor instead keeps ``copy.deepcopy`` and ``pickle`` working.
+
+        Returns
+        -------
+        Tuple[Any, ...]
+            Callable and arguments needed to reconstruct this value.
+        """
+        return (type(self), (self.__value,))
 
     def __add__(self, other):
         """Magic method add."""
@@ -350,6 +400,15 @@ class IntegerValue(np.int64, IVariableValue):
     between the variable interop standards and the default Python and NumPy behaviors.
     """
 
+    __slots__ = ()
+    """
+    Makes this type immutable.
+
+    The numeric payload already lives in the ``numpy.int64`` C struct, which exposes no
+    mutation API, so suppressing the ``__dict__`` is all that is needed. This works only
+    because :class:`IVariableValue` also declares ``__slots__``.
+    """
+
     @overrides
     def __new__(cls, arg: Any = 0):
         """
@@ -392,12 +451,10 @@ class IntegerValue(np.int64, IVariableValue):
         """
         Get a deep copy of this value.
 
-        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
-        on the grounds that scalars are immutable. That assumption does not hold for
-        this class: extending ``numpy.int64`` in Python gives instances a ``__dict__``,
-        so attributes set on a value would be shared with its copies. Construct a new
-        instance instead, which preserves the deep copy semantics this library had
-        before NumPy 2.5.
+        Although this type is immutable, NumPy's own scalar deep copy is not usable
+        here: before NumPy 2.5 it reduces to a bare ``numpy.int64``, discarding the
+        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
+        instance keeps the result an ``IntegerValue`` on every supported version.
 
         Returns
         -------
@@ -489,6 +546,15 @@ class RealValue(np.float64, IVariableValue):
     ``numpy.int64`` objects.
     """
 
+    __slots__ = ()
+    """
+    Makes this type immutable.
+
+    The numeric payload already lives in the ``numpy.float64`` C struct, which exposes
+    no mutation API, so suppressing the ``__dict__`` is all that is needed. This works
+    only because :class:`IVariableValue` also declares ``__slots__``.
+    """
+
     def __new__(cls, arg: Any = 0.0):
         """
         Create a new instance.
@@ -530,12 +596,10 @@ class RealValue(np.float64, IVariableValue):
         """
         Get a deep copy of this value.
 
-        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
-        on the grounds that scalars are immutable. That assumption does not hold for
-        this class: extending ``numpy.float64`` in Python gives instances a
-        ``__dict__``, so attributes set on a value would be shared with its copies.
-        Construct a new instance instead, which preserves the deep copy semantics this
-        library had before NumPy 2.5.
+        Although this type is immutable, NumPy's own scalar deep copy is not usable
+        here: before NumPy 2.5 it reduces to a bare ``numpy.float64``, discarding the
+        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
+        instance keeps the result a ``RealValue`` on every supported version.
 
         Returns
         -------
@@ -636,6 +700,15 @@ class StringValue(np.str_, IVariableValue):
     naturally to the analogous NumPy type.
     """
 
+    __slots__ = ()
+    """
+    Makes this type immutable.
+
+    The string payload already lives in the ``numpy.str_`` C struct, which exposes no
+    mutation API, so suppressing the ``__dict__`` is all that is needed. This works only
+    because :class:`IVariableValue` also declares ``__slots__``.
+    """
+
     def __init__(self, value=..., /):
         # Need to override init to make this not abstract, but np.str_ objects are immutable.
         pass
@@ -644,12 +717,10 @@ class StringValue(np.str_, IVariableValue):
         """
         Get a deep copy of this value.
 
-        NumPy 2.5 changed ``__deepcopy__`` on its scalar types to return ``self``,
-        on the grounds that scalars are immutable. The string payload is indeed
-        immutable, but extending ``numpy.str_`` in Python gives instances a
-        ``__dict__``, so attributes set on a value would be shared with its copies.
-        Construct a new instance instead, which preserves the deep copy semantics this
-        library had before NumPy 2.5.
+        Although this type is immutable, NumPy's own scalar deep copy is not usable
+        here: before NumPy 2.5 it reduces to a bare ``numpy.str_``, discarding the
+        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
+        instance keeps the result a ``StringValue`` on every supported version.
 
         Returns
         -------

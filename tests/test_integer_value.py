@@ -391,4 +391,16 @@ def test_clone() -> None:
 
     # Verification
     assert result is not sut
+    assert type(result) is IntegerValue
     assert result == 7
+
+
+def test_is_immutable() -> None:
+    """Verifies that IntegerValue instances cannot be modified."""
+    # Setup
+    sut: IntegerValue = IntegerValue(7)
+
+    # SUT / Verification
+    with pytest.raises(AttributeError):
+        sut.some_attribute = "value"
+    assert not hasattr(sut, "__dict__")

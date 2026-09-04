@@ -165,4 +165,16 @@ def test_clone() -> None:
 
     # Verification
     assert result is not sut
+    assert type(result) is StringValue
     assert result == "word"
+
+
+def test_is_immutable() -> None:
+    """Verifies that StringValue instances cannot be modified."""
+    # Setup
+    sut: StringValue = StringValue("word")
+
+    # SUT / Verification
+    with pytest.raises(AttributeError):
+        sut.some_attribute = "value"
+    assert not hasattr(sut, "__dict__")

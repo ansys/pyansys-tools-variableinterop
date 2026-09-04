@@ -347,7 +347,19 @@ def test_clone() -> None:
 
     # Verification
     assert result is not sut
+    assert type(result) is RealValue
     assert result == 6.9
+
+
+def test_is_immutable() -> None:
+    """Verifies that RealValue instances cannot be modified."""
+    # Setup
+    sut: RealValue = RealValue(6.9)
+
+    # SUT / Verification
+    with pytest.raises(AttributeError):
+        sut.some_attribute = "value"
+    assert not hasattr(sut, "__dict__")
 
 
 @pytest.mark.parametrize(

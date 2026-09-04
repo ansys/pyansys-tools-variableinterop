@@ -494,3 +494,16 @@ def test_clone() -> None:
     # Verification
     assert result is not sut
     assert np.equal(result, True)
+
+
+def test_is_immutable() -> None:
+    """Verifies that BooleanValue instances cannot be modified."""
+    # Setup
+    sut: acvi.BooleanValue = acvi.BooleanValue(True)
+
+    # SUT / Verification
+    with pytest.raises(AttributeError):
+        sut.some_attribute = "value"
+    with pytest.raises(AttributeError):
+        del sut.some_attribute
+    assert not hasattr(sut, "__dict__")
