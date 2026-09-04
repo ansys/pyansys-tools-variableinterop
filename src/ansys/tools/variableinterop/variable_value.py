@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import copy
-from typing import Generic, Optional, Tuple, TypeVar
+from typing import Any, Generic, Optional, Tuple, TypeVar
 
 import numpy as np
 
@@ -104,11 +104,18 @@ class IVariableValue(ABC):
         raise NotImplementedError  # pragma: nocover
 
 
-class CommonArrayValue(Generic[T], np.ndarray, IVariableValue, ABC):
+class CommonArrayValue(Generic[T], np.ndarray[Any, np.dtype[T]], IVariableValue, ABC):
     """
     Defines an interface for the behavior common among all array types.
 
     This class inherits the ``IVariableValue`` class.
+
+    The ``numpy.ndarray`` base is spelled out rather than written as
+    ``numpy.typing.NDArray[T]``. NumPy 2.5 redefined ``NDArray`` as a PEP 695 type alias,
+    which cannot be used as a base class: at runtime its ``__mro_entries__`` no longer
+    resolves to ``numpy.ndarray``, which raises a metaclass conflict against ``ABCMeta``.
+    Writing the parameterized ``ndarray`` directly resolves to ``numpy.ndarray`` on every
+    supported NumPy version while keeping the element type visible to type checkers.
     """
 
     def get_lengths(self) -> Tuple[int]:

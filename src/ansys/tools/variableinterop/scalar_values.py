@@ -388,7 +388,7 @@ class IntegerValue(np.int64, IVariableValue):
             # For non-IVariableValues, use the superclass behavior.
             return super().__new__(cls, arg)
 
-    def __deepcopy__(self, memo: Dict[int, Any]) -> IntegerValue:
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> IntegerValue:
         """
         Get a deep copy of this value.
 
@@ -526,7 +526,7 @@ class RealValue(np.float64, IVariableValue):
     The :meth:`from_api_string` method accepts other values provided they are unambiguously NaN.
     """
 
-    def __deepcopy__(self, memo: Dict[int, Any]) -> RealValue:
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> RealValue:
         """
         Get a deep copy of this value.
 
@@ -640,7 +640,7 @@ class StringValue(np.str_, IVariableValue):
         # Need to override init to make this not abstract, but np.str_ objects are immutable.
         pass
 
-    def __deepcopy__(self, memo: Dict[int, Any]) -> StringValue:
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> StringValue:
         """
         Get a deep copy of this value.
 
