@@ -26,7 +26,7 @@ from abc import ABC, abstractmethod
 import copy
 from typing import Generic, Optional, Tuple, TypeVar
 
-from numpy.typing import NDArray
+import numpy as np
 
 import ansys.tools.variableinterop.variable_type as variable_type_lib
 
@@ -104,7 +104,7 @@ class IVariableValue(ABC):
         raise NotImplementedError  # pragma: nocover
 
 
-class CommonArrayValue(Generic[T], NDArray[T], IVariableValue, ABC):
+class CommonArrayValue(Generic[T], np.ndarray, IVariableValue, ABC):
     """
     Defines an interface for the behavior common among all array types.
 
