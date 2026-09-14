@@ -338,7 +338,7 @@ def test_to_api_string(source: RealValue, expected_value: str) -> None:
 
 
 def test_clone() -> None:
-    """Verifies that clone returns a new RealValue with the same value."""
+    """Verifies that clone returns an equal RealValue."""
     # Setup
     sut: RealValue = RealValue(6.9)
 
@@ -346,7 +346,8 @@ def test_clone() -> None:
     result: RealValue = sut.clone()
 
     # Verification
-    assert result is not sut
+    # RealValue is immutable, so clone returns the original instance.
+    assert result is sut
     assert type(result) is RealValue
     assert result == 6.9
 

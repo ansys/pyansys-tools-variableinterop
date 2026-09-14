@@ -484,7 +484,7 @@ def test_to_int_value(source: acvi.BooleanValue, expected_result: str) -> None:
 
 
 def test_clone() -> None:
-    """Verifies that clone returns a new BooleanValue with the same value."""
+    """Verifies that clone returns an equal BooleanValue."""
     # Setup
     sut: acvi.BooleanValue = acvi.BooleanValue(True)
 
@@ -492,7 +492,9 @@ def test_clone() -> None:
     result: acvi.BooleanValue = sut.clone()
 
     # Verification
-    assert result is not sut
+    # BooleanValue is immutable, so clone returns the original instance.
+    assert result is sut
+    assert type(result) is acvi.BooleanValue
     assert np.equal(result, True)
 
 

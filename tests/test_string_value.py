@@ -156,7 +156,7 @@ def test_to_api_string(source: StringValue, expected_value: str) -> None:
 
 
 def test_clone() -> None:
-    """Verifies that clone returns a new StringValue with the same value."""
+    """Verifies that clone returns an equal StringValue."""
     # Setup
     sut: StringValue = StringValue("word")
 
@@ -164,7 +164,8 @@ def test_clone() -> None:
     result: StringValue = sut.clone()
 
     # Verification
-    assert result is not sut
+    # StringValue is immutable, so clone returns the original instance.
+    assert result is sut
     assert type(result) is StringValue
     assert result == "word"
 

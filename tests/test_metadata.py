@@ -661,8 +661,13 @@ def test_clone_custom_metadata(type_name: str) -> None:
     metadata1.custom_metadata["key2"] = IntegerValue(0)
     metadata2 = metadata1.clone()
     assert_equals(metadata1, metadata2)
-    assert metadata1.custom_metadata["key1"] is not metadata2.custom_metadata["key1"]
-    assert metadata1.custom_metadata["key2"] is not metadata2.custom_metadata["key2"]
+    # The values are immutable and may be shared, but the dictionary holding them must
+    # not be, otherwise modifying one metadata object would affect the other.
+    assert metadata1.custom_metadata is not metadata2.custom_metadata
+    assert metadata1.custom_metadata["key1"] == metadata2.custom_metadata["key1"]
+    assert metadata1.custom_metadata["key2"] == metadata2.custom_metadata["key2"]
+    metadata2.custom_metadata["key3"] = IntegerValue(2)
+    assert "key3" not in metadata1.custom_metadata
 
 
 @pytest.mark.parametrize(

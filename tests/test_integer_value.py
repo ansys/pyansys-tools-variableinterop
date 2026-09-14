@@ -382,7 +382,7 @@ def test_to_integer_value_invalid(
 
 
 def test_clone() -> None:
-    """Verifies that clone returns a new IntegerValue with the same value."""
+    """Verifies that clone returns an equal IntegerValue."""
     # Setup
     sut: IntegerValue = IntegerValue(7)
 
@@ -390,7 +390,8 @@ def test_clone() -> None:
     result: IntegerValue = sut.clone()
 
     # Verification
-    assert result is not sut
+    # IntegerValue is immutable, so clone returns the original instance.
+    assert result is sut
     assert type(result) is IntegerValue
     assert result == 7
 

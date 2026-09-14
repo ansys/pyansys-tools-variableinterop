@@ -63,7 +63,7 @@ def test_clone(value: acvi.IVariableValue, is_valid: bool):
     # Verify
     assert isinstance(clone, acvi.VariableState)
     assert clone is not original
-    assert clone.value is not original.value
+    # The scalar value types are immutable, so the clone shares the original value.
     assert type(clone.value) == type(original.value)
     assert clone.value == original.value
     assert clone.is_valid == original.is_valid

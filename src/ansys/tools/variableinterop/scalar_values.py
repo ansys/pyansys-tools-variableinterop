@@ -55,6 +55,10 @@ class BooleanValue(IVariableValue):
     :meth:`__delattr__` are overridden to reject writes after construction.
     """
 
+    # Declares the slot's type. The construction path writes it through
+    # object.__setattr__, which type checkers cannot follow back to a declaration.
+    __value: np.bool_
+
     @staticmethod
     def int64_to_bool(val: np.int64) -> bool:
         """Convert a NumPy int64 type to a Boolean value per interchange
@@ -168,13 +172,27 @@ class BooleanValue(IVariableValue):
         """
         raise AttributeError(f"{type(self).__name__} objects are immutable.")
 
+    def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> BooleanValue:
+        """
+        Get a deep copy of this value, which is the value itself.
+
+        This type is immutable, so sharing an instance between a value and its copies is
+        safe. This matches the behavior of the other scalar value types.
+
+        Returns
+        -------
+        BooleanValue
+            This value.
+        """
+        return self
+
     def __reduce__(self) -> Tuple[Any, ...]:
         """
         Reduce this value to a form that can be reconstructed.
 
         The default reduction for a class using ``__slots__`` restores state with
         ``setattr``, which :meth:`__setattr__` rejects. Reconstructing through the
-        constructor instead keeps ``copy.deepcopy`` and ``pickle`` working.
+        constructor instead keeps ``pickle`` working.
 
         Returns
         -------
@@ -449,19 +467,20 @@ class IntegerValue(np.int64, IVariableValue):
 
     def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> IntegerValue:
         """
-        Get a deep copy of this value.
+        Get a deep copy of this value, which is the value itself.
 
-        Although this type is immutable, NumPy's own scalar deep copy is not usable
-        here: before NumPy 2.5 it reduces to a bare ``numpy.int64``, discarding the
-        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
-        instance keeps the result an ``IntegerValue`` on every supported version.
+        This type is immutable, so sharing an instance between a value and its copies is
+        safe. NumPy 2.5 makes the same decision for its own scalars, but earlier
+        versions instead reduce to a bare ``numpy.int64``, which would silently strip
+        the ``IVariableValue`` interface off the result. Returning ``self`` keeps the
+        behavior identical on every supported NumPy version.
 
         Returns
         -------
         IntegerValue
-            Deep copy of this value.
+            This value.
         """
-        return IntegerValue(self)
+        return self
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -594,19 +613,20 @@ class RealValue(np.float64, IVariableValue):
 
     def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> RealValue:
         """
-        Get a deep copy of this value.
+        Get a deep copy of this value, which is the value itself.
 
-        Although this type is immutable, NumPy's own scalar deep copy is not usable
-        here: before NumPy 2.5 it reduces to a bare ``numpy.float64``, discarding the
-        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
-        instance keeps the result a ``RealValue`` on every supported version.
+        This type is immutable, so sharing an instance between a value and its copies is
+        safe. NumPy 2.5 makes the same decision for its own scalars, but earlier
+        versions instead reduce to a bare ``numpy.float64``, which would silently strip
+        the ``IVariableValue`` interface off the result. Returning ``self`` keeps the
+        behavior identical on every supported NumPy version.
 
         Returns
         -------
         RealValue
-            Deep copy of this value.
+            This value.
         """
-        return RealValue(self)
+        return self
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:
@@ -715,19 +735,20 @@ class StringValue(np.str_, IVariableValue):
 
     def __deepcopy__(self, memo: Optional[Dict[int, Any]]) -> StringValue:
         """
-        Get a deep copy of this value.
+        Get a deep copy of this value, which is the value itself.
 
-        Although this type is immutable, NumPy's own scalar deep copy is not usable
-        here: before NumPy 2.5 it reduces to a bare ``numpy.str_``, discarding the
-        subclass, and from NumPy 2.5 on it returns ``self``. Constructing a new
-        instance keeps the result a ``StringValue`` on every supported version.
+        This type is immutable, so sharing an instance between a value and its copies is
+        safe. NumPy 2.5 makes the same decision for its own scalars, but earlier
+        versions instead reduce to a bare ``numpy.str_``, which would silently strip the
+        ``IVariableValue`` interface off the result. Returning ``self`` keeps the
+        behavior identical on every supported NumPy version.
 
         Returns
         -------
         StringValue
-            Deep copy of this value.
+            This value.
         """
-        return StringValue(self)
+        return self
 
     @overrides
     def accept(self, visitor: IVariableValueVisitor[T]) -> T:

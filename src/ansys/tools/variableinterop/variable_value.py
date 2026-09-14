@@ -55,7 +55,18 @@ class IVariableValue(ABC):
     """
 
     def clone(self) -> IVariableValue:
-        """Get a deep copy of this value."""
+        """
+        Get a copy of this value that can be modified without affecting this one.
+
+        The immutable value types return themselves, because nothing can be modified
+        through the result. The mutable ones, such as the array types, return a deep
+        copy.
+
+        Returns
+        -------
+        IVariableValue
+            Value equal to this one that is safe to use independently.
+        """
         return copy.deepcopy(self)
 
     @abstractmethod
