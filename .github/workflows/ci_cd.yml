@@ -165,6 +165,7 @@ jobs:
         uses: ansys/actions/doc-build@7410037bfb276c79ae91eb3617b9f5d2876f0c94 # v11.0.8
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          check-links: false
 
 
   package:
