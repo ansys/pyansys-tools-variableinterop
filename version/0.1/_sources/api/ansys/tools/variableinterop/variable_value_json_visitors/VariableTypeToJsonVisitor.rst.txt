@@ -1,0 +1,394 @@
+
+
+
+
+
+
+:class:`VariableTypeToJsonVisitor`
+==================================
+
+
+.. py:class:: ansys.tools.variableinterop.variable_value_json_visitors.VariableTypeToJsonVisitor
+
+   Bases: :py:obj:`ansys.tools.variableinterop.IVariableTypePseudoVisitor`\ [\ :py:obj:`str`\ ]
+
+
+   
+   Visitor that returns a JSON serializable representation of an VariableType.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: VariableTypeToJsonVisitor
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~visit_unknown`
+            - Visit the ``UNKNOWN`` variable type.
+          * - :py:attr:`~visit_int`
+            - Visit the ``INTEGER`` variable type.
+          * - :py:attr:`~visit_real`
+            - Visit the ``REAL`` variable type.
+          * - :py:attr:`~visit_boolean`
+            - Visit the ``BOOLEAN`` variable type.
+          * - :py:attr:`~visit_string`
+            - Visit the ``STRING`` variable type.
+          * - :py:attr:`~visit_file`
+            - Visit the ``FILE`` variable type.
+          * - :py:attr:`~visit_int_array`
+            - Visit the ``INTEGER_ARRAY`` variable type.
+          * - :py:attr:`~visit_real_array`
+            - Visit the ``REAL_ARRAY`` variable type.
+          * - :py:attr:`~visit_bool_array`
+            - Visit the ``BOOLEAN_ARRAY`` variable type.
+          * - :py:attr:`~visit_string_array`
+            - Visit the ``STRING_ARRAY`` variable type.
+          * - :py:attr:`~visit_file_array`
+            - Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_value_json_visitors import VariableTypeToJsonVisitor
+
+
+
+Method detail
+-------------
+
+.. py:method:: visit_unknown() -> str
+
+   
+   Visit the ``UNKNOWN`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int() -> str
+
+   
+   Visit the ``INTEGER`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real() -> str
+
+   
+   Visit the ``REAL`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_boolean() -> str
+
+   
+   Visit the ``BOOLEAN`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string() -> str
+
+   
+   Visit the ``STRING`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file() -> str
+
+   
+   Visit the ``FILE`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_int_array() -> str
+
+   
+   Visit the ``INTEGER_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_real_array() -> str
+
+   
+   Visit the ``REAL_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_bool_array() -> str
+
+   
+   Visit the ``BOOLEAN_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_string_array() -> str
+
+   
+   Visit the ``STRING_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: visit_file_array() -> str
+
+   
+   Visit the ``FILE_ARRAY`` variable type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Result, as documented by the implementing class.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

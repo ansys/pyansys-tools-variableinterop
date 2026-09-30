@@ -1,0 +1,226 @@
+
+
+
+
+
+
+:class:`FileScope`
+==================
+
+
+.. py:class:: ansys.tools.variableinterop.file_scope.FileScope
+
+   Bases: :py:obj:`contextlib.AbstractContextManager`, :py:obj:`abc.ABC`
+
+
+   
+   Provides an abstract base for file scopes.
+
+   A file scope helps a program manage the disk space used for file storage and
+   enables it to clean up caches and space in a reliable way.
+   ``FileValue`` instances (except for ``ansys.tools.variableinterop.EMPTY_FILE``)
+   should always be created by a ``FileScope`` instance. ``FileValue`` instances
+   created by a ``FileScope`` instance are not valid once the ``FileScope`` instance
+   has been closed.
+
+   This abstract base class contains the logic to be a context manager
+   for use in ``with`` blocks. Any derived class's ``close`` method is
+   automatically called when the ``with`` block is exited.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+.. py:currentmodule:: FileScope
+
+Overview
+--------
+
+.. tab-set::
+
+   .. tab-item:: Abstract methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~close`
+            - Close the ``FileScope`` instance, cleaning up any files it contains.
+          * - :py:attr:`~read_from_file`
+            - Read the contents of a file and create a new ``FileValue`` object backed by a
+          * - :py:attr:`~from_api_object`
+            - Create a ``FileScope`` instance from a map of API strings.
+
+
+
+
+
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__exit__`
+            - Raise any exception triggered within the runtime context.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.file_scope import FileScope
+
+
+
+Method detail
+-------------
+
+.. py:method:: __exit__(__exc_type: Type[BaseException] | None, __exc_value: BaseException | None, __traceback: types.TracebackType | None) -> bool | None
+
+   
+   Raise any exception triggered within the runtime context.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: close() -> None
+   :abstractmethod:
+
+
+   
+   Close the ``FileScope`` instance, cleaning up any files it contains.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: read_from_file(to_read: os.PathLike, mime_type: Optional[str] = None, encoding: Optional[str] = None) -> ansys.tools.variableinterop.file_value.FileValue
+   :abstractmethod:
+
+
+   
+   Read the contents of a file and create a new ``FileValue`` object backed by a
+   file in this scope.
+
+
+   :Parameters:
+
+       **to_read** : :obj:`PathLike`
+           Path to the file to read.
+
+       **mime_type** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           MIME type of the file. The default is `None`, which indicates that the file
+           does not have a MIME type or that the type is not known.
+
+       **encoding** : :obj:`Optional`\[:class:`python:str`], :obj:`optional`
+           Encoding of the file. The default is `None`, which indicates that the file
+           does not have a text encoding (for example, because it is a binary file.)
+
+
+
+   :Returns:
+
+       :obj:`FileValue`
+           New ``FileValue`` object with the contents of the specified file, backed by this scope.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_object(api_object: Dict[str, Optional[str]], load_context: ansys.tools.variableinterop.isave_context.ILoadContext) -> ansys.tools.variableinterop.file_value.FileValue
+   :abstractmethod:
+
+
+   
+   Create a ``FileScope`` instance from a map of API strings.
+
+
+   :Parameters:
+
+       **api_object** : :obj:`Dict`\[:class:`python:str`, :obj:`Optional`\[:class:`python:str`]]
+           Map of API strings that define the scope.
+
+       **load_context** : :obj:`ILoadContext`
+           Load context to read the file contents from.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

@@ -1,0 +1,118 @@
+
+
+
+
+
+
+The ``array_values.py`` module
+==============================
+
+.. py:module:: ansys.tools.variableinterop.array_values
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: array_values
+.. tab-set::
+
+
+
+
+    .. tab-item:: Classes
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_values.BooleanArrayValue`
+            - Stores a value as a ``BooleanArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_values.IntegerArrayValue`
+            - Stores a value as an ``IntegerArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_values.RealArrayValue`
+            - Stores a value as a ``RealArrayValue`` variable type.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.array_values.StringArrayValue`
+            - Stores a value as a ``StringArrayValue`` variable type.
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_class"></span> BooleanArrayValue</api/ansys/tools/variableinterop/array_values/BooleanArrayValue>
+    <span class="nf nf-cod-symbol_class"></span> IntegerArrayValue</api/ansys/tools/variableinterop/array_values/IntegerArrayValue>
+    <span class="nf nf-cod-symbol_class"></span> RealArrayValue</api/ansys/tools/variableinterop/array_values/RealArrayValue>
+    <span class="nf nf-cod-symbol_class"></span> StringArrayValue</api/ansys/tools/variableinterop/array_values/StringArrayValue>
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines all array value implementations of the ``IVariableValue`` variable type.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

@@ -1,0 +1,97 @@
+
+
+
+
+
+
+The ``ivariablemetadata_visitor.py`` module
+===========================================
+
+.. py:module:: ansys.tools.variableinterop.ivariablemetadata_visitor
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: ivariablemetadata_visitor
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.ivariablemetadata_visitor.IVariableMetadataVisitor`
+            - Defines the interface to be implemented for using the visitor pattern with variable
+
+
+
+
+
+
+
+
+    .. tab-item:: Constants
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~T`
+            - 
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_interface"></span> IVariableMetadataVisitor</api/ansys/tools/variableinterop/ivariablemetadata_visitor/IVariableMetadataVisitor>
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``IVariableMetadataVisitor`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:data:: T
+
+
+

@@ -1,0 +1,90 @@
+
+
+
+
+
+
+:class:`IncompatibleTypesException`
+===================================
+
+
+.. py:exception:: ansys.tools.variableinterop.exceptions.IncompatibleTypesException(from_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str], to_type: Union[ansys.tools.variableinterop.variable_type.VariableType, str])
+
+   Bases: :py:obj:`BaseException`
+
+
+   
+   Indicates that the types used in a conversion are incompatible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: IncompatibleTypesException
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+
+
+   .. tab-item:: Attributes
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_type`
+            - 
+          * - :py:attr:`~from_type_str`
+            - 
+          * - :py:attr:`~to_type`
+            - 
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.exceptions import IncompatibleTypesException
+
+
+Attribute detail
+----------------
+
+.. py:attribute:: from_type
+   :type:  Optional[ansys.tools.variableinterop.variable_type.VariableType]
+
+.. py:attribute:: from_type_str
+   :type:  str
+
+.. py:attribute:: to_type
+   :type:  Optional[ansys.tools.variableinterop.variable_type.VariableType]
+
+
+
+
+

@@ -1,0 +1,873 @@
+
+
+
+
+
+
+:class:`BooleanValue`
+=====================
+
+
+.. py:class:: ansys.tools.variableinterop.scalar_values.BooleanValue(source: object = None)
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.IVariableValue`
+
+
+   
+   Stores a value as a ``BooleanValue`` variable type.
+
+   This type is treated by Python as if it were any other Boolean type, such as
+   ``numpy.bool\_`` or a built-in Boolean.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: BooleanValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~accept`
+            - Invoke the visitor pattern of this object using the passed-in visitor
+          * - :py:attr:`~to_api_string`
+            - Convert the value to an API string.
+          * - :py:attr:`~to_real_value`
+            - Convert a given ``BooleanValue`` type to a ``RealValue`` type.
+          * - :py:attr:`~to_integer_value`
+            - Convert a given ``BooleanValue`` type to an ``IntegerValue`` type.
+          * - :py:attr:`~to_display_string`
+            - Convert the value to a formatted string.
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - Variable type of the object.
+
+
+   .. tab-item:: Attributes
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~api_str_to_bool`
+            - Mapping of acceptable normalized values for API string conversion to their
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~int64_to_bool`
+            - Convert a NumPy int64 type to a Boolean value per interchange
+          * - :py:attr:`~int_to_bool`
+            - Convert an integer to a Boolean value per interchange specifications.
+          * - :py:attr:`~float_to_bool`
+            - Convert a float value to a Boolean value per interchange specifications.
+          * - :py:attr:`~str_to_bool`
+            - Convert a string to a Boolean value per interchange specifications.
+          * - :py:attr:`~from_api_string`
+            - Convert an API string back into a ``BooleanValue`` type.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__add__`
+            - Magic method add.
+          * - :py:attr:`~__and__`
+            - Magic method and.
+          * - :py:attr:`~__bool__`
+            - Magic method bool.
+          * - :py:attr:`~__eq__`
+            - 
+          * - :py:attr:`~__floordiv__`
+            - Magic method floordiv.
+          * - :py:attr:`~__gt__`
+            - Magic method gt.
+          * - :py:attr:`~__ge__`
+            - Magic method ge.
+          * - :py:attr:`~__hash__`
+            - 
+          * - :py:attr:`~__lshift__`
+            - Magic method lshift.
+          * - :py:attr:`~__mod__`
+            - Magic method mod.
+          * - :py:attr:`~__mul__`
+            - Magic method mul.
+          * - :py:attr:`~__ne__`
+            - 
+          * - :py:attr:`~__or__`
+            - Magic method or.
+          * - :py:attr:`~__pow__`
+            - Magic method pow.
+          * - :py:attr:`~__rshift__`
+            - Magic method rshift.
+          * - :py:attr:`~__str__`
+            - 
+          * - :py:attr:`~__truediv__`
+            - Magic method truediv.
+          * - :py:attr:`~__xor__`
+            - Magic method xor.
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.scalar_values import BooleanValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+   
+   Variable type of the object.
+
+
+
+
+
+   :Returns:
+
+       :obj:`VariableType`
+           Variable type of the object.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Attribute detail
+----------------
+
+.. py:attribute:: api_str_to_bool
+   :type:  Dict[str, bool]
+
+   
+   Mapping of acceptable normalized values for API string conversion to their
+   corresponding Boolean value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Method detail
+-------------
+
+.. py:method:: int64_to_bool(val: numpy.int64) -> bool
+   :staticmethod:
+
+
+   
+   Convert a NumPy int64 type to a Boolean value per interchange
+   specifications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: int_to_bool(val: int) -> bool
+   :staticmethod:
+
+
+   
+   Convert an integer to a Boolean value per interchange specifications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: float_to_bool(val: float) -> bool
+   :staticmethod:
+
+
+   
+   Convert a float value to a Boolean value per interchange specifications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: str_to_bool(val: str) -> bool
+   :staticmethod:
+
+
+   
+   Convert a string to a Boolean value per interchange specifications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __add__(other)
+
+   
+   Magic method add.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __and__(other)
+
+   
+   Magic method and.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __bool__()
+
+   
+   Magic method bool.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __eq__(other)
+
+.. py:method:: __floordiv__(other)
+
+   
+   Magic method floordiv.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __gt__(other)
+
+   
+   Magic method gt.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __ge__(other)
+
+   
+   Magic method ge.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __hash__()
+
+.. py:method:: __lshift__(other)
+
+   
+   Magic method lshift.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __mod__(other)
+
+   
+   Magic method mod.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __mul__(other)
+
+   
+   Magic method mul.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __ne__(other)
+
+.. py:method:: __or__(other)
+
+   
+   Magic method or.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __pow__(other)
+
+   
+   Magic method pow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __rshift__(other)
+
+   
+   Magic method rshift.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __str__()
+
+.. py:method:: __truediv__(other)
+
+   
+   Magic method truediv.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: __xor__(other)
+
+   
+   Magic method xor.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[ansys.tools.variableinterop.ivariable_visitor.T]) -> ansys.tools.variableinterop.ivariable_visitor.T
+
+   
+   Invoke the visitor pattern of this object using the passed-in visitor
+   implementation.
+
+
+   :Parameters:
+
+       **visitor** : :obj:`IVariableValueVisitor`
+           Visitor object to call.
+
+
+
+   :Returns:
+
+       :obj:`T`
+           Results of the visitor invocation.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+   
+   Convert the value to an API string.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in files and APIs.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_real_value() -> RealValue
+
+   
+   Convert a given ``BooleanValue`` type to a ``RealValue`` type.
+
+   ``True`` is converted to ``1.0``,  and ``False`` is converted to ``0.0``.
+
+
+
+
+   :Returns:
+
+       :obj:`RealValue`
+           ``RealValue`` type with value representing the original ``BooleanValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: from_api_string(value: str) -> BooleanValue
+   :staticmethod:
+
+
+   
+   Convert an API string back into a ``BooleanValue`` type.
+
+   The conversion is performed according to the type
+   interoperability specifications.
+
+   Values that are parseable as floating-point numbers
+   are parsed in that manner and then converted to a ``BooleanValue`` type.
+
+   Values that are non-numeric are checked to see if they match
+   any of the following values.  The comparison is case-insensitive.
+
+   - For ``True``: ``"true"``, ``"yes"``, or ``"y"``.
+   - For ``False``: ``"false"``, ``"no"``, or ``"n"``.
+
+   Values not interpretable result in a ``ValueError``.
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           String to parse.
+
+
+
+   :Returns:
+
+       :obj:`BooleanValue`
+           ``BooleanValue`` type parsed from the API string.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_integer_value() -> IntegerValue
+
+   
+   Convert a given ``BooleanValue`` type to an ``IntegerValue`` type.
+
+   ``True`` is converted to ``1``, and ``False`` is converted to ``0``.
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerValue`
+           ``IntegerValue`` type with the value representing the original ``BooleanValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+   
+   Convert the value to a formatted string.
+
+
+   :Parameters:
+
+       **locale_name** : :class:`python:str`
+           Locale to format the string in.
+
+
+
+   :Returns:
+
+       :class:`python:str`
+           String appropriate for use in user-facing areas.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

@@ -1,0 +1,253 @@
+
+
+
+
+
+
+:class:`StringArrayValue`
+=========================
+
+
+.. py:class:: ansys.tools.variableinterop.array_values.StringArrayValue
+
+   Bases: :py:obj:`ansys.tools.variableinterop.variable_value.CommonArrayValue`\ [\ :py:obj:`numpy.str_`\ ]
+
+
+   
+   Stores a value as a ``StringArrayValue`` variable type.
+
+   In Python, the ``StringArrayValue`` type is implemented by extending NumPy's ``ndarray`` type.
+   This means that they decay naturally into ``numpy.ndarray`` objects when using NumPy's
+   array operators.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+
+.. py:currentmodule:: StringArrayValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~clone`
+            - 
+          * - :py:attr:`~accept`
+            - 
+          * - :py:attr:`~to_real_array_value`
+            - Convert the value to a ``RealArrayValue`` type.
+          * - :py:attr:`~to_boolean_array_value`
+            - Convert the value to a ``BooleanArrayValue`` type.
+          * - :py:attr:`~to_integer_array_value`
+            - Convert the value to an ``IntegerArrayValue`` type.
+          * - :py:attr:`~to_api_string`
+            - 
+          * - :py:attr:`~to_display_string`
+            - 
+
+
+   .. tab-item:: Properties
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~variable_type`
+            - 
+
+
+
+   .. tab-item:: Static methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~from_api_string`
+            - Convert an API-formatted string to a ``StringArrayValue`` type.
+
+
+   .. tab-item:: Special methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~__eq__`
+            - 
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.array_values import StringArrayValue
+
+Property detail
+---------------
+
+.. py:property:: variable_type
+   :type: ansys.tools.variableinterop.variable_type.VariableType
+
+
+
+
+
+Method detail
+-------------
+
+.. py:method:: __eq__(other)
+
+.. py:method:: clone() -> StringArrayValue
+
+.. py:method:: accept(visitor: ansys.tools.variableinterop.ivariable_visitor.IVariableValueVisitor[T]) -> T
+
+.. py:method:: to_real_array_value() -> RealArrayValue
+
+   
+   Convert the value to a ``RealArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`RealArrayValue`
+           ``RealArrayValue`` type with the same values converted to real numbers.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_boolean_array_value() -> BooleanArrayValue
+
+   
+   Convert the value to a ``BooleanArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`BooleanArrayValue`
+           ``BooleanArrayValue`` type with the same values converted to Boolean values.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_integer_array_value() -> IntegerArrayValue
+
+   
+   Convert the value to an ``IntegerArrayValue`` type.
+
+
+
+
+
+   :Returns:
+
+       :obj:`IntegerArrayValue`
+           ``IntegerArrayValue`` type with the same values converted to integers.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_api_string(context: Optional[ansys.tools.variableinterop.isave_context.ISaveContext] = None) -> str
+
+.. py:method:: from_api_string(value: str) -> StringArrayValue
+   :staticmethod:
+
+
+   
+   Convert an API-formatted string to a ``StringArrayValue`` type.
+
+
+   :Parameters:
+
+       **value** : :class:`python:str`
+           API string to parse.
+
+
+
+   :Returns:
+
+       :obj:`StringArrayValue`
+           Result of parsing the ``StringArrayValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: to_display_string(locale_name: str) -> str
+
+
+
+

@@ -1,0 +1,134 @@
+
+
+
+
+
+
+:class:`CommonArrayValue`
+=========================
+
+
+.. py:class:: ansys.tools.variableinterop.variable_value.CommonArrayValue(shape, dtype=float, buffer=None, offset=0, strides=None, order=None)
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ ], :py:obj:`numpy.typing.NDArray`\ [\ :py:obj:`T`\ ], :py:obj:`IVariableValue`, :py:obj:`abc.ABC`
+
+
+   
+   Defines an interface for the behavior common among all array types.
+
+   This class inherits the ``IVariableValue`` class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:currentmodule:: CommonArrayValue
+
+Overview
+--------
+
+.. tab-set::
+
+
+
+   .. tab-item:: Methods
+
+      .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+          * - :py:attr:`~get_lengths`
+            - Get the dimension sizes of the array.
+          * - :py:attr:`~rank`
+            - Get the number of dimensions in the array.
+
+
+
+
+
+
+
+
+Import detail
+-------------
+
+.. code-block:: python
+
+    from ansys.tools.variableinterop.variable_value import CommonArrayValue
+
+
+
+Method detail
+-------------
+
+.. py:method:: get_lengths() -> Tuple[int]
+
+   
+   Get the dimension sizes of the array.
+
+
+
+
+
+   :Returns:
+
+       :obj:`Tuple`\[:class:`python:int`]
+           Dimension sizes of the array.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:method:: rank() -> int
+
+   
+   Get the number of dimensions in the array.
+
+
+
+
+
+   :Returns:
+
+       :class:`python:int`
+           Number of dimensions in the array.
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+

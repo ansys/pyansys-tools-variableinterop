@@ -1,0 +1,87 @@
+
+
+
+
+
+
+The ``isave_context.py`` module
+===============================
+
+.. py:module:: ansys.tools.variableinterop.isave_context
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+.. py:currentmodule:: isave_context
+.. tab-set::
+
+
+
+    .. tab-item:: Interfaces
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.isave_context.ISaveContext`
+            - Defines an abstraction for a save medium.
+
+
+          * - :py:obj:`~ansys.tools.variableinterop.isave_context.ILoadContext`
+            - Defines an abstraction for a load medium.
+
+
+
+
+
+
+
+
+
+
+
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+   :hidden:
+
+    <span class="nf nf-cod-symbol_interface"></span> ISaveContext</api/ansys/tools/variableinterop/isave_context/ISaveContext>
+    <span class="nf nf-cod-symbol_interface"></span> ILoadContext</api/ansys/tools/variableinterop/isave_context/ILoadContext>
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``ISaveContext`` class.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+

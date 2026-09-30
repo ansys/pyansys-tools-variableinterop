@@ -1,0 +1,5 @@
+User-agent: *
+
+Disallow: /pull/
+
+Sitemap: https://variableinterop.docs.pyansys.com/sitemap.xml

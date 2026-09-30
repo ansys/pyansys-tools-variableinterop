@@ -1,0 +1,125 @@
+
+
+
+
+
+
+The ``variable_type_util.py`` module
+====================================
+
+.. py:module:: ansys.tools.variableinterop.utils.variable_type_util
+
+
+Summary
+-------
+
+
+
+
+
+
+
+
+.. py:currentmodule:: variable_type_util
+.. tab-set::
+
+
+
+
+
+
+
+    .. tab-item:: Functions
+
+        .. list-table::
+          :header-rows: 0
+          :widths: auto
+
+
+          * - :py:obj:`~to_type`
+            - Get the associated ``IVariableValue`` type.
+
+
+          * - :py:obj:`~to_type_name`
+            - Get the name of the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+-----------
+
+Defines the ``VariableType`` type.
+
+..
+    !! processed by numpydoc !!
+
+
+
+
+
+
+Module detail
+-------------
+
+.. py:function:: to_type(var_type: ansys.tools.variableinterop.variable_type.VariableType)
+
+   
+   Get the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+.. py:function:: to_type_name(var_type: ansys.tools.variableinterop.variable_type.VariableType)
+
+   
+   Get the name of the associated ``IVariableValue`` type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+
