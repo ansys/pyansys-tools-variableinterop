@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Provides a method for converting a formatted string to a value."""
-from numpy import unicode_
+import numpy as np
 
 from .from_formatted_string_visitor import FromFormattedStringVisitor
 from .ivariable_type_pseudovisitor import vartype_accept
@@ -46,8 +46,10 @@ def from_formatted_string(var_type: VariableType, source: str, locale_name: str)
     IVariableValue
         An IVariableValue of the specified type whose value matches the given string.
     """
-    generator: FromFormattedStringVisitor = FromFormattedStringVisitor(
-        unicode_(source), locale_name
-    )
+    if np.__version__.split(".")[0] == "1":
+        cast = np.unicode_(source)
+    else:
+        cast = np.str_(source)
+    generator: FromFormattedStringVisitor = FromFormattedStringVisitor(cast, locale_name)
     result: IVariableValue = vartype_accept(generator, var_type)
     return result
